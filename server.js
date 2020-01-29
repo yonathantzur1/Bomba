@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('./'));
 
+// Import routes.
+require('./modules/routes/main')(app);
 
 http.listen(config.server.port, () => {
     console.log("Server is up!");
