@@ -1,20 +1,18 @@
 const http = require('http');
+const https = require('https');
 
 module.exports = {
-    async sendRequestsMatrix(requestsMatrix) {
-        let sendObjects = [];
-
+    sendRequestsMatrix(requestsMatrix) {
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
                 let requestData = requestsMatrix[i][j];
-                sendObjects.push(buildSendObject(requestData, i, j));
+                requestsMatrix[i][j] = buildSendObject(requestData, i, j);
             }
-
-            await sendMultiRequests(sendObjects);
-            sendObjects = [];
         }
 
-        return;
+        for (let i = 0; i < requestsMatrix.length; i++) {
+            sendMultiRequests(requestsMatrix[i]);
+        }
     }
 }
 
@@ -37,24 +35,52 @@ function buildSendObject(requestData, xIndex, yIndex) {
     return sendObject;
 }
 
-function sendMultiRequests(sendObjects) {
-    return Promise.all(sendObjects.map(sendObject => {
-        return new Promise((resolve, reject) => {
-            let position = sendObject.position;
-            sendRequest(sendObject.options, sendObject.data).then(response => {
-                // TODO: report client - request succeeded.
-                resolve();
-            }).catch(err => {
-                // TODO: report client - request failed.
-                resolve();
-            });
-        });
-    }));
+async function sendMultiRequests(sendObjects) {
+    for (let i = 0; i < sendObjects.length; i++) {
+        const sendObject = sendObjects[i];
+        const position = sendObject.position;
+
+        try {
+            let response = await sendRequest(sendObject.options, sendObject.data);
+            // TODO: report client request success.
+        }
+        catch (e) {
+            // TODO: report client request failed.
+        }
+    }
+}
+
+function isHttpsRequst(url) {
+    return (url.indexOf("https://") == 0);
+}
+
+function getUrlWithoutProtocol(url) {
+    const protocolSign = "://";
+    const protocolIndex = url.indexOf(protocolSign);
+
+    if (protocolIndex == -1) {
+        return url;
+    }
+    else {
+        return url.substring(protocolIndex + protocolSign.length, url.length);
+    }
 }
 
 function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
-        const req = http.request(options, (res) => {
+        let reqProtocol;
+
+        if (isHttpsRequst(options.hostname)) {
+            process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+            reqProtocol = https;
+        }
+        else {
+            reqProtocol = http;
+        }
+
+        options.hostname = getUrlWithoutProtocol(options.hostname);
+
+        const req = reqProtocol.request(options, res => {
             if (res.statusCode != 200) {
                 return reject();
             }
@@ -72,7 +98,7 @@ function sendRequest(options, data) {
                         resolve(parsedData);
                     }
                     // In case the response data is not a json.
-                    catch(e) {
+                    catch (e) {
                         resolve(rawData);
                     }
                 }
