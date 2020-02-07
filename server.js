@@ -37,7 +37,7 @@ function isFileAllow(reqUrl) {
 
 // Redirect angular requests back to client side.
 app.get('/*', (req, res) => {
-    let buildFolder = 'build/';
+    let buildFolder = 'dist/';
     let file = isFileAllow(req.url) ? req.url : 'index.html';
     let filePath = path.resolve(buildFolder + file);
 
