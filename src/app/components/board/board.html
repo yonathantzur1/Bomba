@@ -1,0 +1,23 @@
+<div id="board">
+    <div class="matrix-container">
+        <table>
+            <tr *ngFor="let row of matrix; index as i">
+                <td class="cell" *ngFor="let col of matrix[i]; index as j">
+                    <cell [data]="matrix[i][j]"></cell>
+                </td>
+                <td class="cell plus-sector">
+                    <div class="hvr-icon-grow plus-icon-container">
+                        <i class="fa fa-plus hvr-icon"></i>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="cell plus-sector">
+                    <div class="hvr-icon-grow plus-icon-container">
+                        <i class="fa fa-plus hvr-icon"></i>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

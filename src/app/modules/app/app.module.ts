@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../../components/app/app.component';
+import { BoardComponent } from '../../components/board/board.component';
+import { CellComponent } from '../../components/board/cell/cell.component';
 
 // Routing
 import { Routing } from '../../routes/app.routing';
@@ -18,7 +20,9 @@ import { Routing } from '../../routes/app.routing';
     Routing
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    BoardComponent,
+    CellComponent
   ],
   providers: [
 

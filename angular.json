@@ -23,10 +23,18 @@
             ],
             "styles": [
               "src/app/fonts/fonts.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap-reboot.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
+              "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css",
+              "node_modules/hover.css/css/hover.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
               "node_modules/socket.io-client/dist/socket.io.slim.js"
             ]
           },
