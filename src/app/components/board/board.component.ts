@@ -13,4 +13,12 @@ export class BoardComponent {
     matrix: Array<Array<Cell>> = [[new Cell()]]
 
     constructor(private boardService: BoardService) { }
+
+    addCol(i) {
+        this.matrix[i].push(new Cell());
+    }
+
+    addRow() {
+        this.matrix.push([new Cell()]);
+    }
 }

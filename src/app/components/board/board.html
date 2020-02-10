@@ -3,18 +3,21 @@
         <table>
             <tr *ngFor="let row of matrix; index as i">
                 <td class="cell" *ngFor="let col of matrix[i]; index as j">
+                    <div>{{j+1}}</div>
                     <cell [data]="matrix[i][j]"></cell>
                 </td>
-                <td class="cell plus-sector">
+                <td class="cell plus-sector" (click)="addCol(i)">
                     <div class="hvr-icon-grow plus-icon-container">
                         <i class="fa fa-plus hvr-icon"></i>
+                        <div class="plus-txt">(Sync)</div>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td class="cell plus-sector">
+                <td class="cell plus-sector" (click)="addRow()">
                     <div class="hvr-icon-grow plus-icon-container">
                         <i class="fa fa-plus hvr-icon"></i>
+                        <div class="plus-txt">(Async)</div>
                     </div>
                 </td>
             </tr>
