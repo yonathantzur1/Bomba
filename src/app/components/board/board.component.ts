@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Cell } from './cell/cell.component'
 import { BoardService } from '../../services/board.service';
 
 @Component({
@@ -10,15 +9,5 @@ import { BoardService } from '../../services/board.service';
 })
 
 export class BoardComponent {
-    matrix: Array<Array<Cell>> = [[new Cell()]]
-
-    constructor(private boardService: BoardService) { }
-
-    addCol(i) {
-        this.matrix[i].push(new Cell());
-    }
-
-    addRow() {
-        this.matrix.push([new Cell()]);
-    }
+    constructor(private boardService: BoardService) { };
 }
