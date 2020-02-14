@@ -10,7 +10,7 @@ import { Cell } from './cell/cell.component';
 
 export class MatrixComponent implements OnInit {
     container: HTMLElement;
-    cellSize: number = 100;
+    cellSize: number = 150;
     minScrollCells: number;
 
     ngOnInit(): void {
