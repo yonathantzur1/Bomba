@@ -1,11 +1,6 @@
-.matrix-container {
-    padding: 10px;
-    user-select: none;
-}
-
 .cell {
     border: 1px solid black;
-    width: 100px;
+    min-width: 100px;
     height: 100px;
     text-align: center;
     padding: 5px;
