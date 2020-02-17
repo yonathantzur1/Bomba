@@ -20,10 +20,20 @@
     width: var(--cards-secotr-width);
     height: 100%;
     float: right;
-    border-left: 1px solid #7d7d7d;
+    border-left: 1px solid #a5a5a5;
     position: relative;
     overflow: auto;
     padding-bottom: 15px;
+}
+
+.cards-top {
+    font-size: 14px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cccccc;
+    border-bottom: 0.5px solid #adadad;
 }
 
 .request-card {

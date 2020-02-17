@@ -21,9 +21,10 @@
 
 .top-sector {
     position: relative;
-    height: 50px;
+    height: 40px;
     width: 100%;
     background-color: #cccccc;
+    border-bottom: 0.5px solid #adadad;
     display: flex;
     align-items: center;
     user-select: none;
