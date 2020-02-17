@@ -1,10 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export class Cell {
-    name: string = "";
-    amount: number = 1;
-    requset: string = "";
-}
+import { Request } from '../../../card/card.component';
 
 @Component({
     selector: 'cell',
@@ -15,7 +10,7 @@ export class Cell {
 
 export class CellComponent {
     @Input()
-    data: Cell;
+    data: Request;
 
     constructor() { }
 }

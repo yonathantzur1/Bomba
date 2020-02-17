@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cell } from './cell/cell.component';
+import { Request } from '../../card/card.component';
 
 @Component({
     selector: 'matrix',
@@ -17,12 +17,12 @@ export class MatrixComponent implements OnInit {
         this.container = document.getElementById("matrix-container");
     }
 
-    matrix: Array<Array<Cell>> = [[new Cell()]]
+    matrix: Array<Array<Request>> = [[new Request()]]
 
     constructor() { }
 
     addCol(i) {
-        this.matrix[i].push(new Cell());
+        this.matrix[i].push(new Request());
         let currentColumnsAmount = this.matrix[i].length;
 
         setTimeout(() => {
@@ -42,7 +42,7 @@ export class MatrixComponent implements OnInit {
     }
 
     addRow() {
-        this.matrix.push([new Cell()]);
+        this.matrix.push([new Request()]);
 
         setTimeout(() => {
             this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;

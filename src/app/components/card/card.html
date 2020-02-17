@@ -1,0 +1,49 @@
+<div id="card">
+    <div class="overlay"></div>
+    <div class="card-container">
+        <div class="top-sector">
+            <i (click)="closeWindow()" class="close-icon fas fa-times hvr-grow"></i>
+            <span class="title">{{request.name.trim() || "New Request"}}</span>
+        </div>
+        <div class="body">
+            <form style="position: relative;" autocomplete="off">
+                <div class="form-group">
+                    <input id="name" [(ngModel)]="request.name" maxlength="40" name="reqName" placeholder="Name"
+                        type="text" class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                    <label id="name-micro" class="microtext"></label>
+                </div>
+                <div class="form-group">
+                    <table class="http-data">
+                        <tr>
+                            <td>
+                                <select class="form-control method-select">
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="DELETE">DELETE</option>
+                                </select>
+                            </td>
+                            <td style="position: relative;">
+                                <input id="url" [(ngModel)]="request.url" name="reqUrl" placeholder="URL" type="text"
+                                    class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                                <label id="url-micro" class="microtext"></label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <textarea id="req-body" (keydown.tab)="tabEnable($event)" [(ngModel)]="request.body" name="reqBody"
+                        placeholder="Body" type="text" class="request-body"></textarea>
+                    <div class="body-type">
+                        <span *ngFor="let type of bodyTypes; index as i">
+                            <span (click)="selectBodyType(i)" class="body-type-option"
+                                [ngClass]="{'body-type-selected': type.isChecked}">{{type.name}}</span>
+                            <span>{{(i < bodyTypes.length - 1) ? " / " : ""}}</span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <i (click)="addReqest()" class="save-icon far fa-arrow-alt-circle-right"></i>
+    </div>
+</div>

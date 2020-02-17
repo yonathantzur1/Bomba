@@ -8,6 +8,11 @@ import { AppComponent } from '../../components/app/app.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
 import { CellComponent } from '../../components/board/matrix/cell/cell.component';
+import { CardComponent } from '../../components/card/card.component';
+
+// Global Services
+import { EventService } from '../../services/global/event.service';
+import { MicrotextService } from '../../services/global/microtext.service';
 
 // Routing
 import { Routing } from '../../routes/app.routing';
@@ -24,10 +29,12 @@ import { Routing } from '../../routes/app.routing';
     AppComponent,
     BoardComponent,
     MatrixComponent,
-    CellComponent
+    CellComponent,
+    CardComponent
   ],
   providers: [
-
+    EventService,
+    MicrotextService
   ],
   bootstrap: [AppComponent]
 })
