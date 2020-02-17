@@ -32,7 +32,7 @@
                     </table>
                 </div>
                 <div class="form-group">
-                    <textarea id="req-body" (keydown.tab)="tabEnable($event)" [(ngModel)]="request.body" name="reqBody"
+                    <textarea id="req-body" (keydown.tab)="tabEnable()" [(ngModel)]="request.body" name="reqBody"
                         placeholder="Body" type="text" class="request-body"></textarea>
                     <div class="body-type">
                         <span *ngFor="let type of bodyTypes; index as i">
