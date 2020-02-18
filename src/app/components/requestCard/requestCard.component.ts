@@ -31,13 +31,13 @@ class BodyType {
 }
 
 @Component({
-    selector: 'card',
-    templateUrl: './card.html',
+    selector: 'request-card',
+    templateUrl: './requestCard.html',
     providers: [],
-    styleUrls: ['./card.css']
+    styleUrls: ['./requestCard.css']
 })
 
-export class CardComponent {
+export class RequestCardComponent {
     request: Request = new Request();
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean;

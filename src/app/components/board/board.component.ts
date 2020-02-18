@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Request } from '../card/card.component'
+import { Request } from '../requestCard/requestCard.component'
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Request } from '../../../card/card.component';
+import { Request } from '../../../requestCard/requestCard.component';
 
 @Component({
     selector: 'cell',
