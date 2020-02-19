@@ -1,7 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Request } from '../requestCard/requestCard.component'
+import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import interact from 'interactjs';
 
 @Component({
     selector: 'board',
@@ -10,47 +9,65 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
     styleUrls: ['./board.css']
 })
 
-export class BoardComponent implements OnDestroy {
-    requestCards: Array<Request> = [];
-    isShowCard: boolean = false;
-
+export class BoardComponent implements OnInit {
     eventsIds: Array<string> = [];
 
-    constructor(private boardService: BoardService,
-        private eventService: EventService) {
+    constructor(private boardService: BoardService) { }
 
-        eventService.register(EVENT_TYPE.ADD_REQUEST_CARD, (card: Request) => {
-            this.requestCards.push(card);
-        }, this.eventsIds);
+    ngOnInit() {
+        interact('.draggable').draggable({
+            inertia: false,
+            autoScroll: true,
+            onmove: dragMoveListener,
+            onstart: (event: any) => {
+                event.currentTarget.style.position = "fixed";
+            },
+            onend: (event: any) => {
+                event.currentTarget.remove();
+            }
+        }).on("down", event => {
+            let original = event.currentTarget;
 
-        eventService.register(EVENT_TYPE.CLOSE_REQUEST_CARD, () => {
-            this.isShowCard = false;
-        }, this.eventsIds);
-
-        let req: Request = new Request();
-        req.name = "Check Hierarchy 1";
-        req.url = "127.0.0.1:9000/Query";
-
-        let req2: Request = new Request();
-        req2.name = "Check Hierarchy2";
-        req2.url = "127.0.0.1:9000/Query";
-
-        let req3: Request = new Request();
-        req3.name = "Check Hierarchy3";
-        req3.url = "127.0.0.1:9000/Query";
-
-        // this.requestCards.push(req);
-        // this.requestCards.push(req2);
-        // this.requestCards.push(req3);
-        // this.requestCards.push(req);
-        // this.requestCards.push(req2);
-        // this.requestCards.push(req3);
-        // this.requestCards.push(req);
-        // this.requestCards.push(req2);
-        // this.requestCards.push(req3);
+            original.setAttribute('allowDrag', 'true');
+            original.onmouseleave = () => {
+                original.setAttribute('allowDrag', 'false');
+                original.onmouseleave = null;
+            };
+        }).on("move", elementMoveListener);
     }
+}
 
-    ngOnDestroy() {
-        this.eventService.unsubscribeEvents(this.eventsIds);
+function elementMoveListener(event: any) {
+    let interaction = event.interaction;
+    let original = event.currentTarget;
+
+    if (interaction.pointerIsDown &&
+        !interaction.interacting() &&
+        original.getAttribute('allowDrag') == 'true' &&
+        original.getAttribute('clonable') != 'false') {
+        let clone = original.cloneNode(true);
+        clone.setAttribute('clonable', 'false');
+        clone.style.position = "absolute";
+        clone.style.right = window.innerWidth - original.getBoundingClientRect().right + "px";
+        clone.style.top = original.getBoundingClientRect().top + "px";
+        original.parentElement.appendChild(clone);
+        interaction.start({ name: 'drag' }, event.interactable, clone);
     }
+}
+
+function dragMoveListener(event: any) {
+    let target = event.target
+
+    // keep the dragged position in the data-x/data-y attributes
+    let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+    let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+        target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the position attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
 }

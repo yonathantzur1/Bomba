@@ -1,0 +1,14 @@
+<div id="requests">
+    <div class="cards-top">Requests Cards</div>
+    <div class="cards-container">
+        <div class="card draggable" *ngFor="let card of requestCards">
+            <div class="card-name">{{card.name}}</div>
+        </div>
+        <div class="card add-card" (click)="isShowNewRequestCard=true;">
+            <div class="new-card-content">
+                <div class="plus-txt">New Request</div>
+            </div>
+        </div>
+    </div>
+    <request-card *ngIf="isShowNewRequestCard"></request-card>
+</div>

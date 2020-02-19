@@ -1,5 +1,5 @@
 #board {
-    --cards-secotr-width: 350px;
+    --cards-secotr-width: 345px;
 }
 
 .matrix-sector {
@@ -24,56 +24,5 @@
     position: relative;
     overflow: auto;
     padding-bottom: 15px;
-}
-
-.cards-top {
-    font-size: 14px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #cccccc;
-    border-bottom: 0.5px solid #adadad;
-}
-
-.request-card {
-    width: calc(100% * (1/2) - 22px);
-    height: 150px;
-    background-color: whitesmoke;
-    box-shadow: 1px 1px 6px 1px #a1a1a1;
-    padding: 5px;
-    display: inline-block;
-    margin: 15px 0 0 15px;
-    position: relative;
-}
-
-
-.add-card {
-    border: 1px dashed black;
-    box-shadow: none;
-    background-color: initial;
-    cursor: pointer;
-}
-
-.add-card:hover {
-    background-color: #e4e4e4;
-}
-
-.new-card-content {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.card-name {
-    text-align: center;
-    width: 100%;
-    font-size: 14px;
-    position: absolute;
-    left: 0;
+    user-select: none;
 }

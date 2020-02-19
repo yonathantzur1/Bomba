@@ -5,15 +5,6 @@
         </div>
     </div>
     <div class="cards-sector">
-        <div class="cards-top">Requests Cards</div>
-        <div class="request-card" *ngFor="let card of requestCards">
-            <div class="card-name">{{card.name}}</div>
-        </div>
-        <div class="request-card add-card" (click)="isShowCard=true;">
-            <div class="new-card-content">
-                <div class="plus-txt">New Request</div>
-            </div>
-        </div>
+        <requests></requests>
     </div>
-    <request-card *ngIf="isShowCard"></request-card>
 </div>
