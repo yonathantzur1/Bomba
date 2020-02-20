@@ -15,14 +15,48 @@ export class BoardComponent implements OnInit {
     constructor(private boardService: BoardService) { }
 
     ngOnInit() {
+        // enable draggables to be dropped into this
+        interact('.dropzone').dropzone({
+            overlap: 0.45,
+
+            ondropactivate: event => {
+                // add active dropzone feedback
+                event.target.classList.add('drop-active');
+            },
+            ondragenter: event => {
+                let draggableElement = event.relatedTarget;
+                let dropzoneElement = event.target;
+
+                // feedback the possibility of a drop
+                dropzoneElement.classList.add('drop-target');
+            },
+            ondragleave: event => {
+                let draggableElement = event.relatedTarget;
+                let dropzoneElement = event.target;
+                
+                // remove the drop feedback style
+                dropzoneElement.classList.remove('drop-target');
+            },
+            ondrop: event => {
+                let draggableElement = event.relatedTarget;
+                let dropzoneElement = event.target;
+                
+            },
+            ondropdeactivate: event => {
+                // remove active dropzone feedback
+                event.target.classList.remove('drop-active');
+                event.target.classList.remove('drop-target');
+            }
+        });
+
         interact('.draggable').draggable({
             inertia: false,
             autoScroll: true,
             onmove: dragMoveListener,
-            onstart: (event: any) => {
+            onstart: event => {
                 event.currentTarget.style.position = "fixed";
             },
-            onend: (event: any) => {
+            onend: event => {
                 event.currentTarget.remove();
             }
         }).on("down", event => {
@@ -46,7 +80,9 @@ function elementMoveListener(event: any) {
         original.getAttribute('allowDrag') == 'true' &&
         original.getAttribute('clonable') != 'false') {
         let clone = original.cloneNode(true);
-        clone.setAttribute('clonable', 'false');
+        clone.style.width = "135px";
+        clone.style.height = "135px";
+        clone.style.fontSize = "12px";
         clone.style.position = "absolute";
         clone.style.right = window.innerWidth - original.getBoundingClientRect().right + "px";
         clone.style.top = original.getBoundingClientRect().top + "px";

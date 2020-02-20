@@ -1,7 +1,7 @@
 <div id="matrix">
     <table>
         <tr *ngFor="let row of matrix; index as i">
-            <td class="cell" *ngFor="let col of matrix[i]; index as j">
+            <td class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
                 <div>{{j+1}}</div>
                 <cell [data]="matrix[i][j]"></cell>
             </td>

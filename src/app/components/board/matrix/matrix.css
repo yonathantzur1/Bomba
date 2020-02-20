@@ -4,6 +4,7 @@
     height: 150px;
     text-align: center;
     padding: 5px;
+    transition: background-color 0.4s;
 }
 
 .plus-icon-container {
@@ -18,4 +19,15 @@
 .plus-txt {
     position: absolute;
     bottom: calc(50% - 30px);
+}
+
+.drop-target {
+    background-color: #29e;
+    border-color: #555555 !important;
+    color: white;
+}
+
+.drop-active {
+    border-width: 2px;
+    border-color: #353535;
 }
