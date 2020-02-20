@@ -22,7 +22,6 @@
     float: right;
     border-left: 1px solid #a5a5a5;
     position: relative;
-    overflow: auto;
     padding-bottom: 15px;
     user-select: none;
 }

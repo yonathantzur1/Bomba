@@ -1,10 +1,15 @@
 <div id="requests">
-    <div class="cards-top">Requests Cards</div>
+    <div class="cards-top">
+        <span>Requests Cards</span>
+        <div *ngIf="requestCards.length > 0" class="plus-icon-container" (click)="isShowNewRequestCard=true;">
+            <i class="far fa-plus-square"></i>
+        </div>
+    </div>
     <div class="cards-container">
         <div class="card draggable" *ngFor="let card of requestCards">
             <div class="card-name">{{card.name}}</div>
         </div>
-        <div class="card add-card" (click)="isShowNewRequestCard=true;">
+        <div *ngIf="requestCards.length == 0" class="card add-card" (click)="isShowNewRequestCard=true;">
             <div class="new-card-content">
                 <div class="plus-txt">New Request</div>
             </div>

@@ -132,7 +132,7 @@ export class RequestCardComponent {
     addReqest() {
         if (this.validateRequest()) {
             this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD, this.request);
-            this. closeWindow();
+            this.closeWindow();
         }
     }
 
@@ -145,6 +145,11 @@ export class RequestCardComponent {
         // In case of pressing escape.
         if (event.code == "Escape") {
             this.closeWindow();
+        }
+
+        // In case of pressing escape.
+        if (event.code == "Enter") {
+            this.addReqest();
         }
     }
 }

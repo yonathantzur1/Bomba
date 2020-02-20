@@ -24,7 +24,7 @@ export class RequestsComponent  implements OnDestroy {
         }, this.eventsIds);
 
         let req: Request = new Request();
-        req.name = "Check Hierarchy 1";
+        req.name = "Check Hierarchy1";
         req.url = "127.0.0.1:9000/Query";
 
         let req2: Request = new Request();

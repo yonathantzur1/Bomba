@@ -1,6 +1,6 @@
 .cards-top {
-    font-size: 14px;
-    height: 35px;
+    font-size: 16px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,6 +10,9 @@
 
 .cards-container {
     position: relative;
+    overflow: auto;
+    height: calc(100% - 30px);
+    padding-bottom: 5px;
 }
 
 .card {
@@ -17,12 +20,10 @@
     height: 150px;
     background-color: whitesmoke;
     box-shadow: 1px 1px 6px 1px #a1a1a1;
-    padding: 5px;
     display: inline-block;
     margin: 15px 0 0 15px;
     position: relative;
 }
-
 
 .add-card {
     border: 1px dashed black;
@@ -47,9 +48,21 @@
 }
 
 .card-name {
-    text-align: center;
     width: 100%;
+    height: 100%;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
+    top: 0;
     left: 0;
+    padding: 5px;
+}
+
+.plus-icon-container {
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    font-size: 22px;
 }
