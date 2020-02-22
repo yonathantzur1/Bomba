@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #cccccc;
+    background-color: #e4e4e4;
     border-bottom: 0.5px solid #adadad;
 }
 
@@ -66,4 +66,8 @@
     position: absolute;
     right: 16px;
     font-size: 22px;
+}
+
+.plus-icon-container:hover {
+    color: #656565;
 }

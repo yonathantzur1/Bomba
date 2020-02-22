@@ -40,12 +40,18 @@ export class RequestsComponent implements OnDestroy {
         req3.name = "Check Hierarchy3";
         req3.url = "127.0.0.1:9000/Query";
 
+        let req4: Request = new Request();
+        req4.name = "Check Hierarchy4";
+        req4.url = "127.0.0.1:9000/Query";
+
         this.requestCards.push(req);
         this.requestCards.push(req2);
         this.requestCards.push(req3);
+        this.requestCards.push(req4);
         this.requestCards.push(req);
         this.requestCards.push(req2);
         this.requestCards.push(req3);
+        this.requestCards.push(req4);
         this.requestCards.push(req);
         this.requestCards.push(req2);
         this.requestCards.push(req3);

@@ -1,8 +1,9 @@
 <div id="cell">
-    <div class="head">
-        <span *ngIf="!data">{{index}}</span>
-    </div>
-    <div *ngIf="data" class="body">
-        {{data.name}}
+    <div class="body">
+        <div class="head">
+            
+        </div>
+        <div class="cell-index" *ngIf="!data">{{index}}</div>
+        <div *ngIf="data">{{data.name}}</div>
     </div>
 </div>

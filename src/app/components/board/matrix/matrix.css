@@ -1,10 +1,32 @@
+.matrix-top {
+    font-size: 16px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e4e4e4;
+    border-bottom: 0.5px solid #adadad;
+    user-select: none;
+}
+
+.matrix-container {
+    margin: 15px;
+    width: auto;
+    height: calc(100% - 70px);
+    overflow: auto;
+    user-select: none;
+}
+
 .cell {
     border: 1px dashed black;
     min-width: 150px;
     height: 150px;
     text-align: center;
-    padding: 5px;
     transition: background-color 0.4s;
+}
+
+.plus-sector:hover {
+    background-color: #e4e4e4;
 }
 
 .plus-icon-container {
@@ -14,10 +36,16 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    position: relative;
+}
+
+.add-icon {
+    font-size: 20px;
 }
 
 .plus-txt {
     position: absolute;
+    font-size: 14px;
     bottom: calc(50% - 30px);
 }
 

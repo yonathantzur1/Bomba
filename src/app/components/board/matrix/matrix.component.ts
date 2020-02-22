@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
+declare let $: any;
+
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
@@ -33,6 +35,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     }
 
     addCol(i: number) {
+        this.removePlusHoverBackground();
         this.matrix[i].push(null);
         let currentColumnsAmount = this.matrix[i].length;
 
@@ -53,10 +56,20 @@ export class MatrixComponent implements OnInit, OnDestroy {
     }
 
     addRow() {
+        this.removePlusHoverBackground();
         this.matrix.push([null]);
 
         setTimeout(() => {
             this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;
+        }, 0);
+    }
+
+    removePlusHoverBackground() {
+        let plusSectorElement = $(".plus-sector");
+        plusSectorElement.css("background-color", "initial");
+
+        setTimeout(() => {
+            plusSectorElement.css("background-color", "");
         }, 0);
     }
 }

@@ -1,0 +1,19 @@
+#cell {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell-index {
+    font-size: 20px;
+}
