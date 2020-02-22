@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Request } from '../../requestCard/requestCard.component';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 @Component({
     selector: 'matrix',
@@ -8,21 +9,31 @@ import { Request } from '../../requestCard/requestCard.component';
     styleUrls: ['./matrix.css']
 })
 
-export class MatrixComponent implements OnInit {
+export class MatrixComponent implements OnInit, OnDestroy {
     container: HTMLElement;
     cellSize: number = 150;
     minScrollCells: number;
+    matrix: Array<Array<Request>> = [[null]];
 
-    ngOnInit(): void {
+    eventsIds: Array<string> = [];
+
+    constructor(private eventService: EventService) {
+        eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
+            let cellIndex = data.cellIndex;
+            this.matrix[cellIndex[0]][cellIndex[1]] = data.request;
+        });
+    }
+
+    ngOnInit() {
         this.container = document.getElementById("matrix-container");
     }
 
-    matrix: Array<Array<Request>> = [[new Request()]]
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
 
-    constructor() { }
-
-    addCol(i) {
-        this.matrix[i].push(new Request());
+    addCol(i: number) {
+        this.matrix[i].push(null);
         let currentColumnsAmount = this.matrix[i].length;
 
         setTimeout(() => {
@@ -42,7 +53,7 @@ export class MatrixComponent implements OnInit {
     }
 
     addRow() {
-        this.matrix.push([new Request()]);
+        this.matrix.push([null]);
 
         setTimeout(() => {
             this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;

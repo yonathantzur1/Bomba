@@ -12,5 +12,8 @@ export class CellComponent {
     @Input()
     data: Request;
 
+    @Input()
+    index: any;
+
     constructor() { }
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+
 import interact from 'interactjs';
 
 @Component({
@@ -9,66 +11,99 @@ import interact from 'interactjs';
     styleUrls: ['./board.css']
 })
 
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
-    constructor(private boardService: BoardService) { }
+    constructor(private boardService: BoardService,
+        private eventService: EventService) { }
 
     ngOnInit() {
-        // enable draggables to be dropped into this
-        interact('.dropzone').dropzone({
-            overlap: 0.45,
-
-            ondropactivate: event => {
-                // add active dropzone feedback
-                event.target.classList.add('drop-active');
-            },
-            ondragenter: event => {
-                let draggableElement = event.relatedTarget;
-                let dropzoneElement = event.target;
-
-                // feedback the possibility of a drop
-                dropzoneElement.classList.add('drop-target');
-            },
-            ondragleave: event => {
-                let draggableElement = event.relatedTarget;
-                let dropzoneElement = event.target;
-                
-                // remove the drop feedback style
-                dropzoneElement.classList.remove('drop-target');
-            },
-            ondrop: event => {
-                let draggableElement = event.relatedTarget;
-                let dropzoneElement = event.target;
-                
-            },
-            ondropdeactivate: event => {
-                // remove active dropzone feedback
-                event.target.classList.remove('drop-active');
-                event.target.classList.remove('drop-target');
-            }
-        });
-
-        interact('.draggable').draggable({
-            inertia: false,
-            autoScroll: true,
-            onmove: dragMoveListener,
-            onstart: event => {
-                event.currentTarget.style.position = "fixed";
-            },
-            onend: event => {
-                event.currentTarget.remove();
-            }
-        }).on("down", event => {
-            let original = event.currentTarget;
-
-            original.setAttribute('allowDrag', 'true');
-            original.onmouseleave = () => {
-                original.setAttribute('allowDrag', 'false');
-                original.onmouseleave = null;
-            };
-        }).on("move", elementMoveListener);
+        enableDragAndDrop(this);
     }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
+
+    dropRequestCard(cardId: string, matrixCellId: string) {
+        let data = {
+            requestIndex: this.getRequestCardIndexFromId(cardId),
+            cellIndex: this.getMatrixCellIndexFromId(matrixCellId)
+        };
+
+        this.eventService.emit(EVENT_TYPE.DROP_REQUEST_CARD, data);
+    }
+
+    getRequestCardIndexFromId(cardId: string): number {
+        let cardIdParts = cardId.split("-");
+
+        return parseInt(cardIdParts[cardIdParts.length - 1]);
+    }
+
+    getMatrixCellIndexFromId(matrixCellId: string): Array<number> {
+        let matrixIdParts = matrixCellId.split("-");
+        let i = parseInt(matrixIdParts[matrixIdParts.length - 2]);
+        let j = parseInt(matrixIdParts[matrixIdParts.length - 1]);
+
+        return [i, j];
+    }
+}
+
+function enableDragAndDrop(self: any) {
+    // enable draggables to be dropped into this
+    interact('.dropzone').dropzone({
+        overlap: 0.4,
+
+        ondropactivate: event => {
+            // add active dropzone feedback
+            event.target.classList.add('drop-active');
+        },
+        ondragenter: event => {
+            let draggableElement = event.relatedTarget;
+            let dropzoneElement = event.target;
+
+            // feedback the possibility of a drop
+            dropzoneElement.classList.add('drop-target');
+        },
+        ondragleave: event => {
+            let dropzoneElement = event.target;
+
+            // remove the drop feedback style
+            dropzoneElement.classList.remove('drop-target');
+        },
+        ondrop: event => {
+            let draggableElement = event.relatedTarget;
+            let dropzoneElement = event.target;
+
+            self.dropRequestCard(draggableElement.id, dropzoneElement.id);
+
+        },
+        ondropdeactivate: event => {
+            // remove active dropzone feedback
+            event.target.classList.remove('drop-active');
+            event.target.classList.remove('drop-target');
+        }
+    });
+
+    interact('.draggable').draggable({
+        inertia: false,
+        autoScroll: true,
+        onmove: dragMoveListener,
+        onstart: event => {
+            event.currentTarget.style.position = "fixed";
+        },
+        onend: event => {
+            event.currentTarget.remove();
+        }
+    }).on("down", event => {
+        let original = event.currentTarget;
+
+        original.setAttribute('allowDrag', 'true');
+        original.onmouseleave = () => {
+            original.setAttribute('allowDrag', 'false');
+            original.onmouseleave = null;
+        };
+    }).on("move", elementMoveListener);
 }
 
 function elementMoveListener(event: any) {

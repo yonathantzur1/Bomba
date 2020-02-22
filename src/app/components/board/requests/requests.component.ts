@@ -9,7 +9,7 @@ import { Request } from '../../requestCard/requestCard.component'
     styleUrls: ['./requests.css']
 })
 
-export class RequestsComponent  implements OnDestroy {
+export class RequestsComponent implements OnDestroy {
     isShowNewRequestCard: boolean = false;
     requestCards: Array<Request> = [];
     eventsIds: Array<string> = [];
@@ -21,6 +21,11 @@ export class RequestsComponent  implements OnDestroy {
 
         eventService.register(EVENT_TYPE.CLOSE_REQUEST_CARD, () => {
             this.isShowNewRequestCard = false;
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.DROP_REQUEST_CARD, (data: any) => {
+            data.request = this.requestCards[data.requestIndex];
+            this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, data);
         }, this.eventsIds);
 
         let req: Request = new Request();

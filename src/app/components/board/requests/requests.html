@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="cards-container">
-        <div class="card draggable" *ngFor="let card of requestCards">
+        <div id="card-{{i}}" class="card draggable" *ngFor="let card of requestCards; index as i">
             <div class="card-name">{{card.name}}</div>
         </div>
         <div *ngIf="requestCards.length == 0" class="card add-card" (click)="isShowNewRequestCard=true;">

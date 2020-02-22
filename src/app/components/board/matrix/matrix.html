@@ -1,9 +1,8 @@
 <div id="matrix">
     <table>
         <tr *ngFor="let row of matrix; index as i">
-            <td class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
-                <div>{{j+1}}</div>
-                <cell [data]="matrix[i][j]"></cell>
+            <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
+                <cell [data]="matrix[i][j]" [index]="j + 1"></cell>
             </td>
             <td class="cell plus-sector" (click)="addCol(i)">
                 <div class="hvr-icon-grow plus-icon-container">
