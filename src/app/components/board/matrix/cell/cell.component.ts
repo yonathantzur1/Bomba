@@ -10,7 +10,7 @@ import { Request } from '../../../requestCard/requestCard.component';
 
 export class CellComponent {
     @Input()
-    data: Request;
+    request: Request;
 
     @Input()
     index: any;

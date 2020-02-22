@@ -1,9 +1,8 @@
-<div id="cell">
+<div id="cell" [ngClass]="{'marked-cell': request && request.isMarked, 'clickable': request}">
     <div class="body">
         <div class="head">
-            
         </div>
-        <div class="cell-index" *ngIf="!data">{{index}}</div>
-        <div *ngIf="data">{{data.name}}</div>
+        <div class="cell-index" *ngIf="!request">{{index}}</div>
+        <div *ngIf="request">{{request.name}}</div>
     </div>
 </div>

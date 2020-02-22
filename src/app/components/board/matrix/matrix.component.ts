@@ -22,8 +22,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
     constructor(private eventService: EventService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let cellIndex = data.cellIndex;
-            this.matrix[cellIndex[0]][cellIndex[1]] = data.request;
-        });
+            this.matrix[cellIndex[0]][cellIndex[1]] = Object.assign({}, data.request);
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.UNMARKED_MATRIX_CELLS, () => {
+            this.unmarkedAllCells();
+        }, this.eventsIds);
     }
 
     ngOnInit() {
@@ -71,5 +75,19 @@ export class MatrixComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             plusSectorElement.css("background-color", "");
         }, 0);
+    }
+
+    markCell(i: number, j: number, value?: boolean) {
+        let request = this.matrix[i][j];
+
+        request && (request.isMarked = (value != null) ? value : !request.isMarked);
+    }
+
+    unmarkedAllCells() {
+        for (let i = 0; i < this.matrix.length; i++) {
+            for (let j = 0; j < this.matrix[i].length; j++) {
+                this.markCell(i, j, false);
+            }
+        }
     }
 }

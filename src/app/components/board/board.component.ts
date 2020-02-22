@@ -57,9 +57,9 @@ function enableDragAndDrop(self: any) {
         ondropactivate: event => {
             // add active dropzone feedback
             event.target.classList.add('drop-active');
+            self.eventService.emit(EVENT_TYPE.UNMARKED_MATRIX_CELLS);
         },
         ondragenter: event => {
-            let draggableElement = event.relatedTarget;
             let dropzoneElement = event.target;
 
             // feedback the possibility of a drop
