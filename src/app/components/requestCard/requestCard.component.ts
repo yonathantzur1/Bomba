@@ -101,6 +101,11 @@ export class RequestCardComponent {
         if (this.getSelectedBodyType().name == "json") {
             setTimeout(() => {
                 try {
+                    if (this.request.body == "") {
+                        this.isValidBodyJson = true;
+                        return;
+                    }
+
                     let jsn = JSON.parse(this.request.body);
                     isFormat && (this.request.body = JSON.stringify(jsn, null, "\t"));
                     this.isValidBodyJson = true;
