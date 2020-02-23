@@ -6,7 +6,8 @@
         </div>
     </div>
     <div class="cards-container">
-        <div id="card-{{i}}" class="card draggable" *ngFor="let card of requestCards; index as i">
+        <div id="card-{{i}}" class="card draggable" (click)="openRequestEdit(card)"
+            *ngFor="let card of requestCards; index as i" [title]="card.name">
             <div class="card-name">{{card.name}}</div>
         </div>
         <div *ngIf="requestCards.length == 0" class="card add-card" (click)="isShowNewRequestCard=true;">
@@ -15,5 +16,5 @@
             </div>
         </div>
     </div>
-    <request-card *ngIf="isShowNewRequestCard"></request-card>
+    <request-card [selectedRequest]="selectedRequest" *ngIf="isShowNewRequestCard"></request-card>
 </div>

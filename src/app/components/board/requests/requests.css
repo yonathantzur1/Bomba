@@ -50,15 +50,16 @@
 
 .card-name {
     width: 100%;
-    height: 100%;
     font-size: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     position: absolute;
-    top: 0;
+    top: calc(50% - 10px);
     left: 0;
-    padding: 5px;
+    padding: 0px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 .plus-icon-container {
@@ -71,3 +72,35 @@
 .plus-icon-container:hover {
     color: #656565;
 }
+
+[data-title] {
+    outline: red dotted 1px; /*optional styling*/
+    font-size: 30px; /*optional styling*/
+    
+    position: relative;
+    cursor: help;
+  }
+  
+  [data-title]:hover::before {
+    content: attr(data-title);
+    position: absolute;
+    bottom: -26px;
+    display: inline-block;
+    padding: 3px 6px;
+    border-radius: 2px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    font-family: sans-serif;
+    white-space: nowrap;
+  }
+  [data-title]:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 8px;
+    display: inline-block;
+    color: #fff;
+    border: 8px solid transparent;	
+    border-bottom: 8px solid #000;
+  }

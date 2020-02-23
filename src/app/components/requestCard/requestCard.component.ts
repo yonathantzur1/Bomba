@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
@@ -38,19 +38,21 @@ class BodyType {
     styleUrls: ['./requestCard.css']
 })
 
-export class RequestCardComponent {
-    request: Request = new Request();
+export class RequestCardComponent implements OnInit {
+    request: Request;
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
     bodyTypes: Array<BodyType> = [];
 
     formatStr: string = "{  }";
 
+    @Input()
+    selectedRequest: Request;
+
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
         this.bodyTypes.push(new BodyType("json", false));
         this.bodyTypes.push(new BodyType("text", false));
-        this.selectBodyType(0);
 
         this.validationFuncs = [
             {
@@ -72,6 +74,11 @@ export class RequestCardComponent {
                 inputId: "url"
             }
         ];
+    }
+
+    ngOnInit() {
+        this.request = Object.assign({}, this.selectedRequest) || new Request();
+        this.selectBodyType(0);
     }
 
     closeWindow() {
@@ -155,9 +162,22 @@ export class RequestCardComponent {
 
     addReqest() {
         if (this.validateRequest()) {
-            this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD, this.request);
+            // In case the request is in edit mode.
+            if (this.selectedRequest) {
+                this.copyRequest(this.selectedRequest, this.request)
+            }
+            else {
+                this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD, this.request);
+            }
+
             this.closeWindow();
         }
+    }
+
+    copyRequest(src: Request, dst: Request) {
+        Object.keys(dst).forEach(key => {
+            src[key] = dst[key];
+        });
     }
 
     hideMicrotext(id: string) {
