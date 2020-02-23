@@ -6,10 +6,6 @@
     font-size: 14px;
 }
 
-.marked-cell {
-    background-color: #e0e0e0;
-}
-
 .clickable {
     cursor: pointer;
 }
@@ -25,6 +21,6 @@
 .cell-index {
     font-size: 14px;
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: 15px;
+    top: 15px;
 }

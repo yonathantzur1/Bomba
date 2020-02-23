@@ -4,10 +4,10 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 
 export class Request {
     id: string;
-    name: string;
+    name: string = "";
     method: string;
-    url: string;
-    body: string;
+    url: string = "";
+    body: string = "";
     isMarked: boolean = false;
 
     // Create random guid for request.
