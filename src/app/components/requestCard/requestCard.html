@@ -32,7 +32,11 @@
                     </table>
                 </div>
                 <div class="form-group">
-                    <textarea id="req-body" (keydown.tab)="tabEnable()" [(ngModel)]="request.body" name="reqBody"
+                    <div *ngIf="getSelectedBodyType().name == 'json'" (click)="formatJson(true)"
+                        [ngClass]="{'invalid-json-icon': !isValidBodyJson}" class="json-format-icon"
+                        title="Format Json">
+                        {{formatStr}}</div>
+                    <textarea id="req-body" (keydown)="bodyKeyDown($event)" [(ngModel)]="request.body" name="reqBody"
                         placeholder="Body" type="text" class="request-body"></textarea>
                     <div class="body-type">
                         <span *ngFor="let type of bodyTypes; index as i">

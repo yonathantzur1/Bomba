@@ -41,8 +41,10 @@ class BodyType {
 export class RequestCardComponent {
     request: Request = new Request();
     validationFuncs: Array<InputFieldValidation>;
-    isValidBodyJson: boolean;
+    isValidBodyJson: boolean = true;
     bodyTypes: Array<BodyType> = [];
+
+    formatStr: string = "{  }";
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
@@ -95,16 +97,32 @@ export class RequestCardComponent {
         this.request.body = this.bodyTypes[position].template;
     }
 
-    formatJson() {
+    formatJson(isFormat: boolean) {
         if (this.getSelectedBodyType().name == "json") {
-            try {
-                let jsn = JSON.parse(this.request.body);
-                this.request.body = JSON.stringify(jsn, null, "\t");
-                this.isValidBodyJson = true;
-            }
-            catch (e) {
-                this.isValidBodyJson = true;
-            }
+            setTimeout(() => {
+                try {
+                    let jsn = JSON.parse(this.request.body);
+                    isFormat && (this.request.body = JSON.stringify(jsn, null, "\t"));
+                    this.isValidBodyJson = true;
+                }
+                catch (e) {
+                    this.isValidBodyJson = false;
+                }
+
+            }, 0);
+        }
+    }
+
+    bodyKeyDown(event: any) {
+        if (event.code == "tab") {
+            this.tabEnable();
+        }
+
+        let key = event.key;
+        let keyCode = event.keyCode;
+
+        if (key.length == 1 || keyCode == 8 || keyCode == 46) {
+            this.formatJson(false);
         }
     }
 
@@ -146,11 +164,6 @@ export class RequestCardComponent {
         // In case of pressing escape.
         if (event.code == "Escape") {
             this.closeWindow();
-        }
-
-        // In case of pressing escape.
-        if (event.code == "Enter") {
-            this.addReqest();
         }
     }
 }

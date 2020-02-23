@@ -79,13 +79,30 @@
     height: 165px;
     outline: none;
     background-color: transparent;
-    padding: 8px;
+    padding: 10px;
+    padding-right: 30px;
     font-size: 14px;
     line-height: 1;
     color: inherit;
     border-radius: 3px;
     tab-size: 4;
     margin-top: 5px;;
+}
+
+.json-format-icon {
+    position: absolute;
+    right: 6px;
+    bottom: 26px;
+    font-size: 14px;
+    color: #450000;
+    cursor: pointer;
+    padding: 5px;
+    white-space: pre;
+}
+
+.invalid-json-icon {
+    color: red;
+    font-weight: bold;
 }
 
 .body-type {
