@@ -7,25 +7,36 @@ export class Request {
     name: string = "";
     method: string;
     url: string = "";
-    body: string = "";
+    body: Body = new Body(BODY_TYPE.JSON, true);
     isMarked: boolean = false;
+    isEmpty: boolean;
 
     // Create random guid for request.
-    constructor() {
+    constructor(isEmpty?: boolean) {
+        this.isEmpty = !!isEmpty;
+        (!this.isEmpty) && (this.id = this.generateGuid());
+    }
+
+    private generateGuid(): string {
         let timestamp = (new Date().getTime() / 1000 | 0).toString(16);
-        this.id = timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
+        return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
             return (Math.random() * 16 | 0).toString(16);
         }).toLowerCase();
     }
 }
 
-class BodyType {
-    name: string;
+enum BODY_TYPE {
+    JSON = "json",
+    TEXT = "text"
+}
+
+class Body {
+    type: BODY_TYPE;
     isChecked: boolean;
     template: string;
 
-    constructor(name: string, isChecked: boolean, template?: string) {
-        this.name = name;
+    constructor(type: BODY_TYPE, isChecked: boolean, template?: string) {
+        this.type = type;
         this.isChecked = isChecked;
         this.template = template || "";
     }
@@ -42,7 +53,9 @@ export class RequestCardComponent implements OnInit {
     request: Request;
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
-    bodyTypes: Array<BodyType> = [];
+    bodyOptions: Array<Body> = [];
+
+    bodyType: any = BODY_TYPE;
 
     formatStr: string = "{  }";
 
@@ -51,9 +64,6 @@ export class RequestCardComponent implements OnInit {
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
-        this.bodyTypes.push(new BodyType("json", false));
-        this.bodyTypes.push(new BodyType("text", false));
-
         this.validationFuncs = [
             {
                 isFieldValid(request: Request) {
@@ -77,44 +87,45 @@ export class RequestCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.request = Object.assign({}, this.selectedRequest) || new Request();
-        this.selectBodyType(0);
+        this.request = this.selectedRequest ? Object.assign({}, this.selectedRequest) : new Request();
+        this.bodyOptions.push(Object.assign({}, this.request.body));
+        this.bodyOptions.push(new Body(BODY_TYPE.TEXT, false));
     }
 
     closeWindow() {
         this.eventService.emit(EVENT_TYPE.CLOSE_REQUEST_CARD);
     }
 
-    getSelectedBodyType(): BodyType {
-        return this.bodyTypes.find((type: BodyType) => {
+    getSelectedBodyOption(): Body {
+        return this.bodyOptions.find((type: Body) => {
             return type.isChecked;
         });
     }
 
-    selectBodyType(position: number) {
-        let selectedType = this.getSelectedBodyType();
+    selectBodyOption(index: number) {
+        let currentBodyOption = this.getSelectedBodyOption();
 
-        if (selectedType) {
-            selectedType.template = this.request.body;
-            selectedType.isChecked = false;
+        if (currentBodyOption) {
+            currentBodyOption.template = this.request.body.template;
+            currentBodyOption.isChecked = false;
         }
 
-        this.bodyTypes[position].isChecked = true;
-
-        this.request.body = this.bodyTypes[position].template;
+        let selectedBodyOption = this.bodyOptions[index];
+        selectedBodyOption.isChecked = true;
+        this.request.body = selectedBodyOption;
     }
 
     formatJson(isFormat: boolean) {
-        if (this.getSelectedBodyType().name == "json") {
+        if (this.getSelectedBodyOption().type == BODY_TYPE.JSON) {
             setTimeout(() => {
                 try {
-                    if (this.request.body == "") {
+                    if (this.request.body.template == "") {
                         this.isValidBodyJson = true;
                         return;
                     }
 
-                    let jsn = JSON.parse(this.request.body);
-                    isFormat && (this.request.body = JSON.stringify(jsn, null, "\t"));
+                    let jsn = JSON.parse(this.request.body.template);
+                    isFormat && (this.request.body.template = JSON.stringify(jsn, null, "\t"));
                     this.isValidBodyJson = true;
                 }
                 catch (e) {
@@ -126,8 +137,8 @@ export class RequestCardComponent implements OnInit {
     }
 
     bodyKeyDown(event: any) {
-        if (event.code == "tab") {
-            this.tabEnable();
+        if (event.code == "Tab") {
+            this.tabEnable(event);
         }
 
         let key = event.key;
@@ -138,7 +149,7 @@ export class RequestCardComponent implements OnInit {
         }
     }
 
-    tabEnable() {
+    tabEnable(event: any) {
         let element: any = document.getElementById("req-body");
 
         // get caret position/selection
@@ -152,6 +163,8 @@ export class RequestCardComponent implements OnInit {
         // put caret at right position again
         element.selectionStart = element.selectionEnd = start + 1;
 
+        event.preventDefault();
+
         // prevent the focus lose
         return false;
     }
@@ -162,6 +175,9 @@ export class RequestCardComponent implements OnInit {
 
     addReqest() {
         if (this.validateRequest()) {
+            let reqBody = this.getSelectedBodyOption();
+            this.request.body = reqBody;
+
             // In case the request is in edit mode.
             if (this.selectedRequest) {
                 this.copyRequest(this.selectedRequest, this.request)

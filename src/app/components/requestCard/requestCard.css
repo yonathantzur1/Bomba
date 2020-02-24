@@ -8,6 +8,10 @@
     background-color: rgba(0,0,0,.35);
 }
 
+input, select {
+    font-size: 14px;
+}
+
 .card-container {
     position: fixed;
     width: 600px;
@@ -64,7 +68,7 @@
 }
 
 .method-select {
-    width: 90%;
+    width: 80%;
     display: inline-block;
 }
 

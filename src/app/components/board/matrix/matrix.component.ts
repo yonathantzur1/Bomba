@@ -15,7 +15,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     container: HTMLElement;
     cellSize: number = 150;
     minScrollCells: number;
-    matrix: Array<Array<Request>> = [[null]];
+    matrix: Array<Array<Request>> = [[new Request(true)]];
 
     eventsIds: Array<string> = [];
 
@@ -40,7 +40,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     addCol(i: number) {
         this.removePlusHoverBackground();
-        this.matrix[i].push(null);
+        this.matrix[i].push(new Request(true));
         let currentColumnsAmount = this.matrix[i].length;
 
         setTimeout(() => {
@@ -61,7 +61,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     addRow() {
         this.removePlusHoverBackground();
-        this.matrix.push([null]);
+        this.matrix.push([new Request(true)]);
 
         setTimeout(() => {
             this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;

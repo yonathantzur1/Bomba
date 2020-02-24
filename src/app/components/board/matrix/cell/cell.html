@@ -1,8 +1,8 @@
-<div id="cell" [ngClass]="{'clickable': request}">
+<div id="cell">
     <div class="body">
         <div class="head">
         </div>
-        <div class="cell-index" *ngIf="!request">{{index}}</div>
-        <div *ngIf="request">{{request.name}}</div>
+        <div class="cell-index" *ngIf="request.isEmpty">{{index}}</div>
+        <div *ngIf="!request.isEmpty">{{request.name}}</div>
     </div>
 </div>
