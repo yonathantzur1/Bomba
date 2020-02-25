@@ -25,8 +25,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.matrix[cellIndex[0]][cellIndex[1]] = Object.assign({}, data.request);
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.UNMARKED_MATRIX_CELLS, () => {
-            this.unmarkedAllCells();
+        eventService.register(EVENT_TYPE.REMOVE_REQUEST, (position: any) => {
+            this.matrix[position.row][position.col] = new Request(true);
         }, this.eventsIds);
     }
 
@@ -77,17 +77,19 @@ export class MatrixComponent implements OnInit, OnDestroy {
         }, 0);
     }
 
-    markCell(i: number, j: number, value?: boolean) {
-        let request = this.matrix[i][j];
+    deleteCell(i: number, j: number) {
+        if (!this.matrix[i][j].isEmpty) {
+            return;
+        }
+        else if (this.matrix.length == 1 && this.matrix[0].length == 1) {
+            return;
+        }
 
-        request && (request.isMarked = (value != null) ? value : !request.isMarked);
-    }
+        let row = this.matrix[i];
+        row.splice(j, 1);
 
-    unmarkedAllCells() {
-        for (let i = 0; i < this.matrix.length; i++) {
-            for (let j = 0; j < this.matrix[i].length; j++) {
-                this.markCell(i, j, false);
-            }
+        if (row.length == 0) {
+            this.matrix.splice(i, 1);
         }
     }
 }

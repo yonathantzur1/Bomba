@@ -5,10 +5,8 @@
     <div id="matrix-container" class="matrix-container">
         <table>
             <tr *ngFor="let row of matrix; index as i">
-                <td id="matrix-{{i + '-' + j}}" (click)="markCell(i, j)" class="cell dropzone"
-                    [ngClass]="{'marked-cell': matrix[i][j] && matrix[i][j].isMarked}"
-                    *ngFor="let col of matrix[i]; index as j">
-                    <cell [request]="matrix[i][j]" [index]="j + 1"></cell>
+                <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
+                    <cell [request]="matrix[i][j]" [row]="i" [col]="j" (dblclick)="deleteCell(i, j)"></cell>
                 </td>
                 <td class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">

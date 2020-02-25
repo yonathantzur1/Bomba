@@ -1,8 +1,11 @@
 <div id="cell">
+    <i *ngIf="!request.isEmpty" (click)="deleteRequest()" class="fas fa-times delete-icon"></i>
     <div class="body">
-        <div class="head">
-        </div>
-        <div class="cell-index" *ngIf="request.isEmpty">{{index}}</div>
+        <div class="cell-index" *ngIf="request.isEmpty">{{col + 1}}</div>
         <div *ngIf="!request.isEmpty">{{request.name}}</div>
+    </div>
+    <div *ngIf="!request.isEmpty" class="control-sector">
+        <input class="amount-input form-control" [(ngModel)]="request.amount" type="number" value="1" min="0"
+            max="9999">
     </div>
 </div>

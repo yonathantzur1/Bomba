@@ -4,17 +4,24 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 
 export class Request {
     id: string;
-    name: string = "";
+    name: string;
     method: string;
-    url: string = "";
-    body: Body = new Body(BODY_TYPE.JSON, true);
-    isMarked: boolean = false;
+    url: string;
+    body: Body;
+    amount: number;
     isEmpty: boolean;
 
     // Create random guid for request.
     constructor(isEmpty?: boolean) {
         this.isEmpty = !!isEmpty;
-        (!this.isEmpty) && (this.id = this.generateGuid());
+
+        if (!this.isEmpty) {
+            this.id = this.generateGuid();
+            this.name = "";
+            this.url = "";
+            this.body = new Body(BODY_TYPE.JSON, true);
+            this.amount = 1;
+        }
     }
 
     private generateGuid(): string {
