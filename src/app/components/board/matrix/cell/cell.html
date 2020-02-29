@@ -1,10 +1,9 @@
 <div id="cell">
-    <div class="body">
-        <div class="cell-index" *ngIf="request.isEmpty">{{col + 1}}</div>
-        <div *ngIf="!request.isEmpty">{{request.name}}</div>
+    <div class="body" [ngSwitch]="request.isEmpty">
+        <div *ngSwitchCase="true" class="cell-index">{{col + 1}}</div>
+        <div *ngSwitchCase="false" class="req-name" [title]="request.name">{{request.name}}</div>
     </div>
     <div *ngIf="!request.isEmpty" class="control-sector">
-        <input class="amount-input form-control" [(ngModel)]="request.amount" type="number" value="1" min="0"
-            max="9999">
+        <input type="number" class="amount-input form-control" [(ngModel)]="request.amount" min="1" max="9999">
     </div>
 </div>

@@ -8,7 +8,8 @@
             <tr *ngFor="let row of matrix; index as i">
                 <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
                     <cell [request]="matrix[i][j]" [row]="i" [col]="j"></cell>
-                    <i *ngIf="!isLastCellOnMatrix()" (click)="deleteCell(i, j)" class="fas fa-times delete-cell"></i>
+                    <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty" (click)="deleteCell(i, j)"
+                        class="fas fa-times delete-cell"></i>
                 </td>
                 <td class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">

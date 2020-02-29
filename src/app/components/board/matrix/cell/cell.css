@@ -18,6 +18,12 @@
     font-size: 16px;
 }
 
+.req-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .control-sector {
     width: 100%;
     position: absolute;
