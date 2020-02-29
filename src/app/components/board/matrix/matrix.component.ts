@@ -24,10 +24,6 @@ export class MatrixComponent implements OnInit, OnDestroy {
             let cellIndex = data.cellIndex;
             this.matrix[cellIndex[0]][cellIndex[1]] = Object.assign({}, data.request);
         }, this.eventsIds);
-
-        eventService.register(EVENT_TYPE.REMOVE_REQUEST, (position: any) => {
-            this.matrix[position.row][position.col] = new Request(true);
-        }, this.eventsIds);
     }
 
     ngOnInit() {
@@ -79,9 +75,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     deleteCell(i: number, j: number) {
         if (!this.matrix[i][j].isEmpty) {
+            this.matrix[i][j] = new Request(true);
             return;
         }
-        else if (this.matrix.length == 1 && this.matrix[0].length == 1) {
+        else if (this.isLastCellOnMatrix()) {
             return;
         }
 
@@ -90,6 +87,21 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
         if (row.length == 0) {
             this.matrix.splice(i, 1);
+        }
+    }
+
+    isLastCellOnMatrix(): boolean {
+        return (this.matrix.length == 1 && this.matrix[0].length == 1);
+    }
+
+    compressMatrix() {
+        // Scan matrix on reverse order and delete empty cells.
+        for (let i = this.matrix.length - 1; i >= 0; i--) {
+            for (let j = this.matrix[i].length - 1; j >= 0; j--) {
+                if (this.matrix[i][j].isEmpty) {
+                    this.deleteCell(i, j);
+                }
+            }
         }
     }
 }

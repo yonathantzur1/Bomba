@@ -18,8 +18,9 @@
 }
 
 .cell {
+    position: relative;
     border: 1px dashed black;
-    min-width: 150px;
+    width: 150px;
     height: 150px;
     text-align: center;
     transition: background-color 0.3s;
@@ -58,4 +59,23 @@
 .drop-active {
     border-width: 2px;
     border-color: #353535;
+}
+
+.delete-cell {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.delete-cell:hover {
+    color: #656565;
+}
+
+.compress-icon {
+    position: absolute;
+    left: 18px;
+    font-size: 18px;
+    cursor: pointer;
 }

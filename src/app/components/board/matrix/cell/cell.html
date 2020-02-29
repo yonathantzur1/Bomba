@@ -1,5 +1,4 @@
 <div id="cell">
-    <i *ngIf="!request.isEmpty" (click)="deleteRequest()" class="fas fa-times delete-icon"></i>
     <div class="body">
         <div class="cell-index" *ngIf="request.isEmpty">{{col + 1}}</div>
         <div *ngIf="!request.isEmpty">{{request.name}}</div>
