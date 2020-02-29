@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
-import interact from 'interactjs';
+declare let interact: any;
 
 @Component({
     selector: 'board',
