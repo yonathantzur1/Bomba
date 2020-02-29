@@ -23,7 +23,7 @@
     "bootstrap-material-design": "^4.1.2",
     "express": "^4.17.1",
     "hover.css": "^2.3.2",
-    "interactjs": "^1.8.5",
+    "interactjs": "^1.8.4",
     "jquery": "^3.4.1",
     "js-sha512": "^0.8.0",
     "jsonwebtoken": "^8.5.1",
