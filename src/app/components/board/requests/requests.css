@@ -62,14 +62,22 @@
     text-align: center;
 }
 
-.plus-icon-container {
+.top-icon {
+    font-size: 22px;
     cursor: pointer;
     position: absolute;
-    right: 16px;
-    font-size: 22px;
 }
 
-.plus-icon-container:hover {
+.plus-icon {
+    right: 16px;
+}
+
+.settings-icon {
+    left: 16px;
+    font-size: 20px !important;
+}
+
+.top-icon:hover {
     color: #656565;
 }
 

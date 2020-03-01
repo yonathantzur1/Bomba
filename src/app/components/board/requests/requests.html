@@ -1,9 +1,9 @@
 <div id="requests">
     <div class="cards-top">
+        <i class="fas fa-cog top-icon settings-icon"></i>
         <span>Requests</span>
-        <div *ngIf="requestCards.length > 0" class="plus-icon-container" (click)="isShowNewRequestCard=true;">
-            <i class="far fa-plus-square"></i>
-        </div>
+        <i *ngIf="requestCards.length > 0" class="far fa-plus-square top-icon plus-icon"
+            (click)="isShowNewRequestCard=true;"></i>
     </div>
     <div class="cards-container">
         <div id="card-{{i}}" class="card draggable" (click)="openRequestEdit(card)"
