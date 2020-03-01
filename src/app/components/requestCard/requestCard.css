@@ -82,6 +82,6 @@ input, select {
     font-size: 11px;
     position: absolute;
     color: var(--microtext-color) !important;
-    line-height: 15px;
+    line-height: 16px;
     left: 0;
 }
