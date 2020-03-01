@@ -1,9 +1,5 @@
 <div id="requestCard">
-    <card [width]="650" [height]="450">
-        <div class="top-sector">
-            <i (click)="closeWindow()" class="close-icon fas fa-times hvr-grow"></i>
-            <span class="title">{{request.name || "New Request"}}</span>
-        </div>
+    <card [title]="request.name || 'New Request'" [width]="650" [height]="450">
         <div class="body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">

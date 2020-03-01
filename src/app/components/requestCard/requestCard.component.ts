@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
@@ -99,10 +99,6 @@ export class RequestCardComponent implements OnInit {
         this.bodyOptions.push(new Body(BODY_TYPE.TEXT, false));
     }
 
-    closeWindow() {
-        this.eventService.emit(EVENT_TYPE.CLOSE_REQUEST_CARD);
-    }
-
     getSelectedBodyOption(): Body {
         return this.bodyOptions.find((type: Body) => {
             return type.isChecked;
@@ -193,7 +189,7 @@ export class RequestCardComponent implements OnInit {
                 this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD, this.request);
             }
 
-            this.closeWindow();
+            this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
         }
     }
 
@@ -205,13 +201,5 @@ export class RequestCardComponent implements OnInit {
 
     hideMicrotext(id: string) {
         this.microtextService.hideMicrotext(id);
-    }
-
-    @HostListener('document:keyup', ['$event'])
-    KeyPress(event: any) {
-        // In case of pressing escape.
-        if (event.code == "Escape") {
-            this.closeWindow();
-        }
     }
 }

@@ -10,7 +10,8 @@ import { Request } from '../../requestCard/requestCard.component'
 })
 
 export class RequestsComponent implements OnDestroy {
-    isShowNewRequestCard: boolean = false;
+    isShowRequestCard: boolean = false;
+    isShowRequestSettings: boolean = false;
     requestCards: Array<Request> = [];
     selectedRequest: Request;
     eventsIds: Array<string> = [];
@@ -20,8 +21,9 @@ export class RequestsComponent implements OnDestroy {
             this.requestCards.push(card);
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.CLOSE_REQUEST_CARD, () => {
-            this.isShowNewRequestCard = false;
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.isShowRequestCard = false;
+            this.isShowRequestSettings = false;
             this.selectedRequest = null;
         }, this.eventsIds);
 
@@ -58,7 +60,7 @@ export class RequestsComponent implements OnDestroy {
 
     openRequestEdit(requset: Request) {
         this.selectedRequest = requset;
-        this.isShowNewRequestCard = true;
+        this.isShowRequestCard = true;
     }
 
 }
