@@ -8,7 +8,9 @@ import { AppComponent } from '../../components/app/app.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
 import { CellComponent } from '../../components/board/matrix/cell/cell.component';
+import { CardComponent } from '../../components/card/card.component';
 import { RequestCardComponent } from '../../components/requestCard/requestCard.component';
+import { RequestSettingsComponent } from '../../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../../components/board/requests/requests.component';
 
 // Global Services
@@ -31,7 +33,9 @@ import { Routing } from '../../routes/app.routing';
     BoardComponent,
     MatrixComponent,
     CellComponent,
+    CardComponent,
     RequestCardComponent,
+    RequestSettingsComponent,
     RequestsComponent
   ],
   providers: [

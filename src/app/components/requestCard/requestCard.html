@@ -1,6 +1,5 @@
-<div id="card">
-    <div class="overlay"></div>
-    <div class="card-container">
+<div id="requestCard">
+    <card [width]="650" [height]="450">
         <div class="top-sector">
             <i (click)="closeWindow()" class="close-icon fas fa-times hvr-grow"></i>
             <span class="title">{{request.name || "New Request"}}</span>
@@ -49,5 +48,5 @@
             </form>
         </div>
         <i (click)="addReqest()" class="save-icon far fa-arrow-alt-circle-right"></i>
-    </div>
+    </card>
 </div>
