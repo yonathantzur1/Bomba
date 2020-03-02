@@ -35,6 +35,11 @@ a, a:hover, a:focus {
     border-color: #7882b6 !important;
 }
 
+input, select {
+    font-size: 14px !important;
+    padding: 3px !important;
+}
+
 /* END OVERRIDE BOOTSTRAP MATERIAL CSS */
 
 :root {

@@ -1,3 +1,12 @@
 <div id="requestSettings">
-    <card [title]="'Default Settings'" [width]="350" [height]="450"></card>
+    <card [title]="'Request Settings'" [width]="350" [height]="450">
+        <div class="body">
+            <form style="position: relative;" autocomplete="off">
+                <div class="form-group">
+                    <input id="url" name="url" placeholder="Default URL" type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+        <i class="save-icon far fa-arrow-alt-circle-right"></i>
+    </card>
 </div>
