@@ -1,0 +1,27 @@
+<div id="alert" (keyup)="KeyPress($event)">
+    <div class="background-container">
+        <div class="box-container">
+            <div class="title">
+                {{alertService.title}}
+            </div>
+            <div class="body">
+                <div class="alert-text" *ngIf="alertService.text" [innerHtml]="alertService.text"></div>
+                <div class="alert-img-container" *ngIf="alertService.image">
+                    <img class="alert-img" [src]="alertService.image">
+                </div>
+            </div>
+            <div class="btns-sector">
+                <div class="alert-btn confirm-btn"
+                    [ngClass]="{'danger-btn' : alertService.type == ALERT_TYPE.DANGER || alertService.type == ALERT_TYPE.WARNING}"
+                    (click)="confirmClick()">
+                    <span *ngIf="!alertService.isLoading">{{alertService.confirmBtnText}}</span>
+                    <div class="mini-loader alert-loader" *ngIf="alertService.isLoading">
+                        <div class="mini-loader-spinner"></div>
+                    </div>
+                </div>
+                <div class="alert-btn close-btn" *ngIf="alertService.showCancelButton" (click)="closeClick()">
+                    {{alertService.closeBtnText}}</div>
+            </div>
+        </div>
+    </div>
+</div>

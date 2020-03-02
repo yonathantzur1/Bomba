@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../../components/app/app.component';
+import { AlertComponent } from '../../components/alert/alert.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
 import { CellComponent } from '../../components/board/matrix/cell/cell.component';
@@ -15,6 +16,7 @@ import { RequestsComponent } from '../../components/board/requests/requests.comp
 
 // Global Services
 import { EventService } from '../../services/global/event.service';
+import { AlertService } from '../../services/global/alert.service';
 import { MicrotextService } from '../../services/global/microtext.service';
 
 // Routing
@@ -30,6 +32,7 @@ import { Routing } from '../../routes/app.routing';
   ],
   declarations: [
     AppComponent,
+    AlertComponent,
     BoardComponent,
     MatrixComponent,
     CellComponent,
@@ -40,6 +43,7 @@ import { Routing } from '../../routes/app.routing';
   ],
   providers: [
     EventService,
+    AlertService,
     MicrotextService
   ],
   bootstrap: [AppComponent]
