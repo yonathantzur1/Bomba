@@ -119,4 +119,20 @@ export class MatrixComponent implements OnInit, OnDestroy {
             }
         }
     }
+
+    isMatrixNotEmpty() {
+        for (let i = 0; i < this.matrix.length; i++) {
+            for (let j = 0; j < this.matrix[i].length; j++) {
+                if (this.matrix[i][j].isEmpty == false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    sendRequests() {
+        
+    }
 }
