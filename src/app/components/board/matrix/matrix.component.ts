@@ -16,13 +16,23 @@ export class MatrixComponent implements OnInit, OnDestroy {
     cellSize: number = 150;
     minScrollCells: number;
     matrix: Array<Array<Request>> = [[new Request(true)]];
+    isShowRequestCard: boolean = false;
+    selectedRequest: Request;
 
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
-            let cellIndex = data.cellIndex;
-            this.matrix[cellIndex[0]][cellIndex[1]] = Object.assign({}, data.request);
+            let rowIndex = data.cellIndex[0];
+            let colIndex = data.cellIndex[1];
+            let matrixRequest: Request = Object.assign({}, data.request);
+            matrixRequest.id = data.request.generateGuid();
+            this.matrix[rowIndex][colIndex] = matrixRequest;
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.isShowRequestCard = false;
+            this.selectedRequest = null;
         }, this.eventsIds);
     }
 
@@ -71,6 +81,11 @@ export class MatrixComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             plusSectorElement.css("background-color", "");
         }, 0);
+    }
+
+    openRequestEdit(requset: Request) {
+        this.selectedRequest = requset;
+        this.isShowRequestCard = true;
     }
 
     deleteCell(i: number, j: number) {

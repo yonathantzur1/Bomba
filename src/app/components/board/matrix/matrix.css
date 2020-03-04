@@ -59,12 +59,20 @@
     border-color: #353535;
 }
 
-.delete-cell {
+.cell-icon {
     position: absolute;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.info-cell {
+    left: 10px;
+    bottom: 10px;
+}
+
+.delete-cell {
     left: 10px;
     top: 10px;
-    cursor: pointer;
-    font-size: 13px;
 }
 
 .delete-cell:hover {
