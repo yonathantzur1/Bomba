@@ -30,8 +30,8 @@ export class AlertService {
         this.isLoading = false;
         this.showCancelButton = true;
         this.text = "";
-        this.confirmBtnText = "אישור";
-        this.closeBtnText = "ביטול";
+        this.confirmBtnText = "Confirm";
+        this.closeBtnText = "Cancel";
     }
 
     alert(alt: any) {
