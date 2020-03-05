@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatrixService } from '../../../services/matrix.service';
 import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
@@ -8,7 +9,7 @@ declare let $: any;
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
-    providers: [],
+    providers: [MatrixService],
     styleUrls: ['./matrix.css']
 })
 
@@ -23,7 +24,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
-         private alertService: AlertService) {
+        private alertService: AlertService,
+        private matrixService: MatrixService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let rowIndex = data.cellIndex[0];
             let colIndex = data.cellIndex[1];
@@ -140,7 +142,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
             text: "Start Bomba requests?",
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
-                
+                this.matrixService.sendRequests(this.matrix);
             }
         });
     }

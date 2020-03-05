@@ -1,3 +1,3 @@
 module.exports = (app) => {
-    app.use('/api/sender', require('./sender'));
+    app.use('/api/matrix', require('./matrix'));
 }

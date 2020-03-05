@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const sender = require('../BL/sender');
+const matrix = require('../BL/matrix');
 
 router.post('/sendRequests', (req, res) => {
-    sender.sendRequestsMatrix(req.body.requestsMatrix);
+    matrix.sendRequestsMatrix(req.body.matrix);
     res.end();
 });
 

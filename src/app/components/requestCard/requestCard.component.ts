@@ -2,10 +2,17 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
+enum METHOD {
+    GET = "GET",
+    POST = "POST",
+    PUT = "PUT",
+    DELETE = "DELETE"
+}
+
 export class Request {
     id: string;
     name: string;
-    method: string;
+    method: METHOD;
     url: string;
     body: Body;
     amount: number;
@@ -19,6 +26,7 @@ export class Request {
             this.id = this.generateGuid();
             this.name = "";
             this.url = "";
+            this.method = METHOD.GET;
             this.body = new Body(BODY_TYPE.JSON, true);
             this.amount = 1;
         }
@@ -61,10 +69,9 @@ export class RequestCardComponent implements OnInit {
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
     bodyOptions: Array<Body> = [];
-
     bodyType: any = BODY_TYPE;
-
     formatStr: string = "{  }";
+    method: any = METHOD;
 
     @Input()
     selectedRequest: Request;
