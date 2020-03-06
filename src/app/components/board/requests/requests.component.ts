@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { Request } from '../../requestCard/requestCard.component'
+import { Request, METHOD } from '../../requestCard/requestCard.component'
 
 @Component({
     selector: 'requests',
@@ -33,20 +33,26 @@ export class RequestsComponent implements OnDestroy {
         }, this.eventsIds);
 
         let req1: Request = new Request();
-        req1.name = "Check Hierarchy 1";
-        req1.url = "127.0.0.1:9000/Query";
+        req1.name = "Test Get";
+        req1.url = "127.0.0.1:5000/testGet?time=1000&success=true";
+        req1.method = METHOD.GET;
 
         let req2: Request = new Request();
-        req2.name = "Check Hierarchy 2";
-        req2.url = "127.0.0.1:9000/Query";
+        req2.name = "Test Post";
+        req2.url = "127.0.0.1:5000/testPost";
+        req2.method = METHOD.POST;
+        req2.body.template = '{"time": 1000, "success": true}';
 
         let req3: Request = new Request();
-        req3.name = "Check Hierarchy 3";
-        req3.url = "127.0.0.1:9000/Query";
+        req3.name = "Test Put";
+        req3.url = "127.0.0.1:5000/testPut";
+        req3.method = METHOD.PUT;
+        req3.body.template = '{"time": 1000, "success": true}';
 
         let req4: Request = new Request();
-        req4.name = "Check Hierarchy 4";
-        req4.url = "127.0.0.1:9000/Query";
+        req4.name = "Test Delete";
+        req4.url = "127.0.0.1:5000/testDelete?time=1000&success=true";
+        req4.method = METHOD.DELETE;
 
         this.requestCards.push(req1);
         this.requestCards.push(req2);

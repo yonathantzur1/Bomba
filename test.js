@@ -26,7 +26,7 @@ app.get('/testGet', (req, res) => {
 
 app.post('/testPost', (req, res) => {
     setTimeout(() => {
-        if (req.body.success == "true") {
+        if (req.body.success == "true" || req.body.success == true) {
             console.log("post - success");
             res.send("success");
         }
@@ -39,7 +39,7 @@ app.post('/testPost', (req, res) => {
 
 app.put('/testPut', (req, res) => {
     setTimeout(() => {
-        if (req.body.success == "true") {
+        if (req.body.success == "true" || req.body.success == true) {
             console.log("put - success");
             res.send("success");
         }

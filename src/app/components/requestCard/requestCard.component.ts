@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
-enum METHOD {
+export enum METHOD {
     GET = "GET",
     POST = "POST",
     PUT = "PUT",
@@ -102,8 +102,17 @@ export class RequestCardComponent implements OnInit {
 
     ngOnInit() {
         this.request = this.selectedRequest ? Object.assign({}, this.selectedRequest) : new Request();
-        this.bodyOptions.push(Object.assign({}, this.request.body));
-        this.bodyOptions.push(new Body(BODY_TYPE.TEXT, false));
+
+        Object.keys(BODY_TYPE).forEach(type => {
+            if (this.request.body.type == BODY_TYPE[type]) {
+                this.bodyOptions.push(Object.assign({}, this.request.body));
+            }
+            else {
+                this.bodyOptions.push(new Body(BODY_TYPE[type], false));
+            }
+        });
+
+        this.formatJson(true);
     }
 
     getSelectedBodyOption(): Body {
@@ -185,9 +194,6 @@ export class RequestCardComponent implements OnInit {
 
     addReqest() {
         if (this.validateRequest()) {
-            let reqBody = this.getSelectedBodyOption();
-            this.request.body = reqBody;
-
             // In case the request is in edit mode.
             if (this.selectedRequest) {
                 this.copyRequest(this.selectedRequest, this.request)

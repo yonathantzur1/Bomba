@@ -139,9 +139,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
     sendRequests() {
         this.alertService.alert({
             title: "Send Requests",
-            text: "Start Bomba requests?",
+            text: "The action will compress the matrix and start bombing all requests.",
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
+                this.compressMatrix();
                 this.matrixService.sendRequests(this.matrix);
             }
         });

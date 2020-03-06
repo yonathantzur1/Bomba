@@ -16,20 +16,52 @@ module.exports = {
     }
 }
 
+function getRequestUrlData(url) {
+    let data = {};
+    let isHttps = isHttpsRequst(url);
+    url = getUrlWithoutProtocol(url);
+    let portIndex = url.indexOf(":");
+    let routeIndex = url.indexOf("/");
+    let portSplit = url.split(":");
+    let routeSplit = url.split("/");
+
+    if (portIndex == -1) {
+        data.ip = routeSplit[0];
+        data.port = isHttps ? 443 : 80;
+    }
+    else {
+        data.ip = portSplit[0];
+        data.port = routeSplit[0].substring(data.ip.length + 1);
+    }
+
+    data.path = (routeIndex != -1) ? url.substring(routeIndex) : "/";
+
+    if (isHttps) {
+        data.ip = "https://" + data.ip;
+    }
+
+    return data;
+}
+
 function buildSendObject(requestData, xIndex, yIndex) {
+    let urlData = getRequestUrlData(requestData.url);
+
     let sendObject = {
         options: {
-            hostname: requestData.ip,
-            port: requestData.port,
-            path: requestData.url,
+            hostname: urlData.ip,
+            port: urlData.port,
+            path: urlData.path,
             method: requestData.method
         },
         position: { xIndex, yIndex }
     }
 
-    if (requestData.data) {
-        sendObject.options.headers = { 'Content-Type': 'application/json' };
-        sendObject.data = JSON.stringify(requestData.data);
+    if (requestData.body && requestData.body.template) {
+        if (requestData.body.type == "json") {
+            sendObject.options.headers = { 'Content-Type': 'application/json' };
+        }
+        
+        sendObject.data = requestData.body.template;
     }
 
     return sendObject;
@@ -56,14 +88,9 @@ function isHttpsRequst(url) {
 
 function getUrlWithoutProtocol(url) {
     const protocolSign = "://";
-    const protocolIndex = url.indexOf(protocolSign);
+    const protocolSplit = url.split(protocolSign);
 
-    if (protocolIndex == -1) {
-        return url;
-    }
-    else {
-        return url.substring(protocolIndex + protocolSign.length, url.length);
-    }
+    return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
 function sendRequest(options, data) {
