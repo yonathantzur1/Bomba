@@ -7,5 +7,5 @@ import { AlertService } from 'src/app/services/global/alert.service';
 })
 
 export class AppComponent {
-    constructor(private alertService: AlertService) { }
+    constructor(public alertService: AlertService) { }
 }

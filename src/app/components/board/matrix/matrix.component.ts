@@ -24,7 +24,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
-        private alertService: AlertService,
+        public alertService: AlertService,
         private matrixService: MatrixService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let rowIndex = data.cellIndex[0];
