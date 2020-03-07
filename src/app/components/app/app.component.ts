@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertService } from 'src/app/services/global/alert.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 @Component({
     selector: 'app',
@@ -7,5 +8,6 @@ import { AlertService } from 'src/app/services/global/alert.service';
 })
 
 export class AppComponent {
-    constructor(public alertService: AlertService) { }
+    constructor(public alertService: AlertService,
+        public snackbarService: SnackbarService) { }
 }

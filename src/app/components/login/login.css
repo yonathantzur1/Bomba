@@ -1,0 +1,137 @@
+.login-head-container {
+    position: relative;
+    text-align: center;
+    user-select: none;
+    margin-top: 15px;
+}
+
+.login-head-icon {
+    height: 70px;
+    width: 70px;
+    margin-top: -20px;
+    margin-left: 10px;
+}
+
+.login-label {
+    font-family: Mona Shark;
+    color: #343a40;
+    font-size: 65px;
+    top: 20px;
+    position: relative;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.user-input {
+    margin-bottom: 5px;
+}
+
+.card-container {
+    margin: auto;
+    margin-top: 25px;
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 0px 0px 5px 0px #828282;
+}
+
+.head-container {    
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #5e5e5f;
+    user-select: none;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.title-text {
+    font-size: 22px;    
+}
+
+.title-icon {
+    font-size: 26px;
+    margin-right: 3px;    
+}
+
+.microtext {
+    font-size: 11px;
+    position: absolute;
+    color: var(--microtext-color) !important;
+    line-height: 5px;
+    left: 0;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -35px;
+    margin-left: -35px;
+    z-index: 999;    
+    border-radius: 50%;
+}
+
+form {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.form-group {
+    padding-bottom: 10px;
+    margin: 28px 0 0 0;
+    position: relative;
+}
+
+.card-container {
+    padding: 5px 25px 5px 25px;
+}
+
+.login-btn {
+    border-style: solid;
+    border-width: 1px;
+    background-color: #007bff;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.login-btn:hover, .login-btn:focus {
+    background-color: #007bff !important;
+    border-color: #7882b6 !important;
+}
+
+.options {
+    margin-top: 5px;
+    user-select: none;
+    text-align: right;
+}
+
+.option-btn {
+    cursor: pointer;
+    font-size: 12px;
+    display: block;
+    color: #4f4f4f !important;
+}
+
+.option-btn:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-icon {
+    font-size: 48px;
+    position: absolute;
+    top: 15px;
+    padding-right: 15px;
+}
+
+.microtext-align {
+    right: 0px;
+}

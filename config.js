@@ -6,6 +6,38 @@ module.exports = {
     db: {
         name: "bomba",
         connectionString: process.env.DEV_CONNECTION_STRING,
-        collections: {}
+        collections: {
+            users: "Users"
+        }
     },
+    logs: {
+        directoryName: "/logs",
+        mainLogName: "bomba.log",
+        secureLogName: "bomba.log",
+        maxLogSize: 5000000, // bytes
+        maxLogFiles: 3
+    },
+    security: {
+        jwt: {
+            secret: process.env.BOMBA_JWT_SECRET,
+            options: { expiresIn: '90d' } // 90 days
+        },
+        encrypt: {
+            algorithm: "aes192",
+            secret: process.env.BOMBA_ENCRYPT_SECRET,
+            salt: process.env.BOMBA_ENCRYPT_SALT
+        },
+        token: {
+            cookieName: "tk",
+            uidCookieName: "uid",
+            maxAge: 90 * 24 * 60 * 60 * 1000 // 90 days
+        },
+        limitter: {
+            freeRetries: 5,
+            waitTime: 1 * 60 * 1000, // 1 minutes
+        },
+        password: {
+            saltSize: 8
+        }
+    }
 }
