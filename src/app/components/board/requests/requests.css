@@ -12,7 +12,7 @@
     position: relative;
     overflow: auto;
     height: calc(100% - 30px);
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 .card-sector {
