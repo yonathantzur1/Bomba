@@ -53,14 +53,15 @@ function buildSendObject(requestData, xIndex, yIndex) {
             path: urlData.path,
             method: requestData.method
         },
-        position: { xIndex, yIndex }
+        position: { xIndex, yIndex },
+        amount: requestData.amount
     }
 
     if (requestData.body && requestData.body.template) {
         if (requestData.body.type == "json") {
             sendObject.options.headers = { 'Content-Type': 'application/json' };
         }
-        
+
         sendObject.data = requestData.body.template;
     }
 
@@ -72,12 +73,14 @@ async function sendMultiRequests(sendObjects) {
         const sendObject = sendObjects[i];
         const position = sendObject.position;
 
-        try {
-            let response = await sendRequest(sendObject.options, sendObject.data);
-            // TODO: report client request success.
-        }
-        catch (e) {
-            // TODO: report client request failed.
+        for (let i = 0; i < sendObject.amount; i++) {
+            try {
+                let response = await sendRequest(sendObject.options, sendObject.data);
+                // TODO: report client request success.   
+            }
+            catch (e) {
+                // TODO: report client request failed.
+            }
         }
     }
 }
