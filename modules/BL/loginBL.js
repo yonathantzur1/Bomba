@@ -1,12 +1,19 @@
-const DAL = require('../../DAL');
-const config = require('../../../config');
+const DAL = require('../DAL');
+const config = require('../../config');
 const sha512 = require('js-sha512');
 
-const errorHandler = require('../../handlers/errorHandler');
+const errorHandler = require('../handlers/errorHandler');
 
 const usersCollectionName = config.db.collections.users;
 
 module.exports = {
+    async getUserById(id) {
+        let userFilter = { "_id": DAL.getObjectId(id) };
+
+        return await DAL.findOne(usersCollectionName, userFilter)
+            .catch(errorHandler.promiseError)
+    },
+
     async getUser(userAuth) {
         let userFilter = { "username": userAuth.username };
 

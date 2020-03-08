@@ -11,8 +11,13 @@ import { LoginService } from '../../services/login.service';
 declare let $: any;
 
 export class User {
-    username: string = '';
-    password: string = '';
+    username: string;
+    password: string;
+
+    constructor() {
+        this.username = "";
+        this.password = "";
+    }
 }
 
 @Component({
@@ -90,11 +95,11 @@ export class LoginComponent {
                 else {
                     // In case the user is locked via brute attack.
                     if (result.lock) {
-                        let lockTimeStr = result.lock + ((result.lock == 1) ? " minute" :  " minutes");
+                        let lockTimeStr = result.lock + ((result.lock == 1) ? " minute" : " minutes");
                         this.snackbarService.snackbar("The account is locked for " + lockTimeStr);
                     }
                     else {
-                        // Show the loader again because the gurd validates the token.
+                        // Show the loader again because the guard validates the token.
                         this.snackbarService.hideSnackbar();
                         this.isLoading = true;
                         this.router.navigateByUrl('');

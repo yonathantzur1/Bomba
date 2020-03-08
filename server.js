@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const config = require('./config');
 
 process.on('uncaughtException', err => {
@@ -21,6 +22,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(express.static('./'));
+
+require('./modules/sockets/socket')(io)
 
 // Import routes.
 require('./modules/routes/main')(app);

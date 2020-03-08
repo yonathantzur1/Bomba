@@ -20,6 +20,13 @@ schemas[REST.POST] = {
                 username: joi.string().required(),
                 password: joi.string().required()
             }
+        },
+        "register": {
+            "register": {
+                username: joi.string().required(),
+                password: joi.string().required(),
+                isAdmin: joi.boolean().required()
+            }
         }
     }
 };
