@@ -21,6 +21,7 @@ export class LoginGuard implements CanActivate {
             else {
                 this.authService.isUserOnSession().then(result => {
                     if (!result) {
+                        this.authService.deleteClientAuth();
                         observer.next(true);
                     }
                     else {

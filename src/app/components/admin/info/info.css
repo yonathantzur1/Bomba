@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 10px 25px 15px 25px;
+    box-shadow: 2px 2px 8px 1px #afafaf;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    user-select: none;
+}
+
+.title {
+    text-align: left;
+    font-size: 24px;
+    border-bottom: 0.5px solid gray;
+    padding-bottom: 5px;
+}
+
+.data {
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+}
+
+info-card {
+    width: 100%;
+}

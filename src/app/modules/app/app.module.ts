@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from '../../components/app/app.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { AdminComponent } from '../../components/admin/admin.component';
+import { InfoComponent } from '../../components/admin/info/info.component';
+import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../../components/admin/register/register.component';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
@@ -56,6 +58,8 @@ import { Routing } from '../../routes/app.routing';
     LoaderSpinnerComponent,
     LoginComponent,
     AdminComponent,
+    InfoComponent,
+    InfoCardComponent,
     RegisterComponent,
     BoardComponent,
     MatrixComponent,

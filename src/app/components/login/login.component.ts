@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService } from '../../services/global/event.service';
@@ -7,6 +7,7 @@ import { SnackbarService } from '../../services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from '../../services/global/microtext.service';
 
 import { LoginService } from '../../services/login.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare let $: any;
 
@@ -27,7 +28,7 @@ export class User {
     styleUrls: ['./login.css']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     user: User = new User();
     isLoading: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
@@ -37,7 +38,8 @@ export class LoginComponent {
         public snackbarService: SnackbarService,
         private microtextService: MicrotextService,
         public eventService: EventService,
-        private loginService: LoginService) {
+        private loginService: LoginService,
+        private globalService: GlobalService) {
         this.validationFuncs = [
             {
                 isFieldValid(user: User) {
@@ -56,6 +58,10 @@ export class LoginComponent {
                 inputId: "login-password"
             }
         ];
+    }
+
+    ngOnInit() {
+        this.globalService.resetGlobalVariables();
     }
 
     // Login user and redirect him to main page.

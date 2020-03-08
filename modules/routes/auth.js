@@ -27,4 +27,9 @@ router.get('/isUserOnSession', (req, res) => {
     }
 });
 
+router.get('/deleteClientAuth', (req, res) => {
+    tokenHandler.deleteAuthCookies(res);
+    res.end();
+});
+
 module.exports = router;
