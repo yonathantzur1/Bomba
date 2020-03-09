@@ -60,9 +60,14 @@ let self = module.exports = {
         res.clearCookie(config.security.token.uidCookieName);
     },
 
+    deleteSocketFromCookie(res) {
+        res.clearCookie(config.security.token.socketCookieName);
+    },
+
     deleteAuthCookies(res) {
         this.deleteTokenFromCookie(res);
         this.deleteUidFromCookie(res);
+        this.deleteSocketFromCookie(res);
     },
 
     getTokenFromCookie(cookie) {

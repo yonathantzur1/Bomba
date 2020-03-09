@@ -30,6 +30,7 @@ module.exports = {
         token: {
             cookieName: "tk",
             uidCookieName: "uid",
+            socketCookieName: "io",
             maxAge: 90 * 24 * 60 * 60 * 1000 // 90 days
         },
         limitter: {
