@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Components
 import { AppComponent } from '../../components/app/app.component';
 import { LoginComponent } from '../../components/login/login.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AdminComponent } from '../../components/admin/admin.component';
 import { InfoComponent } from '../../components/admin/info/info.component';
 import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard.component';
