@@ -1,0 +1,49 @@
+.navbar-container {
+    width: 100%;
+    height: var(--navbar-height);
+    position: relative;
+    border-bottom: 0.5px solid #adadad;
+    padding: 0 5px;
+    user-select: none;
+}
+
+.logo-container {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+}
+
+.logo-image {
+    width: 28px;
+    height: 28px;
+}
+
+.tabs {
+    column-gap: 30px;
+    column-rule: 1px solid var(--main-text-color);
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 45px;
+    margin-top: 15px;
+}
+
+.tab {
+    font-size: 14px;
+    display: block; 
+    text-align: center;
+}
+
+.logout-container {
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.logout-text {
+    margin-right: 5px;
+}

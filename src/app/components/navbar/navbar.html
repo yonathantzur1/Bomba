@@ -1,3 +1,14 @@
 <div id="navbar">
-    
+    <div class="navbar-container">
+        <div class="logo-container">
+            <img class="logo-image" src="assets/logo/icon.png">
+        </div>
+        <div class="tabs" [ngStyle]="{'column-count': tabs.length}">
+            <a class="tab" [routerLink]="tab.url" *ngFor="let tab of tabs">{{tab.name}}</a>
+        </div>
+        <div class="logout-container" (click)="logout()">
+            <span class="logout-text">Logout</span>
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+    </div>
 </div>

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Components
 import { AppComponent } from '../../components/app/app.component';
 import { LoginComponent } from '../../components/login/login.component';
+import { HomeComponent } from '../../components/home/home.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AdminComponent } from '../../components/admin/admin.component';
 import { InfoComponent } from '../../components/admin/info/info.component';
@@ -52,12 +53,9 @@ import { Routing } from '../../routes/app.routing';
   ],
   declarations: [
     AppComponent,
-    AlertComponent,
-    SnackbarComponent,
-    LoaderDotsComponent,
-    LoaderRingsComponent,
-    LoaderSpinnerComponent,
     LoginComponent,
+    HomeComponent,
+    NavbarComponent,
     AdminComponent,
     InfoComponent,
     InfoCardComponent,
@@ -68,7 +66,12 @@ import { Routing } from '../../routes/app.routing';
     CardComponent,
     RequestCardComponent,
     RequestSettingsComponent,
-    RequestsComponent
+    RequestsComponent,
+    AlertComponent,
+    SnackbarComponent,
+    LoaderDotsComponent,
+    LoaderRingsComponent,
+    LoaderSpinnerComponent,
   ],
   providers: [
     AuthGuard,

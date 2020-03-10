@@ -7,6 +7,7 @@
     height: 100%;
     float: left;
     border-right: 1px solid #a5a5a5;
+    border-left: 0.5px solid #a5a5a5;
 }
 
 .cards-sector {
@@ -14,6 +15,7 @@
     height: 100%;
     float: right;
     position: relative;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     user-select: none;
+    border-right: 1px solid #a5a5a5;
 }
