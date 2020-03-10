@@ -77,7 +77,6 @@ export class RegisterComponent {
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.snackbarService.snackbar("Register succeeded");
                 }
             });
         }

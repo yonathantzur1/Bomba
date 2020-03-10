@@ -1,21 +1,23 @@
 #board {
     --cards-secotr-width: 345px;
+    border: 0.5px solid var(--main-border-color);
+    border-top: none;
+}
+
+.sector {
+    height: calc(100% - 20px);
 }
 
 .matrix-sector {
     width: calc(100% - var(--cards-secotr-width));
-    height: 100%;
     float: left;
-    border-right: 1px solid #a5a5a5;
-    border-left: 0.5px solid #a5a5a5;
+    border-right: 0.5px solid var(--main-border-color);
 }
 
 .cards-sector {
     width: var(--cards-secotr-width);
-    height: 100%;
     float: right;
     position: relative;
     padding-bottom: 10px;
     user-select: none;
-    border-right: 1px solid #a5a5a5;
 }

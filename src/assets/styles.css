@@ -47,6 +47,7 @@ input, select {
     --main-background-color: #eee;
     --main-text-color: #4b4b4b;
     --microtext-color: #e53935;
+    --main-border-color: #a5a5a5;
     --main-font: Rubik;
     --navbar-height: 50px;
 }

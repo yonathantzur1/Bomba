@@ -1,6 +1,10 @@
+#requests {
+    --cards-top-height: 35px;
+}
+
 .cards-top {
     font-size: 16px;
-    height: 35px;
+    height: var(--cards-top-height);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,8 +15,8 @@
 .cards-container {
     position: relative;
     overflow: auto;
-    height: calc(100% - 30px);
-    padding-bottom: 10px;
+    height: calc(100% - var(--cards-top-height));
+    padding-bottom: 15px;
 }
 
 .card-sector {
