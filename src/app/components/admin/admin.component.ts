@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { Component } from '@angular/core';
 import { InfoCard } from './info/infoCard/infoCard.component';
 
 @Component({
@@ -9,24 +8,15 @@ import { InfoCard } from './info/infoCard/infoCard.component';
     styleUrls: ['./admin.css']
 })
 
-export class AdminComponent implements OnDestroy {
+export class AdminComponent {
     usersInfoCards: Array<InfoCard>;
     statisticsInfoCards: Array<InfoCard>;
-    isShowRegister: boolean = false;
 
     eventsIds: Array<string> = [];
 
-    constructor(private eventService: EventService) {
-        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
-            this.isShowRegister = false;
-        }, this.eventsIds);
-
+    constructor() {
         this.usersInfoCards = [new InfoCard("Users", "15"), new InfoCard("Admins", "2")];
         this.statisticsInfoCards = [new InfoCard("Projects", "15")];
-    }
-
-    ngOnDestroy() {
-        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
 }

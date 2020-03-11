@@ -5,7 +5,6 @@ import { SocketService } from './socket.service';
 @Injectable()
 export class GlobalService {
     private data = {};
-    userId: string;
 
     constructor(private socketService: SocketService) { }
 
@@ -17,7 +16,6 @@ export class GlobalService {
 
     resetGlobalVariables() {
         this.socketService.deleteSocket();
-        this.userId = null;
     }
 
     setData(key, value) {

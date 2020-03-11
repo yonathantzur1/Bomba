@@ -11,7 +11,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AdminComponent } from '../../components/admin/admin.component';
 import { InfoComponent } from '../../components/admin/info/info.component';
 import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard.component';
-import { RegisterComponent } from '../../components/admin/register/register.component';
+import { RegisterComponent } from '../../components/register/register.component';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { BoardComponent } from '../../components/board/board.component';

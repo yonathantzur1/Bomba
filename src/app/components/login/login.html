@@ -29,9 +29,10 @@
 						class="col-12 btn btn-primary login-btn">Login</button>
 				</div>
 				<div class="options">
-					<span class="option-btn">Join Request</span>
+					<span (click)="isShowRegister=true;" class="option-btn">Register</span>
 				</div>
 			</div>
 		</form>
 	</div>
+	<register *ngIf="isShowRegister"></register>
 </div>

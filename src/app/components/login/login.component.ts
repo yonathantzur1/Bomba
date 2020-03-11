@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EventService } from '../../services/global/event.service';
+import { EventService, EVENT_TYPE } from '../../services/global/event.service';
 import { AlertService, ALERT_TYPE } from '../../services/global/alert.service';
 import { SnackbarService } from '../../services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from '../../services/global/microtext.service';
@@ -28,10 +28,13 @@ export class User {
     styleUrls: ['./login.css']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
     user: User = new User();
     isLoading: boolean = false;
+    isShowRegister: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
+
+    eventsIds: Array<string> = [];
 
     constructor(private router: Router,
         public alertService: AlertService,
@@ -40,6 +43,11 @@ export class LoginComponent implements OnInit {
         public eventService: EventService,
         private loginService: LoginService,
         private globalService: GlobalService) {
+
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.isShowRegister = false;
+        });
+
         this.validationFuncs = [
             {
                 isFieldValid(user: User) {
@@ -62,6 +70,10 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.globalService.resetGlobalVariables();
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     // Login user and redirect him to main page.
@@ -87,16 +99,17 @@ export class LoginComponent implements OnInit {
                 }
                 // In case the user was not found.
                 else if (result == "-1") {
-                    // this.alertService.alert({
-                    //     title: "משתמש לא קיים במערכת",
-                    //     text: "האם ברצונך להרשם?",
-                    //     type: ALERT_TYPE.INFO,
-                    //     confirmBtnText: "כן",
-                    //     cancelBtnText: "לא",
-                    //     confirmFunc: function () {
-                    //         self.router.navigateByUrl('/register');
-                    //     }
-                    // });
+                    this.alertService.alert({
+                        title: "User is not exists",
+                        text: "Would you like to register?",
+                        type: ALERT_TYPE.INFO,
+                        confirmBtnText: "Yes",
+                        cancelBtnText: "No",
+                        confirmFunc: () => {
+                            self.globalService.setData("registerUsername", self.user.username);
+                            self.isShowRegister = true;
+                        }
+                    });
                 }
                 else {
                     // In case the user is locked via brute attack.

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BasicService } from './basic.service';
 import { HttpClient } from '@angular/common/http';
 
-import { NewUser } from '../components/admin/register/register.component';
+import { User } from '../components/login/login.component';
 
 @Injectable()
 export class RegisterService extends BasicService {
@@ -12,8 +12,8 @@ export class RegisterService extends BasicService {
         super(http, "/api/register");
     }
 
-    register(newUser: NewUser) {
-        return super.post('/register', newUser);
+    register(user: User) {
+        return super.post('/register', user);
     }
 
 }

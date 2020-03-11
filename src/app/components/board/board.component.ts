@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
@@ -11,18 +11,13 @@ import interact from 'interactjs';
     styleUrls: ['./board.css']
 })
 
-export class BoardComponent implements OnInit, OnDestroy {
-    eventsIds: Array<string> = [];
+export class BoardComponent implements OnInit {
 
     constructor(private boardService: BoardService,
         private eventService: EventService) { }
 
     ngOnInit() {
         enableDragAndDrop(this);
-    }
-
-    ngOnDestroy() {
-        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     dropRequestCard(cardId: string, matrixCellId: string) {

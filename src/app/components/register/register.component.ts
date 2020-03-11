@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { RegisterService } from 'src/app/services/register.service';
 
 import { User } from 'src/app/components/login/login.component';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare let $: any;
 
@@ -18,7 +19,7 @@ declare let $: any;
     styleUrls: ['./register.css']
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
     user: User = new User();
     isLoading: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
@@ -27,6 +28,7 @@ export class RegisterComponent {
         private registerService: RegisterService,
         private microtextService: MicrotextService,
         private eventService: EventService,
+        private globalService: GlobalService,
         public snackbarService: SnackbarService) {
         this.validationFuncs = [
             {
@@ -49,6 +51,10 @@ export class RegisterComponent {
         ];
     }
 
+    ngOnInit() {
+        this.user.username = this.globalService.getData("registerUsername") || "";
+    }
+
     register() {
         if (this.microtextService.validation(this.validationFuncs, this.user)) {
             this.isLoading = true;
@@ -68,6 +74,7 @@ export class RegisterComponent {
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                    this.router.navigateByUrl("/");
                 }
             });
         }
@@ -76,5 +83,13 @@ export class RegisterComponent {
     // Hide microtext in a specific field.
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
+    }
+
+    @HostListener('document:keyup', ['$event'])
+    KeyPress(event: any) {
+        // In case of pressing escape.
+        if (event.code == "Enter") {
+            this.register();
+        }
     }
 }

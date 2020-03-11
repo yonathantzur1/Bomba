@@ -17,6 +17,7 @@ a, a:hover, a:focus {
     font-size: 14px !important;
     line-height: unset !important;
     opacity: 1;
+    user-select: none;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:focus {
