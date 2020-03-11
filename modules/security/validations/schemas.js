@@ -24,8 +24,7 @@ schemas[REST.POST] = {
         "register": {
             "register": {
                 username: joi.string().required(),
-                password: joi.string().required(),
-                isAdmin: joi.boolean().required()
+                password: joi.string().required()
             }
         }
     }

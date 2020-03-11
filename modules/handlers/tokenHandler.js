@@ -7,8 +7,7 @@ let self = module.exports = {
         let tokenUserObject = {
             "_id": user._id,
             "uid": user.uid,
-            "username": user.username,
-            "isAdmin": user.isAdmin
+            "username": user.username
         }
 
         let tokenObject = { "user": tokenUserObject };

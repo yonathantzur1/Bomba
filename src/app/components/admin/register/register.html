@@ -1,6 +1,6 @@
 <div id="register">
     <loaderSpinner class="loader" *ngIf="isLoading"></loaderSpinner>
-    <card [title]="'New User'" [width]="400" [height]="260">
+    <card [title]="'New User'" [width]="400" [height]="240">
         <div class="body">
             <form autocomplete="off">
                 <div class="form-group">
@@ -18,13 +18,6 @@
                     <label id="register-password-micro" class="microtext"></label>
                 </div>
             </form>
-            <div class="switch-container">
-                <span class="switch-text">Admin User</span>
-                <label class="switch">
-                    <input [checked]="user.isAdmin" (click)="changeAdminState()" type="checkbox">
-                    <span id="slider" class="slider slider-animation round"></span>
-                </label>
-            </div>
         </div>
         <i (click)="register()" class="register-icon far fa-arrow-alt-circle-right"></i>
     </card>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/global/auth.service';
 
 class Tab {
     name: string;
@@ -22,11 +23,12 @@ export class NavbarComponent {
 
     tabs: Array<Tab>;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
         this.tabs = [new Tab("Projects", ""), new Tab("Admin", "admin")]
     }
 
-    logout() {
+    async logout() {
+        await this.authService.deleteClientAuth();
         this.router.navigateByUrl("login");
     }
 

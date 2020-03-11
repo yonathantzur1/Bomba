@@ -1,11 +1,10 @@
 .sector {
-    max-width: 80%;
+    width: 80%;
     min-width: 1000px;
     margin: auto;
 }
 
 .main-container {
-    width: 100%;
     height: calc(100% - var(--navbar-height));
     position: relative;
 }

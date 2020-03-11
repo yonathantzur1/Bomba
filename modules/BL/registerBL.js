@@ -23,8 +23,7 @@ module.exports = {
             "username": newUser.username,
             "password": newUser.password,
             "salt": salt,
-            "creationDate": new Date(),
-            "isAdmin": !!newUser.isAdmin
+            "creationDate": new Date()
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)

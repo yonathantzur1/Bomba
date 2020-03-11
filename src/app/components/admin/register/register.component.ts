@@ -11,15 +11,6 @@ import { User } from 'src/app/components/login/login.component';
 
 declare let $: any;
 
-export class NewUser extends User {
-    isAdmin: boolean;
-
-    constructor() {
-        super();
-        this.isAdmin = false;
-    }
-}
-
 @Component({
     selector: 'register',
     templateUrl: './register.html',
@@ -28,7 +19,7 @@ export class NewUser extends User {
 })
 
 export class RegisterComponent {
-    user: NewUser = new NewUser();
+    user: User = new User();
     isLoading: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
 
@@ -86,9 +77,4 @@ export class RegisterComponent {
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
     }
-
-    changeAdminState() {
-        this.user.isAdmin = !this.user.isAdmin;
-    }
-
 }
