@@ -5,7 +5,7 @@ module.exports = {
     },
     db: {
         name: "bomba",
-        connectionString: process.env.DEV_CONNECTION_STRING,
+        connectionString: process.env.DEV_CONNECTION_STRING || process.env.BOMBA_CONNECTION_STRING,
         collections: {
             users: "Users"
         }
