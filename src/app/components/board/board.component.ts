@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
@@ -11,13 +11,20 @@ import interact from 'interactjs';
     styleUrls: ['./board.css']
 })
 
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
+    dropzoneInteract: any;
+    draggableInteract: any;
 
     constructor(private boardService: BoardService,
         private eventService: EventService) { }
 
     ngOnInit() {
         enableDragAndDrop(this);
+    }
+
+    ngOnDestroy() {
+        this.dropzoneInteract.unset();
+        this.draggableInteract.unset();
     }
 
     dropRequestCard(cardId: string, matrixCellId: string) {
@@ -46,7 +53,7 @@ export class BoardComponent implements OnInit {
 
 function enableDragAndDrop(self: any) {
     // enable draggables to be dropped into this
-    interact('.dropzone').dropzone({
+    self.dropzoneInteract = interact('.dropzone').dropzone({
         overlap: 0.4,
 
         ondropactivate: event => {
@@ -79,7 +86,7 @@ function enableDragAndDrop(self: any) {
         }
     });
 
-    interact('.draggable').draggable({
+    self.draggableInteract = interact('.draggable').draggable({
         inertia: false,
         autoScroll: true,
         onmove: dragMoveListener,
