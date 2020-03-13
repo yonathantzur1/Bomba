@@ -14,6 +14,10 @@ export class AuthService extends BasicService {
         return super.get('/isUserOnSession');
     }
 
+    isUserAdmin() {
+        return super.get('/isUserAdmin');
+    }
+
     deleteClientAuth() {
         return super.get('/deleteClientAuth');
     }

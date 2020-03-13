@@ -9,8 +9,8 @@ const usersCollectionName = config.db.collections.users;
 
 module.exports = {
     // Add user to the DB.
-    async addUser(newUser) {
-        if (await isUserExists(newUser.username)) {
+    async addUser(newUser, isAdmin) {
+        if (await isUserExists(newUser.username) && !isAdmin) {
             return false;
         }
 
@@ -23,7 +23,8 @@ module.exports = {
             "username": newUser.username,
             "password": newUser.password,
             "salt": salt,
-            "creationDate": new Date()
+            "creationDate": new Date(),
+            "isAdmin": !!isAdmin
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)
@@ -36,6 +37,10 @@ module.exports = {
 };
 
 async function isUserExists(username) {
+    if (username == config.security.admin.username) {
+        return true;
+    }
+
     let userCount = await DAL.count(usersCollectionName, { username })
         .catch(errorHandler.promiseError);
 

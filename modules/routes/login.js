@@ -22,21 +22,21 @@ router.post('/userLogin',
         // (result == false): wrong password.
         // (result == "-1"): username is not exists on DB.
         // else: username and password are valid.
-        loginBL.getUser(req.body).then(result => {
-            if (result) {
+        loginBL.getUser(req.body).then(user => {
+            if (user) {
                 // In case the username is not exists on DB.
-                if (result == "-1") {
-                    res.send({ result });
+                if (user == "-1") {
+                    res.send({ result: user });
                 }
                 // In case user username and password are valid.
                 else {
-                    tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(result), res);
-                    res.send({ "result": true });
+                    tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
+                    res.send({ result: true });
                 }
             }
             // In case the password is wrong.
             else {
-                res.send({ result });
+                res.send({ result: user });
             }
         }).catch(err => {
             errorHandler.routeError(err, res);

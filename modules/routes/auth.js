@@ -27,6 +27,10 @@ router.get('/isUserOnSession', (req, res) => {
     }
 });
 
+router.get('/isUserAdmin', (req, res) => {
+    res.send(req.user && req.user.isAdmin);
+});
+
 router.get('/deleteClientAuth', (req, res) => {
     tokenHandler.deleteAuthCookies(res);
     res.end();

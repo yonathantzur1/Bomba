@@ -8,8 +8,9 @@ import { AdminComponent } from '../components/admin/admin.component';
 import { BoardComponent } from '../components/board/board.component';
 
 // Guards
-import { LoginGuard } from '../guards/login.guard';
 import { AuthGuard } from '../guards/auth.guard';
+import { AdminGuard } from '../guards/admin.guard';
+import { LoginGuard } from '../guards/login.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -19,7 +20,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: BoardComponent },
-      { path: 'admin', component: AdminComponent }
+      { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
     ]
   },
 ];

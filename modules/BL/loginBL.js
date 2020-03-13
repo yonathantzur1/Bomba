@@ -1,4 +1,5 @@
 const DAL = require('../DAL');
+const registerBL = require('./registerBL');
 const config = require('../../config');
 const sha512 = require('js-sha512');
 
@@ -14,23 +15,34 @@ module.exports = {
             .catch(errorHandler.promiseError)
     },
 
-    async getUser(userAuth) {
-        let userFilter = { "username": userAuth.username };
+    isAdminUser(userAuth) {
+        let adminAuth = config.security.admin;
 
-        let user = await DAL.findOne(usersCollectionName, userFilter)
+        return (userAuth.username == adminAuth.username &&
+            userAuth.password == adminAuth.password);
+    },
+
+    async getUser(userAuth) {
+        let user = await DAL.findOne(usersCollectionName, { "username": userAuth.username })
             .catch(errorHandler.promiseError);
 
-        // In case the username was not found.
-        if (!user) {
-            return "-1";
-        }
-        // In case the password is wrong.
-        else if (sha512(userAuth.password + user.salt) != user.password) {
-            return false;
+        if (this.isAdminUser(userAuth)) {
+            if (!user) {
+                user = await registerBL.addUser(userAuth, true);
+            }
         }
         else {
-            return user;
+            // In case the username was not found.
+            if (!user) {
+                return "-1";
+            }
+            // In case the password is wrong.
+            else if (sha512(userAuth.password + user.salt) != user.password) {
+                return false;
+            }
         }
+
+        return user;
     },
 
     updateLastLogin: (userId) => {

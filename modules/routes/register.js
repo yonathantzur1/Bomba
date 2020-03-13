@@ -12,15 +12,15 @@ router.post('/register',
         next();
     },
     (req, res) => {
-        registerBL.addUser(req.body).then(result => {
+        registerBL.addUser(req.body).then(user => {
             // In case the username is exists.
-            if (!result) {
-                res.send({ result });
+            if (!user) {
+                res.send({ result: user });
             }
             else {
-                let token = tokenHandler.getTokenFromUserObject(result);
+                let token = tokenHandler.getTokenFromUserObject(user);
                 tokenHandler.setTokenOnCookie(token, res);
-                res.send({ "result": true });
+                res.send({ result: true });
             }
         }).catch(err => {
             errorHandler.routeError(err, res);

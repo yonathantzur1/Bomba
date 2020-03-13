@@ -5,6 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../../components/app/app.component';
+import { LoaderDotsComponent } from '../../components/loaders/loaderDots/loaderDots.component';
+import { LoaderRingsComponent } from '../../components/loaders/loaderRings/loaderRings.component';
+import { LoaderSpinnerComponent } from '../../components/loaders/loaderSpinner/loaderSpinner.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { HomeComponent } from '../../components/home/home.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -12,8 +17,6 @@ import { AdminComponent } from '../../components/admin/admin.component';
 import { InfoComponent } from '../../components/admin/info/info.component';
 import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../../components/register/register.component';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
 import { CellComponent } from '../../components/board/matrix/cell/cell.component';
@@ -22,12 +25,9 @@ import { RequestCardComponent } from '../../components/requestCard/requestCard.c
 import { RequestSettingsComponent } from '../../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../../components/board/requests/requests.component';
 
-import { LoaderDotsComponent } from '../../components/loaders/loaderDots/loaderDots.component';
-import { LoaderRingsComponent } from '../../components/loaders/loaderRings/loaderRings.component';
-import { LoaderSpinnerComponent } from '../../components/loaders/loaderSpinner/loaderSpinner.component';
-
 // Guards
 import { AuthGuard } from '../../guards/auth.guard';
+import { AdminGuard } from '../../guards/admin.guard';
 import { LoginGuard } from '../../guards/login.guard';
 
 // Global Services
@@ -52,7 +52,13 @@ import { Routing } from '../../routes/app.routing';
     Routing
   ],
   declarations: [
+    // -----Components-----
     AppComponent,
+    LoaderDotsComponent,
+    LoaderRingsComponent,
+    LoaderSpinnerComponent,
+    AlertComponent,
+    SnackbarComponent,
     LoginComponent,
     HomeComponent,
     NavbarComponent,
@@ -66,16 +72,15 @@ import { Routing } from '../../routes/app.routing';
     CardComponent,
     RequestCardComponent,
     RequestSettingsComponent,
-    RequestsComponent,
-    AlertComponent,
-    SnackbarComponent,
-    LoaderDotsComponent,
-    LoaderRingsComponent,
-    LoaderSpinnerComponent,
+    RequestsComponent
+
   ],
   providers: [
+    // -----Guards-----
     AuthGuard,
+    AdminGuard,
     LoginGuard,
+    // -----Global services-----
     EventService,
     AlertService,
     SnackbarService,
