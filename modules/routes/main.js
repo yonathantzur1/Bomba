@@ -1,4 +1,4 @@
-const tokenHandler = require('../handlers/tokenHandler');
+const permissionsMiddleware = require('../middlewares/permissionsMiddleware');
 
 module.exports = (app) => {
     // Validate user token for each api request.
@@ -7,9 +7,7 @@ module.exports = (app) => {
         '/register/*',
         '/auth/isUserOnSession',
         '/auth/deleteClientAuth'
-    ], (req, res, next) => {
-        tokenHandler.validateUserAuthCookies(req) ? next() : res.sendStatus(401);
-    }));
+    ], permissionsMiddleware.auth));
 
     app.use('/api/login', require('./login'));
     app.use('/api/register', require('./register'));

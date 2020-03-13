@@ -1,0 +1,48 @@
+.container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.head-container {
+    position: relative;
+    text-align: center;
+    user-select: none;
+    margin-top: 15px;
+}
+
+.head-icon {
+    height: 70px;
+    width: 70px;
+    margin-top: -20px;
+    margin-left: 10px;
+}
+
+.head-label {
+    font-family: Mona Shark;
+    color: #343a40;
+    font-size: 65px;
+    top: 20px;
+    position: relative;
+}
+
+.main-text {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+.sub-text {
+    font-size: 16px;
+}
+
+.random-image {
+    width: 255px;
+    height: 240px;
+    border-radius: 40%;
+    margin: 15px;
+}
+
+.back-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #046ad9;
+}

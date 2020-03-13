@@ -6,6 +6,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { BoardComponent } from '../components/board/board.component';
+import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
 import { AuthGuard } from '../guards/auth.guard';
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
     ]
   },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
