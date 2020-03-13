@@ -6,9 +6,9 @@
     "heroku-postbuild": "ng build --aot=true --buildOptimizer=true --prod"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.900.5",
-    "@angular-devkit/build-optimizer": "^0.900.5",
-    "@angular/cli": "~9.0.5",
+    "@angular-devkit/build-angular": "^0.900.6",
+    "@angular-devkit/build-optimizer": "^0.900.6",
+    "@angular/cli": "~9.0.6",
     "@angular/common": "~9.0.6",
     "@angular/compiler": "~9.0.6",
     "@angular/compiler-cli": "~9.0.6",
@@ -29,7 +29,7 @@
     "jquery": "^3.4.1",
     "js-sha512": "^0.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.4",
+    "mongodb": "^3.5.5",
     "popper.js": "^1.16.1",
     "rxjs": "^6.5.4",
     "socket.io": "^2.3.0",
