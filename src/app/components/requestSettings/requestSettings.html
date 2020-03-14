@@ -1,12 +1,22 @@
 <div id="requestSettings">
-    <card [title]="'Request Settings'" [width]="350" [height]="450">
+    <card [title]="'Request Settings'" [width]="400" [height]="240">
         <div class="body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
-                    <input id="url" name="url" placeholder="Default URL" type="text" class="form-control">
+                    <input [(ngModel)]="defaultSettings.url" id="url" name="url" placeholder="Default URL" type="text"
+                        class="form-control">
+                </div>
+                <div class="form-group">
+                    <select [(ngModel)]="defaultSettings.method" name="methodSelect" class="form-control method-select">
+                        <option [value]="method.DEFAULT">{{method.DEFAULT}}</option>
+                        <option [value]="method.GET">{{method.GET}}</option>
+                        <option [value]="method.POST">{{method.POST}}</option>
+                        <option [value]="method.PUT">{{method.PUT}}</option>
+                        <option [value]="method.DELETE">{{method.DELETE}}</option>
+                    </select>
                 </div>
             </form>
         </div>
-        <i class="save-icon far fa-arrow-alt-circle-right"></i>
+        <i (click)="setDefault()" class="save-icon far fa-arrow-alt-circle-right"></i>
     </card>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { Request, METHOD } from '../../requestCard/requestCard.component'
+import { DefaultSettings } from '../../requestSettings/requestSettings.component'
 
 @Component({
     selector: 'requests',
@@ -15,6 +16,7 @@ export class RequestsComponent implements OnDestroy {
     requestCards: Array<Request> = [];
     selectedRequest: Request;
     eventsIds: Array<string> = [];
+    defaultSettings: DefaultSettings;
 
     constructor(private eventService: EventService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD, (card: Request) => {
@@ -31,6 +33,11 @@ export class RequestsComponent implements OnDestroy {
             data.request = this.requestCards[data.requestIndex];
             this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, data);
         }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.SET_DEFAULT_REQUEST_SETTINGS,
+            (defaultSettings: DefaultSettings) => {
+                this.defaultSettings = defaultSettings;
+            }, this.eventsIds);
 
         let req1: Request = new Request();
         req1.name = "Test Get";

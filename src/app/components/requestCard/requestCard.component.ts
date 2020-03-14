@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { DefaultSettings } from '../requestSettings/requestSettings.component';
 
 export enum METHOD {
+    DEFAULT = "Default Method",
     GET = "GET",
     POST = "POST",
     PUT = "PUT",
@@ -76,6 +78,9 @@ export class RequestCardComponent implements OnInit {
     @Input()
     selectedRequest: Request;
 
+    @Input()
+    defaultSettings: DefaultSettings;
+
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
         this.validationFuncs = [
@@ -101,7 +106,13 @@ export class RequestCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.request = this.selectedRequest ? Object.assign({}, this.selectedRequest) : new Request();
+        if (this.selectedRequest) {
+            this.request = Object.assign({}, this.selectedRequest);
+        }
+        else {
+            this.request = new Request();
+            this.setDefaultSettings();
+        }
 
         Object.keys(BODY_TYPE).forEach(type => {
             if (this.request.body.type == BODY_TYPE[type]) {
@@ -113,6 +124,18 @@ export class RequestCardComponent implements OnInit {
         });
 
         this.formatJson(true);
+    }
+
+    setDefaultSettings() {
+        if (this.defaultSettings) {
+            if (this.defaultSettings.url) {
+                this.request.url = this.defaultSettings.url;
+            }
+
+            if (this.defaultSettings.method != METHOD.DEFAULT) {
+                this.request.method = this.defaultSettings.method;
+            }
+        }
     }
 
     getSelectedBodyOption(): Body {

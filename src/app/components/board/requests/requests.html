@@ -16,6 +16,6 @@
             </div>
         </div>
     </div>
-    <request-card [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard"></request-card>
+    <request-card [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard"></request-card>
     <request-settings *ngIf="isShowRequestSettings"></request-settings>
 </div>
