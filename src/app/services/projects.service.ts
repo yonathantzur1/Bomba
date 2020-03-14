@@ -10,6 +10,10 @@ export class ProjectsService extends BasicService {
         super(http, "/api/projects");
     }
 
+    getProjects() {
+        return super.get('/getProjects');
+    }
+
     addProject(name: string) {
         return super.post('/addProject', { name });
     }

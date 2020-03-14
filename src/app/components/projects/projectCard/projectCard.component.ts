@@ -1,6 +1,10 @@
 import { Component, HostListener } from '@angular/core';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
+
+declare let $: any;
 
 @Component({
     selector: 'project-card',
@@ -14,8 +18,10 @@ export class ProjectCardComponent {
     name: string = "";
     validationFuncs: Array<InputFieldValidation>;
 
-    constructor(private projectsService: ProjectsService,
-        private microtextService: MicrotextService) {
+    constructor(private eventService: EventService,
+        private microtextService: MicrotextService,
+        private snackbarService: SnackbarService,
+        private projectsService: ProjectsService) {
         this.validationFuncs = [
             {
                 isFieldValid(name: string) {
@@ -30,8 +36,23 @@ export class ProjectCardComponent {
 
     addProject() {
         if (this.microtextService.validation(this.validationFuncs, this.name)) {
-            this.projectsService.addProject(this.name);
+            this.projectsService.addProject(this.name).then(data => {
+                if (!data) {
+                    this.snackbarService.snackbar("Server error occurred");
+                }
+                else if (data.result == false) {
+                    $("#name-micro").html("The project name is already in use");
+                }
+                else {
+                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                }
+            });
         }
+    }
+
+    // Hide microtext in a specific field.
+    hideMicrotext(microtextId: string) {
+        this.microtextService.hideMicrotext(microtextId);
     }
 
     @HostListener('document:keyup', ['$event'])

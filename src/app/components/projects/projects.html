@@ -1,8 +1,11 @@
 <div id="projects">
     <div class="projects-container">
-        <div class="project">
-            <span class="name">Hello</span>
+        <div *ngFor="let project of projects" class="project">
+            <span class="name">{{project.name}}</span>
         </div>
     </div>
     <project-card *ngIf="isShowNewProject"></project-card>
+    <div (click)="isShowNewProject=true;" class="add-project-btn">
+        <i class="fas fa-plus"></i>
+    </div>
 </div>

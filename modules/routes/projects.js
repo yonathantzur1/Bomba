@@ -4,11 +4,19 @@ const errorHandler = require('../handlers/errorHandler');
 
 const projectsBL = require('../BL/projectsBL');
 
+router.get('/getProjects', (req, res) => {
+    projectsBL.getProjects(req.user._id).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 router.post('/addProject',
     validator,
     (req, res) => {
         projectsBL.addProject(req.body.name, req.user._id).then(result => {
-            res.send(true);
+            res.send({ result });
         }).catch(err => {
             errorHandler.routeError(err, res);
         });

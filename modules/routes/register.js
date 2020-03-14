@@ -14,7 +14,6 @@ router.post('/register',
     },
     (req, res) => {
         registerBL.addUser(req.body).then(user => {
-            // In case the username is exists.
             if (!user) {
                 res.send({ result: user });
             }
