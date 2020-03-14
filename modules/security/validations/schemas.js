@@ -26,6 +26,11 @@ schemas[REST.POST] = {
                 username: joi.string().required(),
                 password: joi.string().required()
             }
+        },
+        "projects": {
+            "addProject": {
+                name: joi.string().required()
+            }
         }
     }
 };

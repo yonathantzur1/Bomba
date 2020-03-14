@@ -1,0 +1,26 @@
+form {
+    position: relative;
+}
+
+.add-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.add-icon:hover {
+    color: #696969;
+}
+
+.body {
+    padding: 15px;
+}
+
+.microtext {
+    font-size: 11px;
+    color: var(--microtext-color) !important;
+    line-height: 18px;
+    user-select: none;
+}

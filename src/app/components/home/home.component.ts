@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent implements OnInit {
-    
+
     currUser: any = null;
 
     constructor(private router: Router) { }
 
     ngOnInit() {
+
     }
 }

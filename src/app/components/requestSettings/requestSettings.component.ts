@@ -37,7 +37,6 @@ export class RequestSettingsComponent {
 
     @HostListener('document:keyup', ['$event'])
     KeyPress(event: any) {
-        // In case of pressing escape.
         if (event.code == "Enter") {
             this.setDefault();
         }

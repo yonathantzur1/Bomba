@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const registerBL = require('../BL/registerBL');
 const tokenHandler = require('../handlers/tokenHandler');
 const validator = require('../security/validations/validator');
 const errorHandler = require('../handlers/errorHandler');
+
+const registerBL = require('../BL/registerBL');
 
 // Add new user to the DB and make sure the username is not already exists.
 router.post('/register',

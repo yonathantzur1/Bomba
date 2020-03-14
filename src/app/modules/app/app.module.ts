@@ -25,6 +25,7 @@ import { RequestCardComponent } from '../../components/requestCard/requestCard.c
 import { RequestSettingsComponent } from '../../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../../components/board/requests/requests.component';
 import { ProjectsComponent } from '../../components/projects/projects.component';
+import { ProjectCardComponent } from '../../components/projects/projectCard/projectCard.component';
 import { PageNotFoundComponent } from '../../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -76,6 +77,7 @@ import { Routing } from '../../routes/app.routing';
     RequestSettingsComponent,
     RequestsComponent,
     ProjectsComponent,
+    ProjectCardComponent,
     PageNotFoundComponent
   ],
   providers: [

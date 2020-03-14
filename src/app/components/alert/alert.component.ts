@@ -25,7 +25,6 @@ export class AlertComponent {
 
     @HostListener('document:keyup', ['$event'])
     KeyPress(event: any) {
-        // In case of pressing escape.
         if (event.code == "Escape" && !this.alertService.disableEscapeExit) {
             this.closeClick();
         }
