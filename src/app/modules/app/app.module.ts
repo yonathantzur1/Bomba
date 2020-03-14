@@ -24,6 +24,7 @@ import { CardComponent } from '../../components/card/card.component';
 import { RequestCardComponent } from '../../components/requestCard/requestCard.component';
 import { RequestSettingsComponent } from '../../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../../components/board/requests/requests.component';
+import { ProjectsComponent } from '../../components/projects/projects.component';
 import { PageNotFoundComponent } from '../../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -74,6 +75,7 @@ import { Routing } from '../../routes/app.routing';
     RequestCardComponent,
     RequestSettingsComponent,
     RequestsComponent,
+    ProjectsComponent,
     PageNotFoundComponent
   ],
   providers: [

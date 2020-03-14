@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { METHOD } from '../requestCard/requestCard.component'; 
+import { METHOD } from '../requestCard/requestCard.component';
 
 export class DefaultSettings {
     url: string;

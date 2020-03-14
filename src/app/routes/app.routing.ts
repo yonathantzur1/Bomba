@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
 import { AdminComponent } from '../components/admin/admin.component';
+import { ProjectsComponent } from '../components/projects/projects.component';
 import { BoardComponent } from '../components/board/board.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
@@ -20,7 +21,8 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', component: BoardComponent },
+      { path: '', component: ProjectsComponent },
+      // { path: '', component: BoardComponent },
       { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
     ]
   },
