@@ -39,6 +39,10 @@ export class ProjectsComponent {
             this.isShowNewProject = false;
         }, this.eventsIds);
 
+        this.eventService.register(EVENT_TYPE.ADD_PROJECT, (project: any) => {
+            this.projects.push(new Project(project._id, project.name, project.date))
+        }, this.eventsIds);
+
         this.loadAllProjects();
     }
 

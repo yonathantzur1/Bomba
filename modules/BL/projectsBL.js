@@ -25,7 +25,9 @@ module.exports = {
         let insertResult = await DAL.insert(projectsCollectionName, project)
             .catch(errorHandler.promiseError);
 
-        return insertResult.toString();
+        project._id = insertResult;
+
+        return project;
     },
 
     deleteProject(projectId) {

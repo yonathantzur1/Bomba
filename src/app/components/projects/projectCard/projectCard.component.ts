@@ -49,6 +49,7 @@ export class ProjectCardComponent implements OnInit {
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                    this.eventService.emit(EVENT_TYPE.ADD_PROJECT, data.result);
                 }
             });
         }

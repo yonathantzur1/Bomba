@@ -1,12 +1,15 @@
 <div id="projects">
     <div class="projects-container">
+        <div *ngIf="projects && projects.length == 0" (click)="isShowNewProject=true;" class="project empty-project">
+            <span class="name">New Project</span>
+        </div>
         <div *ngFor="let project of projects" class="project">
             <i (click)="deleteProject(project.id)" class="fas fa-times delete-icon hvr-grow"></i>
             <span class="name">{{project.name}}</span>
         </div>
     </div>
     <project-card *ngIf="isShowNewProject"></project-card>
-    <div (click)="isShowNewProject=true;" class="add-project-btn">
+    <div *ngIf="projects && projects.length > 0" (click)="isShowNewProject=true;" class="add-project-btn">
         <i class="fas fa-plus"></i>
     </div>
 </div>
