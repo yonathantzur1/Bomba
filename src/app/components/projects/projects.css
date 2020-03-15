@@ -18,6 +18,7 @@
     padding: 10px;
     cursor: pointer;
     user-select: none;
+    position: relative;
 }
 
 .name {
@@ -38,4 +39,16 @@
     justify-content: center;
     align-items: center;
     font-size: 18px;
+}
+
+.delete-icon {
+    position: absolute;
+    cursor: pointer;
+    font-size: 14px;
+    left: 10px;
+    top: 10px;
+}
+
+.delete-icon:hover {
+    color: #656565;
 }

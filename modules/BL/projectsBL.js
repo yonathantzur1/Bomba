@@ -26,7 +26,12 @@ module.exports = {
             .catch(errorHandler.promiseError);
 
         return insertResult.toString();
-    }
+    },
+
+    deleteProject(projectId) {
+        return DAL.delete(projectsCollectionName,
+            { _id: DAL.getObjectId(projectId) });
+    },
 };
 
 async function isProjectExists(name, ownerId) {

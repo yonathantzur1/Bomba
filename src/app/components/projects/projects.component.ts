@@ -39,12 +39,44 @@ export class ProjectsComponent {
             this.isShowNewProject = false;
         }, this.eventsIds);
 
-        this.projectsService.getProjects().then((projects: Array<Project>) => {
+        this.loadAllProjects();
+    }
+
+    loadAllProjects() {
+        this.projectsService.getProjects().then(projects => {
             if (projects) {
-                this.projects = projects;
+                this.projects = projects.map((project: { _id: string; name: string; date: Date; }) => {
+                    return new Project(project._id, project.name, project.date);
+                });
             }
             else {
                 this.snackbarService.snackbar("Server error occurred");
+            }
+        });
+    }
+
+    deleteProject(id: string) {
+        let deleteProject: Project;
+        let deleteIndex: number;
+
+        for (let i = 0; i < this.projects.length; i++) {
+            let project = this.projects[i];
+
+            if (project.id == id) {
+                deleteProject = project;
+                deleteIndex = i;
+                break;
+            }
+        }
+
+        this.projects.splice(deleteIndex, 1);
+
+        this.projectsService.deleteProject(id).then(result => {
+            if (!result) {
+                this.snackbarService.snackbar("Server error occurred");
+
+                // Return false deleted project to the projects list.
+                this.projects.splice(deleteIndex, 0, deleteProject);
             }
         });
     }

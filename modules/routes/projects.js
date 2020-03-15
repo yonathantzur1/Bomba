@@ -22,4 +22,12 @@ router.post('/addProject',
         });
     });
 
+router.delete('/deleteProject', (req, res) => {
+    projectsBL.deleteProject(req.query.id).then(result => {
+        res.send(result ? true : false);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

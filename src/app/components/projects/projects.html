@@ -1,6 +1,7 @@
 <div id="projects">
     <div class="projects-container">
         <div *ngFor="let project of projects" class="project">
+            <i (click)="deleteProject(project.id)" class="fas fa-times delete-icon hvr-grow"></i>
             <span class="name">{{project.name}}</span>
         </div>
     </div>

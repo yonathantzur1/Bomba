@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -13,7 +13,7 @@ declare let $: any;
     styleUrls: ['./projectCard.css']
 })
 
-export class ProjectCardComponent {
+export class ProjectCardComponent implements OnInit {
 
     name: string = "";
     validationFuncs: Array<InputFieldValidation>;
@@ -32,6 +32,10 @@ export class ProjectCardComponent {
                 inputId: "name"
             }
         ];
+    }
+
+    ngOnInit() {
+        $("#name").focus();
     }
 
     addProject() {
