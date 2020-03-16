@@ -1,16 +1,17 @@
 <div id="projects">
     <div class="projects-container" *ngIf="projects">
-        <div *ngIf="projects.length == 0" (click)="isShowNewProject=true;" class="project empty-project">
+        <div *ngIf="projects.length == 0" (click)="isShowProjectCard=true;" class="project empty-project">
             <span class="name">New Project</span>
         </div>
-        <div *ngFor="let project of projects" class="project" [ngClass]="{'single-project' : projects.length == 1}">
-            <i (click)="deleteProject(project)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
-            <i (click)="edit(project)" class="far fa-edit top-icon edit-icon"></i>
+        <div *ngFor="let project of projects" (click)="openProject(project.id)" class="project"
+            [ngClass]="{'single-project' : projects.length == 1}">
+            <i (click)="deleteProject(project, $event)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
+            <i (click)="edit(project, $event)" class="far fa-edit top-icon edit-icon hvr-grow"></i>
             <span class="name">{{project.name}}</span>
         </div>
     </div>
-    <project-card [editProject]="editProject" *ngIf="isShowNewProject"></project-card>
-    <div *ngIf="projects && projects.length > 0" (click)="isShowNewProject=true;" class="add-project-btn">
+    <project-card [editProject]="editProject" *ngIf="isShowProjectCard"></project-card>
+    <div *ngIf="projects && projects.length > 0" (click)="isShowProjectCard=true;" class="add-project-btn">
         <i class="fas fa-plus"></i>
     </div>
 </div>

@@ -27,7 +27,7 @@ export class Project {
 export class ProjectsComponent {
 
     projects: Array<Project>;
-    isShowNewProject: boolean = false;
+    isShowProjectCard: boolean = false;
     editProject: Project;
 
     eventsIds: Array<string> = [];
@@ -39,7 +39,7 @@ export class ProjectsComponent {
         private projectsService: ProjectsService) {
 
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
-            this.isShowNewProject = false;
+            this.isShowProjectCard = false;
             this.editProject = null;
         }, this.eventsIds);
 
@@ -73,12 +73,18 @@ export class ProjectsComponent {
         });
     }
 
-    edit(project: Project) {
-        this.editProject = project;
-        this.isShowNewProject = true;
+    openProject(id: string) {
+        this.router.navigateByUrl("/board/" + id);
     }
 
-    deleteProject(project: Project) {
+    edit(project: Project, event: any) {
+        event.stopPropagation();
+        this.editProject = project;
+        this.isShowProjectCard = true;
+    }
+
+    deleteProject(project: Project, event: any) {
+        event.stopPropagation();
         this.alertService.alert({
             title: "Delete Project",
             text: "Please confirm delete the project: " + project.name + "\n\n" +

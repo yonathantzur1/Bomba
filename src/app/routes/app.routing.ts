@@ -22,7 +22,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: ProjectsComponent },
-      // { path: '', component: BoardComponent },
+      { path: 'board/:id', component: BoardComponent },
       { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
     ]
   },

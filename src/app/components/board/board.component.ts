@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import interact from 'interactjs';
 
@@ -15,11 +16,18 @@ export class BoardComponent implements OnInit, OnDestroy {
     dropzoneInteract: any;
     draggableInteract: any;
 
-    constructor(private boardService: BoardService,
-        private eventService: EventService) { }
+    constructor(private router: Router,
+        private route: ActivatedRoute,
+        private eventService: EventService,
+        private boardService: BoardService) { }
 
     ngOnInit() {
         enableDragAndDrop(this);
+
+        // In case of route params changed.
+        this.route.params.subscribe(params => {
+            let id = params["id"];
+        });
     }
 
     ngOnDestroy() {
