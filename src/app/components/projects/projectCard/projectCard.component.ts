@@ -30,6 +30,7 @@ export class ProjectCardComponent implements OnInit {
         this.validationFuncs = [
             {
                 isFieldValid(name: string) {
+                    name = name.trim();
                     return !!name;
                 },
                 errMsg: "Please enter project name",
