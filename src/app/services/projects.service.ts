@@ -18,6 +18,10 @@ export class ProjectsService extends BasicService {
         return super.post('/addProject', { name });
     }
 
+    editProject(id: string, name: string) {
+        return super.put('/editProject', { id, name });
+    }
+
     deleteProject(id: string) {
         return super.delete('/deleteProject?id=' + id);
     }

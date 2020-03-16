@@ -1,8 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+
+import { Project } from '../projects.component';
 
 declare let $: any;
 
@@ -17,6 +19,9 @@ export class ProjectCardComponent implements OnInit {
 
     name: string = "";
     validationFuncs: Array<InputFieldValidation>;
+
+    @Input()
+    editProject: Project;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,
@@ -36,22 +41,42 @@ export class ProjectCardComponent implements OnInit {
 
     ngOnInit() {
         $("#name").focus();
+
+        if (this.editProject) {
+            this.name = this.editProject.name;
+        }
     }
 
     addProject() {
         if (this.microtextService.validation(this.validationFuncs, this.name)) {
-            this.projectsService.addProject(this.name).then(data => {
-                if (!data) {
-                    this.snackbarService.snackbar("Server error occurred");
-                }
-                else if (data.result == false) {
-                    $("#name-micro").html("The project name is already in use");
-                }
-                else {
-                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.eventService.emit(EVENT_TYPE.ADD_PROJECT, data.result);
-                }
-            });
+            if (this.editProject) {
+                this.projectsService.editProject(this.editProject.id, this.name).then(data => {
+                    if (!data) {
+                        this.snackbarService.snackbar("Server error occurred");
+                    }
+                    else if (data.result == false) {
+                        $("#name-micro").html("The project name is already in use");
+                    }
+                    else {
+                        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                        this.eventService.emit(EVENT_TYPE.EDIT_PROJECT, data.result);
+                    }
+                });
+            }
+            else {
+                this.projectsService.addProject(this.name).then(data => {
+                    if (!data) {
+                        this.snackbarService.snackbar("Server error occurred");
+                    }
+                    else if (data.result == false) {
+                        $("#name-micro").html("The project name is already in use");
+                    }
+                    else {
+                        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                        this.eventService.emit(EVENT_TYPE.ADD_PROJECT, data.result);
+                    }
+                });
+            }
         }
     }
 

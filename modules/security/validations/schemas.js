@@ -29,7 +29,7 @@ schemas[REST.POST] = {
         },
         "projects": {
             "addProject": {
-                name: joi.string().required()
+                name: joi.string().max(20).required()
             }
         }
     }
@@ -40,7 +40,14 @@ schemas[REST.POST] = {
 //#region put
 
 schemas[REST.PUT] = {
-
+    "api": {
+        "projects": {
+            "editProject": {
+                id: joi.string().required(),
+                name: joi.string().max(20).required()
+            }
+        }
+    }
 };
 
 //#endregion
@@ -48,7 +55,13 @@ schemas[REST.PUT] = {
 //#region delete
 
 schemas[REST.DELETE] = {
-
+    "api": {
+        "projects": {
+            "deleteProject": {
+                id: joi.string().required()
+            }
+        }
+    }
 };
 
 //#endregion

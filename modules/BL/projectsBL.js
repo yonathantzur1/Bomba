@@ -30,6 +30,20 @@ module.exports = {
         return project;
     },
 
+    async editProject(projectId, name, ownerId) {
+        if (await isProjectExists(name, ownerId)) {
+            return false;
+        }
+
+        let projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(ownerId) };
+        let projectUpdate = { $set: { name } }
+
+        let updateResult = await DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+            .catch(errorHandler.promiseError);
+
+        return updateResult ? { _id: projectId, name } : updateResult;
+    },
+
     deleteProject(projectId) {
         return DAL.delete(projectsCollectionName,
             { _id: DAL.getObjectId(projectId) });

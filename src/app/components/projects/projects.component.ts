@@ -4,7 +4,7 @@ import { ProjectsService } from 'src/app/services/projects.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
-class Project {
+export class Project {
     id: string;
     name: string;
     date: Date;
@@ -27,6 +27,7 @@ export class ProjectsComponent {
 
     projects: Array<Project>;
     isShowNewProject: boolean = false;
+    editProject: Project;
 
     eventsIds: Array<string> = [];
 
@@ -37,10 +38,21 @@ export class ProjectsComponent {
 
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowNewProject = false;
+            this.editProject = null;
         }, this.eventsIds);
 
         this.eventService.register(EVENT_TYPE.ADD_PROJECT, (project: any) => {
             this.projects.push(new Project(project._id, project.name, project.date))
+        }, this.eventsIds);
+
+        this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (project: any) => {
+            for (let i = 0; i < this.projects.length; i++) {
+                if (this.projects[i].id == project._id) {
+                    this.projects[i].name = project.name;
+                }
+            }
+
+            this.editProject = null;
         }, this.eventsIds);
 
         this.loadAllProjects();
@@ -57,6 +69,11 @@ export class ProjectsComponent {
                 this.snackbarService.snackbar("Server error occurred");
             }
         });
+    }
+
+    edit(project: Project) {
+        this.editProject = project;
+        this.isShowNewProject = true;
     }
 
     deleteProject(id: string) {
