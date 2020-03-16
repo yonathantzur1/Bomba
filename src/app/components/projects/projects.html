@@ -4,7 +4,7 @@
             <span class="name">New Project</span>
         </div>
         <div *ngFor="let project of projects" class="project" [ngClass]="{'single-project' : projects.length == 1}">
-            <i (click)="deleteProject(project.id)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
+            <i (click)="deleteProject(project)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
             <i (click)="edit(project)" class="far fa-edit top-icon edit-icon"></i>
             <span class="name">{{project.name}}</span>
         </div>

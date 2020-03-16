@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 export class Project {
     id: string;
@@ -34,6 +35,7 @@ export class ProjectsComponent {
     constructor(private router: Router,
         private eventService: EventService,
         private snackbarService: SnackbarService,
+        private alertService: AlertService,
         private projectsService: ProjectsService) {
 
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
@@ -76,28 +78,36 @@ export class ProjectsComponent {
         this.isShowNewProject = true;
     }
 
-    deleteProject(id: string) {
-        let deleteProject: Project;
-        let deleteIndex: number;
+    deleteProject(project: Project) {
+        this.alertService.alert({
+            title: "Delete Project",
+            text: "Please confirm delete the project: " + project.name + "\n\n" +
+                "The action will delete all matrix, requests and data saved on the project.",
+            type: ALERT_TYPE.DANGER,
+            confirmFunc: () => {
+                let deleteProject: Project;
+                let deleteIndex: number;
 
-        for (let i = 0; i < this.projects.length; i++) {
-            let project = this.projects[i];
+                for (let i = 0; i < this.projects.length; i++) {
+                    let project = this.projects[i];
 
-            if (project.id == id) {
-                deleteProject = project;
-                deleteIndex = i;
-                break;
-            }
-        }
+                    if (project.id == project.id) {
+                        deleteProject = project;
+                        deleteIndex = i;
+                        break;
+                    }
+                }
 
-        this.projects.splice(deleteIndex, 1);
+                this.projects.splice(deleteIndex, 1);
 
-        this.projectsService.deleteProject(id).then(result => {
-            if (!result) {
-                this.snackbarService.snackbar("Server error occurred");
+                this.projectsService.deleteProject(project.id).then(result => {
+                    if (!result) {
+                        this.snackbarService.snackbar("Server error occurred");
 
-                // Return false deleted project to the projects list.
-                this.projects.splice(deleteIndex, 0, deleteProject);
+                        // Return false deleted project to the projects list.
+                        this.projects.splice(deleteIndex, 0, deleteProject);
+                    }
+                });
             }
         });
     }
