@@ -55,16 +55,17 @@
 .top-icon {
     position: absolute;
     cursor: pointer;
-    font-size: 15px;
-    top: 10px;
+    font-size: 16px;
+    padding: 5px;
+    top: 5px;
 }
 
 .delete-icon {
-    left: 10px;
+    left: 5px;
 }
 
 .edit-icon {
-    right: 10px;
+    right: 5px;
 }
 
 .delete-icon:hover {

@@ -19,7 +19,9 @@ module.exports = {
         let project = {
             name,
             owner: DAL.getObjectId(ownerId),
-            date: new Date()
+            date: new Date(),
+            matrix: null,
+            requests: null
         };
 
         let insertResult = await DAL.insert(projectsCollectionName, project)

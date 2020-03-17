@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Request } from '../../../requestCard/requestCard.component';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 @Component({
     selector: 'cell',
@@ -18,5 +19,9 @@ export class CellComponent {
     @Input()
     col: number;
 
-    constructor() { }
+    constructor(private eventService: EventService) { }
+
+    amountChanged() {
+        this.eventService.emit(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT);
+    }
 }

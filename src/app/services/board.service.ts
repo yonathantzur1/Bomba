@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Request } from '../components/requestCard/requestCard.component';
+
 import { BasicService } from './basic.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,13 +12,25 @@ export class BoardService extends BasicService {
         super(http, "/api/board");
     }
 
-    exampleGet() {
-        return super.get('/example');
+    getProjectBoard(projectId: string) {
+        return super.get('/getProjectBoard?projectId=' + projectId);
     }
 
-    examplePost(str: string) {
-        let data = { str };
+    saveMatrix(projectId: string, matrix: Array<Array<Request>>) {
+        let data = {
+            projectId,
+            matrix
+        }
 
-        return super.post('/example', data);
+        return super.put('/saveMatrix', data);
+    }
+
+    saveRequests(projectId: string, requests: Array<Request>) {
+        let data = {
+            projectId,
+            requests
+        }
+
+        return super.put('/saveRequests', data);
     }
 }

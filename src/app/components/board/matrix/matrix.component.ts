@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MatrixService } from '../../../services/matrix.service';
+import { BoardService } from 'src/app/services/board.service';
 import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
@@ -14,10 +15,16 @@ declare let $: any;
 })
 
 export class MatrixComponent implements OnInit, OnDestroy {
+
+    @Input()
+    projectId: string;
+
+    @Input()
+    matrix: Array<Array<Request>>;
+
     container: HTMLElement;
     cellSize: number = 150;
     minScrollCells: number;
-    matrix: Array<Array<Request>> = [[new Request(true)]];
     isShowRequestCard: boolean = false;
     selectedRequest: Request;
 
@@ -25,18 +32,25 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     constructor(private eventService: EventService,
         public alertService: AlertService,
-        private matrixService: MatrixService) {
+        private matrixService: MatrixService,
+        private boardService: BoardService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let rowIndex = data.cellIndex[0];
             let colIndex = data.cellIndex[1];
             let matrixRequest: Request = Object.assign({}, data.request);
             matrixRequest.id = data.request.generateGuid();
             this.matrix[rowIndex][colIndex] = matrixRequest;
+            this.saveMatrix();
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRequestCard = false;
             this.selectedRequest = null;
+            this.saveMatrix();
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT, () => {
+            this.saveMatrix();
         }, this.eventsIds);
     }
 
@@ -51,6 +65,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     addCol(i: number) {
         this.removePlusHoverBackground();
         this.matrix[i].push(new Request(true));
+        this.saveMatrix();
         let currentColumnsAmount = this.matrix[i].length;
 
         setTimeout(() => {
@@ -72,6 +87,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     addRow() {
         this.removePlusHoverBackground();
         this.matrix.push([new Request(true)]);
+        this.saveMatrix();
 
         setTimeout(() => {
             this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;
@@ -122,6 +138,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 }
             }
         }
+
+        this.saveMatrix();
     }
 
     isMatrixNotEmpty() {
@@ -146,5 +164,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.matrixService.sendRequests(this.matrix);
             }
         });
+    }
+
+    saveMatrix() {
+        this.boardService.saveMatrix(this.projectId, this.matrix);
     }
 }

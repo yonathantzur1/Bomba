@@ -1,6 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
+import { BoardService } from 'src/app/services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { Request, METHOD } from '../../requestCard/requestCard.component'
+import { Request } from '../../requestCard/requestCard.component'
 import { DefaultSettings } from '../../requestSettings/requestSettings.component'
 
 @Component({
@@ -11,26 +12,34 @@ import { DefaultSettings } from '../../requestSettings/requestSettings.component
 })
 
 export class RequestsComponent implements OnDestroy {
+
+    @Input()
+    projectId: string;
+
+    @Input()
+    requests: Array<Request>;
+
     isShowRequestCard: boolean = false;
     isShowRequestSettings: boolean = false;
-    requestCards: Array<Request> = [];
     selectedRequest: Request;
     eventsIds: Array<string> = [];
     defaultSettings: DefaultSettings;
 
-    constructor(private eventService: EventService) {
+    constructor(private eventService: EventService,
+        private boardService: BoardService) {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD, (card: Request) => {
-            this.requestCards.push(card);
+            this.requests.push(card);
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRequestCard = false;
             this.isShowRequestSettings = false;
             this.selectedRequest = null;
+            this.saveRequests();
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.DROP_REQUEST_CARD, (data: any) => {
-            data.request = this.requestCards[data.requestIndex];
+            data.request = this.requests[data.requestIndex];
             this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, data);
         }, this.eventsIds);
 
@@ -38,33 +47,6 @@ export class RequestsComponent implements OnDestroy {
             (defaultSettings: DefaultSettings) => {
                 this.defaultSettings = defaultSettings;
             }, this.eventsIds);
-
-        let req1: Request = new Request();
-        req1.name = "Test Get";
-        req1.url = "127.0.0.1:5000/testGet?time=1000&success=true";
-        req1.method = METHOD.GET;
-
-        let req2: Request = new Request();
-        req2.name = "Test Post";
-        req2.url = "127.0.0.1:5000/testPost";
-        req2.method = METHOD.POST;
-        req2.body.template = '{"time": 1000, "success": true}';
-
-        let req3: Request = new Request();
-        req3.name = "Test Put";
-        req3.url = "127.0.0.1:5000/testPut";
-        req3.method = METHOD.PUT;
-        req3.body.template = '{"time": 1000, "success": true}';
-
-        let req4: Request = new Request();
-        req4.name = "Test Delete";
-        req4.url = "127.0.0.1:5000/testDelete?time=1000&success=true";
-        req4.method = METHOD.DELETE;
-
-        this.requestCards.push(req1);
-        this.requestCards.push(req2);
-        this.requestCards.push(req3);
-        this.requestCards.push(req4);
     }
 
     ngOnDestroy() {
@@ -76,4 +58,8 @@ export class RequestsComponent implements OnDestroy {
         this.isShowRequestCard = true;
     }
 
+
+    saveRequests() {
+        this.boardService.saveRequests(this.projectId, this.requests);
+    }
 }

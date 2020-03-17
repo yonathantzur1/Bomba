@@ -10,7 +10,7 @@
                     <cell [request]="matrix[i][j]" [row]="i" [col]="j"></cell>
                     <i *ngIf="!matrix[i][j].isEmpty" class="far fa-edit cell-icon info-cell"
                         (click)="openRequestEdit(matrix[i][j])"></i>
-                    <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty" (click)="deleteCell(i, j)"
+                    <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty" (click)="deleteCell(i, j);saveMatrix();"
                         class="fas fa-times cell-icon delete-cell"></i>
                 </td>
                 <td class="cell plus-sector" (click)="addCol(i)">

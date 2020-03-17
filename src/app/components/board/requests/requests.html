@@ -2,20 +2,21 @@
     <div class="cards-top">
         <i class="fas fa-cog top-icon settings-icon" (click)="isShowRequestSettings=true;"></i>
         <span>Requests</span>
-        <i *ngIf="requestCards.length > 0" class="far fa-plus-square top-icon plus-icon"
+        <i *ngIf="requests.length > 0" class="far fa-plus-square top-icon plus-icon"
             (click)="isShowRequestCard=true;"></i>
     </div>
     <div class="cards-container">
-        <div id="card-{{i}}" class="card-sector draggable" (click)="openRequestEdit(card)"
-            *ngFor="let card of requestCards; index as i" [title]="card.name">
-            <div class="card-name">{{card.name}}</div>
+        <div id="card-{{i}}" class="card-sector draggable" (click)="openRequestEdit(request)"
+            *ngFor="let request of requests; index as i" [title]="request.name">
+            <div class="card-name">{{request.name}}</div>
         </div>
-        <div *ngIf="requestCards.length == 0" class="card add-card" (click)="isShowRequestCard=true;">
+        <div *ngIf="requests.length == 0" class="card-sector add-card" (click)="isShowRequestCard=true;">
             <div class="new-card-content">
                 <div class="plus-txt">New Request</div>
             </div>
         </div>
     </div>
-    <request-card [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard"></request-card>
+    <request-card [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard">
+    </request-card>
     <request-settings *ngIf="isShowRequestSettings"></request-settings>
 </div>

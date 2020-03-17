@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { Request } from '../requestCard/requestCard.component';
 
 import interact from 'interactjs';
 
@@ -16,9 +19,17 @@ export class BoardComponent implements OnInit, OnDestroy {
     dropzoneInteract: any;
     draggableInteract: any;
 
+    projectId: string;
+    matrix: Array<Array<Request>>;
+    requests: Array<Request>;
+
+    isLoading: boolean = false;
+    isDataLoaded: boolean = false;
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private eventService: EventService,
+        private snackbarService: SnackbarService,
         private boardService: BoardService) { }
 
     ngOnInit() {
@@ -26,8 +37,62 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         // In case of route params changed.
         this.route.params.subscribe(params => {
-            let id = params["id"];
+            this.projectId = params["id"];
+
+            this.isLoading = true;
+
+            this.boardService.getProjectBoard(this.projectId).then(result => {
+                this.isLoading = false;
+
+                if (!result) {
+                    this.snackbarService.snackbar("Server error occurred");
+                    this.router.navigateByUrl('');
+                }
+                else {
+                    // In case matrix exists.
+                    if (result.matrix) {
+                        this.mapMatrix(result.matrix);
+                        this.matrix = result.matrix;
+                    } else {
+                        this.matrix = [[new Request(true)]];
+                    }
+
+                    // In case requests exist.
+                    if (result.requests) {
+                        this.mapRequests(result.requests);
+                        this.requests = result.requests;
+                    } else {
+                        this.requests = [];
+                    }
+
+                    this.isDataLoaded = true;
+                }
+            });
         });
+    }
+
+    mapMatrix(matrix: any) {
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = this.convertJsonToObject(matrix[i][j]);
+            }
+        }
+    }
+
+    mapRequests(requests: any) {
+        for (let i = 0; i < requests.length; i++) {
+            requests[i] = this.convertJsonToObject(requests[i]);
+        }
+    }
+
+    convertJsonToObject(request: any): Request {
+        if (request.isEmpty) {
+            return new Request(true);
+        }
+        else {
+            return new Request().setValues(request.id, request.name, request.method,
+                request.url, request.body, request.amount);
+        }
     }
 
     ngOnDestroy() {

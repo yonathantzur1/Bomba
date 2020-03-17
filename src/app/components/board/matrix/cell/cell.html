@@ -4,6 +4,6 @@
         <div *ngSwitchCase="false" class="req-name" [title]="request.name">{{request.name}}</div>
     </div>
     <div *ngIf="!request.isEmpty" class="control-sector">
-        <input type="number" class="amount-input form-control" [(ngModel)]="request.amount" min="1" max="9999">
+        <input type="number" (change)="amountChanged()" class="amount-input form-control" [(ngModel)]="request.amount" min="1" max="9999">
     </div>
 </div>

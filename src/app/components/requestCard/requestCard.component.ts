@@ -27,11 +27,23 @@ export class Request {
         if (!this.isEmpty) {
             this.id = this.generateGuid();
             this.name = "";
-            this.url = "";
             this.method = METHOD.GET;
+            this.url = "";
             this.body = new Body(BODY_TYPE.JSON, true);
             this.amount = 1;
         }
+    }
+
+    setValues(id: string, name: string, method: METHOD,
+        url: string, body: Body, amount: number) {
+        this.id = id;
+        this.name = name;
+        this.method = method;
+        this.url = url;
+        this.body = body;
+        this.amount = amount;
+
+        return this;
     }
 
     public generateGuid(): string {

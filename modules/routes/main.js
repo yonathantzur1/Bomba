@@ -13,6 +13,7 @@ module.exports = (app) => {
     app.use('/api/register', require('./register'));
     app.use('/api/projects', require('./projects'));
     app.use('/api/matrix', require('./matrix'));
+    app.use('/api/board', require('./board'));
 
     app.use('/api/auth', require('./auth'));
 }
