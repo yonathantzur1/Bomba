@@ -1,8 +1,9 @@
 const http = require('http');
 const https = require('https');
+const events = require('../events');
 
 module.exports = {
-    sendRequestsMatrix(requestsMatrix) {
+    sendRequestsMatrix(requestsMatrix, userId) {
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
                 let requestData = requestsMatrix[i][j];
@@ -11,7 +12,7 @@ module.exports = {
         }
 
         for (let i = 0; i < requestsMatrix.length; i++) {
-            sendMultiRequests(requestsMatrix[i]);
+            sendMultiRequests(requestsMatrix[i], userId);
         }
     }
 }
@@ -68,7 +69,7 @@ function buildSendObject(requestData, xIndex, yIndex) {
     return sendObject;
 }
 
-async function sendMultiRequests(sendObjects) {
+async function sendMultiRequests(sendObjects, userId) {
     for (let i = 0; i < sendObjects.length; i++) {
         const sendObject = sendObjects[i];
         const position = sendObject.position;
@@ -76,10 +77,12 @@ async function sendMultiRequests(sendObjects) {
         for (let i = 0; i < sendObject.amount; i++) {
             try {
                 let response = await sendRequest(sendObject.options, sendObject.data);
-                // TODO: report client request success.   
+                // TODO: report client request success.
+                events.emit("socket.requestSuccess", userId, {});
             }
             catch (e) {
                 // TODO: report client request failed.
+                events.emit("socket.requestError", userId, {});
             }
         }
     }

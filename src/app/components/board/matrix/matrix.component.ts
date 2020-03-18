@@ -4,6 +4,7 @@ import { BoardService } from 'src/app/services/board.service';
 import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { SocketService } from 'src/app/services/global/socket.service';
 
 declare let $: any;
 
@@ -34,9 +35,11 @@ export class MatrixComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
+        public socketService: SocketService,
         public alertService: AlertService,
         private matrixService: MatrixService,
         private boardService: BoardService) {
+
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let rowIndex = data.cellIndex[0];
             let colIndex = data.cellIndex[1];
@@ -59,6 +62,14 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.container = document.getElementById("matrix-container");
+
+        this.socketService.socketOn("requestSuccess", (data) => {
+            alert("success");
+        });
+
+        this.socketService.socketOn("requestError", (data) => {
+            alert("error");
+        });
     }
 
     ngOnDestroy() {

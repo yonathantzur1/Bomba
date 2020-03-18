@@ -1,5 +1,6 @@
 const tokenHandler = require('../handlers/tokenHandler');
 const logger = require('../../logger');
+const events = require('../events');
 
 let connectedUsers = {};
 
@@ -49,6 +50,14 @@ module.exports = (io) => {
         socket.on('error', (err) => {
             logger.error(err);
         });
+    });
+
+    events.on('socket.requestSuccess', (userId, data) => {
+        io.to(userId).emit('requestSuccess', data);
+    });
+
+    events.on('socket.requestError', (userId, data) => {
+        io.to(userId).emit('requestError', data);
     });
 
     return connectedUsers;
