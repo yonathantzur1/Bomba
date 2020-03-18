@@ -6,8 +6,14 @@ const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
     getProjects(ownerId) {
-        return DAL.find(projectsCollectionName,
+        projectFields = {
+            "name": 1,
+            "date": 1
+        }
+
+        return DAL.findSpecific(projectsCollectionName,
             { owner: DAL.getObjectId(ownerId) },
+            projectFields,
             { "date": 1 });
     },
 
@@ -50,6 +56,14 @@ module.exports = {
         return DAL.delete(projectsCollectionName,
             { _id: DAL.getObjectId(projectId) });
     },
+
+    saveRequestSettings(projectId, defaultSettings, ownerId) {
+        let projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(ownerId) };
+        let projectUpdate = { $set: { defaultSettings } }
+
+        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+            .catch(errorHandler.promiseError);
+    }
 };
 
 async function isProjectExists(name, ownerId) {

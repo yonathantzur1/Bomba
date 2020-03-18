@@ -50,4 +50,12 @@ router.delete('/deleteProject',
         });
     });
 
+router.put('/saveRequestSettings', (req, res) => {
+    projectsBL.saveRequestSettings(req.body.id, req.body.defaultSettings, req.user._id).then(result => {
+        res.send(result ? true : false);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

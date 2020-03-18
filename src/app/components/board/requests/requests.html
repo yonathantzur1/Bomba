@@ -20,5 +20,5 @@
     </div>
     <request-card [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard">
     </request-card>
-    <request-settings *ngIf="isShowRequestSettings"></request-settings>
+    <request-settings [projectId]="projectId" [defaultSettings]="defaultSettings" *ngIf="isShowRequestSettings"></request-settings>
 </div>

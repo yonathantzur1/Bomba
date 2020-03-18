@@ -5,6 +5,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Request } from '../requestCard/requestCard.component';
+import { DefaultSettings } from '../requestSettings/requestSettings.component';
 
 import interact from 'interactjs';
 
@@ -23,9 +24,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     projectName: string;
     matrix: Array<Array<Request>>;
     requests: Array<Request>;
+    defaultSettings: DefaultSettings;
 
     isLoading: boolean = false;
-    isDataLoaded: boolean = false;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -53,7 +54,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                     this.projectName = result.name;
                     this.matrix = this.mapMatrix(result.matrix);
                     this.requests = this.mapRequests(result.requests);
-                    this.isDataLoaded = true;
+                    this.defaultSettings = result.defaultSettings;
                 }
             });
         });
@@ -184,7 +185,7 @@ function elementMoveListener(event: any) {
 
         // Remove all icons from clone element.
         let deleteChildElements = [];
-        
+
         clone.childNodes.forEach((node: any) => {
             if (node.nodeName == "I") {
                 deleteChildElements.push(node);

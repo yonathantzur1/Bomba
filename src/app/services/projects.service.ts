@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { BasicService } from './basic.service';
 import { HttpClient } from '@angular/common/http';
 
+import { DefaultSettings } from '../components/requestSettings/requestSettings.component';
+
 @Injectable()
 export class ProjectsService extends BasicService {
 
@@ -26,4 +28,7 @@ export class ProjectsService extends BasicService {
         return super.delete('/deleteProject?id=' + id);
     }
 
+    saveRequestSettings(id: string, defaultSettings: DefaultSettings) {
+        return super.put('/saveRequestSettings', { id, defaultSettings });
+    }
 }

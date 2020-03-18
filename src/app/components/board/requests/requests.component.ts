@@ -20,11 +20,13 @@ export class RequestsComponent implements OnDestroy {
     @Input()
     requests: Array<Request>;
 
+    @Input()
+    defaultSettings: DefaultSettings;
+
     isShowRequestCard: boolean = false;
     isShowRequestSettings: boolean = false;
     selectedRequest: Request;
     eventsIds: Array<string> = [];
-    defaultSettings: DefaultSettings;
 
     constructor(private eventService: EventService,
         private alertService: AlertService,

@@ -14,6 +14,7 @@ module.exports = {
             name: 1,
             matrix: 1,
             requests: 1,
+            defaultSettings: 1
         };
 
         return DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields);

@@ -1,6 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { METHOD } from '../requestCard/requestCard.component';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 export class DefaultSettings {
     url: string;
@@ -15,16 +17,28 @@ export class DefaultSettings {
 @Component({
     selector: 'request-settings',
     templateUrl: './requestSettings.html',
-    providers: [],
+    providers: [ProjectsService],
     styleUrls: ['./requestSettings.css']
 })
 
-export class RequestSettingsComponent {
+export class RequestSettingsComponent implements OnInit {
+
+    @Input()
+    projectId: string;
+
+    @Input()
     defaultSettings: DefaultSettings;
+
     method: any = METHOD;
 
-    constructor(private eventService: EventService) {
-        this.defaultSettings = new DefaultSettings();
+    constructor(private eventService: EventService,
+        private snackbarService: SnackbarService,
+        private projectService: ProjectsService) { }
+
+    ngOnInit() {
+        if (!this.defaultSettings) {
+            this.defaultSettings = new DefaultSettings();
+        }
     }
 
     setDefault() {
@@ -33,6 +47,11 @@ export class RequestSettingsComponent {
         }
 
         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+        this.projectService.saveRequestSettings(this.projectId, this.defaultSettings).then(result => {
+            if (!result) {
+                this.snackbarService.snackbar("Server error occurred");
+            }
+        });
     }
 
     @HostListener('document:keyup', ['$event'])
