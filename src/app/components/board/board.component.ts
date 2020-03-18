@@ -181,6 +181,20 @@ function elementMoveListener(event: any) {
         original.getAttribute('allowDrag') == 'true' &&
         original.getAttribute('clonable') != 'false') {
         let clone = original.cloneNode(true);
+
+        // Remove all icons from clone element.
+        let deleteChildElements = [];
+        
+        clone.childNodes.forEach((node: any) => {
+            if (node.nodeName == "I") {
+                deleteChildElements.push(node);
+            }
+        });
+
+        deleteChildElements.forEach(child => {
+            clone.removeChild(child);
+        });
+
         clone.style.width = "135px";
         clone.style.height = "135px";
         clone.style.fontSize = "12px";

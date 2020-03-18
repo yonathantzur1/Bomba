@@ -3,6 +3,7 @@ import { BoardService } from 'src/app/services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { Request } from '../../requestCard/requestCard.component'
 import { DefaultSettings } from '../../requestSettings/requestSettings.component'
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 @Component({
     selector: 'requests',
@@ -26,7 +27,9 @@ export class RequestsComponent implements OnDestroy {
     defaultSettings: DefaultSettings;
 
     constructor(private eventService: EventService,
+        private alertService: AlertService,
         private boardService: BoardService) {
+
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD, (card: Request) => {
             this.requests.push(card);
         }, this.eventsIds);
@@ -61,5 +64,20 @@ export class RequestsComponent implements OnDestroy {
 
     saveRequests() {
         this.boardService.saveRequests(this.projectId, this.requests);
+    }
+
+    deleteRequest(index: number, event: any) {
+        event.stopPropagation();
+
+        this.alertService.alert({
+            title: "Delete Request",
+            text: 'Please confirm deletion of the request "' + this.requests[index].name + '"\n\n' +
+                "The action will delete all data saved on the request.",
+            type: ALERT_TYPE.DANGER,
+            confirmFunc: () => {
+                this.requests.splice(index, 1);
+                this.saveRequests();
+            }
+        });
     }
 }

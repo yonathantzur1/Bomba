@@ -9,6 +9,8 @@
         <div id="card-{{i}}" class="card-sector draggable" (click)="openRequestEdit(request)"
             *ngFor="let request of requests; index as i" [title]="request.name">
             <div class="card-name">{{request.name}}</div>
+            <i name="delete-icon" title="delete request" (click)="deleteRequest(i, $event)"
+                class="far fa-trash-alt delete-request-icon"></i>
         </div>
         <div *ngIf="requests.length == 0" class="card-sector add-card" (click)="isShowRequestCard=true;">
             <div class="new-card-content">
