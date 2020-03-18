@@ -95,10 +95,10 @@ export class ProjectsComponent {
                 let deleteIndex: number;
 
                 for (let i = 0; i < this.projects.length; i++) {
-                    let project = this.projects[i];
+                    let currProject = this.projects[i];
 
-                    if (project.id == project.id) {
-                        deleteProject = project;
+                    if (project.id == currProject.id) {
+                        deleteProject = currProject;
                         deleteIndex = i;
                         break;
                     }
