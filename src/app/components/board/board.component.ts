@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Request } from '../requestCard/requestCard.component';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
 
-import interact from 'interactjs';
+declare let interact: any;
 
 @Component({
     selector: 'board',
