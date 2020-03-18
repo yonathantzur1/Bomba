@@ -34,14 +34,18 @@ export class Request {
         }
     }
 
-    setValues(id: string, name: string, method: METHOD,
-        url: string, body: Body, amount: number) {
-        this.id = id;
-        this.name = name;
-        this.method = method;
-        this.url = url;
-        this.body = body;
-        this.amount = amount;
+    copy(request: any) {
+        if (request.isEmpty) {
+            this.isEmpty = !!request.isEmpty;
+        }
+        else {
+            this.id = request.id;
+            this.name = request.name;
+            this.method = request.method;
+            this.url = request.url;
+            this.body = request.body;
+            this.amount = request.amount;
+        }
 
         return this;
     }

@@ -5,10 +5,12 @@
 }
 
 .sector {
-    height: calc(100% - 20px);
+    height: calc(100% - 15px);
+    max-height: 800px;
 }
 
 .matrix-sector {
+    height: 100%;
     width: calc(100% - var(--cards-secotr-width));
     float: left;
     border-right: 0.5px solid var(--main-border-color);

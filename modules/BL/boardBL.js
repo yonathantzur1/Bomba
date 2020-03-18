@@ -11,6 +11,7 @@ module.exports = {
         };
 
         projectFields = {
+            name: 1,
             matrix: 1,
             requests: 1,
         };

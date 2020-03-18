@@ -1,5 +1,5 @@
 <div id="requestCard">
-    <card [title]="request.name || 'New Request'" [width]="650" [height]="450">
+    <card [title]="request.name.trim() || 'New Request'" [width]="650" [height]="450">
         <div class="body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">

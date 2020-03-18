@@ -11,12 +11,13 @@
     background-color: #e4e4e4;
     border-bottom: 0.5px solid #adadad;
     user-select: none;
+    position: relative;
 }
 
 .matrix-container {
     margin: 15px;
     width: auto;
-    height: calc(100% - 70px);
+    height: calc(100% - 65px);
     overflow: auto;
     user-select: none;
 }
@@ -91,19 +92,10 @@
 }
 
 .send-btn-container {
-    width: 45px;
-    height: 45px;
     cursor: pointer;
     position: absolute;
-    bottom: 15px;
-    right: 30px;
-    border-radius: 50%;
-    box-shadow: 1px 1px 5px 2px #adadad;
-    background-color: #efefef;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
+    left: 18px;
+    font-size: 16px;
 }
 
 .send-btn-container:hover {

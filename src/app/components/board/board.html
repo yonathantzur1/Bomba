@@ -1,7 +1,7 @@
 <div id="board">
     <div class="sector" *ngIf="isDataLoaded">
         <div class="matrix-sector">
-            <matrix [projectId]="projectId" [matrix]="matrix"></matrix>
+            <matrix [projectId]="projectId" [projectName]="projectName" [matrix]="matrix"></matrix>
         </div>
         <div class="cards-sector">
             <requests [projectId]="projectId" [requests]="requests"></requests>

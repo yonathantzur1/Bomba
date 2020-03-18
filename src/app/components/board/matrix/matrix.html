@@ -1,7 +1,10 @@
 <div id="matrix">
     <div class="matrix-top">
         <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress compress-icon"></i>
-        <span>Matrix</span>
+        <span>{{projectName}} - Matrix</span>
+        <div *ngIf="isMatrixNotEmpty()" (click)="sendRequests()" class="send-btn-container">
+            <i class="far fa-paper-plane"></i>
+        </div>
     </div>
     <div id="matrix-container" class="matrix-container">
         <table>
@@ -31,7 +34,4 @@
         </table>
     </div>
     <request-card [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard"></request-card>
-    <div *ngIf="isMatrixNotEmpty()" (click)="sendRequests()" class="send-btn-container">
-        <i class="far fa-paper-plane"></i>
-    </div>
 </div>

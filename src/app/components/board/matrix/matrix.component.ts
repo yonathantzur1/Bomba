@@ -20,6 +20,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
     projectId: string;
 
     @Input()
+    projectName: string;
+
+    @Input()
     matrix: Array<Array<Request>>;
 
     container: HTMLElement;

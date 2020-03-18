@@ -87,8 +87,8 @@ export class ProjectsComponent {
         event.stopPropagation();
         this.alertService.alert({
             title: "Delete Project",
-            text: "Please confirm delete the project: " + project.name + "\n\n" +
-                "The action will delete all matrix, requests and data saved on the project.",
+            text: 'Please confirm deletion of the project "' + project.name + '"\n\n' +
+                "The action will delete all data saved on the project.",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
                 let deleteProject: Project;

@@ -20,6 +20,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     draggableInteract: any;
 
     projectId: string;
+    projectName: string;
     matrix: Array<Array<Request>>;
     requests: Array<Request>;
 
@@ -49,22 +50,9 @@ export class BoardComponent implements OnInit, OnDestroy {
                     this.router.navigateByUrl('');
                 }
                 else {
-                    // In case matrix exists.
-                    if (result.matrix) {
-                        this.mapMatrix(result.matrix);
-                        this.matrix = result.matrix;
-                    } else {
-                        this.matrix = [[new Request(true)]];
-                    }
-
-                    // In case requests exist.
-                    if (result.requests) {
-                        this.mapRequests(result.requests);
-                        this.requests = result.requests;
-                    } else {
-                        this.requests = [];
-                    }
-
+                    this.projectName = result.name;
+                    this.matrix = this.mapMatrix(result.matrix);
+                    this.requests = this.mapRequests(result.requests);
                     this.isDataLoaded = true;
                 }
             });
@@ -72,26 +60,30 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     mapMatrix(matrix: any) {
-        for (let i = 0; i < matrix.length; i++) {
-            for (let j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = this.convertJsonToObject(matrix[i][j]);
+        if (matrix) {
+            for (let i = 0; i < matrix.length; i++) {
+                for (let j = 0; j < matrix[i].length; j++) {
+                    matrix[i][j] = new Request().copy(matrix[i][j]);
+                }
             }
+
+            return matrix;
+        }
+        else {
+            return [[new Request(true)]];
         }
     }
 
     mapRequests(requests: any) {
-        for (let i = 0; i < requests.length; i++) {
-            requests[i] = this.convertJsonToObject(requests[i]);
-        }
-    }
+        if (requests) {
+            for (let i = 0; i < requests.length; i++) {
+                requests[i] = new Request().copy(requests[i]);
+            }
 
-    convertJsonToObject(request: any): Request {
-        if (request.isEmpty) {
-            return new Request(true);
+            return requests;
         }
         else {
-            return new Request().setValues(request.id, request.name, request.method,
-                request.url, request.body, request.amount);
+            return [];
         }
     }
 
