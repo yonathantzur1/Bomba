@@ -48,6 +48,10 @@ export class SocketService {
         this.socket.on(name, func);
     }
 
+    socketOff(name: string) {
+        this.socket.off(name);
+    }
+
     // This function should be called in order to refresh
     // the client cookies (token) that the socket object contains.
     refreshSocket() {

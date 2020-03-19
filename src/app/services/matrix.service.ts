@@ -12,8 +12,8 @@ export class MatrixService extends BasicService {
         super(http, "/api/matrix");
     }
 
-    sendRequests(matrix: Array<Array<Request>>) {
-        let data = { matrix };
+    sendRequests(matrix: Array<Array<Request>>, projectId: string) {
+        let data = { matrix, projectId };
 
         return super.post('/sendRequests', data);
     }

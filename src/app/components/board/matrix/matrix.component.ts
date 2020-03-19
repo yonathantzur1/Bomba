@@ -64,16 +64,26 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.container = document.getElementById("matrix-container");
 
         this.socketService.socketOn("requestSuccess", (data) => {
-            alert("success");
+            if (data.projectId != this.projectId) {
+                return;
+            }
+
+            console.log("success");
         });
 
         this.socketService.socketOn("requestError", (data) => {
-            alert("error");
+            if (data.projectId != this.projectId) {
+                return;
+            }
+
+            console.log("error");
         });
     }
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
+        this.socketService.socketOff("requestSuccess");
+        this.socketService.socketOff("requestError");
     }
 
     addCol(i: number) {
@@ -175,7 +185,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
                 this.compressMatrix();
-                this.matrixService.sendRequests(this.matrix);
+                this.matrixService.sendRequests(this.matrix, this.projectId);
             }
         });
     }

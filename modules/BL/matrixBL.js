@@ -1,9 +1,17 @@
+const DAL = require('../DAL');
+const config = require('../../config');
 const http = require('http');
 const https = require('https');
 const events = require('../events');
 
+const projectsCollectionName = config.db.collections.projects;
+
 module.exports = {
-    sendRequestsMatrix(requestsMatrix, userId) {
+    async sendRequestsMatrix(requestsMatrix, projectId, userId) {
+        if (await isProjectOwnerValid(projectId, userId) == false) {
+            return;
+        }
+
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
                 let requestData = requestsMatrix[i][j];
@@ -12,9 +20,16 @@ module.exports = {
         }
 
         for (let i = 0; i < requestsMatrix.length; i++) {
-            sendMultiRequests(requestsMatrix[i], userId);
+            sendMultiRequests(requestsMatrix[i], projectId, userId);
         }
     }
+}
+
+async function isProjectOwnerValid(projectId, userId) {
+    let filter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
+    let count = await DAL.count(projectsCollectionName, filter);
+
+    return count ? true : false;
 }
 
 function getRequestUrlData(url) {
@@ -69,20 +84,22 @@ function buildSendObject(requestData, xIndex, yIndex) {
     return sendObject;
 }
 
-async function sendMultiRequests(sendObjects, userId) {
+async function sendMultiRequests(sendObjects, projectId, userId) {
     for (let i = 0; i < sendObjects.length; i++) {
         const sendObject = sendObjects[i];
         const position = sendObject.position;
 
         for (let i = 0; i < sendObject.amount; i++) {
+            let result = { projectId, position };
+
             try {
                 let response = await sendRequest(sendObject.options, sendObject.data);
                 // TODO: report client request success.
-                events.emit("socket.requestSuccess", userId, {});
+                events.emit("socket.requestSuccess", userId, result);
             }
             catch (e) {
                 // TODO: report client request failed.
-                events.emit("socket.requestError", userId, {});
+                events.emit("socket.requestError", userId, result);
             }
         }
     }
