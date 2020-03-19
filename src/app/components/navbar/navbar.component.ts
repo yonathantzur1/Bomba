@@ -48,4 +48,8 @@ export class NavbarComponent implements OnInit {
     navigateMain() {
         this.router.navigateByUrl("/");
     }
+
+    linkClick(url: string) {
+        this.router.navigateByUrl(url);
+    }
 }
