@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
         this.router.navigateByUrl("/");
     }
 
-    linkClick(url: string) {
+    tabClick(url: string) {
         this.router.navigateByUrl(url);
     }
 }
