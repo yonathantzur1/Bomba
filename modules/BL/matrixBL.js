@@ -94,11 +94,9 @@ async function sendMultiRequests(sendObjects, projectId, userId) {
 
             try {
                 let response = await sendRequest(sendObject.options, sendObject.data);
-                // TODO: report client request success.
                 events.emit("socket.requestSuccess", userId, result);
             }
             catch (e) {
-                // TODO: report client request failed.
                 events.emit("socket.requestError", userId, result);
             }
         }

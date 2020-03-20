@@ -77,19 +77,11 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.container = document.getElementById("matrix-container");
 
         this.socketService.socketOn("requestSuccess", (data: any) => {
-            if (data.projectId != this.projectId) {
-                return;
-            }
-
-            this.resultMatrix[data.requestId].success++;
+            this.increaseRequestStatus(data, "success");
         });
 
         this.socketService.socketOn("requestError", (data: any) => {
-            if (data.projectId != this.projectId) {
-                return;
-            }
-
-            this.resultMatrix[data.requestId].fail++;
+            this.increaseRequestStatus(data, "fail");
         });
     }
 
@@ -97,6 +89,15 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.eventService.unsubscribeEvents(this.eventsIds);
         this.socketService.socketOff("requestSuccess");
         this.socketService.socketOff("requestError");
+    }
+
+    increaseRequestStatus(data: any, status: string) {
+        if (data.projectId != this.projectId) {
+            return;
+        }
+
+        let result: RequestResult = this.resultMatrix[data.requestId];
+        result && result[status]++
     }
 
     addCol(i: number) {
@@ -209,7 +210,11 @@ export class MatrixComponent implements OnInit, OnDestroy {
     initResultMatrix() {
         for (let i = 0; i < this.matrix.length; i++) {
             for (let j = 0; j < this.matrix[i].length; j++) {
-                this.resultMatrix[this.matrix[i][j].id] = new RequestResult();
+                let request: Request = this.matrix[i][j];
+
+                if (!request.isEmpty) {
+                    this.resultMatrix[request.id] = new RequestResult();
+                }
             }
         }
     }

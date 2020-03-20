@@ -8,7 +8,8 @@ module.exports = {
         connectionString: process.env.DEV_CONNECTION_STRING || process.env.BOMBA_CONNECTION_STRING,
         collections: {
             users: "Users",
-            projects: "Projects"
+            projects: "Projects",
+            results: "Results"
         }
     },
     logs: {
