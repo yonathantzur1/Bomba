@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/global/auth.service';
 
 @Component({
     selector: 'home',
@@ -8,13 +8,17 @@ import { Router } from '@angular/router';
     styleUrls: ['./home.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-    currUser: any = null;
+    isLoading: boolean;
+    isAdmin: boolean;
 
-    constructor(private router: Router) { }
-
-    ngOnInit() {
-
+    constructor(private authService: AuthService) {
+        this.isLoading = true;
+        
+        this.authService.isUserAdmin().then(isAdmin => {
+            this.isLoading = false;
+            this.isAdmin = isAdmin;
+        });
     }
 }

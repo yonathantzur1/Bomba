@@ -9,12 +9,13 @@
     <div id="matrix-container" class="matrix-container">
         <table>
             <tr *ngFor="let row of matrix; index as i">
-                <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
+                <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j; ">
                     <cell [request]="matrix[i][j]" [row]="i" [col]="j"></cell>
                     <i *ngIf="!matrix[i][j].isEmpty" class="far fa-edit cell-icon info-cell"
                         (click)="openRequestEdit(matrix[i][j])"></i>
                     <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty" (click)="deleteCell(i, j);saveMatrix();"
                         class="fas fa-times cell-icon delete-cell"></i>
+                    <result-info [request]="matrix[i][j]" [result]="resultMatrix[matrix[i][j].id]"></result-info>
                 </td>
                 <td class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">

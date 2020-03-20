@@ -20,6 +20,7 @@
     height: calc(100% - 65px);
     overflow: auto;
     user-select: none;
+    position: relative;
 }
 
 .cell {
@@ -100,4 +101,10 @@
 
 .send-btn-container:hover {
     background-color: #e7e7e7;
+}
+
+result-info {
+    position: absolute;
+    top: 6px;
+    right: 8px;
 }

@@ -8,6 +8,16 @@ import { SocketService } from 'src/app/services/global/socket.service';
 
 declare let $: any;
 
+export class RequestResult {
+    success: number;
+    fail: number;
+
+    constructor() {
+        this.success = 0;
+        this.fail = 0;
+    }
+}
+
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
@@ -25,6 +35,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     @Input()
     matrix: Array<Array<Request>>;
+
+    resultMatrix: any = {};
 
     container: HTMLElement;
     cellSize: number = 150;
@@ -63,20 +75,20 @@ export class MatrixComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.container = document.getElementById("matrix-container");
 
-        this.socketService.socketOn("requestSuccess", (data) => {
+        this.socketService.socketOn("requestSuccess", (data: any) => {
             if (data.projectId != this.projectId) {
                 return;
             }
 
-            console.log("success");
+            this.resultMatrix[data.requestId].success++;
         });
 
-        this.socketService.socketOn("requestError", (data) => {
+        this.socketService.socketOn("requestError", (data: any) => {
             if (data.projectId != this.projectId) {
                 return;
             }
 
-            console.log("error");
+            this.resultMatrix[data.requestId].fail++;
         });
     }
 
@@ -185,9 +197,19 @@ export class MatrixComponent implements OnInit, OnDestroy {
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
                 this.compressMatrix();
+                this.initResultMatrix();
                 this.matrixService.sendRequests(this.matrix, this.projectId);
             }
         });
+    }
+
+
+    initResultMatrix() {
+        for (let i = 0; i < this.matrix.length; i++) {
+            for (let j = 0; j < this.matrix[i].length; j++) {
+                this.resultMatrix[this.matrix[i][j].id] = new RequestResult();
+            }
+        }
     }
 
     saveMatrix() {

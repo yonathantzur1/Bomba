@@ -26,7 +26,8 @@ const routes: Routes = [
       { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
     ]
   },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: '**', redirectTo: "page-not-found" }
 ];
 
 @NgModule({

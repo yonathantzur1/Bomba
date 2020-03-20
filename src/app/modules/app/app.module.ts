@@ -19,7 +19,8 @@ import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard
 import { RegisterComponent } from '../../components/register/register.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
-import { CellComponent } from '../../components/board/matrix/cell/cell.component';
+import { CellComponent } from '../../components/board/matrix/cell/cell.component'
+import { ResultInfoComponent } from '../../components/board/matrix/resultInfo/resultInfo.component';
 import { CardComponent } from '../../components/card/card.component';
 import { RequestCardComponent } from '../../components/requestCard/requestCard.component';
 import { RequestSettingsComponent } from '../../components/requestSettings/requestSettings.component';
@@ -72,6 +73,7 @@ import { Routing } from '../../routes/app.routing';
     BoardComponent,
     MatrixComponent,
     CellComponent,
+    ResultInfoComponent,
     CardComponent,
     RequestCardComponent,
     RequestSettingsComponent,

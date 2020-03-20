@@ -1,8 +1,11 @@
 <div id="home">
-    <div class="sector">
-        <navbar></navbar>
+    <div *ngIf="!isLoading">
+        <div class="sector">
+            <navbar [isAdmin]="isAdmin"></navbar>
+        </div>
+        <div class="sector main-container">
+            <router-outlet></router-outlet>
+        </div>
     </div>
-    <div class="sector main-container">
-        <router-outlet></router-outlet>
-    </div>
+    <loaderRings *ngIf="isLoading"></loaderRings>
 </div>

@@ -15,7 +15,7 @@ module.exports = {
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
                 let requestData = requestsMatrix[i][j];
-                requestsMatrix[i][j] = buildSendObject(requestData, i, j);
+                requestsMatrix[i][j] = buildSendObject(requestData);
             }
         }
 
@@ -59,7 +59,7 @@ function getRequestUrlData(url) {
     return data;
 }
 
-function buildSendObject(requestData, xIndex, yIndex) {
+function buildSendObject(requestData) {
     let urlData = getRequestUrlData(requestData.url);
 
     let sendObject = {
@@ -69,7 +69,7 @@ function buildSendObject(requestData, xIndex, yIndex) {
             path: urlData.path,
             method: requestData.method
         },
-        position: { xIndex, yIndex },
+        requestId: requestData.id,
         amount: requestData.amount
     }
 
@@ -87,10 +87,10 @@ function buildSendObject(requestData, xIndex, yIndex) {
 async function sendMultiRequests(sendObjects, projectId, userId) {
     for (let i = 0; i < sendObjects.length; i++) {
         const sendObject = sendObjects[i];
-        const position = sendObject.position;
+        const requestId = sendObject.requestId;
 
         for (let i = 0; i < sendObject.amount; i++) {
-            let result = { projectId, position };
+            let result = { projectId, requestId };
 
             try {
                 let response = await sendRequest(sendObject.options, sendObject.data);

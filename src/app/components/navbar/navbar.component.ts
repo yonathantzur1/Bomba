@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/global/auth.service';
 import { CookieService } from 'src/app/services/global/cookie.service';
@@ -23,6 +23,8 @@ class Tab {
 })
 
 export class NavbarComponent implements OnInit {
+    @Input()
+    isAdmin: boolean;
 
     tabs: Array<Tab>;
 
@@ -30,12 +32,15 @@ export class NavbarComponent implements OnInit {
         private cookieService: CookieService,
         private globalService: GlobalService,
         private socketService: SocketService,
-        private authService: AuthService) {
-        this.tabs = [new Tab("Projects", ""), new Tab("Admin", "admin")]
-    }
+        private authService: AuthService) { }
 
     ngOnInit() {
         this.socketService.socketEmit('login');
+        this.tabs = [new Tab("Projects", "")];
+
+        if (this.isAdmin) {
+            this.tabs.push(new Tab("Admin", "admin"));
+        }
     }
 
     logout() {
