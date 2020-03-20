@@ -43,6 +43,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     minScrollCells: number;
     isShowRequestCard: boolean = false;
     selectedRequest: Request;
+    isSend: boolean = false;
 
     eventsIds: Array<string> = [];
 
@@ -199,6 +200,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.compressMatrix();
                 this.initResultMatrix();
                 this.matrixService.sendRequests(this.matrix, this.projectId);
+                this.isSend = true;
             }
         });
     }

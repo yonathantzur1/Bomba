@@ -19,6 +19,9 @@ export class CellComponent {
     @Input()
     col: number;
 
+    @Input()
+    isSend: boolean;
+
     constructor(private eventService: EventService) { }
 
     amountChanged() {

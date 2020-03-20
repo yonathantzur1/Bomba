@@ -1,10 +1,15 @@
 .result-sector {
-    text-align: right;
+    text-align: left;
     font-size: 12px;
 }
 
+.result-type-container {
+    margin-top: 8px;
+}
+
 .result-icon {
-    margin-left: 3px;
+    margin-right: 5px;
+    height: 14px;
 }
 
 .success-icon {
@@ -13,8 +18,9 @@
 
 .fail-icon {
     color: #dc3545;
+    margin-right: 9px;
 }
 
 .break-line {
-    margin-left: 3px;
+    margin-right: 5px;
 }

@@ -1,12 +1,16 @@
 <div id="resultInfo" *ngIf="!request.isEmpty && result">
     <div class="result-sector">
-        <div *ngIf="result.success != 0">
-            <span [hidden]="result.success == request.amount">{{result.success}}
-                <span class="break-line">|</span> </span><i class="fas fa-check result-icon success-icon"></i>
+        <div *ngIf="result.success != 0" class="result-type-container">
+            <i class="fas fa-check result-icon success-icon"></i>
+            <span [hidden]="result.success == request.amount">
+                <span class="break-line">|</span> <span>{{result.success}}</span>
+            </span>
         </div>
-        <div *ngIf="result.fail != 0">
-            <span [hidden]="result.fail == request.amount">{{result.fail}}
-                <span class="break-line">|</span></span><i class="fas fa-bug result-icon fail-icon"></i>
+        <div *ngIf="result.fail != 0" class="result-type-container">
+            <i class="fas fa-times result-icon fail-icon"></i>
+            <span [hidden]="result.fail == request.amount">
+                <span class="break-line">|</span> <span>{{result.fail}}</span>
+            </span>
         </div>
     </div>
 </div>

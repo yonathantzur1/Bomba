@@ -31,9 +31,15 @@
     right: 0;
 }
 
+.amount-number {
+    margin-right: 12px;
+    margin-bottom: 8px;
+    float: right;
+}
+
 .amount-input {
-    width: 48px;
-    font-size: 12px;
+    width: 50px;
+    font-size: 12px !important;
     margin-right: 5px;
     margin-bottom: 5px;
     text-align: center;

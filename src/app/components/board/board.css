@@ -6,7 +6,6 @@
 
 .sector {
     height: calc(100% - 15px);
-    max-height: 800px;
 }
 
 .matrix-sector {
