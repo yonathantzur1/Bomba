@@ -119,7 +119,7 @@ result-info {
 
 loader-dots {
     position: absolute;
-    left: 15px;
+    left: 45px;
 }
 
 .report-icon {
@@ -130,4 +130,13 @@ loader-dots {
 
 .close-report-icon {
     left: 20px;
+}
+
+.stop-requests-icon {
+    position: absolute;
+    left: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-right: 1px solid black;
+    padding-right: 8px;
 }

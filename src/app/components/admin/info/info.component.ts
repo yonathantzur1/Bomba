@@ -9,11 +9,8 @@ import { InfoCard } from './infoCard/infoCard.component';
 })
 
 export class InfoComponent {
-    @Input()
-    title: string;
-
-    @Input()
-    cards: Array<InfoCard>;
+    @Input() title: string;
+    @Input() cards: Array<InfoCard>;
     
     constructor() { }
 

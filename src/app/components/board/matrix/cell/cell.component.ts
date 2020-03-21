@@ -10,17 +10,10 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 })
 
 export class CellComponent {
-    @Input()
-    request: Request;
-
-    @Input()
-    row: number;
-
-    @Input()
-    col: number;
-
-    @Input()
-    isSendMode: boolean;
+    @Input() request: Request;
+    @Input() row: number;
+    @Input() col: number;
+    @Input() isSendMode: boolean;
 
     constructor(private eventService: EventService) { }
 

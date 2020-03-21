@@ -17,4 +17,10 @@ export class MatrixService extends BasicService {
 
         return super.post('/sendRequests', data);
     }
+
+    stopRequests(projectId: string) {
+        let data = { projectId };
+
+        return super.post('/stopRequests', data);
+    }
 }

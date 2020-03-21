@@ -14,14 +14,9 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 
 export class RequestsComponent implements OnDestroy {
 
-    @Input()
-    projectId: string;
-
-    @Input()
-    requests: Array<Request>;
-
-    @Input()
-    defaultSettings: DefaultSettings;
+    @Input() projectId: string;
+    @Input() requests: Array<Request>;
+    @Input() defaultSettings: DefaultSettings;
 
     isShowRequestCard: boolean = false;
     isShowRequestSettings: boolean = false;

@@ -23,8 +23,8 @@ class Tab {
 })
 
 export class NavbarComponent implements OnInit {
-    @Input()
-    isAdmin: boolean;
+    
+    @Input() isAdmin: boolean;
 
     tabs: Array<Tab>;
 

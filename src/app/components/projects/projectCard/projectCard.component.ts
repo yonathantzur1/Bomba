@@ -17,11 +17,10 @@ declare let $: any;
 
 export class ProjectCardComponent implements OnInit {
 
+    @Input() editProject: Project;
+    
     name: string = "";
     validationFuncs: Array<InputFieldValidation>;
-
-    @Input()
-    editProject: Project;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,

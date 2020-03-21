@@ -83,6 +83,10 @@ class Body {
 })
 
 export class RequestCardComponent implements OnInit {
+
+    @Input() selectedRequest: Request;
+    @Input() defaultSettings: DefaultSettings;
+
     request: Request;
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
@@ -90,12 +94,6 @@ export class RequestCardComponent implements OnInit {
     bodyType: any = BODY_TYPE;
     formatStr: string = "{  }";
     method: any = METHOD;
-
-    @Input()
-    selectedRequest: Request;
-
-    @Input()
-    defaultSettings: DefaultSettings;
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {

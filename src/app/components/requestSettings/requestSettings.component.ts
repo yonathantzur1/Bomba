@@ -23,11 +23,8 @@ export class DefaultSettings {
 
 export class RequestSettingsComponent implements OnInit {
 
-    @Input()
-    projectId: string;
-
-    @Input()
-    defaultSettings: DefaultSettings;
+    @Input() projectId: string;
+    @Input() defaultSettings: DefaultSettings;
 
     method: any = METHOD;
 

@@ -6,4 +6,9 @@ router.post('/sendRequests', (req, res) => {
     res.end();
 });
 
+router.post('/stopRequests', (req, res) => {
+    matrixBL.stopRequests(req.body.projectId, req.user._id);
+    res.end();
+});
+
 module.exports = router;

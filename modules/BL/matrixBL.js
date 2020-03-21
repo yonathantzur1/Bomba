@@ -8,10 +8,14 @@ const events = require('../events');
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
+    projectsRequests: {},
+
     async sendRequestsMatrix(requestsMatrix, projectId, userId) {
         if (await isProjectOwnerValid(projectId, userId) == false) {
             return;
         }
+
+        this.projectsRequests[projectId] = true;
 
         let resultId = await resultsBL.initResults(requestsMatrix, projectId, userId);
 
@@ -22,9 +26,41 @@ module.exports = {
             }
         }
 
+        let promises = [];
+
         for (let i = 0; i < requestsMatrix.length; i++) {
-            sendMultiRequests(requestsMatrix[i], projectId, userId, resultId);
+            promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId, resultId));
         }
+
+        Promise.all(promises).then(data => {
+            delete this.projectsRequests[projectId];
+        });
+    },
+
+    async sendMultiRequests(sendObjects, projectId, userId, resultId) {
+        for (let i = 0; i < sendObjects.length && this.projectsRequests[projectId]; i++) {
+            const sendObject = sendObjects[i];
+            const requestId = sendObject.requestId;
+
+            for (let i = 0; i < sendObject.amount && this.projectsRequests[projectId]; i++) {
+                let result = { projectId, requestId };
+
+                try {
+                    let response = await sendRequest(sendObject.options, sendObject.data);
+                    await resultsBL.increaseResultState(resultId, requestId, "success");
+                    events.emit("socket.requestSuccess", userId, result);
+                }
+                catch (e) {
+                    await resultsBL.increaseResultState(resultId, requestId, "fail");
+                    events.emit("socket.requestError", userId, result);
+                }
+            }
+        }
+    },
+
+    stopRequests(projectId, userId) {
+        delete this.projectsRequests[projectId];
+        resultsBL.removeResults(projectId, userId);
     }
 }
 
@@ -85,27 +121,6 @@ function buildSendObject(requestData) {
     }
 
     return sendObject;
-}
-
-async function sendMultiRequests(sendObjects, projectId, userId, resultId) {
-    for (let i = 0; i < sendObjects.length; i++) {
-        const sendObject = sendObjects[i];
-        const requestId = sendObject.requestId;
-
-        for (let i = 0; i < sendObject.amount; i++) {
-            let result = { projectId, requestId };
-
-            try {
-                let response = await sendRequest(sendObject.options, sendObject.data);
-                await resultsBL.increaseResultState(resultId, requestId, "success");
-                events.emit("socket.requestSuccess", userId, result);
-            }
-            catch (e) {
-                await resultsBL.increaseResultState(resultId, requestId, "fail");
-                events.emit("socket.requestError", userId, result);
-            }
-        }
-    }
 }
 
 function isHttpsRequst(url) {

@@ -7,8 +7,11 @@
             </div>
         </span>
         <span *ngIf="isSendMode" class="matrix-top-buttons">
-            <loader-dots *ngIf="requestsAmount > resultsAmount" css='{"font-size": "10px", "padding-top": "15px"}'>
-            </loader-dots>
+            <span *ngIf="requestsAmount > resultsAmount" class="matrix-top-buttons">
+                <loader-dots css='{"font-size": "10px", "padding-top": "15px"}'>
+                </loader-dots>
+                <i (click)="stopRequests()" class="far fa-hand-paper stop-requests-icon" title="Stop Requests"></i>
+            </span>
             <span *ngIf="requestsAmount == resultsAmount" class="matrix-top-buttons">
                 <i (click)="closeReport()" title="Close Report" class="fas fa-times report-icon close-report-icon"></i>
             </span>

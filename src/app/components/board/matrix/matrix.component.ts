@@ -28,20 +28,11 @@ export class RequestResult {
 
 export class MatrixComponent implements OnInit, OnDestroy {
 
-    @Input()
-    projectId: string;
-
-    @Input()
-    projectName: string;
-
-    @Input()
-    matrix: Array<Array<Request>>;
-
-    @Input()
-    isSendMode: boolean;
-
-    @Input()
-    results: any;
+    @Input() projectId: string;
+    @Input() projectName: string;
+    @Input() matrix: Array<Array<Request>>;
+    @Input() isSendMode: boolean;
+    @Input() results: any;
 
     requestsAmount: number;
     resultsAmount: number;
@@ -272,5 +263,17 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
         this.results = {};
         this.resultsAmount = 0;
+    }
+
+    stopRequests() {
+        this.alertService.alert({
+            title: "Stop Requests",
+            text: "Please confirm stopping requests sending.",
+            type: ALERT_TYPE.INFO,
+            confirmFunc: () => {
+                this.matrixService.stopRequests(this.projectId);
+                this.closeReport();
+            }
+        });
     }
 }

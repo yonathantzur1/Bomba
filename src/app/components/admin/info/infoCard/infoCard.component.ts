@@ -20,8 +20,7 @@ export class InfoCard {
 export class InfoCardComponent {
     users: Array<InfoCard>
 
-    @Input()
-    card: InfoCard;
+    @Input() card: InfoCard;
 
     constructor() { }
 

@@ -11,11 +11,8 @@ import { RequestResult } from '../matrix.component';
 
 export class ResultInfoComponent {
 
-    @Input()
-    request: Request;
-
-    @Input()
-    result: RequestResult;
+    @Input() request: Request;
+    @Input() result: RequestResult;
 
     constructor() { }
 
