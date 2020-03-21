@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         this.socketService.socketEmit('login');
-        this.tabs = [new Tab("Projects", "")];
+        this.tabs = [new Tab("Projects", ""), new Tab("Reports", "reports")];
 
         if (this.isAdmin) {
             this.tabs.push(new Tab("Admin", "admin"));

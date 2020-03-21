@@ -4,7 +4,7 @@
 		<img src="assets/logo/icon.png" class="login-head-icon">
 	</div>
 	<div (keyup.enter)="loginEnter()" align="center" class="row card-container col-md-4 col-11">
-		<loaderSpinner class="loader" *ngIf="isLoading"></loaderSpinner>
+		<loader-spinner class="loader" *ngIf="isLoading"></loader-spinner>
 		<div class="disable-screen" *ngIf="isLoading"></div>
 		<form>
 			<div class="form-group">

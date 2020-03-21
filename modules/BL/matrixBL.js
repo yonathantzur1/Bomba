@@ -1,4 +1,5 @@
 const DAL = require('../DAL');
+const resultsBL = require('./resultsBL');
 const config = require('../../config');
 const http = require('http');
 const https = require('https');
@@ -12,6 +13,8 @@ module.exports = {
             return;
         }
 
+        let resultId = await resultsBL.initResults(requestsMatrix, projectId, userId);
+
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
                 let requestData = requestsMatrix[i][j];
@@ -20,7 +23,7 @@ module.exports = {
         }
 
         for (let i = 0; i < requestsMatrix.length; i++) {
-            sendMultiRequests(requestsMatrix[i], projectId, userId);
+            sendMultiRequests(requestsMatrix[i], projectId, userId, resultId);
         }
     }
 }
@@ -84,7 +87,7 @@ function buildSendObject(requestData) {
     return sendObject;
 }
 
-async function sendMultiRequests(sendObjects, projectId, userId) {
+async function sendMultiRequests(sendObjects, projectId, userId, resultId) {
     for (let i = 0; i < sendObjects.length; i++) {
         const sendObject = sendObjects[i];
         const requestId = sendObject.requestId;
@@ -94,9 +97,11 @@ async function sendMultiRequests(sendObjects, projectId, userId) {
 
             try {
                 let response = await sendRequest(sendObject.options, sendObject.data);
+                await resultsBL.increaseResultState(resultId, requestId, "success");
                 events.emit("socket.requestSuccess", userId, result);
             }
             catch (e) {
+                await resultsBL.increaseResultState(resultId, requestId, "fail");
                 events.emit("socket.requestError", userId, result);
             }
         }

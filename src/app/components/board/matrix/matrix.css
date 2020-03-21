@@ -14,6 +14,14 @@
     position: relative;
 }
 
+.matrix-top-buttons {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
 .matrix-container {
     margin: 15px;
     width: auto;
@@ -105,6 +113,21 @@
 
 result-info {
     position: absolute;
-    bottom: 6px;
+    bottom: 4px;
     left: 8px;
+}
+
+loader-dots {
+    position: absolute;
+    left: 15px;
+}
+
+.report-icon {
+    position: absolute;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.close-report-icon {
+    left: 20px;
 }

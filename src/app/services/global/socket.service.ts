@@ -45,11 +45,11 @@ export class SocketService {
     }
 
     socketOn(name: string, func: Function) {
-        this.socket.on(name, func);
+        this.socket && this.socket.on(name, func);
     }
 
     socketOff(name: string) {
-        this.socket.off(name);
+        this.socket && this.socket.off(name);
     }
 
     // This function should be called in order to refresh

@@ -1,30 +1,41 @@
 <div id="matrix">
     <div class="matrix-top">
-        <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress compress-icon"></i>
-        <span>{{projectName}} - Matrix</span>
-        <div *ngIf="isMatrixNotEmpty()" (click)="sendRequests()" class="send-btn-container">
-            <i class="far fa-paper-plane"></i>
-        </div>
+        <span *ngIf="!isSendMode" class="matrix-top-buttons">
+            <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress compress-icon"></i>
+            <div *ngIf="isMatrixNotEmpty()" (click)="sendRequests()" class="send-btn-container">
+                <i class="far fa-paper-plane"></i>
+            </div>
+        </span>
+        <span *ngIf="isSendMode" class="matrix-top-buttons">
+            <loader-dots *ngIf="requestsAmount > resultsAmount" css='{"font-size": "10px", "padding-top": "15px"}'>
+            </loader-dots>
+            <span *ngIf="requestsAmount == resultsAmount" class="matrix-top-buttons">
+                <i (click)="closeReport()" title="Close Report" class="fas fa-times report-icon close-report-icon"></i>
+            </span>
+        </span>
+        <span>{{projectName + (isSendMode ? " - Report": "Matrix")}}</span>
     </div>
     <div id="matrix-container" class="matrix-container">
         <table>
             <tr *ngFor="let row of matrix; index as i">
                 <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j; ">
-                    <cell [request]="matrix[i][j]" [row]="i" [col]="j" [isSend]="isSend"></cell>
-                    <i *ngIf="!matrix[i][j].isEmpty && !isSend" class="far fa-edit cell-icon info-cell"
-                        (click)="openRequestEdit(matrix[i][j])"></i>
-                    <i *ngIf="(!isLastCellOnMatrix() || !matrix[i][j].isEmpty) && !isSend" (click)="deleteCell(i, j);saveMatrix();"
-                        class="fas fa-times cell-icon delete-cell"></i>
-                    <result-info [request]="matrix[i][j]" [result]="resultMatrix[matrix[i][j].id]"></result-info>
+                    <cell [request]="matrix[i][j]" [row]="i" [col]="j" [isSendMode]="isSendMode"></cell>
+                    <span *ngIf="!isSendMode">
+                        <i *ngIf="!matrix[i][j].isEmpty" class="far fa-edit cell-icon info-cell"
+                            (click)="openRequestEdit(matrix[i][j])"></i>
+                        <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty"
+                            (click)="deleteCell(i, j);saveMatrix();" class="fas fa-times cell-icon delete-cell"></i>
+                    </span>
+                    <result-info [request]="matrix[i][j]" [result]="results[matrix[i][j].id]"></result-info>
                 </td>
-                <td *ngIf="!isSend" class="cell plus-sector" (click)="addCol(i)">
+                <td *ngIf="!isSendMode" class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">
                         <i class="add-icon far fa-plus-square"></i>
                         <div class="plus-txt">(Sync)</div>
                     </div>
                 </td>
             </tr>
-            <tr *ngIf="!isSend">
+            <tr *ngIf="!isSendMode">
                 <td class="cell plus-sector" (click)="addRow()">
                     <div class="plus-icon-container">
                         <i class="add-icon far fa-plus-square"></i>

@@ -5,6 +5,7 @@ import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
+import { ResultsService } from 'src/app/services/results.service';
 
 declare let $: any;
 
@@ -21,7 +22,7 @@ export class RequestResult {
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
-    providers: [MatrixService],
+    providers: [MatrixService, BoardService, ResultsService],
     styleUrls: ['./matrix.css']
 })
 
@@ -36,14 +37,20 @@ export class MatrixComponent implements OnInit, OnDestroy {
     @Input()
     matrix: Array<Array<Request>>;
 
-    resultMatrix: any = {};
+    @Input()
+    isSendMode: boolean;
+
+    @Input()
+    results: any;
+
+    requestsAmount: number;
+    resultsAmount: number;
 
     container: HTMLElement;
     cellSize: number = 150;
     minScrollCells: number;
     isShowRequestCard: boolean = false;
     selectedRequest: Request;
-    isSend: boolean = false;
 
     eventsIds: Array<string> = [];
 
@@ -51,6 +58,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         public socketService: SocketService,
         public alertService: AlertService,
         private matrixService: MatrixService,
+        private resultsService: ResultsService,
         private boardService: BoardService) {
 
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
@@ -76,6 +84,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.container = document.getElementById("matrix-container");
 
+        if (Object.keys(this.results).length > 0) {
+            this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
+        }
+
         this.socketService.socketOn("requestSuccess", (data: any) => {
             this.increaseRequestStatus(data, "success");
         });
@@ -83,6 +95,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.socketService.socketOn("requestError", (data: any) => {
             this.increaseRequestStatus(data, "fail");
         });
+
+        this.requestsAmount = this.getMatrixRequestsAmount();
+        this.resultsAmount = this.getResultsAmount();
     }
 
     ngOnDestroy() {
@@ -96,8 +111,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
             return;
         }
 
-        let result: RequestResult = this.resultMatrix[data.requestId];
-        result && result[status]++
+        let result: RequestResult = this.results[data.requestId];
+
+        if (result) {
+            result[status]++;
+            this.resultsAmount++;
+        }
     }
 
     addCol(i: number) {
@@ -201,7 +220,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.compressMatrix();
                 this.initResultMatrix();
                 this.matrixService.sendRequests(this.matrix, this.projectId);
-                this.isSend = true;
+                this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
+                this.requestsAmount = this.getMatrixRequestsAmount();
             }
         });
     }
@@ -213,7 +233,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 let request: Request = this.matrix[i][j];
 
                 if (!request.isEmpty) {
-                    this.resultMatrix[request.id] = new RequestResult();
+                    this.results[request.id] = new RequestResult();
                 }
             }
         }
@@ -221,5 +241,36 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     saveMatrix() {
         this.boardService.saveMatrix(this.projectId, this.matrix);
+    }
+
+    getMatrixRequestsAmount() {
+        let amount = 0;
+
+        for (let i = 0; i < this.matrix.length; i++) {
+            for (let j = 0; j < this.matrix[i].length; j++) {
+                amount += this.matrix[i][j].amount;
+            }
+        }
+
+        return amount;
+    }
+
+    getResultsAmount() {
+        let amount = 0;
+
+        Object.keys(this.results).forEach(reqId => {
+            let result = this.results[reqId];
+
+            amount += result.success + result.fail;
+        });
+
+        return amount;
+    }
+
+    closeReport() {
+        this.resultsService.removeResults(this.projectId);
+        this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
+        this.results = {};
+        this.resultsAmount = 0;
     }
 }

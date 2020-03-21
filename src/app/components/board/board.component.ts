@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
+import { ResultsService } from 'src/app/services/results.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +13,7 @@ declare let interact: any;
 @Component({
     selector: 'board',
     templateUrl: './board.html',
-    providers: [BoardService],
+    providers: [BoardService, ResultsService],
     styleUrls: ['./board.css']
 })
 
@@ -24,15 +25,24 @@ export class BoardComponent implements OnInit, OnDestroy {
     projectName: string;
     matrix: Array<Array<Request>>;
     requests: Array<Request>;
+    results: any;
     defaultSettings: DefaultSettings;
 
     isLoading: boolean = false;
+    isSendMode: boolean = false;
+
+    eventsIds: Array<string> = [];
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private eventService: EventService,
         private snackbarService: SnackbarService,
-        private boardService: BoardService) { }
+        private boardService: BoardService,
+        private resultsService: ResultsService) {
+        this.eventService.register(EVENT_TYPE.REQUESTS_SEND_MODE, (mode: boolean) => {
+            this.isSendMode = mode;
+        }, this.eventsIds);
+    }
 
     ngOnInit() {
         enableDragAndDrop(this);
@@ -43,21 +53,44 @@ export class BoardComponent implements OnInit, OnDestroy {
 
             this.isLoading = true;
 
-            this.boardService.getProjectBoard(this.projectId).then(result => {
+            let dataQueries = [this.boardService.getProjectBoard(this.projectId),
+            this.resultsService.getResults(this.projectId)];
+
+            Promise.all(dataQueries).then(data => {
                 this.isLoading = false;
 
-                if (!result) {
+                let matrixResult = data[0];
+                let requestsResults = data[1];
+
+                if (!matrixResult) {
                     this.snackbarService.snackbar("Server error occurred");
                     this.router.navigateByUrl('');
+                    return;
                 }
                 else {
-                    this.projectName = result.name;
-                    this.matrix = this.mapMatrix(result.matrix);
-                    this.requests = this.mapRequests(result.requests);
-                    this.defaultSettings = result.defaultSettings;
+                    this.projectName = matrixResult.name;
+                    this.matrix = this.mapMatrix(matrixResult.matrix);
+                    this.requests = this.mapRequests(matrixResult.requests);
+                    this.defaultSettings = matrixResult.defaultSettings;
+                }
+
+                if (requestsResults) {
+                    this.results = requestsResults;
+                    this.isSendMode = true;
+                }
+                else {
+                    this.results = {};
+                    this.isSendMode = false;
                 }
             });
+
         });
+    }
+
+    ngOnDestroy() {
+        this.dropzoneInteract.unset();
+        this.draggableInteract.unset();
+        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     mapMatrix(matrix: any) {
@@ -86,11 +119,6 @@ export class BoardComponent implements OnInit, OnDestroy {
         else {
             return [];
         }
-    }
-
-    ngOnDestroy() {
-        this.dropzoneInteract.unset();
-        this.draggableInteract.unset();
     }
 
     dropRequestCard(cardId: string, matrixCellId: string) {

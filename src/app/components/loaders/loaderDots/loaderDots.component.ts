@@ -6,8 +6,9 @@ declare let $: any;
 let loaderDotsComponentInstances = 0;
 
 @Component({
-    selector: 'loaderDots',
-    templateUrl: './loaderDots.html'
+    selector: 'loader-dots',
+    templateUrl: './loaderDots.html',
+    styleUrls: ['./loaderDots.css']
 })
 
 export class LoaderDotsComponent implements OnInit {

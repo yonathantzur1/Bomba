@@ -16,6 +16,11 @@
     position: relative;
 }
 
+.send-mode {
+    width: 100%;
+    border-right: none;
+}
+
 .cards-sector {
     width: var(--cards-secotr-width);
     float: right;

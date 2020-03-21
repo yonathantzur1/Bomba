@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'loaderRings',
+    selector: 'loade-rings',
     templateUrl: './loaderRings.html',
     styleUrls: ['./loaderRings.css']
 })

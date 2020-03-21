@@ -20,7 +20,7 @@ export class CellComponent {
     col: number;
 
     @Input()
-    isSend: boolean;
+    isSendMode: boolean;
 
     constructor(private eventService: EventService) { }
 
