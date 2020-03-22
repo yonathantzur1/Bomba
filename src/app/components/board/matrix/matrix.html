@@ -30,6 +30,9 @@
                             (click)="deleteCell(i, j);saveMatrix();" class="fas fa-times cell-icon delete-cell"></i>
                     </span>
                     <result-info [request]="matrix[i][j]" [result]="results[matrix[i][j].id]"></result-info>
+                    <div *ngIf="isSendMode && getResultAverageTime(results[matrix[i][j].id])" class="time-overlay">
+                        Average time: {{getResultAverageTime(results[matrix[i][j].id])}} (s)
+                    </div>
                 </td>
                 <td *ngIf="!isSendMode" class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">

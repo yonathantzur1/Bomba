@@ -12,10 +12,12 @@ declare let $: any;
 export class RequestResult {
     success: number;
     fail: number;
+    time: number;
 
     constructor() {
         this.success = 0;
         this.fail = 0;
+        this.time = 0;
     }
 }
 
@@ -107,6 +109,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         if (result) {
             result[status]++;
             this.resultsAmount++;
+            result.time += data.time;
         }
     }
 
@@ -275,5 +278,14 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.closeReport();
             }
         });
+    }
+
+    getResultAverageTime(result: RequestResult) {
+        if (result == null) {
+            return null;
+        }
+
+        let resultsAmount = result.success + result.fail;
+        return resultsAmount == 0 ? null : (result.time / resultsAmount).toFixed(3);
     }
 }
