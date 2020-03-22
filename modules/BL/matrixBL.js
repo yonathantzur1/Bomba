@@ -44,14 +44,19 @@ module.exports = {
 
             for (let i = 0; i < sendObject.amount && this.projectsRequests[projectId]; i++) {
                 let result = { projectId, requestId };
+                let startTime = new Date();
 
                 try {
-                    let response = await sendRequest(sendObject.options, sendObject.data);
-                    await resultsBL.increaseResultState(resultId, requestId, "success");
+                    result.response = await sendRequest(sendObject.options, sendObject.data);
+                    let endTime = new Date();
+                    result.time = getDatesDiffBySeconds(endTime, startTime);
+                    await resultsBL.updateResult(resultId, requestId, "success", result.time);
                     events.emit("socket.requestSuccess", userId, result);
                 }
                 catch (e) {
-                    await resultsBL.increaseResultState(resultId, requestId, "fail");
+                    let endTime = new Date();
+                    result.time = getDatesDiffBySeconds(endTime, startTime);
+                    await resultsBL.updateResult(resultId, requestId, "fail", result.time);
                     events.emit("socket.requestError", userId, result);
                 }
             }
@@ -62,6 +67,10 @@ module.exports = {
         delete this.projectsRequests[projectId];
         resultsBL.removeResults(projectId, userId);
     }
+}
+
+function getDatesDiffBySeconds(date1, date2) {
+    return Math.abs((date1.getTime() - date2.getTime()) / 1000);
 }
 
 async function isProjectOwnerValid(projectId, userId) {

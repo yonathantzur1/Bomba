@@ -11,7 +11,8 @@ module.exports = {
             for (let j = 0; j < matrix[i].length; j++) {
                 results[matrix[i][j].id] = {
                     "success": 0,
-                    "fail": 0
+                    "fail": 0,
+                    "time": 0
                 }
             }
         }
@@ -40,15 +41,16 @@ module.exports = {
         return data ? data.results : null;
     },
 
-    increaseResultState(resultId, requestId, state) {
+    updateResult(resultId, requestId, state, time) {
         let resultsFilter = {
             _id: DAL.getObjectId(resultId),
         };
 
-        let jsonStr = '{ "$inc": { "' + "results." + requestId + "." + state + '" : 1 } }';
-        let update = JSON.parse(jsonStr);
+        let jsonStr = '{ "$inc": { "' + "results." + requestId + "." + state + '": 1,' +
+            ' "results.' + requestId + '.time": ' + time + ' } }';
+        let updateObj = JSON.parse(jsonStr);
 
-        return DAL.updateOne(resultsCollectionName, resultsFilter, update);
+        return DAL.updateOne(resultsCollectionName, resultsFilter, updateObj);
     },
 
     removeResults(projectId, userId) {
