@@ -151,7 +151,7 @@ loader-dots {
 }
 
 .time-overlay:hover {
-    opacity: 100% !important;
+    opacity: 1 !important;
     padding-top: 10px;
     font-size: 11px;
     transition: opacity 0.08s;
