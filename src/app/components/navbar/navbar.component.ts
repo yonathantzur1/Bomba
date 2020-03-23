@@ -9,10 +9,12 @@ import { SOCKET_STATE } from 'src/app/enums';
 class Tab {
     name: string;
     url: string;
+    isClicked: boolean;
 
-    constructor(name: string, url: string) {
+    constructor(name: string, url: string, isClicked?: boolean) {
         this.name = name;
         this.url = url;
+        this.isClicked = isClicked || false;
     }
 }
 
@@ -62,7 +64,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
         }, self.checkSocketConnectDelay * 1000);
 
-        this.tabs = [new Tab("Projects", ""), new Tab("Reports", "reports")];
+        this.tabs = [new Tab("Projects", "", true), new Tab("Reports", "reports")];
 
         if (this.isAdmin) {
             this.tabs.push(new Tab("Admin", "admin"));
@@ -84,7 +86,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl("/");
     }
 
-    tabClick(url: string) {
-        this.router.navigateByUrl(url);
+    tabClick(tab: Tab) {
+        this.tabs.forEach((currTab: Tab) => {
+            currTab.isClicked = false;
+        });
+
+        tab.isClicked = true;
+        this.router.navigateByUrl(tab.url);
     }
 }

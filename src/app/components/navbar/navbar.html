@@ -4,7 +4,10 @@
             <img class="logo-image" src="assets/logo/icon.png">
         </div>
         <div class="tabs" [ngStyle]="{'column-count': tabs.length}">
-            <a class="tab" (click)="tabClick(tab.url)" *ngFor="let tab of tabs">{{tab.name}}</a>
+            <span class="tab" [ngClass]="{'clicked-tab': tab.isClicked}" (click)="tabClick(tab)"
+                *ngFor="let tab of tabs">
+                {{tab.name}}
+            </span>
         </div>
         <div class="logout-container" (click)="logout()">
             <span class="logout-text">Logout</span>

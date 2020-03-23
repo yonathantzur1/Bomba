@@ -48,3 +48,7 @@
 .logout-text {
     margin-right: 5px;
 }
+
+.clicked-tab {
+    text-decoration: underline;
+}
