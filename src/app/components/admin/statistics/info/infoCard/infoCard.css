@@ -14,7 +14,7 @@
 }
 
 .title {
-    font-size: 18px;
+    font-size: 20px;
     margin-top: 3px;
 }
 
@@ -27,6 +27,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
 }

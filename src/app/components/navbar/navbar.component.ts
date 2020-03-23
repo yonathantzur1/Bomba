@@ -11,10 +11,10 @@ class Tab {
     url: string;
     isClicked: boolean;
 
-    constructor(name: string, url: string, isClicked?: boolean) {
+    constructor(name: string, url: string) {
         this.name = name;
         this.url = url;
-        this.isClicked = isClicked || false;
+        this.isClicked = false;
     }
 }
 
@@ -64,10 +64,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
         }, self.checkSocketConnectDelay * 1000);
 
-        this.tabs = [new Tab("Projects", "", true), new Tab("Reports", "reports")];
+        this.initializeTabs();
+    }
+
+    initializeTabs() {
+        this.tabs = [new Tab("Projects", "/"), new Tab("Reports", "/reports")];
 
         if (this.isAdmin) {
-            this.tabs.push(new Tab("Admin", "admin"));
+            this.tabs.push(new Tab("Users", "/users"));
+            this.tabs.push(new Tab("Statistics", "/statistics"));
+        }
+
+        for (let i = 0 ; i < this.tabs.length; i++) {
+            let tab: Tab = this.tabs[i];
+
+            if (tab.url == this.router.url) {
+                tab.isClicked = true;
+                break;
+            }
         }
     }
 

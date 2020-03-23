@@ -100,11 +100,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                 // In case the user was not found.
                 else if (result == "-1") {
                     this.alertService.alert({
-                        title: "User is not exists",
+                        title: "User does not exist",
                         text: "Would you like to register?",
                         type: ALERT_TYPE.INFO,
                         confirmBtnText: "Yes",
-                        cancelBtnText: "No",
+                        closeBtnText: "No",
                         confirmFunc: () => {
                             self.globalService.setData("registerUsername", self.user.username);
                             self.isShowRegister = true;

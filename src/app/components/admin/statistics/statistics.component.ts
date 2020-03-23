@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { InfoCard } from './info/infoCard/infoCard.component';
 
 @Component({
-    selector: 'admin',
-    templateUrl: './admin.html',
+    selector: 'statistics',
+    templateUrl: './statistics.html',
     providers: [],
-    styleUrls: ['./admin.css']
+    styleUrls: ['./statistics.css']
 })
 
-export class AdminComponent {
+export class StatisticsComponent {
     usersInfoCards: Array<InfoCard>;
     statisticsInfoCards: Array<InfoCard>;
 

@@ -4,9 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 // Components
 import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
-import { AdminComponent } from '../components/admin/admin.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
+import { ReportsComponent } from '../components/reports/reports.component';
 import { BoardComponent } from '../components/board/board.component';
+import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
+import { UsersComponent } from '../components/admin/users/users.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -22,8 +24,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: ProjectsComponent },
+      { path: 'reports', component: ReportsComponent },
       { path: 'board/:id', component: BoardComponent },
-      { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] }
+      { path: 'statistics', component: StatisticsComponent, canActivate: [AdminGuard] },
+      { path: 'users', component: UsersComponent, canActivate: [AdminGuard] }
     ]
   },
   { path: 'page-not-found', component: PageNotFoundComponent },

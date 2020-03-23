@@ -12,10 +12,12 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { SnackbarComponent } from '../../components/snackbar/snackbar.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { HomeComponent } from '../../components/home/home.component';
+import { ReportsComponent } from 'src/app/components/reports/reports.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { AdminComponent } from '../../components/admin/admin.component';
-import { InfoComponent } from '../../components/admin/info/info.component';
-import { InfoCardComponent } from '../../components/admin/info/infoCard/infoCard.component';
+import { StatisticsComponent } from '../../components/admin/statistics/statistics.component';
+import { UsersComponent } from '../../components/admin/users/users.component';
+import { InfoComponent } from '../../components/admin/statistics/info/info.component';
+import { InfoCardComponent } from '../../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../../components/register/register.component';
 import { BoardComponent } from '../../components/board/board.component';
 import { MatrixComponent } from '../../components/board/matrix/matrix.component';
@@ -65,8 +67,10 @@ import { Routing } from '../../routes/app.routing';
     SnackbarComponent,
     LoginComponent,
     HomeComponent,
+    ReportsComponent,
     NavbarComponent,
-    AdminComponent,
+    StatisticsComponent,
+    UsersComponent,
     InfoComponent,
     InfoCardComponent,
     RegisterComponent,
