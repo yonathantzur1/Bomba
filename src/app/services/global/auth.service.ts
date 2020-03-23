@@ -14,6 +14,10 @@ export class AuthService extends BasicService {
         return super.get('/isUserOnSession');
     }
 
+    isUserSocketConnect() {
+        return super.get('/isUserSocketConnect');
+    }
+
     isUserAdmin() {
         return super.get('/isUserAdmin');
     }

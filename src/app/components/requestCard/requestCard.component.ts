@@ -2,14 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
-
-export enum METHOD {
-    DEFAULT = "Default Method",
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE"
-}
+import { METHOD } from 'src/app/enums';
 
 export class Request {
     id: string;

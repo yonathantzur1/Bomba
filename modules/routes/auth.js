@@ -2,6 +2,7 @@ const router = require('express').Router();
 const loginBL = require('../BL/loginBL');
 const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
+const enums = require('../enums');
 
 // Checking if the session of the user is open.
 router.get('/isUserOnSession', (req, res) => {
@@ -25,6 +26,21 @@ router.get('/isUserOnSession', (req, res) => {
             errorHandler.routeError(err, res);
         });
     }
+});
+
+router.get('/isUserSocketConnect', (req, res) => {
+    let state;
+
+    // In case the user is logout.
+    if (!tokenHandler.validateUserAuthCookies(req)) {
+        state = enums.SOCKET_STATE.LOGOUT;
+    }
+    else {
+        let socketUser = req.connectedUsers[req.user._id];
+        state = socketUser ? enums.SOCKET_STATE.ACTIVE : enums.SOCKET_STATE.CLOSE;
+    }
+
+    res.send({ state });
 });
 
 router.get('/isUserAdmin', (req, res) => {

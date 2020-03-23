@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { METHOD } from '../requestCard/requestCard.component';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { METHOD } from 'src/app/enums';
 
 export class DefaultSettings {
     url: string;

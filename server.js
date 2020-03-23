@@ -23,10 +23,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('./'));
 
-require('./modules/sockets/socket')(io)
+let connectedUsers = require('./modules/sockets/socket')(io)
 
 // Import routes.
-require('./modules/routes/main')(app);
+require('./modules/routes/main')(app, connectedUsers);
 
 // Allowed files extensions list.
 const allowedExt = [
