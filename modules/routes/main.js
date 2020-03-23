@@ -9,12 +9,17 @@ module.exports = (app, connectedUsers) => {
         '/auth/deleteClientAuth'
     ], permissionsMiddleware.auth));
 
+    app.use('/api/admin', permissionsMiddleware.admin);
+
     app.use('/api/login', require('./login'));
     app.use('/api/register', require('./register'));
     app.use('/api/projects', require('./projects'));
     app.use('/api/matrix', require('./matrix'));
     app.use('/api/board', require('./board'));
     app.use('/api/results', require('./results'));
+
+    app.use('/api/admin/users', require('./admin/users'));
+    app.use('/api/admin/statistics', require('./admin/statistics'));
 
     app.use('/api/auth', (req, res, next) => {
         req.connectedUsers = connectedUsers;

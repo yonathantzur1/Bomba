@@ -6,6 +6,19 @@
     align-items: center;
 }
 
+.loading-sector {
+    margin: auto;
+}
+
+.loading-sector > .title {
+    position: absolute;
+    font-size: 48px;
+    width: 100%;
+    top: calc(50% - 100px);
+    left: 0;
+    text-align: center;
+}
+
 .center-container {
     width: 100%;
     max-height: 100%;

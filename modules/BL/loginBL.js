@@ -12,7 +12,7 @@ module.exports = {
         let userFilter = { "_id": DAL.getObjectId(id) };
 
         return await DAL.findOne(usersCollectionName, userFilter)
-            .catch(errorHandler.promiseError)
+            .catch(errorHandler.promiseError);
     },
 
     isAdminUser(userAuth) {

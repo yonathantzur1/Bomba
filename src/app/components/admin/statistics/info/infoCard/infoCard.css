@@ -11,6 +11,7 @@
     box-shadow: 1px 1px 5px 1px #afafaf;
     border-radius: 50%;
     position: relative;
+    user-select: none;
 }
 
 .title {

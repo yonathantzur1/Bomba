@@ -1,5 +1,9 @@
 <div id="admin">
-    <div class="center-container">
+    <div *ngIf="isLoading" class="loading-sector">
+        <div class="title">Statistics</div>
+        <loader-dots></loader-dots>
+    </div>
+    <div class="center-container" *ngIf="!isLoading">
         <info [title]="'Users'" [cards]="usersInfoCards"></info>
         <info [title]="'Statistics'" [cards]="statisticsInfoCards"></info>
     </div>
