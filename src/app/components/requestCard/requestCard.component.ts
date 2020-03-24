@@ -3,6 +3,7 @@ import { MicrotextService, InputFieldValidation } from 'src/app/services/global/
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
 import { METHOD } from 'src/app/enums';
+import { generateGuid } from 'src/app/globals';
 
 export class Request {
     id: string;
@@ -18,7 +19,7 @@ export class Request {
         this.isEmpty = !!isEmpty;
 
         if (!this.isEmpty) {
-            this.id = this.generateGuid();
+            this.id = generateGuid();
             this.name = "";
             this.method = METHOD.GET;
             this.url = "";
@@ -41,13 +42,6 @@ export class Request {
         }
 
         return this;
-    }
-
-    public generateGuid(): string {
-        let timestamp = (new Date().getTime() / 1000 | 0).toString(16);
-        return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
-            return (Math.random() * 16 | 0).toString(16);
-        }).toLowerCase();
     }
 }
 

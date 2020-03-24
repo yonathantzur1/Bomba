@@ -50,6 +50,11 @@ module.exports = (io) => {
         socket.on('error', (err) => {
             logger.error(err);
         });
+
+        socket.on('saveMatrix', (userGuid, projectId, matrix) => {
+            let token = tokenHandler.decodeTokenFromSocket(socket);
+            io.to(token.user._id).emit('saveMatrix', userGuid, projectId, matrix);
+        });
     });
 
     events.on('socket.requestSuccess', (userId, data) => {

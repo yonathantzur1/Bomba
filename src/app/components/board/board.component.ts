@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { SocketService } from 'src/app/services/global/socket.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -36,6 +38,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
         private route: ActivatedRoute,
         private eventService: EventService,
+        private socketService: SocketService,
+        private globalService: GlobalService,
         private snackbarService: SnackbarService,
         private boardService: BoardService,
         private resultsService: ResultsService) {
@@ -85,6 +89,13 @@ export class BoardComponent implements OnInit, OnDestroy {
             });
 
         });
+
+        this.socketService.socketOn("saveMatrix",
+            (editorUserGuid: string, projectId: string, matrix: any) => {
+                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
+                    this.matrix = this.mapMatrix(matrix);
+                }
+            });
     }
 
     ngOnDestroy() {

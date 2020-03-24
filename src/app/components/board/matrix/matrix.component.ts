@@ -6,6 +6,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { ResultsService } from 'src/app/services/results.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare let $: any;
 
@@ -48,6 +49,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
+        private globalService: GlobalService,
         public socketService: SocketService,
         public alertService: AlertService,
         private matrixService: MatrixService,
@@ -235,6 +237,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     saveMatrix() {
         this.boardService.saveMatrix(this.projectId, this.matrix);
+        this.socketService.socketEmit('saveMatrix',
+            this.globalService.userGuid,
+            this.projectId,
+            this.matrix);
     }
 
     getMatrixRequestsAmount() {
