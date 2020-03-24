@@ -47,11 +47,6 @@ module.exports = (io) => {
             }
         });
 
-        socket.on('error', (err) => {
-            logger.error(err);
-        });
-
-
         socket.on('selfSync', (eventName, data) => {
             let token = tokenHandler.decodeTokenFromSocket(socket);
 

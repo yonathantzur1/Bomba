@@ -91,6 +91,18 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.increaseRequestStatus(data, "fail");
         });
 
+        this.socketService.socketOn("syncSendRequests", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.sendRequestsPreActions();
+            }
+        });
+
+        this.socketService.socketOn("syncCloseReport", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.closeReportPreActions();
+            }
+        });
+
         this.requestsAmount = this.getMatrixRequestsAmount();
         this.resultsAmount = this.getResultsAmount();
     }
@@ -99,6 +111,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.eventService.unsubscribeEvents(this.eventsIds);
         this.socketService.socketOff("requestSuccess");
         this.socketService.socketOff("requestError");
+        this.socketService.socketOff("syncSendRequests");
+        this.socketService.socketOff("syncCloseReport");
+    }
+
+    isSyncAllow(projectId: string, userGuid: string) {
+        return (this.projectId == projectId && this.globalService.userGuid != userGuid);
     }
 
     increaseRequestStatus(data: any, status: string) {
@@ -207,21 +225,29 @@ export class MatrixComponent implements OnInit, OnDestroy {
         return false;
     }
 
+    sendRequestsPreActions() {
+        this.compressMatrix();
+        this.requestsAmount = this.getMatrixRequestsAmount();
+        this.initResultMatrix();
+        this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
+    }
+
     sendRequests() {
         this.alertService.alert({
             title: "Send Requests",
             text: "Start bombing?",
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
-                this.compressMatrix();
-                this.initResultMatrix();
+                this.sendRequestsPreActions();
                 this.matrixService.sendRequests(this.matrix, this.projectId);
-                this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
-                this.requestsAmount = this.getMatrixRequestsAmount();
+                this.socketService.socketEmit('selfSync', 'syncSendRequests',
+                    {
+                        "userGuid": this.globalService.userGuid,
+                        "projectId": this.projectId
+                    });
             }
         });
     }
-
 
     initResultMatrix() {
         for (let i = 0; i < this.matrix.length; i++) {
@@ -270,11 +296,22 @@ export class MatrixComponent implements OnInit, OnDestroy {
         return amount;
     }
 
-    closeReport() {
-        this.resultsService.removeResults(this.projectId);
+    closeReportPreActions() {
         this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
         this.results = {};
         this.resultsAmount = 0;
+    }
+
+    closeReport() {
+        this.closeReportPreActions();
+        this.resultsService.removeResults(this.projectId);
+
+        this.socketService.socketEmit('selfSync',
+            'syncCloseReport',
+            {
+                "userGuid": this.globalService.userGuid,
+                "projectId": this.projectId
+            });
     }
 
     stopRequests() {

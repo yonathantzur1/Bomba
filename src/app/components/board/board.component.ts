@@ -91,19 +91,19 @@ export class BoardComponent implements OnInit, OnDestroy {
         });
 
         this.socketService.socketOn("syncMatrix", (data: any) => {
-            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
                 this.matrix = this.mapMatrix(data.matrix);
             }
         });
 
         this.socketService.socketOn("syncRequests", (data: any) => {
-            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
                 this.requests = this.mapRequests(data.requests);
             }
         });
 
         this.socketService.socketOn("syncDefaultSettings", (data: any) => {
-            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
                 this.defaultSettings = data.defaultSettings;
             }
         });
@@ -116,6 +116,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.socketService.socketOff("syncMatrix");
         this.socketService.socketOff("syncRequests");
         this.socketService.socketOff("syncDefaultSettings");
+    }
+
+    isSyncAllow(projectId: string, userGuid: string) {
+        return (this.projectId == projectId && this.globalService.userGuid != userGuid);
     }
 
     mapMatrix(matrix: any) {
