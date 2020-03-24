@@ -90,26 +90,23 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         });
 
-        this.socketService.socketOn("syncMatrix",
-            (editorUserGuid: string, projectId: string, matrix: any) => {
-                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
-                    this.matrix = this.mapMatrix(matrix);
-                }
-            });
+        this.socketService.socketOn("syncMatrix", (data: any) => {
+            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+                this.matrix = this.mapMatrix(data.matrix);
+            }
+        });
 
-        this.socketService.socketOn("syncRequests",
-            (editorUserGuid: string, projectId: string, requests: any) => {
-                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
-                    this.requests = this.mapRequests(requests);
-                }
-            });
+        this.socketService.socketOn("syncRequests", (data: any) => {
+            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+                this.requests = this.mapRequests(data.requests);
+            }
+        });
 
-        this.socketService.socketOn("syncDefaultSettings",
-            (editorUserGuid: string, projectId: string, defaultSettings: any) => {
-                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
-                    this.defaultSettings = defaultSettings;
-                }
-            });
+        this.socketService.socketOn("syncDefaultSettings", (data: any) => {
+            if (this.projectId == data.projectId && this.globalService.userGuid != data.userGuid) {
+                this.defaultSettings = data.defaultSettings;
+            }
+        });
     }
 
     ngOnDestroy() {

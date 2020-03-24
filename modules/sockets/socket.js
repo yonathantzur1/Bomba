@@ -51,19 +51,13 @@ module.exports = (io) => {
             logger.error(err);
         });
 
-        socket.on('syncMatrix', (userGuid, projectId, matrix) => {
-            let token = tokenHandler.decodeTokenFromSocket(socket);
-            io.to(token.user._id).emit('syncMatrix', userGuid, projectId, matrix);
-        });
 
-        socket.on('syncRequests', (userGuid, projectId, requests) => {
+        socket.on('selfSync', (eventName, data) => {
             let token = tokenHandler.decodeTokenFromSocket(socket);
-            io.to(token.user._id).emit('syncRequests', userGuid, projectId, requests);
-        });
 
-        socket.on('syncDefaultSettings', (userGuid, projectId, defaultSettings) => {
-            let token = tokenHandler.decodeTokenFromSocket(socket);
-            io.to(token.user._id).emit('syncDefaultSettings', userGuid, projectId, defaultSettings);
+            if (token) {
+                io.to(token.user._id).emit(eventName, data);
+            }
         });
     });
 

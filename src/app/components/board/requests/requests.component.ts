@@ -65,10 +65,13 @@ export class RequestsComponent implements OnDestroy {
 
     saveRequests() {
         this.boardService.saveRequests(this.projectId, this.requests);
-        this.socketService.socketEmit('syncRequests',
-            this.globalService.userGuid,
-            this.projectId,
-            this.requests);
+        this.socketService.socketEmit('selfSync',
+            'syncRequests',
+            {
+                "userGuid": this.globalService.userGuid,
+                "projectId": this.projectId,
+                "requests": this.requests
+            });
     }
 
     deleteRequest(index: number, event: any) {

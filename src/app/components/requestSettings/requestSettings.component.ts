@@ -47,10 +47,13 @@ export class RequestSettingsComponent implements OnInit {
 
         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
         this.projectService.saveRequestSettings(this.projectId, this.defaultSettings);
-        this.socketService.socketEmit('syncDefaultSettings',
-            this.globalService.userGuid,
-            this.projectId,
-            this.defaultSettings);
+        this.socketService.socketEmit('selfSync',
+            'syncDefaultSettings',
+            {
+                "userGuid": this.globalService.userGuid,
+                "projectId": this.projectId,
+                "defaultSettings": this.defaultSettings
+            });
     }
 
     @HostListener('document:keyup', ['$event'])

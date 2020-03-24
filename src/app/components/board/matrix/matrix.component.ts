@@ -237,10 +237,13 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     saveMatrix() {
         this.boardService.saveMatrix(this.projectId, this.matrix);
-        this.socketService.socketEmit('syncMatrix',
-            this.globalService.userGuid,
-            this.projectId,
-            this.matrix);
+        this.socketService.socketEmit('selfSync',
+            'syncMatrix',
+            {
+                "userGuid": this.globalService.userGuid,
+                "projectId": this.projectId,
+                "matrix": this.matrix
+            });
     }
 
     getMatrixRequestsAmount() {
