@@ -90,10 +90,17 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         });
 
-        this.socketService.socketOn("saveMatrix",
+        this.socketService.socketOn("syncMatrix",
             (editorUserGuid: string, projectId: string, matrix: any) => {
                 if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
                     this.matrix = this.mapMatrix(matrix);
+                }
+            });
+
+        this.socketService.socketOn("syncRequests",
+            (editorUserGuid: string, projectId: string, requests: any) => {
+                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
+                    this.requests = this.mapRequests(requests);
                 }
             });
     }

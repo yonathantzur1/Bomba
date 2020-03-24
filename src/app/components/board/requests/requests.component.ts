@@ -1,6 +1,8 @@
 import { Component, OnDestroy, Input } from '@angular/core';
 import { BoardService } from 'src/app/services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { SocketService } from 'src/app/services/global/socket.service';
 import { Request } from '../../requestCard/requestCard.component'
 import { DefaultSettings } from '../../requestSettings/requestSettings.component'
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
@@ -24,6 +26,8 @@ export class RequestsComponent implements OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
+        private globalService: GlobalService,
+        public socketService: SocketService,
         private alertService: AlertService,
         private boardService: BoardService) {
 
@@ -61,6 +65,10 @@ export class RequestsComponent implements OnDestroy {
 
     saveRequests() {
         this.boardService.saveRequests(this.projectId, this.requests);
+        this.socketService.socketEmit('syncRequests',
+            this.globalService.userGuid,
+            this.projectId,
+            this.requests);
     }
 
     deleteRequest(index: number, event: any) {

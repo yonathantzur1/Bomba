@@ -51,9 +51,14 @@ module.exports = (io) => {
             logger.error(err);
         });
 
-        socket.on('saveMatrix', (userGuid, projectId, matrix) => {
+        socket.on('syncMatrix', (userGuid, projectId, matrix) => {
             let token = tokenHandler.decodeTokenFromSocket(socket);
-            io.to(token.user._id).emit('saveMatrix', userGuid, projectId, matrix);
+            io.to(token.user._id).emit('syncMatrix', userGuid, projectId, matrix);
+        });
+
+        socket.on('syncRequests', (userGuid, projectId, requests) => {
+            let token = tokenHandler.decodeTokenFromSocket(socket);
+            io.to(token.user._id).emit('syncRequests', userGuid, projectId, requests);
         });
     });
 
