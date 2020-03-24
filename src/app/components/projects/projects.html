@@ -10,6 +10,7 @@
                 <i (click)="deleteProject(project, $event)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
                 <i (click)="edit(project, $event)" class="far fa-edit top-icon edit-icon hvr-grow"></i>
                 <span class="name">{{project.name}}</span>
+                <span class="date">{{formatDate(project.date)}}</span>
             </div>
         </div>
         <project-card [editProject]="editProject" *ngIf="isShowProjectCard"></project-card>

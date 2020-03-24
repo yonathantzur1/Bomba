@@ -79,6 +79,24 @@ export class ProjectsComponent {
         });
     }
 
+    formatDate(date: Date) {
+        date = new Date(date);
+
+        let day: any = date.getDate();
+        let month: any = date.getMonth() + 1;
+        let year: any = date.getFullYear().toString().substr(-2);
+
+        if (day < 10) {
+            day = "0" + day;
+        }
+
+        if (month < 10) {
+            month = "0" + month;
+        }
+
+        return (day + '/' + month + '/' + year);
+    }
+
     openProject(id: string) {
         this.router.navigateByUrl("/board/" + id);
     }
