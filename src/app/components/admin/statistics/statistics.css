@@ -7,16 +7,16 @@
 }
 
 .loading-sector {
-    margin: auto;
-}
-
-.loading-sector > .title {
     position: absolute;
-    font-size: 48px;
     width: 100%;
     top: calc(50% - 100px);
     left: 0;
     text-align: center;
+}
+
+.loading-sector > .title {
+    font-size: 48px;
+    margin-bottom: 10px;
 }
 
 .center-container {

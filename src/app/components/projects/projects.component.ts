@@ -30,6 +30,8 @@ export class ProjectsComponent {
     isShowProjectCard: boolean = false;
     editProject: Project;
 
+    isLoading: boolean = false;
+
     eventsIds: Array<string> = [];
 
     constructor(private router: Router,
@@ -61,7 +63,11 @@ export class ProjectsComponent {
     }
 
     loadAllProjects() {
+        this.isLoading = true;
+
         this.projectsService.getProjects().then(projects => {
+            this.isLoading = false;
+
             if (projects) {
                 this.projects = projects.map((project: { _id: string; name: string; date: Date; }) => {
                     return new Project(project._id, project.name, project.date);

@@ -1,5 +1,6 @@
 <div id="projects">
-    <div *ngIf="projects">
+    <loader-rings *ngIf="isLoading"></loader-rings>
+    <div *ngIf="!isLoading">
         <div class="projects-container">
             <div *ngIf="projects.length == 0" (click)="isShowProjectCard=true;" class="project empty-project">
                 <span class="name">New Project</span>

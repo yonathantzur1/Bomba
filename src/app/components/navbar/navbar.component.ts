@@ -75,13 +75,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.tabs.push(new Tab("Statistics", "/statistics"));
         }
 
-        for (let i = 0 ; i < this.tabs.length; i++) {
+        let isTabClicked: boolean = false;
+
+        for (let i = 0; i < this.tabs.length; i++) {
             let tab: Tab = this.tabs[i];
 
             if (tab.url == this.router.url) {
                 tab.isClicked = true;
+                isTabClicked = true;
                 break;
             }
+        }
+
+        if (!isTabClicked && this.tabs.length > 0) {
+            this.tabs[0].isClicked = true;
         }
     }
 
