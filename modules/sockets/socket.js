@@ -60,6 +60,11 @@ module.exports = (io) => {
             let token = tokenHandler.decodeTokenFromSocket(socket);
             io.to(token.user._id).emit('syncRequests', userGuid, projectId, requests);
         });
+
+        socket.on('syncDefaultSettings', (userGuid, projectId, defaultSettings) => {
+            let token = tokenHandler.decodeTokenFromSocket(socket);
+            io.to(token.user._id).emit('syncDefaultSettings', userGuid, projectId, defaultSettings);
+        });
     });
 
     events.on('socket.requestSuccess', (userId, data) => {

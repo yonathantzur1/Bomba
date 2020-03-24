@@ -103,12 +103,22 @@ export class BoardComponent implements OnInit, OnDestroy {
                     this.requests = this.mapRequests(requests);
                 }
             });
+
+        this.socketService.socketOn("syncDefaultSettings",
+            (editorUserGuid: string, projectId: string, defaultSettings: any) => {
+                if (this.projectId == projectId && this.globalService.userGuid != editorUserGuid) {
+                    this.defaultSettings = defaultSettings;
+                }
+            });
     }
 
     ngOnDestroy() {
         this.dropzoneInteract.unset();
         this.draggableInteract.unset();
         this.eventService.unsubscribeEvents(this.eventsIds);
+        this.socketService.socketOff("syncMatrix");
+        this.socketService.socketOff("syncRequests");
+        this.socketService.socketOff("syncDefaultSettings");
     }
 
     mapMatrix(matrix: any) {

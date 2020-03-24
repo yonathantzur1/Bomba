@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { SocketService } from 'src/app/services/global/socket.service';
 import { METHOD } from 'src/app/enums';
 
 export class DefaultSettings {
@@ -29,7 +30,8 @@ export class RequestSettingsComponent implements OnInit {
     method: any = METHOD;
 
     constructor(private eventService: EventService,
-        private snackbarService: SnackbarService,
+        private globalService: GlobalService,
+        private socketService: SocketService,
         private projectService: ProjectsService) { }
 
     ngOnInit() {
@@ -44,11 +46,11 @@ export class RequestSettingsComponent implements OnInit {
         }
 
         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-        this.projectService.saveRequestSettings(this.projectId, this.defaultSettings).then(result => {
-            if (!result) {
-                this.snackbarService.snackbar("Server error occurred");
-            }
-        });
+        this.projectService.saveRequestSettings(this.projectId, this.defaultSettings);
+        this.socketService.socketEmit('syncDefaultSettings',
+            this.globalService.userGuid,
+            this.projectId,
+            this.defaultSettings);
     }
 
     @HostListener('document:keyup', ['$event'])
