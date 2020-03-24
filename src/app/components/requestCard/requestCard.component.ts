@@ -19,7 +19,7 @@ export class Request {
         this.isEmpty = !!isEmpty;
 
         if (!this.isEmpty) {
-            this.id = generateGuid();
+            this.id = this.generateGuid();
             this.name = "";
             this.method = METHOD.GET;
             this.url = "";
@@ -42,6 +42,10 @@ export class Request {
         }
 
         return this;
+    }
+
+    generateGuid() {
+        return generateGuid();
     }
 }
 
