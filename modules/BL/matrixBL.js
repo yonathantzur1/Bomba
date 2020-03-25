@@ -44,21 +44,35 @@ module.exports = {
 
             for (let i = 0; i < sendObject.amount && this.projectsRequests[projectId]; i++) {
                 let result = { projectId, requestId };
-                let startTime = new Date();
+                let isRequestSuccess = true;
+                let startTime;
 
                 try {
+                    if (sendObject.jsonData) {
+                        let jsonData = Object.assign({}, sendObject.jsonData);
+
+                        replaceJsonValue(jsonData, {
+                            "{number}": i,
+                            "{string}": i.toString(),
+                            "{date}": new Date(),
+                            "{iso}": new Date().toISOString()
+                        });
+
+                        sendObject.data = JSON.stringify(jsonData);
+                    }
+
+                    startTime = new Date();
                     result.response = await sendRequest(sendObject.options, sendObject.data);
-                    let endTime = new Date();
-                    result.time = getDatesDiffBySeconds(endTime, startTime);
-                    await resultsBL.updateResult(resultId, requestId, "success", result.time);
-                    events.emit("socket.requestSuccess", userId, result);
                 }
                 catch (e) {
-                    let endTime = new Date();
-                    result.time = getDatesDiffBySeconds(endTime, startTime);
-                    await resultsBL.updateResult(resultId, requestId, "fail", result.time);
-                    events.emit("socket.requestError", userId, result);
+                    isRequestSuccess = false;
                 }
+
+                result.time = getDatesDiffBySeconds(new Date(), startTime);
+                await resultsBL.updateResult(resultId, requestId,
+                    isRequestSuccess ? "success" : "fail", result.time);
+                events.emit(isRequestSuccess ? "socket.requestSuccess" : "socket.requestError",
+                    userId, result);
             }
         }
     },
@@ -124,6 +138,7 @@ function buildSendObject(requestData) {
     if (requestData.body && requestData.body.template) {
         if (requestData.body.type == "json") {
             sendObject.options.headers = { 'Content-Type': 'application/json' };
+            sendObject.jsonData = jsonTryParse(requestData.body.template);
         }
 
         sendObject.data = requestData.body.template;
@@ -170,14 +185,7 @@ function sendRequest(options, data) {
                     resolve();
                 }
                 else {
-                    try {
-                        const parsedData = JSON.parse(rawData);
-                        resolve(parsedData);
-                    }
-                    // In case the response data is not a json.
-                    catch (e) {
-                        resolve(rawData);
-                    }
+                    resolve(jsonTryParse(rawData) || rawData);
                 }
             });
         });
@@ -195,4 +203,27 @@ function sendRequest(options, data) {
 
         req.end();
     });
+}
+
+function replaceJsonValue(obj, replaceValues) {
+    Object.keys(obj).forEach(key => {
+        let value = obj[key];
+
+        if (typeof value == "object" && value != null) {
+            replaceJsonValue(value, replaceValues);
+        }
+        else if (typeof value == "string" &&
+            Object.keys(replaceValues).includes(value)) {
+            obj[key] = replaceValues[value];
+        }
+    });
+}
+
+function jsonTryParse(obj) {
+    try {
+        return JSON.parse(obj);
+    }
+    catch (e) {
+        return null;
+    }
 }
