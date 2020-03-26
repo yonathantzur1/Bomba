@@ -86,6 +86,8 @@ export class RequestCardComponent implements OnInit {
     formatStr: string = "{  }";
     method: any = METHOD;
 
+    isShowInfo: boolean = false;
+
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
         this.validationFuncs = [
@@ -129,6 +131,10 @@ export class RequestCardComponent implements OnInit {
         });
 
         this.formatJson(true);
+    }
+
+    showInfo(isShow: boolean) {
+        this.isShowInfo = isShow;
     }
 
     setDefaultSettings() {

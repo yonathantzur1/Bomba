@@ -27,11 +27,24 @@
                         </tr>
                     </table>
                 </div>
-                <div class="form-group">
-                    <div *ngIf="getSelectedBodyOption().type == bodyType.JSON" (click)="formatJson(true)"
-                        [ngClass]="{'invalid-json-icon': !isValidBodyJson}" class="json-format-icon"
-                        title="Format Json">
-                        {{formatStr}}</div>
+                <div class="form-group" style="position: relative;">
+                    <div *ngIf="getSelectedBodyOption().type == bodyType.JSON">
+                        <i class="fas fa-info info-icon" (mouseenter)="showInfo(true)"
+                            (mouseleave)="showInfo(false)"></i>
+                        <div *ngIf="isShowInfo">
+                            <i class="fas fa-caret-left info-arrow-icon"></i>
+                            <div class="info-container">
+                                <div class="info-title">Counting Values</div>
+                                <div class="info-data-row">{{'"{number}" = 1, 2, 3...'}}</div>
+                                <div class="info-data-row">{{'"{text}" = \'1\', \'2\', \'3\'...'}}</div>
+                                <div class="info-data-row">{{'"{date}" = Date Object'}}</div>
+                                <div class="info-data-row">{{'"{iso}" = ISO string Date'}}</div>
+                            </div>
+                        </div>
+                        <div (click)="formatJson(true)" [ngClass]="{'invalid-json-icon': !isValidBodyJson}"
+                            class="json-format-icon" title="Format Json">
+                            {{formatStr}}</div>
+                    </div>
                     <textarea id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody" placeholder="Body"
                         type="text" class="request-body" [(ngModel)]="request.body.template"></textarea>
                     <div class="body-type">

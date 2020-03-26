@@ -42,7 +42,7 @@ module.exports = {
             const sendObject = sendObjects[i];
             const requestId = sendObject.requestId;
 
-            for (let i = 0; i < sendObject.amount && this.projectsRequests[projectId]; i++) {
+            for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 let result = { projectId, requestId };
                 let isRequestSuccess = true;
                 let startTime;
