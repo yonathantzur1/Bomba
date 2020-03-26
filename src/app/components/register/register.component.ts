@@ -47,6 +47,14 @@ export class RegisterComponent implements OnInit {
                 errMsg: "Please enter password",
                 fieldId: "register-password-micro",
                 inputId: "register-password"
+            },
+            {
+                isFieldValid(user: User) {
+                    return user.password.length >= 6;
+                },
+                errMsg: "Your password must be at least 6 characters long",
+                fieldId: "register-password-micro",
+                inputId: "register-password"
             }
         ];
     }
