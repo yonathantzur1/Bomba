@@ -45,7 +45,7 @@ input, select {
 
 :root {
     /* Define css global variables */
-    --main-background-color: #eee;
+    --main-background-color: #f7f7f7;
     --main-text-color: #4b4b4b;
     --microtext-color: #e53935;
     --main-border-color: #a5a5a5;

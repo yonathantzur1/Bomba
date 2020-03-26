@@ -27,7 +27,7 @@
     resize: none;
     border: 1px solid #7882b6;
     width: 100%;
-    height: calc(100% - 230px);
+    height: calc(100% - 220px);
     outline: none;
     background-color: transparent;
     padding: 10px;
@@ -82,7 +82,7 @@
     right: 34px;
     top: -25px;
     border-radius: 6px;
-    background-color: whitesmoke;
+    background-color: #fafafa;
     padding: 5px 10px;
 }
 

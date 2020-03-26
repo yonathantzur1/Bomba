@@ -45,9 +45,9 @@
 }
 
 .add-project-btn {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
-    right: -80px;
+    right: 40px;
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -77,4 +77,10 @@
 
 .delete-icon:hover {
     color: #656565;
+}
+
+@media (max-aspect-ratio: 8/5) {
+    .projects-container {
+        padding: 10px;
+    }
 }

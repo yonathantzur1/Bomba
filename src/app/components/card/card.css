@@ -10,17 +10,18 @@
 
 .card-container {
     position: fixed;
-    background-color: whitesmoke;
-    box-shadow: 1px 1px 8px 1px #686868;
+    background-color: #fafafa;
+    box-shadow: 1px 1px 8px 1px #424242;
     z-index: 2;
 }
 
 .top-sector {
     position: relative;
-    height: 40px;
+    height: 38px;
     width: 100%;
-    background-color: #cccccc;
-    border-bottom: 0.5px solid #adadad;
+    background-color: #1e88e5;
+    box-shadow: 0px 1px 1px 0px #848484;
+    color: whitesmoke;
     display: flex;
     align-items: center;
     user-select: none;
@@ -29,12 +30,12 @@
 .close-icon {
     position: absolute;
     right: 15px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
 }
 
 .close-icon:hover {
-    color: #656565;
+    color: #ffffff;
 }
 
 .title {

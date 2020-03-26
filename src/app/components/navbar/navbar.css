@@ -26,7 +26,7 @@
     user-select: none;
     cursor: pointer;
     display: inline-block;
-    margin-left: 35px;
+    margin-left: 30px;
     margin-top: 15px;
 }
 
@@ -51,4 +51,14 @@
 
 .clicked-tab {
     text-decoration: underline;
+}
+
+@media (max-aspect-ratio: 8/5) {
+    .navbar-container {
+        padding: 0 10px;
+    }
+    
+    .logout-container {
+        right: 15px;
+    }
 }

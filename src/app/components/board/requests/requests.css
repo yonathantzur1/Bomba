@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e4e4e4;
+    background-color: #eeeeee;
     border-bottom: 0.5px solid #adadad;
 }
 
@@ -22,7 +22,7 @@
 .card-sector {
     width: 150px;
     height: 150px;
-    background-color: whitesmoke;
+    background-color: #ffffff;
     box-shadow: 1px 1px 6px 1px #a1a1a1;
     display: inline-block;
     margin: 15px 0 0 15px;

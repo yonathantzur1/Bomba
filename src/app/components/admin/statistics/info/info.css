@@ -23,3 +23,9 @@
 info-card {
     width: 100%;
 }
+
+@media (max-aspect-ratio: 8/5) {
+    .container {
+        width: 80%;
+    }
+}

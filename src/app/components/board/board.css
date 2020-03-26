@@ -2,10 +2,12 @@
     --cards-secotr-width: 345px;
     border: 0.5px solid var(--main-border-color);
     border-top: none;
+    position: relative;
+    height: calc(100% - 15px);
 }
 
 .sector {
-    height: calc(100% - 15px);
+    height: 100%;
 }
 
 .matrix-sector {
@@ -25,6 +27,11 @@
     width: var(--cards-secotr-width);
     float: right;
     position: relative;
-    padding-bottom: 10px;
     user-select: none;
+}
+
+@media (max-aspect-ratio: 8/5) {
+    #board {
+        height: 100%
+    }
 }
