@@ -1,9 +1,9 @@
 <div id="users">
     <div class="users-container">
-        <div class="form-group">
+        <div class="form-group input-container">
             <input id="users-search-input" [(ngModel)]="searchInput" (keyup.enter)="searchUser()"
                 class="form-control search-input" placeholder="Search User" autocapitalize="off" autocomplete="off"
-                autocorrect="off" spellcheck="false" type="text">
+                autocorrect="off" spellcheck="false" type="text" maxlength="30">
             <div *ngIf="!isLoading" class="search-user-btn" (click)="searchUser()"
                 [ngClass]="{'search-user-btn-disabled': searchInput == '', 'search-user-btn-active': searchInput && searchInput.length > 0}">
                 <i class="material-icons search-user-btn-icon">search</i>
@@ -12,5 +12,4 @@
             </loader-dots>
         </div>
     </div>
-
-</div>>
+</div>

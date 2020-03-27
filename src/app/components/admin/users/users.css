@@ -5,12 +5,13 @@
     margin: auto;
     position: relative;
     user-select: none;
-    margin-top: 30px;
+    padding-top: 30px;
 }
 
-.form-group {
-    margin-top: 10px !important;
+.input-container {
     display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 .user-loading-container {
@@ -20,22 +21,22 @@
 
 .search-input {
     font-size: 16px;
-    width: calc(100% - 60px);
+    width: 250px;
     margin-right: 10px;
     padding-bottom: 0 !important;
     display: inline-block;
 }
 
 .search-user-btn {
-    margin-right: 15px;
+    margin-top: 5px;
     box-shadow: 0px 0px 5px 1px #c2c2c2;
-    height: 35px;
-    width: 35px;
+    height: 28px;
+    width: 28px;
     border-radius: 50%;
     display: inline-block;    
     background-color: #afafaf;
-    font-size: 22px;
-    align-self: center;
+    align-items: center;
+    justify-content: center;
     display: flex;
 }
 
@@ -65,7 +66,5 @@
 
 .search-user-btn-icon {
     color: #f3f3f3;
-    width: 100%;
-    text-align: center;
-    align-self: center;
+    font-size: 20px;
 }

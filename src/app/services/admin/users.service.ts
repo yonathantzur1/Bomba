@@ -9,4 +9,8 @@ export class UsersService extends BasicService {
     constructor(public http: HttpClient) {
         super(http, "/api/admin/users");
     }
+
+    getUser(searchInput: string) {
+        return super.post('/getUser', { searchInput });
+    }
 }
