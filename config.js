@@ -20,10 +20,6 @@ module.exports = {
         maxLogFiles: 3
     },
     security: {
-        admin: {
-            username: "admin",
-            password: process.env.BOMBA_ADMIN_PASSWORD
-        },
         jwt: {
             secret: process.env.BOMBA_JWT_SECRET,
             options: { expiresIn: "90d" } // 90 days
