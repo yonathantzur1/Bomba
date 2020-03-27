@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/global/auth.service';
 import { CookieService } from 'src/app/services/global/cookie.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { SOCKET_STATE } from 'src/app/enums';
@@ -34,11 +35,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     tabs: Array<Tab>;
 
+    eventsIds: Array<string> = [];
+
     constructor(private router: Router,
         private cookieService: CookieService,
+        private eventService: EventService,
         private globalService: GlobalService,
         private socketService: SocketService,
-        private authService: AuthService) { }
+        private authService: AuthService) {
+        this.eventService.register(EVENT_TYPE.TAB_CLICK, (url: string) => {
+            this.tabClick(url, true);
+        }, this.eventsIds);
+    }
 
     ngOnInit() {
         this.socketService.socketEmit('login');
@@ -67,6 +75,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.initializeTabs();
     }
 
+    ngOnDestroy() {
+        clearInterval(this.checkSocketConnectInterval);
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
+
     initializeTabs() {
         this.tabs = [new Tab("Projects", "/"), new Tab("Reports", "/reports")];
 
@@ -75,25 +88,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.tabs.push(new Tab("Statistics", "/statistics"));
         }
 
-        let isTabClicked: boolean = false;
-
-        for (let i = 0; i < this.tabs.length; i++) {
-            let tab: Tab = this.tabs[i];
-
-            if (tab.url == this.router.url) {
-                tab.isClicked = true;
-                isTabClicked = true;
-                break;
-            }
-        }
-
-        if (!isTabClicked && this.tabs.length > 0) {
-            this.tabs[0].isClicked = true;
-        }
-    }
-
-    ngOnDestroy() {
-        clearInterval(this.checkSocketConnectInterval);
+        this.tabClick(this.router.url);
     }
 
     logout() {
@@ -104,15 +99,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     navigateMain() {
-        this.router.navigateByUrl("/");
+        this.tabClick("/");
     }
 
-    tabClick(tab: Tab) {
-        this.tabs.forEach((currTab: Tab) => {
-            currTab.isClicked = false;
+    tabClick(url: string, preventNavigate?: boolean) {
+        this.tabs.forEach((tab: Tab) => {
+            tab.isClicked = (tab.url == url);
         });
 
-        tab.isClicked = true;
-        this.router.navigateByUrl(tab.url);
+        if (!preventNavigate) {
+            this.router.navigateByUrl(url);
+        }
     }
 }

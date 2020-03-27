@@ -8,7 +8,17 @@ import { Component } from '@angular/core';
 })
 
 export class UsersComponent {
+    searchInput: string;
+    users: Array<any> = [];
+
+    isLoading: boolean = false;
 
     constructor() { }
+
+    searchUser() {
+        if (this.searchInput && (this.searchInput = this.searchInput.trim())) {
+            this.isLoading = true;
+        }
+    }
 
 }

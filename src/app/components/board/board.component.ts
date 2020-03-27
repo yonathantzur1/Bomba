@@ -43,6 +43,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService,
         private boardService: BoardService,
         private resultsService: ResultsService) {
+        this.eventService.emit(EVENT_TYPE.TAB_CLICK, "/");
         this.eventService.register(EVENT_TYPE.REQUESTS_SEND_MODE, (mode: boolean) => {
             this.isSendMode = mode;
         }, this.eventsIds);

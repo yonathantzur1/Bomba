@@ -4,7 +4,7 @@
             <img class="logo-image" src="assets/logo/icon.png">
         </div>
         <div class="tabs" [ngStyle]="{'column-count': tabs.length}">
-            <span class="tab" [ngClass]="{'clicked-tab': tab.isClicked}" (click)="tabClick(tab)"
+            <span class="tab" [ngClass]="{'clicked-tab': tab.isClicked}" (click)="tabClick(tab.url)"
                 *ngFor="let tab of tabs">
                 {{tab.name}}
             </span>

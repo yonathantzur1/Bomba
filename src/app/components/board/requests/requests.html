@@ -7,8 +7,8 @@
     </div>
     <div class="cards-container">
         <div id="card-{{i}}" class="card-sector draggable" (click)="openRequestEdit(request)"
-            *ngFor="let request of requests; index as i" [title]="request.name">
-            <div class="card-name">{{request.name}}</div>
+            *ngFor="let request of requests; index as i">
+            <div class="card-name" [title]="request.name">{{request.name}}</div>
             <i name="delete-icon" title="delete request" (click)="deleteRequest(i, $event)"
                 class="far fa-trash-alt delete-request-icon"></i>
         </div>
