@@ -28,7 +28,8 @@ module.exports = {
         let userFields = {
             "username": 1,
             "creationDate": 1,
-            "isAdmin": 1
+            "isAdmin": 1,
+            "lastLoginTime": 1
         }
 
         return DAL.findSpecific(usersCollectionName, usersFilter, userFields, { "username": 1 });

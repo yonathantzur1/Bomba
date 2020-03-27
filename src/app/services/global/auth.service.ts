@@ -10,6 +10,10 @@ export class AuthService extends BasicService {
         super(http, "/api/auth");
     }
 
+    getCurrUser() {
+        return super.get('/getCurrUser');
+    }
+
     isUserOnSession() {
         return super.get('/isUserOnSession');
     }

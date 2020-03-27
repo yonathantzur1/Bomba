@@ -13,12 +13,17 @@ import { generateGuid } from 'src/app/globals';
 export class HomeComponent {
 
     isLoading: boolean;
+    currUser: any;
     isAdmin: boolean;
 
     constructor(private authService: AuthService,
         private globalService: GlobalService) {
         this.isLoading = true;
         
+        this.authService.getCurrUser().then((user: any) => {
+            this.currUser = user;
+        });
+
         this.authService.isUserAdmin().then(isAdmin => {
             this.isLoading = false;
             this.isAdmin = isAdmin;

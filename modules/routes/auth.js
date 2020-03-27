@@ -4,6 +4,20 @@ const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
 const enums = require('../enums');
 
+// Getting the current login user.
+router.get('/getCurrUser', (req, res) => {
+    let user = req.user;
+
+    // Return user with only specific details.
+    let userClientObject = {
+        "_id": user._id,
+        "username": user.username
+    }
+
+    loginBL.updateLastLogin(user._id);
+    res.send(userClientObject);
+});
+
 // Checking if the session of the user is open.
 router.get('/isUserOnSession', (req, res) => {
     if (!tokenHandler.validateUserAuthCookies(req)) {
