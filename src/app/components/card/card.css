@@ -10,7 +10,7 @@
 
 .card-container {
     position: fixed;
-    background-color: #fafafa;
+    background-color: #f7f7f7;
     box-shadow: 1px 1px 8px 1px #424242;
     z-index: 2;
 }
