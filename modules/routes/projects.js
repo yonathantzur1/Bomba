@@ -43,7 +43,7 @@ router.put('/editProject',
 router.delete('/deleteProject',
     validator,
     (req, res) => {
-        projectsBL.deleteProject(req.query.id).then(result => {
+        projectsBL.deleteProject(req.query.id, req.user._id).then(result => {
             res.send(result ? true : false);
         }).catch(err => {
             errorHandler.routeError(err, res);

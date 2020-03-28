@@ -3,6 +3,7 @@ const config = require('../../config');
 const errorHandler = require('../handlers/errorHandler');
 
 const projectsCollectionName = config.db.collections.projects;
+const reportsCollectionName = config.db.collections.reports;
 
 module.exports = {
     getProjects(ownerId) {
@@ -52,9 +53,16 @@ module.exports = {
         return updateResult ? { _id: projectId, name } : updateResult;
     },
 
-    deleteProject(projectId) {
-        return DAL.delete(projectsCollectionName,
-            { _id: DAL.getObjectId(projectId) });
+    async deleteProject(projectId, userId) {
+        let deleteProject = await DAL.delete(projectsCollectionName,
+            { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) });
+
+        if (deleteProject) {
+            DAL.delete(reportsCollectionName,
+                { projectId: DAL.getObjectId(projectId) });
+        }
+
+        return deleteProject;
     },
 
     saveRequestSettings(projectId, defaultSettings, ownerId) {
