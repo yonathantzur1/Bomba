@@ -1,0 +1,35 @@
+.folders-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
+
+.folder {
+    height: 140px;
+    width: calc(25% - 20px);
+    display: flex;
+    justify-content: start;
+    padding: 10px;
+    user-select: none;
+    position: relative;
+    align-items: center;
+}
+
+.folder-icon {
+    font-size: 100px;
+    cursor: pointer;
+}
+
+.folder-text {
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

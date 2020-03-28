@@ -90,5 +90,54 @@ module.exports = {
         let resultId = await DAL.insert(reportsCollectionName, report);
 
         return resultId ? true : false;
+    },
+
+    getAllReports(userId) {
+        let reportFilter = {
+            $match: { "project.owner": DAL.getObjectId(userId) }
+        }
+
+        let joinFilter = {
+            $lookup:
+            {
+                from: projectsCollectionName,
+                localField: 'projectId',
+                foreignField: '_id',
+                as: 'project'
+            }
+        };
+
+        let unwindObject = {
+            $unwind: {
+                path: "$project"
+            }
+        };
+
+        let group = {
+            $group: {
+                _id: {
+                    "projectId": "$projectId",
+                    "projectName": "$project.name"
+                },
+                count: { $sum: 1 }
+            }
+        }
+
+        let fields = {
+            $project: {
+                "_id": 0,
+                "projectId": "$_id.projectId",
+                "projectName": "$_id.projectName",
+                "reportsAmount": "$count"
+            }
+        };
+
+        let sort = {
+            $sort: { "projectName": 1 }
+        }
+
+        let aggregateArray = [joinFilter, unwindObject, reportFilter, group, fields, sort];
+
+        return DAL.aggregate(reportsCollectionName, aggregateArray);
     }
 }

@@ -19,4 +19,12 @@ router.post('/saveReport', (req, res) => {
     });
 });
 
+router.get('/getAllReports', (req, res) => {
+    reportsBL.getAllReports(req.user._id).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;
