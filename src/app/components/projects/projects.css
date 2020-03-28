@@ -58,6 +58,10 @@
     border-radius: 50%;
 }
 
+.send-mode-done {
+    background-color: #43a047;
+}
+
 .add-project-btn {
     position: fixed;
     bottom: 30px;

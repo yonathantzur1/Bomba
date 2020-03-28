@@ -32,8 +32,10 @@ module.exports = {
             promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId));
         }
 
-        Promise.all(promises).then(data => {
+        Promise.all(promises).then(() => {
             delete this.projectsRequests[projectId];
+            reportsBL.finishReport(projectId);
+            events.emit("socket.finishReport", userId, projectId);
         });
     },
 
@@ -62,7 +64,7 @@ module.exports = {
                     }
 
                     startTime = new Date();
-                    result.response = await sendRequest(sendObject.options, sendObject.data);
+                    await sendRequest(sendObject.options, sendObject.data);
                 }
                 catch (e) {
                     isRequestSuccess = false;

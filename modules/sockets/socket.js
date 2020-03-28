@@ -64,5 +64,9 @@ module.exports = (io) => {
         io.to(userId).emit('requestError', data);
     });
 
+    events.on('socket.finishReport', (userId, projectId) => {
+        io.to(userId).emit('finishReport', projectId);
+    });
+
     return connectedUsers;
 };

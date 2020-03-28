@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { SocketService } from 'src/app/services/global/socket.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
@@ -10,12 +11,14 @@ export class Project {
     name: string;
     date: Date;
     isSendMode: boolean;
+    isSendDone: boolean;
 
-    constructor(id: string, name: string, date: Date, isSendMode: boolean) {
+    constructor(id: string, name: string, date: Date, isSendMode: boolean, isSendDone: boolean) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.isSendMode = isSendMode;
+        this.isSendDone = isSendDone;
     }
 }
 
@@ -26,7 +29,7 @@ export class Project {
     styleUrls: ['./projects.css']
 })
 
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit, OnDestroy {
 
     projects: Array<Project>;
     isShowProjectCard: boolean = false;
@@ -38,6 +41,7 @@ export class ProjectsComponent {
 
     constructor(private router: Router,
         private eventService: EventService,
+        private socketService: SocketService,
         private snackbarService: SnackbarService,
         private alertService: AlertService,
         private projectsService: ProjectsService) {
@@ -51,6 +55,7 @@ export class ProjectsComponent {
             this.projects.push(new Project(project._id,
                 project.name,
                 project.date,
+                false,
                 false));
         }, this.eventsIds);
 
@@ -67,6 +72,20 @@ export class ProjectsComponent {
         this.loadAllProjects();
     }
 
+    ngOnInit() {
+        this.socketService.socketOn("finishReport", (projectId: string) => {
+            let project = this.projects.find((project: Project) => {
+                return project.id == projectId;
+            });
+
+            project.isSendDone = true;
+        });
+    }
+
+    ngOnDestroy() {
+        this.socketService.socketOff("finishReport");
+    }
+
     loadAllProjects() {
         this.isLoading = true;
 
@@ -78,7 +97,8 @@ export class ProjectsComponent {
                     return new Project(project._id,
                         project.name,
                         project.date,
-                        project.isSendMode);
+                        project.isSendMode,
+                        project.isSendDone);
                 });
             }
             else {

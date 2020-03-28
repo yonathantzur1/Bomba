@@ -16,7 +16,8 @@ module.exports = {
             $project: {
                 "name": 1,
                 "date": 1,
-                "isSendMode": { $cond: [{ $eq: ["$report", "$null"] }, false, true] }
+                "isSendMode": { $cond: [{ $eq: ["$report", "$null"] }, false, true] },
+                "isSendDone": "$report.isDone"
             }
         }
 

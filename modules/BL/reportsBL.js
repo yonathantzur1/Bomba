@@ -45,6 +45,20 @@ module.exports = {
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
     },
 
+    finishReport(projectId) {
+        // Update only if report exists in document.
+        let projectFilter = {
+            _id: DAL.getObjectId(projectId),
+            report: { $ne: null }
+        }
+
+        let updateObj = {
+            $set: { "report.isDone": true }
+        };
+
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+    },
+
     removeReport(projectId, userId) {
         let projectFilter = {
             _id: DAL.getObjectId(projectId),
