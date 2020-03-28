@@ -16,11 +16,13 @@
                     (click)="confirmClick()">
                     <span *ngIf="!alertService.isLoading">{{alertService.confirmBtnText}}</span>
                     <div class="mini-loader alert-loader" *ngIf="alertService.isLoading">
-                        <div class="mini-loader-spinner"></div>
+                        <loader-dots css='{"font-size": "8px", "padding-top": "18px"}'></loader-dots>
                     </div>
                 </div>
-                <div class="alert-btn close-btn" *ngIf="alertService.showCancelButton" (click)="closeClick()">
-                    {{alertService.closeBtnText}}</div>
+                <div *ngIf="alertService.showCancelButton && !alertService.isLoading" class="alert-btn close-btn"
+                    (click)="closeClick()">
+                    {{alertService.closeBtnText}}
+                </div>
             </div>
         </div>
     </div>

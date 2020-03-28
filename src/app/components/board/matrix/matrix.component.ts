@@ -5,8 +5,9 @@ import { Request } from '../../requestCard/requestCard.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
-import { ResultsService } from 'src/app/services/results.service';
+import { ReportsService } from 'src/app/services/reports.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 declare let $: any;
 
@@ -25,7 +26,7 @@ export class RequestResult {
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
-    providers: [MatrixService, BoardService, ResultsService],
+    providers: [MatrixService, BoardService, ReportsService],
     styleUrls: ['./matrix.css']
 })
 
@@ -33,9 +34,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     @Input() projectId: string;
     @Input() projectName: string;
-    @Input() matrix: Array<Array<Request>>;
+    @Input() matrix: Request[][];
     @Input() isSendMode: boolean;
-    @Input() results: any;
+    @Input() report: any;
 
     requestsAmount: number;
     resultsAmount: number;
@@ -51,9 +52,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
     constructor(private eventService: EventService,
         private globalService: GlobalService,
         public socketService: SocketService,
+        public snackbarService: SnackbarService,
         public alertService: AlertService,
         private matrixService: MatrixService,
-        private resultsService: ResultsService,
+        private reportService: ReportsService,
         private boardService: BoardService) {
 
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
@@ -79,10 +81,6 @@ export class MatrixComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.container = document.getElementById("matrix-container");
 
-        if (Object.keys(this.results).length > 0) {
-            this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
-        }
-
         this.socketService.socketOn("requestSuccess", (data: any) => {
             this.increaseRequestStatus(data, "success");
         });
@@ -104,7 +102,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         });
 
         this.requestsAmount = this.getMatrixRequestsAmount();
-        this.resultsAmount = this.getResultsAmount();
+        this.resultsAmount = this.report ? this.getResultsAmount() : 0;
     }
 
     ngOnDestroy() {
@@ -124,7 +122,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
             return;
         }
 
-        let result: RequestResult = this.results[data.requestId];
+        let result: RequestResult = this.report.results[data.requestId];
 
         if (result) {
             result[status]++;
@@ -250,12 +248,14 @@ export class MatrixComponent implements OnInit, OnDestroy {
     }
 
     initResultMatrix() {
+        this.report = { "results": {} };
+
         for (let i = 0; i < this.matrix.length; i++) {
             for (let j = 0; j < this.matrix[i].length; j++) {
                 let request: Request = this.matrix[i][j];
 
                 if (!request.isEmpty) {
-                    this.results[request.id] = new RequestResult();
+                    this.report.results[request.id] = new RequestResult();
                 }
             }
         }
@@ -287,8 +287,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
     getResultsAmount() {
         let amount = 0;
 
-        Object.keys(this.results).forEach(reqId => {
-            let result = this.results[reqId];
+        Object.keys(this.report.results).forEach(reqId => {
+            let result = this.report.results[reqId];
 
             amount += result.success + result.fail;
         });
@@ -298,13 +298,41 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     closeReportPreActions() {
         this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
-        this.results = {};
+        this.report.results = {};
         this.resultsAmount = 0;
+    }
+
+    closeReportSaveCheck() {
+        this.alertService.alert({
+            title: "Save Report",
+            text: "Would you like to save the report?",
+            type: ALERT_TYPE.INFO,
+            confirmBtnText: "Yes",
+            closeBtnText: "No",
+            disableEscapeExit: true,
+            preConfirm: () => {
+                return new Promise((resolve, reject) => {
+                    this.reportService.saveReport(this.projectId).then(result => {
+                        if (result) {
+                            this.snackbarService.snackbar("The report was saved");
+                            resolve();
+                        }
+                        else {
+                            this.snackbarService.snackbar("Report save error occurred");
+                            reject();
+                        }
+                    });
+                });
+            },
+            finalFunc: () => {
+                this.closeReport();
+            }
+        });
     }
 
     closeReport() {
         this.closeReportPreActions();
-        this.resultsService.removeResults(this.projectId);
+        this.reportService.removeReport(this.projectId);
 
         this.socketService.socketEmit('selfSync',
             'syncCloseReport',

@@ -60,6 +60,9 @@ export class AlertService {
             this.preConfirm().then(() => {
                 this.isLoading = true;
                 this.confirmFunc && this.confirmFunc();
+                this.activateAlertClose()
+            }).catch(() => {
+                this.isLoading = false;
                 this.initialize();
             });
         }

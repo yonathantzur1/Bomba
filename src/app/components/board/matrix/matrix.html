@@ -13,7 +13,8 @@
                 <i (click)="stopRequests()" class="fas fa-stop stop-requests-icon" title="Stop Requests"></i>
             </span>
             <span *ngIf="requestsAmount == resultsAmount" class="matrix-top-buttons">
-                <i (click)="closeReport()" title="Close Report" class="fas fa-times report-icon close-report-icon"></i>
+                <i (click)="closeReportSaveCheck()" title="Close Report"
+                    class="fas fa-times report-icon close-report-icon"></i>
             </span>
         </span>
         <span>{{projectName + " - " + (isSendMode ? "Report": "Matrix")}}</span>
@@ -29,10 +30,13 @@
                         <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty"
                             (click)="deleteCell(i, j);saveMatrix();" class="fas fa-times cell-icon delete-cell"></i>
                     </span>
-                    <result-info [request]="matrix[i][j]" [result]="results[matrix[i][j].id]"></result-info>
-                    <div *ngIf="isSendMode && getResultAverageTime(results[matrix[i][j].id])" class="time-overlay">
-                        Average time: {{getResultAverageTime(results[matrix[i][j].id])}} (s)
-                    </div>
+                    <span *ngIf="isSendMode">
+                        <result-info [request]="matrix[i][j]" [result]="report.results[matrix[i][j].id]">
+                        </result-info>
+                        <div *ngIf="getResultAverageTime(report.results[matrix[i][j].id])" class="time-overlay">
+                            Average time: {{getResultAverageTime(report.results[matrix[i][j].id])}} (s)
+                        </div>
+                    </span>
                 </td>
                 <td *ngIf="!isSendMode" class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">

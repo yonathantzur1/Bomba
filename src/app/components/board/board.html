@@ -3,7 +3,7 @@
     <div class="sector" *ngIf="!isLoading">
         <div class="matrix-sector" [ngClass]="{'send-mode': isSendMode}">
             <matrix [projectId]="projectId" [projectName]="projectName" [matrix]="matrix" [isSendMode]="isSendMode"
-                [results]="results"></matrix>
+                [report]="report"></matrix>
         </div>
         <div class="cards-sector" *ngIf="!isSendMode">
             <requests [projectId]="projectId" [requests]="requests" [defaultSettings]="defaultSettings"></requests>

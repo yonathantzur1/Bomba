@@ -16,7 +16,7 @@ export class BoardService extends BasicService {
         return super.get('/getProjectBoard?projectId=' + projectId);
     }
 
-    saveMatrix(projectId: string, matrix: Array<Array<Request>>) {
+    saveMatrix(projectId: string, matrix: Request[][]) {
         let data = {
             projectId,
             matrix

@@ -112,7 +112,7 @@ export class ProjectsComponent {
         this.alertService.alert({
             title: "Delete Project",
             text: 'Please confirm deletion of the project "' + project.name + '"\n\n' +
-                "The action will delete all data saved on the project.",
+                "The action will delete all data saved on the project and its reports.",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
                 let deleteProject: Project;

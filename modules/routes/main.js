@@ -16,7 +16,7 @@ module.exports = (app, connectedUsers) => {
     app.use('/api/projects', require('./projects'));
     app.use('/api/matrix', require('./matrix'));
     app.use('/api/board', require('./board'));
-    app.use('/api/results', require('./results'));
+    app.use('/api/reports', require('./reports'));
 
     app.use('/api/admin/users', require('./admin/users'));
     app.use('/api/admin/statistics', require('./admin/statistics'));

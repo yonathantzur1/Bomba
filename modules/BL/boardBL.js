@@ -14,6 +14,7 @@ module.exports = {
             name: 1,
             matrix: 1,
             requests: 1,
+            report: 1,
             defaultSettings: 1
         };
 

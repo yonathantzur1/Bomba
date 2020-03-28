@@ -1,5 +1,5 @@
 const DAL = require('../DAL');
-const resultsBL = require('./resultsBL');
+const reportsBL = require('./reportsBL');
 const config = require('../../config');
 const http = require('http');
 const https = require('https');
@@ -17,7 +17,7 @@ module.exports = {
 
         this.projectsRequests[projectId] = true;
 
-        let resultId = await resultsBL.initResults(requestsMatrix, projectId, userId);
+        await reportsBL.initReport(requestsMatrix, projectId, userId);
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
@@ -29,7 +29,7 @@ module.exports = {
         let promises = [];
 
         for (let i = 0; i < requestsMatrix.length; i++) {
-            promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId, resultId));
+            promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId));
         }
 
         Promise.all(promises).then(data => {
@@ -37,7 +37,7 @@ module.exports = {
         });
     },
 
-    async sendMultiRequests(sendObjects, projectId, userId, resultId) {
+    async sendMultiRequests(sendObjects, projectId, userId) {
         for (let i = 0; i < sendObjects.length && this.projectsRequests[projectId]; i++) {
             const sendObject = sendObjects[i];
             const requestId = sendObject.requestId;
@@ -69,7 +69,7 @@ module.exports = {
                 }
 
                 result.time = getDatesDiffBySeconds(new Date(), startTime);
-                await resultsBL.updateResult(resultId, requestId,
+                await reportsBL.updateReportResult(projectId, requestId,
                     isRequestSuccess ? "success" : "fail", result.time);
                 events.emit(isRequestSuccess ? "socket.requestSuccess" : "socket.requestError",
                     userId, result);
@@ -79,7 +79,7 @@ module.exports = {
 
     stopRequests(projectId, userId) {
         delete this.projectsRequests[projectId];
-        resultsBL.removeResults(projectId, userId);
+        reportsBL.removeReport(projectId, userId);
     }
 }
 

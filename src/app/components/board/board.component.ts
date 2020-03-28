@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { ResultsService } from 'src/app/services/results.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -15,7 +14,7 @@ declare let interact: any;
 @Component({
     selector: 'board',
     templateUrl: './board.html',
-    providers: [BoardService, ResultsService],
+    providers: [BoardService],
     styleUrls: ['./board.css']
 })
 
@@ -25,9 +24,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     projectId: string;
     projectName: string;
-    matrix: Array<Array<Request>>;
+    matrix: Request[][];
     requests: Array<Request>;
-    results: any;
+    report: any;
     defaultSettings: DefaultSettings;
 
     isLoading: boolean = false;
@@ -41,8 +40,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         private socketService: SocketService,
         private globalService: GlobalService,
         private snackbarService: SnackbarService,
-        private boardService: BoardService,
-        private resultsService: ResultsService) {
+        private boardService: BoardService) {
         this.eventService.emit(EVENT_TYPE.TAB_CLICK, "/");
         this.eventService.register(EVENT_TYPE.REQUESTS_SEND_MODE, (mode: boolean) => {
             this.isSendMode = mode;
@@ -55,36 +53,28 @@ export class BoardComponent implements OnInit, OnDestroy {
         // In case of route params changed.
         this.route.params.subscribe(params => {
             this.projectId = params["id"];
-
             this.isLoading = true;
 
-            let dataQueries = [this.boardService.getProjectBoard(this.projectId),
-            this.resultsService.getResults(this.projectId)];
-
-            Promise.all(dataQueries).then(data => {
+            this.boardService.getProjectBoard(this.projectId).then(project => {
                 this.isLoading = false;
 
-                let matrixResult = data[0];
-                let requestsResults = data[1];
-
-                if (!matrixResult) {
+                if (!project) {
                     this.snackbarService.snackbar("Server error occurred");
                     this.router.navigateByUrl('');
                     return;
                 }
                 else {
-                    this.projectName = matrixResult.name;
-                    this.matrix = this.mapMatrix(matrixResult.matrix);
-                    this.requests = this.mapRequests(matrixResult.requests);
-                    this.defaultSettings = matrixResult.defaultSettings;
+                    this.projectName = project.name;
+                    this.matrix = this.mapMatrix(project.matrix);
+                    this.requests = this.mapRequests(project.requests);
+                    this.defaultSettings = project.defaultSettings;
                 }
 
-                if (requestsResults) {
-                    this.results = requestsResults;
+                if (project.report) {
+                    this.report = project.report;
                     this.isSendMode = true;
                 }
                 else {
-                    this.results = {};
                     this.isSendMode = false;
                 }
             });

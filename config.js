@@ -9,7 +9,7 @@ module.exports = {
         collections: {
             users: "Users",
             projects: "Projects",
-            results: "Results"
+            reports: "Reports"
         }
     },
     logs: {
