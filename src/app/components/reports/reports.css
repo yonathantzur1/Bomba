@@ -33,3 +33,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+@media (max-aspect-ratio: 8/5) {
+    .folders-container {
+        padding: 5px 20px;
+    }
+}
