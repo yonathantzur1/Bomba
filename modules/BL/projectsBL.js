@@ -7,15 +7,24 @@ const reportsCollectionName = config.db.collections.reports;
 
 module.exports = {
     getProjects(ownerId) {
-        projectFields = {
-            "name": 1,
-            "date": 1
+
+        let filter = {
+            $match: { owner: DAL.getObjectId(ownerId) }
         }
 
-        return DAL.findSpecific(projectsCollectionName,
-            { owner: DAL.getObjectId(ownerId) },
-            projectFields,
-            { "date": 1 });
+        projectFields = {
+            $project: {
+                "name": 1,
+                "date": 1,
+                "isSendMode": { $cond: [{ $eq: ["$report", "$null"] }, false, true] }
+            }
+        }
+
+        let sortObj = { $sort: { "date": 1 } };
+
+        let aggregateArray = [filter, projectFields, sortObj];
+
+        return DAL.aggregate(projectsCollectionName, aggregateArray);
     },
 
     async addProject(name, ownerId) {

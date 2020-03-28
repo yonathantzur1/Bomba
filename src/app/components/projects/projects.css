@@ -48,6 +48,16 @@
     font-size: 10px;
 }
 
+.send-mode-alert {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffd54f;
+    border-radius: 50%;
+}
+
 .add-project-btn {
     position: fixed;
     bottom: 30px;

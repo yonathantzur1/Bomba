@@ -10,7 +10,7 @@
 
 .folder {
     height: 140px;
-    width: calc(25% - 20px);
+    width: calc(20% - 20px);
     display: flex;
     justify-content: start;
     padding: 10px;
@@ -20,7 +20,7 @@
 }
 
 .folder-icon {
-    font-size: 100px;
+    width: 100px;
     cursor: pointer;
 }
 

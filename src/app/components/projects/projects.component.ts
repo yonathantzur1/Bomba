@@ -9,11 +9,13 @@ export class Project {
     id: string;
     name: string;
     date: Date;
+    isSendMode: boolean;
 
-    constructor(id: string, name: string, date: Date) {
+    constructor(id: string, name: string, date: Date, isSendMode: boolean) {
         this.id = id;
         this.name = name;
         this.date = date;
+        this.isSendMode = isSendMode;
     }
 }
 
@@ -46,7 +48,10 @@ export class ProjectsComponent {
         }, this.eventsIds);
 
         this.eventService.register(EVENT_TYPE.ADD_PROJECT, (project: any) => {
-            this.projects.push(new Project(project._id, project.name, project.date))
+            this.projects.push(new Project(project._id,
+                project.name,
+                project.date,
+                false));
         }, this.eventsIds);
 
         this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (project: any) => {
@@ -69,8 +74,11 @@ export class ProjectsComponent {
             this.isLoading = false;
 
             if (projects) {
-                this.projects = projects.map((project: { _id: string; name: string; date: Date; }) => {
-                    return new Project(project._id, project.name, project.date);
+                this.projects = projects.map(project => {
+                    return new Project(project._id,
+                        project.name,
+                        project.date,
+                        project.isSendMode);
                 });
             }
             else {

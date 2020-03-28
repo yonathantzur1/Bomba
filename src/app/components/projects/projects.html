@@ -11,6 +11,7 @@
                 <i (click)="edit(project, $event)" class="far fa-edit top-icon edit-icon hvr-grow"></i>
                 <span [title]="project.name" class="name">{{project.name}}</span>
                 <span class="date">{{formatDate(project.date)}}</span>
+                <span title="Report Mode" *ngIf="project.isSendMode" class="send-mode-alert"></span>
             </div>
         </div>
         <project-card [editProject]="editProject" *ngIf="isShowProjectCard"></project-card>
