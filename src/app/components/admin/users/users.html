@@ -7,7 +7,7 @@
                     autocorrect="off" spellcheck="false" type="text" maxlength="30">
                 <div *ngIf="!isLoading" class="search-user-btn" (click)="searchUser()"
                     [ngClass]="{'search-user-btn-disabled': searchInput == '', 'search-user-btn-active': searchInput && searchInput.length > 0}">
-                    <i class="material-icons search-user-btn-icon">search</i>
+                    <i class="fas fa-search search-user-btn-icon"></i>
                 </div>
                 <loader-dots *ngIf="isLoading" class="user-loading"
                     css='{"font-size": "10px", "position": "absolute", "right": "-40px", "top": "28px"}'>
