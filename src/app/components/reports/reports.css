@@ -12,7 +12,7 @@
     height: 140px;
     width: calc(20% - 20px);
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 10px;
     user-select: none;
     position: relative;
