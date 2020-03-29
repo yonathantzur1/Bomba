@@ -1,4 +1,4 @@
-#board {
+.board-container {
     --cards-secotr-width: 345px;
     border: 0.5px solid var(--main-border-color);
     border-top: none;
@@ -31,7 +31,7 @@
 }
 
 @media (max-aspect-ratio: 8/5) {
-    #board {
+    .board-container {
         height: 100%
     }
 }
