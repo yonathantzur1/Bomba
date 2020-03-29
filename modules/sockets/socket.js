@@ -56,6 +56,10 @@ module.exports = (io) => {
         });
     });
 
+    events.on('socket.requestStart', (userId, data) => {
+        io.to(userId).emit('requestStart', data);
+    });
+
     events.on('socket.requestSuccess', (userId, data) => {
         io.to(userId).emit('requestSuccess', data);
     });

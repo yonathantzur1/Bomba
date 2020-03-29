@@ -15,11 +15,13 @@ export class RequestResult {
     success: number;
     fail: number;
     time: number;
+    isStart: boolean;
 
     constructor() {
         this.success = 0;
         this.fail = 0;
         this.time = 0;
+        this.isStart = false;
     }
 }
 
@@ -81,6 +83,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.container = document.getElementById("matrix-container");
 
+        this.socketService.socketOn("requestStart", (data: any) => {
+            if (data.projectId == this.projectId) {
+                this.report.results[data.requestId].isStart = true;
+            }
+        });
+
         this.socketService.socketOn("requestSuccess", (data: any) => {
             this.increaseRequestStatus(data, "success");
         });
@@ -107,6 +115,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
+        this.socketService.socketOff("requestStart");
         this.socketService.socketOff("requestSuccess");
         this.socketService.socketOff("requestError");
         this.socketService.socketOff("syncSendRequests");

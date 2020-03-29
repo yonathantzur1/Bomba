@@ -1,14 +1,15 @@
 <div id="resultInfo" *ngIf="!request.isEmpty && result">
     <div class="result-sector">
+        <i *ngIf="result.isStart && result.success == 0 && result.fail == 0" class="far fa-hourglass sending-icon"></i>
         <div *ngIf="result.success != 0" class="result-type-container">
             <i class="fas fa-check result-icon success-icon"></i>
-            <span [hidden]="result.success == request.amount">
+            <span [hidden]="result.success == 0 || result.fail == 0">
                 <span class="break-line">|</span> <span>{{result.success}}</span>
             </span>
         </div>
         <div *ngIf="result.fail != 0" class="result-type-container">
             <i class="fas fa-times result-icon fail-icon"></i>
-            <span [hidden]="result.fail == request.amount">
+            <span *ngIf="result.success != 0 && result.fail != 0">
                 <span class="break-line">|</span> <span>{{result.fail}}</span>
             </span>
         </div>

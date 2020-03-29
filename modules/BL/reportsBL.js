@@ -13,7 +13,8 @@ module.exports = {
                 results[matrix[i][j].id] = {
                     "success": 0,
                     "fail": 0,
-                    "time": 0
+                    "time": 0,
+                    "isStart": false
                 }
             }
         }
@@ -31,7 +32,20 @@ module.exports = {
         return DAL.updateOne(projectsCollectionName, projectFilter, { $set: { "report": setReport } });
     },
 
-    updateReportResult(projectId, requestId, state, time) {
+    updateRequestStart(projectId, requestId) {
+        // Update only if report exists in document.
+        let projectFilter = {
+            _id: DAL.getObjectId(projectId),
+            report: { $ne: null }
+        }
+
+        let jsonStr = '{ "$set": { "' + "report.results." + requestId + '.isStart": true } }';
+        let updateObj = JSON.parse(jsonStr);
+
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+    },
+
+    updateRequestResult(projectId, requestId, state, time) {
         // Update only if report exists in document.
         let projectFilter = {
             _id: DAL.getObjectId(projectId),
