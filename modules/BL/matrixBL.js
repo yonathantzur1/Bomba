@@ -27,14 +27,17 @@ module.exports = {
         }
 
         let promises = [];
+        let requestsStartTime = new Date();
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId));
         }
 
         Promise.all(promises).then(() => {
+            let totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime)
             delete this.projectsRequests[projectId];
             reportsBL.finishReport(projectId);
+            reportsBL.saveReport(projectId, totalTime);
             events.emit("socket.finishReport", userId, projectId);
         });
     },

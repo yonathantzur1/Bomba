@@ -13,8 +13,7 @@
                 <i (click)="stopRequests()" class="fas fa-stop stop-requests-icon" title="Stop Requests"></i>
             </span>
             <span *ngIf="requestsAmount == resultsAmount" class="matrix-top-buttons">
-                <i (click)="closeReportSaveCheck()" title="Close Report"
-                    class="fas fa-times report-icon close-report-icon"></i>
+                <i (click)="closeReport()" title="Close Report" class="fas fa-times report-icon close-report-icon"></i>
             </span>
         </span>
         <span>{{projectName + " - " + (isSendMode ? "Report": "Matrix")}}</span>

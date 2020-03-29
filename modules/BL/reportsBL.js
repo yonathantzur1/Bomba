@@ -70,22 +70,12 @@ module.exports = {
             $set: { "report.isDone": true }
         };
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+        DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
     },
 
-    removeReport(projectId, userId) {
+    async saveReport(projectId, totalTime) {
         let projectFilter = {
-            _id: DAL.getObjectId(projectId),
-            owner: DAL.getObjectId(userId)
-        };
-
-        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } });
-    },
-
-    async saveReport(projectId, userId) {
-        let projectFilter = {
-            _id: DAL.getObjectId(projectId),
-            owner: DAL.getObjectId(userId)
+            _id: DAL.getObjectId(projectId)
         }
 
         let projectFields = { "report": 1 };
@@ -98,11 +88,12 @@ module.exports = {
             "success": 0,
             "fail": 0,
             "total": 0,
-            "totalTime": 0, // seconds
-            "requestAverageTime": 0 // seconds
+            "totalTime": totalTime // seconds
         };
 
         let results = queryResult.report.results;
+
+        let requestsTotalAvgTime = 0
 
         Object.keys(results).forEach(requestId => {
             let result = results[requestId];
@@ -110,14 +101,22 @@ module.exports = {
             report.success += result.success;
             report.fail += result.fail;
             report.total += result.success + result.fail;
-            report.totalTime += result.time;
+            requestsTotalAvgTime += result.time;
         });
 
-        report.requestAverageTime = report.totalTime / report.total;
+        report.requestAverageTime = requestsTotalAvgTime / report.total; // seconds
 
-        let resultId = await DAL.insert(reportsCollectionName, report);
+        DAL.insert(reportsCollectionName, report);
+    },
 
-        return resultId ? true : false;
+
+    removeReport(projectId, userId) {
+        let projectFilter = {
+            _id: DAL.getObjectId(projectId),
+            owner: DAL.getObjectId(userId)
+        };
+
+        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } });
     },
 
     getAllReports(userId) {

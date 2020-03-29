@@ -11,14 +11,6 @@ router.delete('/removeReport', (req, res) => {
     });
 });
 
-router.post('/saveReport', (req, res) => {
-    reportsBL.saveReport(req.body.projectId, req.user._id).then(result => {
-        res.send(result);
-    }).catch(err => {
-        errorHandler.routeError(err, res);
-    });
-});
-
 router.get('/getAllReports', (req, res) => {
     reportsBL.getAllReports(req.user._id).then(result => {
         res.send(result);

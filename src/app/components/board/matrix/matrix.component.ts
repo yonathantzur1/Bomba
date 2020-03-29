@@ -311,34 +311,6 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.resultsAmount = 0;
     }
 
-    closeReportSaveCheck() {
-        this.alertService.alert({
-            title: "Save Report",
-            text: "Would you like to save the report?",
-            type: ALERT_TYPE.INFO,
-            confirmBtnText: "Yes",
-            closeBtnText: "No",
-            disableEscapeExit: true,
-            preConfirm: () => {
-                return new Promise((resolve, reject) => {
-                    this.reportService.saveReport(this.projectId).then(result => {
-                        if (result) {
-                            this.snackbarService.snackbar("The report was saved");
-                            resolve();
-                        }
-                        else {
-                            this.snackbarService.snackbar("Report save error occurred");
-                            reject();
-                        }
-                    });
-                });
-            },
-            finalFunc: () => {
-                this.closeReport();
-            }
-        });
-    }
-
     closeReport() {
         this.closeReportPreActions();
         this.reportService.removeReport(this.projectId);
