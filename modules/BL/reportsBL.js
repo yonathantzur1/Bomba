@@ -166,5 +166,38 @@ module.exports = {
         let aggregateArray = [joinFilter, unwindObject, reportFilter, group, fields, sort];
 
         return DAL.aggregate(reportsCollectionName, aggregateArray);
+    },
+
+    async getProjectReports(projectId, userId) {
+        let reportFilter = {
+            $match: {
+                "projectId": DAL.getObjectId(projectId),
+                "project.owner": DAL.getObjectId(userId)
+            }
+        }
+
+        let joinFilter = {
+            $lookup:
+            {
+                from: projectsCollectionName,
+                localField: 'projectId',
+                foreignField: '_id',
+                as: 'project'
+            }
+        }
+
+        let fields = {
+            $project: {
+                "project": 0
+            }
+        };
+
+        let sort = {
+            $sort: { "date": -1 }
+        }
+
+        let aggregateArray = [joinFilter, reportFilter, fields, sort];
+
+        return DAL.aggregate(reportsCollectionName, aggregateArray);
     }
 }

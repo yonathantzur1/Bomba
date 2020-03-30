@@ -17,4 +17,8 @@ export class ReportsService extends BasicService {
     getAllReports() {
         return super.get('/getAllReports');
     }
+
+    getProjectReports(projectId: string) {
+        return super.get('/getProjectReports?projectId=' + projectId);
+    }
 }

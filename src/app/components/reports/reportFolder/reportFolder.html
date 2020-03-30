@@ -1,0 +1,11 @@
+<div id="reportFolder">
+    <card [title]="projectName + ' Reports'" [width]="800" [height]="480">
+        <loader-spinner *ngIf="isLoading"></loader-spinner>
+        <div class="documents-container" *ngIf="!isLoading">
+            <div *ngFor="let document of documents" class="document">
+                <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
+                <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
+            </div>
+        </div>
+    </card>
+</div>

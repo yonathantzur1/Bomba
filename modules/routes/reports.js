@@ -19,4 +19,12 @@ router.get('/getAllReports', (req, res) => {
     });
 });
 
+router.get('/getProjectReports', (req, res) => {
+    reportsBL.getProjectReports(req.query.projectId, req.user._id).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

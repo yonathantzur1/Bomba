@@ -1,0 +1,39 @@
+loader-spinner {
+    position: absolute;
+    left: calc(50% - 35px);
+    top: calc(50% - 45px);
+}
+
+.documents-container {
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.document {
+    width: calc(33.333% - 30px);
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    user-select: none;
+    position: relative;
+    align-items: center;
+}
+
+.document-icon {
+    width: 50px;
+    cursor: pointer;
+}
+
+.document-date {
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

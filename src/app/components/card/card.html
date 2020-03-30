@@ -5,6 +5,8 @@
             <i (click)="closeWindow()" class="close-icon fas fa-times hvr-grow"></i>
             <span class="title">{{title}}</span>
         </div>
-        <ng-content></ng-content>
+        <div class="body-sector">
+            <ng-content></ng-content>
+        </div>
     </div>
 </div>

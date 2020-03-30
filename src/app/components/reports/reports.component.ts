@@ -1,11 +1,22 @@
 import { Component } from '@angular/core';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 class Report {
     projectId: string;
     projectName: string;
     amount: number;
+}
+
+class FolderData {
+    projectId: string;
+    projectName: string;
+
+    constructor(projectId: string, projectName: string) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+    }
 }
 
 @Component({
@@ -19,10 +30,17 @@ export class ReportsComponent {
 
     reports: Array<Report>;
 
+    folderData: FolderData;
+
     isLoading: boolean = false;
 
     constructor(private reportsService: ReportsService,
+        private eventService: EventService,
         private snackbarService: SnackbarService) {
+        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.folderData = null;
+        });
+
         this.isLoading = true;
 
         this.reportsService.getAllReports().then(reports => {
@@ -35,6 +53,10 @@ export class ReportsComponent {
                 this.snackbarService.snackbar("Server error occurred")
             }
         });
+    }
+
+    openFolder(report: Report) {
+        this.folderData = new FolderData(report.projectId, report.projectName);
     }
 
 }

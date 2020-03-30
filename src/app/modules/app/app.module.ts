@@ -13,6 +13,7 @@ import { SnackbarComponent } from '../../components/snackbar/snackbar.component'
 import { LoginComponent } from '../../components/login/login.component';
 import { HomeComponent } from '../../components/home/home.component';
 import { ReportsComponent } from 'src/app/components/reports/reports.component';
+import { ReportFolderComponent } from 'src/app/components/reports/reportFolder/reportFolder.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { StatisticsComponent } from '../../components/admin/statistics/statistics.component';
 import { UsersComponent } from '../../components/admin/users/users.component';
@@ -68,6 +69,7 @@ import { Routing } from '../../routes/app.routing';
     LoginComponent,
     HomeComponent,
     ReportsComponent,
+    ReportFolderComponent,
     NavbarComponent,
     StatisticsComponent,
     UsersComponent,

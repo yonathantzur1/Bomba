@@ -1,7 +1,7 @@
 <div id="reports">
     <loader-rings *ngIf="isLoading"></loader-rings>
     <div *ngIf="!isLoading" class="folders-container">
-        <div *ngFor="let report of reports" class="folder">
+        <div (click)="openFolder(report)" *ngFor="let report of reports" class="folder">
             <img src="assets/icons/folder.svg" class="folder-icon">
             <div title="{{report.projectName + ' (' + report.reportsAmount + ')'}}" class="folder-text">
                 {{report.projectName}}
@@ -9,4 +9,6 @@
             </div>
         </div>
     </div>
+    <report-folder *ngIf="folderData" [projectId]="folderData.projectId" [projectName]="folderData.projectName">
+    </report-folder>
 </div>

@@ -1,3 +1,7 @@
+#card {
+    --top-height: 40px;
+}
+
 .overlay {
     position: fixed;
     top: 0;
@@ -17,7 +21,7 @@
 
 .top-sector {
     position: relative;
-    height: 38px;
+    height: var(--top-height);
     width: 100%;
     background-color: #1e88f9;
     box-shadow: 0px 1px 1px 0px #848484;
@@ -25,6 +29,11 @@
     display: flex;
     align-items: center;
     user-select: none;
+}
+
+.body-sector {
+    height: calc(100% - var(--top-height));
+    position: relative;
 }
 
 .close-icon {

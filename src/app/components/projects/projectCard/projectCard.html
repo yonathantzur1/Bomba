@@ -1,12 +1,14 @@
-<card [title]="editProject ? 'Edit Project' : 'Add Project'" [width]="300" [height]="160">
-    <div class="body">
-        <form autocomplete="off">
-            <div class="form-group">
-                <input [(ngModel)]="name" maxlength="20" id="name" name="name" placeholder="Name" type="text" class="form-control"
-                    (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
-                <label id="name-micro" class="microtext"></label>
-            </div>
-        </form>
-        <i (click)="addProject()" class="add-icon far fa-arrow-alt-circle-right"></i>
-    </div>
-</card>
+<div id="projectCard">
+    <card [title]="editProject ? 'Edit Project' : 'Add Project'" [width]="300" [height]="160">
+        <div class="body">
+            <form autocomplete="off">
+                <div class="form-group">
+                    <input [(ngModel)]="name" maxlength="20" id="name" name="name" placeholder="Name" type="text"
+                        class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                    <label id="name-micro" class="microtext"></label>
+                </div>
+            </form>
+            <i (click)="addProject()" class="add-icon far fa-arrow-alt-circle-right"></i>
+        </div>
+    </card>
+</div>
