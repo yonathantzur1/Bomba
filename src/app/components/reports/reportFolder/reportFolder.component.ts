@@ -4,7 +4,14 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 class Document {
-
+    _id: string;
+    projectId: string;
+    date: Date;
+    success: number;
+    fail: number;
+    total: number;
+    totalTime: number;
+    requestAverageTime: number;
 }
 
 @Component({
@@ -71,7 +78,7 @@ export class ReportFolderComponent implements OnInit {
         return (day + '/' + month + '/' + year + " " + hour + ":" + minutes);
     }
 
-    openDocument() {
+    openDocument(document: Document) {
         alert("TO DO...");
     }
 
