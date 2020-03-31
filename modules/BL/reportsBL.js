@@ -87,24 +87,24 @@ module.exports = {
             "date": queryResult.report.creationDate,
             "success": 0,
             "fail": 0,
-            "total": 0,
             "totalTime": totalTime // seconds
         };
 
         let results = queryResult.report.results;
 
         let requestsTotalAvgTime = 0
+        let totalRequests = 0;
 
         Object.keys(results).forEach(requestId => {
             let result = results[requestId];
 
             report.success += result.success;
             report.fail += result.fail;
-            report.total += result.success + result.fail;
+            totalRequests += result.success + result.fail;
             requestsTotalAvgTime += result.time;
         });
 
-        report.requestAverageTime = requestsTotalAvgTime / report.total; // seconds
+        report.requestAverageTime = requestsTotalAvgTime / totalRequests; // seconds
 
         DAL.insert(reportsCollectionName, report);
     },

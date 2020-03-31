@@ -9,7 +9,6 @@ export class Document {
     date: Date;
     success: number;
     fail: number;
-    total: number;
     totalTime: number;
     requestAverageTime: number;
 }
