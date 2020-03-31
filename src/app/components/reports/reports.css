@@ -9,10 +9,10 @@
 }
 
 .folder {
-    height: 140px;
-    width: calc(20% - 20px);
+    height: 120px;
+    width: 20%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 10px;
     user-select: none;
     position: relative;
@@ -20,14 +20,14 @@
 }
 
 .folder-icon {
-    width: 100px;
+    width: 64px;
     cursor: pointer;
 }
 
 .folder-text {
     position: absolute;
     bottom: 0;
-    width: 100px;
+    width: 80%;
     text-align: center;
     overflow: hidden;
     white-space: nowrap;

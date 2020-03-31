@@ -1,0 +1,34 @@
+<div id="reportDocument">
+    <div class="document-container">
+        <table>
+            <tr>
+                <td>
+                    <div class="property">Succeeded</div>
+                    <div class="value">{{document.success}}</div>
+                </td>
+                <td>
+                    <div class="property">Failed</div>
+                    <div class="value">{{document.fail}}</div>
+                </td>
+                <td>
+                    <div class="property">Total</div>
+                    <div class="value">{{document.total}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="property">Total Time</div>
+                    <div class="value">
+                        {{document.totalTime.toFixed(2)}} <span class="time-unit">(s)</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="property">Average Time</div>
+                    <div class="value">
+                        {{document.requestAverageTime.toFixed(2)}} <span class="time-unit">(s)</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

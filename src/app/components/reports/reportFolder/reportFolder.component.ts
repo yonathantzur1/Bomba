@@ -29,6 +29,7 @@ export class ReportFolderComponent implements OnInit {
     isLoading: boolean = false;
 
     documents: Array<Document>;
+    selectedDocument: Document;
 
     constructor(private reportsService: ReportsService,
         private eventService: EventService,
@@ -79,7 +80,7 @@ export class ReportFolderComponent implements OnInit {
     }
 
     openDocument(document: Document) {
-        alert("TO DO...");
+        this.selectedDocument = document;
     }
 
 }
