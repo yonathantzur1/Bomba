@@ -3,7 +3,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
-class Document {
+export class Document {
     _id: string;
     projectId: string;
     date: Date;
