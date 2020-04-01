@@ -27,4 +27,12 @@ router.get('/getProjectReports', (req, res) => {
     });
 });
 
+router.delete('/deleteReport', (req, res) => {
+    reportsBL.deleteReport(req.query.projectId, req.query.reportId, req.user._id).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

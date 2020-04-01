@@ -4,8 +4,11 @@
         [width]="800" [height]="480">
         <loader-spinner *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
-            <div *ngFor="let document of documents" class="document">
-                <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
+            <div *ngFor="let document of documents; index as i" class="document">
+                <div class="document-icon-container">
+                    <i (click)="deleteDocument(i)" class="delete-icon fas fa-times"></i>
+                    <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
+                </div>
                 <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
             </div>
         </div>

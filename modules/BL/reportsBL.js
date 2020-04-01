@@ -199,5 +199,25 @@ module.exports = {
         let aggregateArray = [joinFilter, reportFilter, fields, sort];
 
         return DAL.aggregate(reportsCollectionName, aggregateArray);
+    },
+
+    async deleteReport(projectId, reportId, userId) {
+        let projectFilter = {
+            "_id": DAL.getObjectId(projectId),
+            "owner": DAL.getObjectId(userId)
+        }
+
+        let isUserProjectOwner = ((await DAL.count(projectsCollectionName, projectFilter)) == 1);
+
+        if (!isUserProjectOwner) {
+            return false;
+        }
+
+        let reportFilter = {
+            "_id": DAL.getObjectId(reportId),
+            "projectId": DAL.getObjectId(projectId)
+        }
+
+        return DAL.deleteOne(reportsCollectionName, reportFilter);
     }
 }

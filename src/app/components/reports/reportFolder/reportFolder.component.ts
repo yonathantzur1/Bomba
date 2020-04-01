@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 export class Document {
     _id: string;
@@ -31,6 +32,7 @@ export class ReportFolderComponent implements OnInit {
     selectedDocument: Document;
 
     constructor(private reportsService: ReportsService,
+        private alertService: AlertService,
         private eventService: EventService,
         private snackbarService: SnackbarService) { }
 
@@ -80,6 +82,30 @@ export class ReportFolderComponent implements OnInit {
 
     openDocument(document: Document) {
         this.selectedDocument = document;
+    }
+
+    deleteDocument(position: number) {
+        let document: Document = this.documents[position];
+
+        this.alertService.alert({
+            title: "Delete Report",
+            text: "Please confirm deletion of the report\nfrom date: " + this.formatDate(document.date),
+            type: ALERT_TYPE.DANGER,
+            preConfirm: this.reportsService.deleteReport(this.projectId, document._id),
+            confirmFunc: (reportResult: any) => {
+                if (reportResult) {
+                    this.documents.splice(position, 1);
+
+                    if (this.documents.length == 0) {
+                        this.eventService.emit(EVENT_TYPE.EMPTY_REPORT_FOLDER, this.projectId);
+                        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                    }
+                }
+                else {
+                    this.snackbarService.snackbar("Server error occurred");
+                }
+            }
+        });
     }
 
 }

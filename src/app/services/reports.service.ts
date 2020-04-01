@@ -21,4 +21,9 @@ export class ReportsService extends BasicService {
     getProjectReports(projectId: string) {
         return super.get('/getProjectReports?projectId=' + projectId);
     }
+
+    deleteReport(projectId: string, reportId: string, ) {
+        return super.delete('/deleteReport?projectId=' + projectId +
+            "&reportId=" + reportId);
+    }
 }

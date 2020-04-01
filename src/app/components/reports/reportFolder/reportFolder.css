@@ -23,6 +23,10 @@ loader-spinner {
     align-items: center;
 }
 
+.document-icon-container {
+    position: relative;
+}
+
 .document-icon {
     width: 50px;
     cursor: pointer;
@@ -36,4 +40,20 @@ loader-spinner {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.delete-icon {
+    position: absolute;
+    top: -3px;
+    left: 1px;
+    font-size: 10px;
+    background-color: white;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 0.5px solid black;
+    cursor: pointer;
 }
