@@ -87,12 +87,13 @@ module.exports = {
             "date": queryResult.report.creationDate,
             "success": 0,
             "fail": 0,
-            "totalTime": totalTime // seconds
+            "totalTime": totalTime,
+            "longestTime": 0
         };
 
         let results = queryResult.report.results;
 
-        let requestsTotalAvgTime = 0
+        let requestsTotalTime = 0
         let totalRequests = 0;
 
         Object.keys(results).forEach(requestId => {
@@ -101,10 +102,16 @@ module.exports = {
             report.success += result.success;
             report.fail += result.fail;
             totalRequests += result.success + result.fail;
-            requestsTotalAvgTime += result.time;
+            requestsTotalTime += result.time;
+
+            let requestsAvgTime = result.time / (result.success + result.fail);
+
+            if (requestsAvgTime > report.longestTime) {
+                report.longestTime = requestsAvgTime;
+            }
         });
 
-        report.requestAverageTime = requestsTotalAvgTime / totalRequests; // seconds
+        report.requestAverageTime = requestsTotalTime / totalRequests; // seconds
 
         DAL.insert(reportsCollectionName, report);
     },

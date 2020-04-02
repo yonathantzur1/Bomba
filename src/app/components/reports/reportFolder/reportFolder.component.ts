@@ -11,6 +11,7 @@ export class Document {
     success: number;
     fail: number;
     totalTime: number;
+    longestTime: number;
     requestAverageTime: number;
 }
 

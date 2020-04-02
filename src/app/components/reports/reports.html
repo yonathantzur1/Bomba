@@ -1,5 +1,11 @@
 <div id="reports">
     <loader-rings *ngIf="isLoading"></loader-rings>
+    <div class="not-found-reports-sector" *ngIf="!isLoading && reports.length == 0">
+        <i class="far fa-newspaper" style="font-size:60px;"></i>
+        <div style="font-size:40px;">
+            No reports found
+        </div>
+    </div>
     <div *ngIf="!isLoading" class="folders-container">
         <div (click)="openFolder(report)" *ngFor="let report of reports" class="folder">
             <img src="assets/icons/folder.svg" class="folder-icon">
