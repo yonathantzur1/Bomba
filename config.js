@@ -1,6 +1,7 @@
 module.exports = {
     server: {
         port: process.env.PORT || 8000,
+        isProd: (process.env.IS_PROD == 'true'),
         maxRequestSize: "10mb"
     },
     db: {

@@ -172,8 +172,19 @@ function getUrlWithoutProtocol(url) {
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
+function isLocalhostRequest(url, port) {
+    let urlWithoutProtocol = getUrlWithoutProtocol(url).toLowerCase();
+
+    return (urlWithoutProtocol == "localhost" || urlWithoutProtocol == "127.0.0.1");
+}
+
 function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
+
+        if (config.server.isProd && isLocalhostRequest(options.hostname)) {
+            reject();
+        }
+
         let reqProtocol;
 
         if (isHttpsRequst(options.hostname)) {
