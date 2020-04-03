@@ -5,7 +5,7 @@ module.exports = {
         maxRequestSize: "10mb"
     },
     requests: {
-        max: 1000
+        max: 500
     },
     db: {
         name: "bomba",
