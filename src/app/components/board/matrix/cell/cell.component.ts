@@ -14,10 +14,12 @@ export class CellComponent {
     @Input() row: number;
     @Input() col: number;
     @Input() isSendMode: boolean;
+    @Input() maxRequestAmount: number;
 
     constructor(private eventService: EventService) { }
 
     amountChanged() {
+        this.request.amount = Math.min(this.request.amount, this.maxRequestAmount);
         this.eventService.emit(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT);
     }
 }

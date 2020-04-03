@@ -4,6 +4,9 @@ module.exports = {
         isProd: (process.env.IS_PROD == 'true'),
         maxRequestSize: "10mb"
     },
+    requests: {
+        max: 1000
+    },
     db: {
         name: "bomba",
         connectionString: process.env.DEV_CONNECTION_STRING || process.env.BOMBA_CONNECTION_STRING,

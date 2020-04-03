@@ -49,9 +49,12 @@ module.exports = {
 
             let requestsPromises = [];
 
+            if (sendObject.amount > config.requests.max) {
+                break;
+            }
+
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 let clientResult = { projectId, requestId };
-                let startTime;
 
                 if (sendObject.jsonData) {
                     let jsonData = Object.assign({}, sendObject.jsonData);
@@ -66,12 +69,12 @@ module.exports = {
                     sendObject.data = JSON.stringify(jsonData);
                 }
 
-                let isRequestSuccess;
-                startTime = new Date();
-
                 reportsBL.updateRequestStart(projectId, requestId).then(() => {
                     events.emit("socket.requestStart", userId, clientResult);
                 });
+
+                let isRequestSuccess;
+                let startTime = new Date();
 
                 requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
                     isRequestSuccess = true;
@@ -172,7 +175,7 @@ function getUrlWithoutProtocol(url) {
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
-function isLocalhostRequest(url, port) {
+function isLocalhostRequest(url) {
     let urlWithoutProtocol = getUrlWithoutProtocol(url).toLowerCase();
 
     return (urlWithoutProtocol == "localhost" || urlWithoutProtocol == "127.0.0.1");

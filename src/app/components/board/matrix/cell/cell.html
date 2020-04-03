@@ -7,7 +7,7 @@
         <div [ngSwitch]="isSendMode">
             <span *ngSwitchCase="true" class="amount-number">{{request.amount}}</span>
             <input *ngSwitchCase="false" type="number" (change)="amountChanged()" class="amount-input form-control"
-                [(ngModel)]="request.amount" min="1" max="9999">
+                [(ngModel)]="request.amount" min="1" [max]="maxRequestAmount">
         </div>
 
     </div>

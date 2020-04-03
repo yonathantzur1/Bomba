@@ -39,6 +39,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     @Input() matrix: Request[][];
     @Input() isSendMode: boolean;
     @Input() report: any;
+    @Input() maxRequestAmount: number;
 
     requestsAmount: number;
     resultsAmount: number;

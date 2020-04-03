@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     requests: Array<Request>;
     report: any;
     defaultSettings: DefaultSettings;
+    maxRequestAmount: number;
 
     isLoading: boolean = false;
     isSendMode: boolean = false;
@@ -68,6 +69,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                     this.matrix = this.mapMatrix(project.matrix);
                     this.requests = this.mapRequests(project.requests);
                     this.defaultSettings = project.defaultSettings;
+                    this.maxRequestAmount = project.maxRequestAmount;
                 }
 
                 if (project.report) {

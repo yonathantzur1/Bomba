@@ -4,7 +4,7 @@ const config = require('../../config');
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
-    getProjectBoard(projectId, userId) {
+    async getProjectBoard(projectId, userId) {
         projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
@@ -18,7 +18,10 @@ module.exports = {
             defaultSettings: 1
         };
 
-        return DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields);
+        let board = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields);
+        board && (board.maxRequestAmount = config.requests.max);
+
+        return board;
     },
 
     saveMatrix(projectId, userId, matrix) {
