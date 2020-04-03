@@ -45,15 +45,16 @@ module.exports = {
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
     },
 
-    updateRequestResult(projectId, requestId, state, time) {
+    updateRequestStatus(requestStatus) {
         // Update only if report exists in document.
         let projectFilter = {
-            _id: DAL.getObjectId(projectId),
+            _id: DAL.getObjectId(requestStatus.projectId),
             report: { $ne: null }
         }
 
-        let jsonStr = '{ "$inc": { "' + "report.results." + requestId + "." + state + '": 1,' +
-            ' "report.results.' + requestId + '.time": ' + time + ' } }';
+        let jsonStr = '{ "$set": { "report.results.' + requestStatus.requestId + '.success": ' + requestStatus.success +
+            ', "report.results.' + requestStatus.requestId + '.fail": ' + requestStatus.fail +
+            ', "report.results.' + requestStatus.requestId + '.time": ' + requestStatus.time + ' } }';
         let updateObj = JSON.parse(jsonStr);
 
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);

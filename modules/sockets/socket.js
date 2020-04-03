@@ -60,12 +60,8 @@ module.exports = (io) => {
         io.to(userId).emit('requestStart', data);
     });
 
-    events.on('socket.requestSuccess', (userId, data) => {
-        io.to(userId).emit('requestSuccess', data);
-    });
-
-    events.on('socket.requestError', (userId, data) => {
-        io.to(userId).emit('requestError', data);
+    events.on('socket.requestStatus', (userId, data) => {
+        io.to(userId).emit('requestStatus', data);
     });
 
     events.on('socket.finishReport', (userId, projectId) => {

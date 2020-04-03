@@ -90,12 +90,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.socketService.socketOn("requestSuccess", (data: any) => {
-            this.increaseRequestStatus(data, "success");
-        });
-
-        this.socketService.socketOn("requestError", (data: any) => {
-            this.increaseRequestStatus(data, "fail");
+        this.socketService.socketOn("requestStatus", (data: any) => {
+            this.updateRequestStatus(data);
         });
 
         this.socketService.socketOn("syncSendRequests", (data: any) => {
@@ -117,8 +113,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
         this.socketService.socketOff("requestStart");
-        this.socketService.socketOff("requestSuccess");
-        this.socketService.socketOff("requestError");
+        this.socketService.socketOff("requestStatus");
         this.socketService.socketOff("syncSendRequests");
         this.socketService.socketOff("syncCloseReport");
     }
@@ -127,7 +122,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         return (this.projectId == projectId && this.globalService.userGuid != userGuid);
     }
 
-    increaseRequestStatus(data: any, status: string) {
+    updateRequestStatus(data: any) {
         if (data.projectId != this.projectId) {
             return;
         }
@@ -135,9 +130,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
         let result: RequestResult = this.report.results[data.requestId];
 
         if (result) {
-            result[status]++;
-            this.resultsAmount++;
-            result.time += data.time;
+            result.success = data.success;
+            result.fail = data.fail;
+            result.time = data.time;
+            this.resultsAmount += result.success + result.fail;
         }
     }
 

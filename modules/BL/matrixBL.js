@@ -47,15 +47,20 @@ module.exports = {
             const sendObject = sendObjects[i];
             const requestId = sendObject.requestId;
 
-            let requestsPromises = [];
-
             if (sendObject.amount > config.requests.max) {
                 break;
             }
 
-            for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
-                let clientResult = { projectId, requestId };
+            let requestsPromises = [];
+            let requestStatus = {
+                projectId,
+                requestId,
+                "success": 0,
+                "fail": 0,
+                "time": 0
+            }
 
+            for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 if (sendObject.jsonData) {
                     let jsonData = Object.assign({}, sendObject.jsonData);
 
@@ -70,27 +75,24 @@ module.exports = {
                 }
 
                 reportsBL.updateRequestStart(projectId, requestId).then(() => {
-                    events.emit("socket.requestStart", userId, clientResult);
+                    events.emit("socket.requestStart", userId, requestStatus);
                 });
 
-                let isRequestSuccess;
                 let startTime = new Date();
 
                 requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
-                    isRequestSuccess = true;
+                    requestStatus.success++;
                 }).catch(() => {
-                    isRequestSuccess = false;
+                    requestStatus.fail++;
                 }).finally(async () => {
-                    clientResult.time = getDatesDiffBySeconds(new Date(), startTime);
-                    reportsBL.updateRequestResult(projectId, requestId,
-                        isRequestSuccess ? "success" : "fail", clientResult.time).then(() => {
-                            events.emit(isRequestSuccess ? "socket.requestSuccess" : "socket.requestError",
-                                userId, clientResult);
-                        });
+                    requestStatus.time += getDatesDiffBySeconds(new Date(), startTime);
                 }));
             }
 
             await Promise.all(requestsPromises);
+            reportsBL.updateRequestStatus(requestStatus).then(() => {
+                events.emit("socket.requestStatus", userId, requestStatus);
+            });
         }
     },
 
