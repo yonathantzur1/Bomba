@@ -7,6 +7,7 @@ export class UserCard {
     creationDate: Date;
     isAdmin: boolean;
     lastLoginTime: Date;
+    projects: number;
 }
 
 @Component({
