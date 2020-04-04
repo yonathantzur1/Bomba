@@ -62,3 +62,55 @@ app.delete('/testDelete', (req, res) => {
         }
     }, req.query.time);
 });
+
+app.get('/randomGet', (req, res) => {
+    setTimeout(() => {
+        if (Math.floor(Math.random() * 2)) {
+            console.log("random get - success");
+            res.send("success");
+        }
+        else {
+            console.log("random get - error");
+            res.status(500).send("error");
+        }
+    }, req.query.time);
+});
+
+app.post('/randomPost', (req, res) => {
+    setTimeout(() => {
+        if (Math.floor(Math.random() * 2)) {
+            console.log("random post - success");
+            res.send("success");
+        }
+        else {
+            console.log("random post - error");
+            res.status(500).send("error");
+        }
+    }, req.query.time);
+});
+
+app.put('/randomPut', (req, res) => {
+    setTimeout(() => {
+        if (Math.floor(Math.random() * 2)) {
+            console.log("random put - success");
+            res.send("success");
+        }
+        else {
+            console.log("random put - error");
+            res.status(500).send("error");
+        }
+    }, req.query.time);
+});
+
+app.delete('/randomDelete', (req, res) => {
+    setTimeout(() => {
+        if (Math.floor(Math.random() * 2)) {
+            console.log("random delete - success");
+            res.send("success");
+        }
+        else {
+            console.log("random delete - error");
+            res.status(500).send("error");
+        }
+    }, req.query.time);
+});

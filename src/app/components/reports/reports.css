@@ -7,17 +7,16 @@
 
 .folders-container {
     width: 100%;
-    height: 100%;
+    max-height: 100%;
     overflow-y: auto;
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    padding-top: 20px;
 }
 
 .folder {
-    height: 120px;
-    width: 20%;
+    height: 140px;
+    width: 140px;
     display: flex;
     justify-content: center;
     user-select: none;
@@ -32,16 +31,10 @@
 
 .folder-text {
     position: absolute;
-    bottom: 0;
+    top: 100px;
     width: 80%;
     text-align: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-@media (max-aspect-ratio: 8/5) {
-    .folders-container {
-        padding: 5px 20px;
-    }
 }

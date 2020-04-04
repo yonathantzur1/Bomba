@@ -19,7 +19,13 @@ export class CellComponent {
     constructor(private eventService: EventService) { }
 
     amountChanged() {
-        this.request.amount = Math.min(this.request.amount, this.maxRequestAmount);
+        if (!this.request.amount || this.request.amount < 0) {
+            this.request.amount = 1;
+        }
+        else {
+            this.request.amount = Math.min(this.request.amount, this.maxRequestAmount);
+        }
+
         this.eventService.emit(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT);
     }
 }
