@@ -17,7 +17,7 @@ export class UserCardComponent {
 
     constructor(private usersService: UsersService) { }
 
-    getInfoDateString(date: string) {
+    getInfoDateString(date: Date) {
         let dateObj = new Date(date);
 
         let dateString = (dateObj.getDate()) + "/" +
