@@ -18,6 +18,7 @@ import { ReportDocumentComponent } from 'src/app/components/reports/reportFolder
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { UsersComponent } from '../components/admin/users/users.component';
+import { UserCardComponent } from '../components/admin/users/userCard/userCard.component';
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../components/register/register.component';
@@ -75,6 +76,7 @@ import { Routing } from '../routes/app.routing';
     NavbarComponent,
     StatisticsComponent,
     UsersComponent,
+    UserCardComponent,
     InfoComponent,
     InfoCardComponent,
     RegisterComponent,

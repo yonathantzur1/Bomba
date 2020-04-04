@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { UsersService } from 'src/app/services/admin/users.service';
 
+export class UserCard {
+    _id: string;
+    username: string;
+    creationDate: Date;
+    isAdmin: boolean;
+    lastLoginTime: Date;
+}
+
 @Component({
     selector: 'users',
     templateUrl: './users.html',
@@ -10,8 +18,9 @@ import { UsersService } from 'src/app/services/admin/users.service';
 
 export class UsersComponent {
     searchInput: string;
-    users: Array<any> = [];
+    user: UserCard;
 
+    isNotFound: boolean = false;
     isLoading: boolean = false;
 
     constructor(private usersService: UsersService) { }
@@ -19,10 +28,18 @@ export class UsersComponent {
     searchUser() {
         if (this.searchInput && (this.searchInput = this.searchInput.trim())) {
             this.isLoading = true;
+            this.isNotFound = false;
+            this.user = null;
 
-            this.usersService.getUser(this.searchInput).then(results => {
+            this.usersService.getUser(this.searchInput).then(user => {
                 this.isLoading = false;
-                let x = results;
+
+                if (user) {
+                    this.user = user;
+                }
+                else {
+                    this.isNotFound = true;
+                }
             });
         }
     }

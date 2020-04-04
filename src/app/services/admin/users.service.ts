@@ -13,4 +13,8 @@ export class UsersService extends BasicService {
     getUser(searchInput: string) {
         return super.post('/getUser', { searchInput });
     }
+
+    changeAdminStatus(userId: string, isAdmin: boolean) {
+        return super.put('/changeAdminStatus', { userId, isAdmin });
+    }
 }

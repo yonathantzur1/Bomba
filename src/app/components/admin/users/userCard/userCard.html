@@ -1,0 +1,34 @@
+<div id="userCard">
+    <div class="card-container">
+        <div class="user-name-container">
+            {{user.username}}
+        </div>
+        <div class="user-info-container">
+            <table class="info-table">
+                <tr>
+                    <td>
+                        <div class="info-title">Register Date</div>
+                        <div class="info-data">{{getInfoDateString(user.creationDate)}}</div>
+                    </td>
+                    <td>
+                        <div class="info-title">Last Login</div>
+                        <div class="info-data">{{getInfoDateString(user.lastLoginTime)}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="info-title">Projects</div>
+                        <div class="info-data">{{user.projects}}</div>
+                    </td>
+                    <td>
+                        <div class="info-title">Admin</div>
+                        <div class="info-data">
+                            <i class="far check-admin" (click)="changeAdminStatus()"
+                                [ngClass]="{'fa-check-square': user.isAdmin, 'fa-square': !user.isAdmin}"></i>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

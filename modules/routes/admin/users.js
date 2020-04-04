@@ -15,4 +15,12 @@ router.post('/getUser',
         });
     });
 
+router.put('/changeAdminStatus', (req, res) => {
+    usersBL.changeAdminStatus(req.body.userId, req.body.isAdmin).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

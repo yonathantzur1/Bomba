@@ -15,7 +15,7 @@
 }
 
 .input-container > .form-group {
-    width: 250px;
+    width: 100%;
     position: relative;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .search-input {
-    width: 100%;
+    width: calc(100% - 45px);
     margin-right: 10px;
     padding-bottom: 0 !important;
     display: inline-block;
@@ -33,15 +33,15 @@
 
 .search-user-btn {
     box-shadow: 0px 0px 5px 1px #c2c2c2;
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
     border-radius: 50%;
     background-color: #afafaf;
     align-items: center;
     justify-content: center;
     display: flex;
     position: absolute;
-    right: -35px;
+    right: 0px;
     top: 5px;
 }
 
@@ -57,14 +57,7 @@
     cursor: pointer;
 }
 
-@keyframes disablesearch {
-    from {background-color: #4799ff;}
-    to {background-color: #9d9d9d;}
-}
-
 .search-user-btn-disabled {
-    animation-name: disablesearch;
-    animation-duration: 0.3s;
     background-color: #9d9d9d;
     cursor: default;
 }
@@ -72,4 +65,9 @@
 .search-user-btn-icon {
     color: #f3f3f3;
     font-size: 15px;
+}
+
+.not-found-users-sector {
+    text-align: center;
+    margin-top: 20px;
 }

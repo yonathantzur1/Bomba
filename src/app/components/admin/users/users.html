@@ -6,13 +6,18 @@
                     class="form-control search-input" placeholder="Search User" autocapitalize="off" autocomplete="off"
                     autocorrect="off" spellcheck="false" type="text" maxlength="30">
                 <div *ngIf="!isLoading" class="search-user-btn" (click)="searchUser()"
-                    [ngClass]="{'search-user-btn-disabled': searchInput == '', 'search-user-btn-active': searchInput && searchInput.length > 0}">
+                    [ngClass]="{'search-user-btn-disabled': !searchInput || !searchInput.trim(), 'search-user-btn-active': searchInput && searchInput.length > 0}">
                     <i class="fas fa-search search-user-btn-icon"></i>
                 </div>
                 <loader-dots *ngIf="isLoading" class="user-loading"
-                    css='{"font-size": "10px", "position": "absolute", "right": "-40px", "top": "28px"}'>
+                    css='{"font-size": "10px", "position": "absolute", "right": "-5px", "top": "25px"}'>
                 </loader-dots>
             </div>
+        </div>
+        <user-card *ngIf="user" [user]="user"></user-card>
+        <div class="not-found-users-sector" *ngIf="isNotFound && !isLoading">
+            <i class="fas fa-user-times" style="font-size:70px;"></i>
+            <div style="font-size:40px;">User Not Found</div>
         </div>
     </div>
 </div>
