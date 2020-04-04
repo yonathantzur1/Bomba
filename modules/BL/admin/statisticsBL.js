@@ -4,17 +4,22 @@ const errorHandler = require('../../handlers/errorHandler');
 
 const usersCollectionName = config.db.collections.users;
 const projectsCollectionName = config.db.collections.projects;
+const reportsCollectionName = config.db.collections.reports;
 
 module.exports = {
     async getStatistics() {
-        let results = await Promise.all([this.getUsersCount(),
-        this.getAdminsCount(),
-        this.getProjectsCount()]).catch(errorHandler.promiseError);
+        let results = await Promise.all([
+            this.getUsersCount(),
+            this.getAdminsCount(),
+            this.getProjectsCount(),
+            this.getReportsCount()
+        ]).catch(errorHandler.promiseError);
 
         return {
             "users": results[0],
             "admins": results[1],
-            "projects": results[2]
+            "projects": results[2],
+            "reports": results[3]
         }
     },
 
@@ -30,6 +35,11 @@ module.exports = {
 
     getProjectsCount() {
         return DAL.count(projectsCollectionName, {})
+            .catch(errorHandler.promiseError);
+    },
+
+    getReportsCount() {
+        return DAL.count(reportsCollectionName, {})
             .catch(errorHandler.promiseError);
     }
 }

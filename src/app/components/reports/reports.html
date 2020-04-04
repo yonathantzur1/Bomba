@@ -7,8 +7,8 @@
         </div>
     </div>
     <div *ngIf="!isLoading" class="folders-container">
-        <div (click)="openFolder(report)" *ngFor="let report of reports" class="folder">
-            <img src="assets/icons/folder.svg" class="folder-icon">
+        <div *ngFor="let report of reports" class="folder">
+            <img src="assets/icons/folder.svg" (click)="openFolder(report)" class="folder-icon">
             <div title="{{report.projectName + ' (' + report.reportsAmount + ')'}}" class="folder-text">
                 {{report.projectName}}
                 <span style="font-size: 14px;">({{report.reportsAmount}})</span>

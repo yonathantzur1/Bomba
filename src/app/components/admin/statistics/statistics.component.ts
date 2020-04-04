@@ -26,8 +26,15 @@ export class StatisticsComponent {
             this.isLoading = false;
 
             if (result) {
-                this.usersInfoCards = [new InfoCard("Users", result.users), new InfoCard("Admins", result.admins)];
-                this.statisticsInfoCards = [new InfoCard("Projects", result.projects)];
+                this.usersInfoCards = [
+                    new InfoCard("Users", result.users),
+                    new InfoCard("Admins", result.admins)
+                ];
+
+                this.statisticsInfoCards = [
+                    new InfoCard("Projects", result.projects),
+                    new InfoCard("Reports", result.reports)
+                ];
             }
             else {
                 this.snackbarService.snackbar("Server error occurred");
