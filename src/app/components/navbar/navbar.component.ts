@@ -5,7 +5,6 @@ import { CookieService } from 'src/app/services/global/cookie.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SocketService } from 'src/app/services/global/socket.service';
-import { SOCKET_STATE } from 'src/app/enums';
 
 class Tab {
     name: string;
@@ -31,7 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Input() isAdmin: boolean;
 
     checkSocketConnectInterval: any;
-    checkSocketConnectDelay: number = 10; // seconds
+    checkSocketConnectDelay: number = 3; // seconds
 
     tabs: Array<Tab>;
 
@@ -51,26 +50,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.socketService.socketEmit('login');
 
-        let self = this;
-
-        self.checkSocketConnectInterval = setInterval(() => {
-            self.authService.isUserSocketConnect().then((result: any) => {
-                if (result) {
-                    switch (result.state) {
-                        case SOCKET_STATE.ACTIVE:
-                            break;
-                        // In case the user is login with no connected socket.
-                        case SOCKET_STATE.CLOSE:
-                            self.socketService.refreshSocket();
-                            break;
-                        // In case the user is logout.
-                        case SOCKET_STATE.LOGOUT:
-                            self.logout();
-                            break;
-                    }
-                }
-            });
-        }, self.checkSocketConnectDelay * 1000);
+        this.checkSocketConnectInterval = setInterval(() => {
+            if (!this.socketService.isSocketConnect()) {
+                this.socketService.refreshSocket();
+            }
+        }, this.checkSocketConnectDelay * 1000);
 
         this.initializeTabs();
     }

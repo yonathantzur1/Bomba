@@ -4,9 +4,3 @@ exports.REST = Object.freeze({
     PUT: "PUT",
     DELETE: "DELETE"
 });
-
-exports.SOCKET_STATE = Object.freeze({
-    ACTIVE: "ACTIVE",
-    CLOSE: "CLOSE",
-    LOGOUT: "LOGOUT"
-});

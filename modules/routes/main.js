@@ -1,6 +1,6 @@
 const permissionsMiddleware = require('../middlewares/permissionsMiddleware');
 
-module.exports = (app, connectedUsers) => {
+module.exports = (app) => {
     // Validate user token for each api request.
     app.use('/api', Exclude([
         '/login/*',
@@ -21,10 +21,7 @@ module.exports = (app, connectedUsers) => {
     app.use('/api/admin/users', require('./admin/users'));
     app.use('/api/admin/statistics', require('./admin/statistics'));
 
-    app.use('/api/auth', (req, res, next) => {
-        req.connectedUsers = connectedUsers;
-        next();
-    }, require('./auth'));
+    app.use('/api/auth', require('./auth'));
 }
 
 // Exclude routes for middlewares.

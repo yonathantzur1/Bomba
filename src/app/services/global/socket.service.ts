@@ -4,7 +4,7 @@ declare let io: any;
 
 @Injectable()
 export class SocketService {
-    socket: any;
+    private socket: any;
 
     initialize() {
         this.socket = io();
@@ -50,6 +50,10 @@ export class SocketService {
 
     socketOff(name: string) {
         this.socket && this.socket.off(name);
+    }
+
+    isSocketConnect() {
+        return (this.isSocketExists() && this.socket.connected);
     }
 
     // This function should be called in order to refresh
