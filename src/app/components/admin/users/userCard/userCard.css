@@ -42,9 +42,7 @@
 
 .info-data {
     width: 100%;
-    display: inline-block;    
-    -webkit-user-select: text;
-    user-select: text;
+    display: inline-block;
 }
 
 .check-admin {

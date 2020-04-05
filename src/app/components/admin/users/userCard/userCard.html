@@ -25,6 +25,7 @@
                         <div class="info-data">
                             <i class="far check-admin" (click)="changeAdminStatus()"
                                 [ngClass]="{'fa-check-square': user.isAdmin, 'fa-square': !user.isAdmin}"></i>
+                            <span> - {{user.isAdmin ? 'Yes' : 'No'}}</span>
                         </div>
                     </td>
                 </tr>
