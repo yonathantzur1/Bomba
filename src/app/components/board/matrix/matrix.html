@@ -18,6 +18,9 @@
         </span>
         <span>{{projectName + " - " + (isSendMode ? "Report": "Matrix")}}</span>
     </div>
+    <div *ngIf="isSendMode" class="load-progress-container">
+        <div class="load-progress" [ngStyle]="{'width': (resultsAmount / requestsAmount * 100) + '%'}"></div>
+    </div>
     <div id="matrix-container" class="matrix-container">
         <table>
             <tr *ngFor="let row of matrix; index as i">
