@@ -60,6 +60,10 @@ module.exports = {
                 "time": 0
             }
 
+            reportsBL.updateRequestStart(projectId, requestId).then(() => {
+                events.emit("socket.requestStart", userId, requestStatus);
+            });
+
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 if (sendObject.jsonData) {
                     let jsonData = Object.assign({}, sendObject.jsonData);
@@ -73,10 +77,6 @@ module.exports = {
 
                     sendObject.data = JSON.stringify(jsonData);
                 }
-
-                reportsBL.updateRequestStart(projectId, requestId).then(() => {
-                    events.emit("socket.requestStart", userId, requestStatus);
-                });
 
                 let startTime = new Date();
 
