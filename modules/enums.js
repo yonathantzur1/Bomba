@@ -4,3 +4,9 @@ exports.REST = Object.freeze({
     PUT: "PUT",
     DELETE: "DELETE"
 });
+
+exports.LOG_TYPE = Object.freeze({
+    LOGIN: 0,
+    LOGIN_FAIL: 1,
+    REGISTER: 2
+});

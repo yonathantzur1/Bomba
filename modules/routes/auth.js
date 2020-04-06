@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const loginBL = require('../BL/loginBL');
+const logsBL = require('../BL/logsBL');
 const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
 
@@ -13,6 +14,7 @@ router.get('/getCurrUser', (req, res) => {
         "username": user.username
     }
 
+    logsBL.login(user.username, req);
     loginBL.updateLastLogin(user._id);
     res.send(userClientObject);
 });

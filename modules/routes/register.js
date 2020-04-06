@@ -2,6 +2,7 @@ const router = require('express').Router();
 const tokenHandler = require('../handlers/tokenHandler');
 const validator = require('../security/validations/validator');
 const errorHandler = require('../handlers/errorHandler');
+const logsBL = require('../BL/logsBL');
 
 const registerBL = require('../BL/registerBL');
 
@@ -21,6 +22,7 @@ router.post('/register',
                 let token = tokenHandler.getTokenFromUserObject(user);
                 tokenHandler.setTokenOnCookie(token, res);
                 res.send({ result: true });
+                logsBL.register(user.username, req);
             }
         }).catch(err => {
             errorHandler.routeError(err, res);

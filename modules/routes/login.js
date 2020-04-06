@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const loginBL = require('../BL/loginBL');
+const logsBL = require('../BL/logsBL');
 const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
 const validator = require('../security/validations/validator');
@@ -37,6 +38,7 @@ router.post('/userLogin',
             // In case the password is wrong.
             else {
                 res.send({ result: user });
+                logsBL.loginFail(req.body.username, req);
             }
         }).catch(err => {
             errorHandler.routeError(err, res);

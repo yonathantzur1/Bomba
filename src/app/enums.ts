@@ -5,3 +5,9 @@ export enum METHOD {
     PUT = "PUT",
     DELETE = "DELETE"
 }
+
+export enum LOG_TYPE {
+    LOGIN,
+    LOGIN_FAIL,
+    REGISTER
+}
