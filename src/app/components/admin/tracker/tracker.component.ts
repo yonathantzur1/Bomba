@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { TrackerService } from '../../../services/admin/tracker.service';
-import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { DateService } from '../../../services/global/date.service';
 import { MicrotextService, InputFieldValidation } from '../../../services/global/microtext.service';
 
@@ -54,7 +53,6 @@ export class TrackerComponent {
 
     constructor(private dateService: DateService,
         private trackerService: TrackerService,
-        private snackbarService: SnackbarService,
         private microtextService: MicrotextService) {
         let self = this;
 
