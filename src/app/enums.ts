@@ -11,3 +11,8 @@ export enum LOG_TYPE {
     LOGIN_FAIL,
     REGISTER
 }
+
+export enum STATISTICS_RANGE {
+    YEARLY,
+    WEEKLY
+}

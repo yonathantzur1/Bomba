@@ -10,3 +10,8 @@ exports.LOG_TYPE = Object.freeze({
     LOGIN_FAIL: 1,
     REGISTER: 2
 });
+
+exports.STATISTICS_RANGE = Object.freeze({
+    YEARLY: 0,
+    WEEKLY: 1
+});

@@ -1,0 +1,164 @@
+.tracker-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+}
+.chart-container {
+    position: relative;
+    height: calc(100% - 160px);
+    width: 100%;
+    max-height: 450px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.control-menu {
+    width: 230px;
+    height: 50px;
+    position: relative;
+    display: flex;
+    border-radius: 3px;
+    z-index: 2;
+    margin: auto;
+}
+
+.tab-container {
+    display: inline-flex;
+    width: 55px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: 0.5px solid #939393;
+}
+
+.tab-container:hover {
+    background-color: #ebf5ff;
+}
+
+.tab {
+    display: inline-flex;
+    width: 100%;    
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tab-icon {
+    margin: auto;
+    font-size: 20px;
+}
+
+.close {
+    position: absolute;
+    right: 35px;
+    top: 35px;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.modal-header, .modal-body, .modal-footer {
+    user-select: none;    
+}
+
+.modal-title-icon {
+    font-size: 20px;    
+    top: 26px;
+    margin-left: 10px;    
+}
+
+.menu-option {
+    margin-bottom: 10px;
+}
+
+.menu-option div {    
+    display: inline-block;
+    cursor: pointer;
+}
+
+.menu-option i {    
+    font-size: 16px;
+}
+
+.menu-option span {
+    margin-left: 5px;
+}
+
+.no-chart-container {
+    width: 100%;
+    margin-top: 95px;
+    font-size: 45px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.no-chart-container i {
+    margin-left: 12px;
+}
+
+.chart-dates-container {    
+    text-align: center;
+}
+
+.dates-range-string-title {
+    position: relative;
+    user-select: none;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16px;
+    top: -3px;
+}
+
+.change-date-range-icon {
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 0;  
+}
+
+.control-menu-overly {
+    background-color: var(--main-background-color);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+.microtext {
+    font-size: 11px;
+    color: var(--microtext-color);
+    line-height: 15px;
+    position: absolute;
+}
+
+.disable-btn {
+    color: darkgrey;
+    cursor: default;
+}
+
+.chart-top-details-container {
+    user-select: none;
+}
+
+.chart-title-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    display: inline-block;
+}
+
+.user-data-container {
+    cursor: pointer;
+}
+
+.accept-btn-disabled {
+    color: darkgrey !important;
+    cursor: not-allowed;
+}

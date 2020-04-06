@@ -20,6 +20,7 @@ module.exports = (app) => {
 
     app.use('/api/admin/users', require('./admin/users'));
     app.use('/api/admin/statistics', require('./admin/statistics'));
+    app.use('/api/admin/tracker', require('./admin/tracker'));
 
     app.use('/api/auth', require('./auth'));
 }

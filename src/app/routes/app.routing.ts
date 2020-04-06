@@ -7,8 +7,9 @@ import { HomeComponent } from '../components/home/home.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ReportsComponent } from '../components/reports/reports.component';
 import { BoardComponent } from '../components/board/board.component';
-import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { UsersComponent } from '../components/admin/users/users.component';
+import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
+import { TrackerComponent } from '../components/admin/tracker/tracker.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -26,8 +27,9 @@ const routes: Routes = [
       { path: '', component: ProjectsComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'board/:id', component: BoardComponent },
+      { path: 'users', component: UsersComponent, canActivate: [AdminGuard] },
       { path: 'statistics', component: StatisticsComponent, canActivate: [AdminGuard] },
-      { path: 'users', component: UsersComponent, canActivate: [AdminGuard] }
+      { path: 'tracker', component: TrackerComponent, canActivate: [AdminGuard] },
     ]
   },
   { path: 'page-not-found', component: PageNotFoundComponent },

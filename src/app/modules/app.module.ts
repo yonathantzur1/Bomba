@@ -16,8 +16,9 @@ import { ReportsComponent } from 'src/app/components/reports/reports.component';
 import { ReportFolderComponent } from 'src/app/components/reports/reportFolder/reportFolder.component';
 import { ReportDocumentComponent } from 'src/app/components/reports/reportFolder/reportDocument/reportDocument.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
-import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { UsersComponent } from '../components/admin/users/users.component';
+import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
+import { TrackerComponent } from '../components/admin/tracker/tracker.component';
 import { UserCardComponent } from '../components/admin/users/userCard/userCard.component';
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
@@ -48,10 +49,10 @@ import { AuthService } from '../services/global/auth.service';
 import { CookieService } from '../services/global/cookie.service';
 import { GlobalService } from '../services/global/global.service';
 import { SocketService } from '../services/global/socket.service';
+import { DateService } from '../services/global/date.service';
 
 // Routing
 import { Routing } from '../routes/app.routing';
-
 
 @NgModule({
   imports: [
@@ -74,8 +75,9 @@ import { Routing } from '../routes/app.routing';
     ReportFolderComponent,
     ReportDocumentComponent,
     NavbarComponent,
-    StatisticsComponent,
     UsersComponent,
+    StatisticsComponent,
+    TrackerComponent,
     UserCardComponent,
     InfoComponent,
     InfoCardComponent,
@@ -105,7 +107,8 @@ import { Routing } from '../routes/app.routing';
     AuthService,
     CookieService,
     GlobalService,
-    SocketService
+    SocketService,
+    DateService
   ],
   bootstrap: [AppComponent]
 })
