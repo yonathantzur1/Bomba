@@ -46,7 +46,7 @@ module.exports = (io) => {
 function setSocketRedisAdapter(io) {
     const redisConf = config.redis;
 
-    if (redisConf.ip && redisConf.port) {
+    if (config.server.isProd && redisConf.ip && redisConf.port) {
         const configOptions = { auth_pass: redisConf.password };
         const pub = redis.createClient(redisConf.port, redisConf.ip, configOptions);
         const sub = redis.createClient(redisConf.port, redisConf.ip, configOptions);
