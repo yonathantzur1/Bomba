@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const config = require('./config');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const config = require('./config');
 
 process.on('uncaughtException', err => {
     console.error(err);

@@ -7,6 +7,11 @@ module.exports = {
     requests: {
         max: 1000
     },
+    redis: {
+        ip: process.env.BOMBA_REDIS_IP,
+        port: process.env.BOMBA_REDIS_PORT,
+        password: process.env.BOMBA_REDIS_PASSWORD
+    },
     db: {
         name: "bomba",
         connectionString: process.env.DEV_CONNECTION_STRING || process.env.BOMBA_CONNECTION_STRING,
