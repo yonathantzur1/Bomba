@@ -5,19 +5,25 @@ const http = require('http');
 const https = require('https');
 const events = require('../events');
 
+const errorHandler = require('../handlers/errorHandler');
+
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
     projectsRequests: {},
 
     async sendRequestsMatrix(requestsMatrix, projectId, userId) {
-        if (await isProjectOwnerValid(projectId, userId) == false) {
+        let isOwnerValid = await isProjectOwnerValid(projectId, userId)
+            .catch(errorHandler.promiseError);
+
+        if (isOwnerValid == false) {
             return;
         }
 
         this.projectsRequests[projectId] = true;
 
-        await reportsBL.initReport(requestsMatrix, projectId, userId);
+        await reportsBL.initReport(requestsMatrix, projectId, userId)
+            .catch(errorHandler.promiseError);
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
@@ -108,7 +114,8 @@ function getDatesDiffBySeconds(date1, date2) {
 
 async function isProjectOwnerValid(projectId, userId) {
     let filter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
-    let count = await DAL.count(projectsCollectionName, filter);
+    let count = await DAL.count(projectsCollectionName, filter)
+        .catch(errorHandler.promiseError);
 
     return count ? true : false;
 }

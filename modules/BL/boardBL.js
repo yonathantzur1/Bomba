@@ -1,6 +1,8 @@
 const DAL = require('../DAL');
 const config = require('../../config');
 
+const errorHandler = require('../handlers/errorHandler');
+
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
@@ -18,7 +20,9 @@ module.exports = {
             defaultSettings: 1
         };
 
-        let board = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields);
+        let board = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
+            .catch(errorHandler.promiseError);
+
         board && (board.maxRequestAmount = config.requests.max);
 
         return board;

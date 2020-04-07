@@ -1,6 +1,8 @@
 const DAL = require('../DAL');
 const config = require('../../config');
 
+const errorHandler = require('../handlers/errorHandler');
+
 const reportsCollectionName = config.db.collections.reports;
 const projectsCollectionName = config.db.collections.projects;
 
@@ -81,7 +83,8 @@ module.exports = {
 
         let projectFields = { "report": 1 };
 
-        let queryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields);
+        let queryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
+            .catch(errorHandler.promiseError);
 
         let report = {
             "projectId": DAL.getObjectId(queryResult._id),
@@ -215,9 +218,10 @@ module.exports = {
             "owner": DAL.getObjectId(userId)
         }
 
-        let isUserProjectOwner = ((await DAL.count(projectsCollectionName, projectFilter)) == 1);
+        let projectCount = await DAL.count(projectsCollectionName, projectFilter)
+            .catch(errorHandler.promiseError);
 
-        if (!isUserProjectOwner) {
+        if (projectCount < 1) {
             return false;
         }
 

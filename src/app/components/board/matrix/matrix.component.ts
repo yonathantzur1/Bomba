@@ -46,7 +46,6 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     container: HTMLElement;
     cellSize: number = 150;
-    minScrollCells: number;
     isShowRequestCard: boolean = false;
     selectedRequest: Request;
 
@@ -142,19 +141,15 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.matrix[i].push(new Request(true));
         this.saveMatrix();
         let currentColumnsAmount = this.matrix[i].length;
+        let minScrollCells = Math.floor(this.container.clientWidth / this.cellSize) - 1;
 
         setTimeout(() => {
-            if (!this.minScrollCells) {
+            if (!minScrollCells) {
                 this.container.scrollLeft = this.container.scrollWidth - this.container.clientWidth;
             }
-            else if (currentColumnsAmount >= this.minScrollCells) {
+            else if (currentColumnsAmount >= minScrollCells) {
                 this.container.scrollLeft =
-                    (currentColumnsAmount - this.minScrollCells) * this.cellSize
-            }
-
-            if (!this.minScrollCells &&
-                (this.container.scrollWidth > this.container.clientWidth)) {
-                this.minScrollCells = currentColumnsAmount - 1;
+                    (currentColumnsAmount - minScrollCells) * this.cellSize;
             }
         }, 0);
     }

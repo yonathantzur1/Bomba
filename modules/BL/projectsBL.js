@@ -29,7 +29,10 @@ module.exports = {
     },
 
     async addProject(name, ownerId) {
-        if (await isProjectExists(name, ownerId)) {
+        let isExists = await isProjectExists(name, ownerId)
+            .catch(errorHandler.promiseError);
+
+        if (isExists) {
             return false;
         }
 
@@ -50,7 +53,10 @@ module.exports = {
     },
 
     async editProject(projectId, name, ownerId) {
-        if (await isProjectExists(name, ownerId)) {
+        let isExists = await isProjectExists(name, ownerId)
+            .catch(errorHandler.promiseError);
+
+        if (isExists) {
             return false;
         }
 
@@ -64,12 +70,16 @@ module.exports = {
     },
 
     async deleteProject(projectId, userId) {
-        let deleteProject = await DAL.delete(projectsCollectionName,
-            { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) });
+        let projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
+
+        let deleteProject = await DAL.delete(projectsCollectionName, projectFilter)
+            .catch(errorHandler.promiseError);
 
         if (deleteProject) {
-            DAL.delete(reportsCollectionName,
-                { projectId: DAL.getObjectId(projectId) });
+            let reportFilter = { projectId: DAL.getObjectId(projectId) };
+
+            DAL.delete(reportsCollectionName, reportFilter)
+                .catch(errorHandler.promiseError);
         }
 
         return deleteProject;
@@ -79,8 +89,7 @@ module.exports = {
         let projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(ownerId) };
         let projectUpdate = { $set: { defaultSettings } }
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate);
     }
 };
 

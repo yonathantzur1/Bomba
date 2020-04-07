@@ -10,7 +10,10 @@ const usersCollectionName = config.db.collections.users;
 module.exports = {
     // Add user to the DB.
     async addUser(newUser) {
-        if (await isUserExists(newUser.username)) {
+        let isExists = await isUserExists(newUser.username)
+            .catch(errorHandler.promiseError);
+
+        if (isExists) {
             return false;
         }
 

@@ -1,6 +1,8 @@
 const DAL = require('../../DAL');
 const config = require('../../../config');
 
+const errorHandler = require('../../handlers/errorHandler');
+
 const usersCollectionName = config.db.collections.users;
 const projectsCollectionName = config.db.collections.projects;
 
@@ -23,7 +25,8 @@ module.exports = {
             "lastLoginTime": 1
         }
 
-        let user = await DAL.findOneSpecific(usersCollectionName, usersFilter, userFields);
+        let user = await DAL.findOneSpecific(usersCollectionName, usersFilter, userFields)
+            .catch(errorHandler.promiseError);
 
         if (!user) {
             return null;
@@ -31,7 +34,8 @@ module.exports = {
 
         let projectsFilter = { "owner": DAL.getObjectId(user._id) }
 
-        let userProjects = await DAL.count(projectsCollectionName, projectsFilter);
+        let userProjects = await DAL.count(projectsCollectionName, projectsFilter)
+            .catch(errorHandler.promiseError);
 
         user.projects = userProjects;
 

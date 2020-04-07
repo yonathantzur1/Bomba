@@ -33,54 +33,55 @@ module.exports = {
             }
         }
 
-        if (isRangeValid) {
-            let filter = {
-                "type": logType,
-                "date": {
-                    $gte: new Date(datesRange.startDate),
-                    $lte: new Date(datesRange.endDate)
-                }
-            };
-
-            username && (filter.username = username);
-
-            let logsFilter = {
-                $match: filter
-            };
-
-            let groupObj = {
-                $group: {
-                    _id: groupFilter,
-                    count: { $sum: 1 }
-                }
-            };
-
-            let aggregate = [logsFilter, groupObj];
-
-            let result = await DAL.aggregate(logsCollectionName, aggregate)
-                .catch(errorHandler.promiseError);
-
-            let data = [];
-
-            for (let i = 0; i < barsNumber; i++) {
-                data.push(null);
-            }
-
-            result.forEach(logGroup => {
-                data[logGroup._id[rangeKey] - 1] = logGroup.count;
-            });
-
-            return data;
-        }
-        else {
+        if (!isRangeValid) {
             return errorHandler.promiseError("Range " + range + " is not valid");
         }
+
+        let filter = {
+            "type": logType,
+            "date": {
+                $gte: new Date(datesRange.startDate),
+                $lte: new Date(datesRange.endDate)
+            }
+        };
+
+        username && (filter.username = username);
+
+        let logsFilter = {
+            $match: filter
+        };
+
+        let groupObj = {
+            $group: {
+                _id: groupFilter,
+                count: { $sum: 1 }
+            }
+        };
+
+        let aggregate = [logsFilter, groupObj];
+
+        let result = await DAL.aggregate(logsCollectionName, aggregate)
+            .catch(errorHandler.promiseError);
+
+        let data = [];
+
+        for (let i = 0; i < barsNumber; i++) {
+            data.push(null);
+        }
+
+        result.forEach(logGroup => {
+            data[logGroup._id[rangeKey] - 1] = logGroup.count;
+        });
+
+        return data;
+
     },
 
     async isUserExists(username) {
-        let userFilter = { username };
+        let users = await DAL.count(usersCollectionName, { username })
+            .catch(errorHandler.promiseError);
 
-        return (await DAL.count(usersCollectionName, userFilter)) > 0;
+        return (users > 0);
     }
 };
 
@@ -100,9 +101,7 @@ function getTimeZoneOffsetString(clientTimeZone) {
         minutes = "0" + minutes;
     }
 
-    let offsetString = hours + ":" + minutes;
-    isPositive ? (offsetString = "+" + offsetString) : (offsetString = "-" + offsetString);
+    let offsetString = (isPositive ? "+" : "-") + hours + ":" + minutes;
 
-    // Convert time zone from minutes to milliseconds.
     return offsetString;
 }
