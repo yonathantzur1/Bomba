@@ -1,4 +1,4 @@
-const redis = require('redis');
+const Redis = require('ioredis');
 const redisAdapter = require('socket.io-redis');
 
 const config = require('../../config');
@@ -46,11 +46,16 @@ module.exports = (io) => {
 function setSocketRedisAdapter(io) {
     const redisConf = config.redis;
 
-    if (config.server.isProd && redisConf.ip && redisConf.port) {
-        const configOptions = { auth_pass: redisConf.password };
-        const pub = redis.createClient(redisConf.port, redisConf.ip, configOptions);
-        const sub = redis.createClient(redisConf.port, redisConf.ip, configOptions);
+    if (redisConf.ip && redisConf.port) {
+        let options = {
+            port: redisConf.port,
+            host: redisConf.ip,
+            password: redisConf.password
+        }
 
-        io.adapter(redisAdapter({ pubClient: pub, subClient: sub }));
+        io.adapter(redisAdapter({
+            pubClient: new Redis(options),
+            subClient: new Redis(options)
+        }));
     }
 }
