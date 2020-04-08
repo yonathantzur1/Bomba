@@ -46,7 +46,7 @@ module.exports = (io) => {
 function setSocketRedisAdapter(io) {
     const redisConf = config.redis;
 
-    if (redisConf.ip && redisConf.port) {
+    if (redisConf.ip && redisConf.port && config.server.isProd) {
         let options = {
             port: redisConf.port,
             host: redisConf.ip,
