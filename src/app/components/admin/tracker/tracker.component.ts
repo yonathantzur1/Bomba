@@ -116,7 +116,7 @@ export class TrackerComponent {
             },
             {
                 id: "charts-time",
-                title: "Time Unit",
+                title: "Time Units",
                 icon: "far fa-clock",
                 options: [
                     {
