@@ -44,18 +44,12 @@ module.exports = (io) => {
 };
 
 function setSocketRedisAdapter(io) {
-    const redisConf = config.redis;
+    redisConnectionString = config.redis.connectionString;
 
-    if (redisConf.ip && redisConf.port && config.server.isProd) {
-        let options = {
-            port: redisConf.port,
-            host: redisConf.ip,
-            password: redisConf.password
-        }
-
+    if (redisConnectionString && config.server.isProd) {
         io.adapter(redisAdapter({
-            pubClient: new Redis(options),
-            subClient: new Redis(options)
+            pubClient: new Redis(redisConnectionString),
+            subClient: new Redis(redisConnectionString)
         }));
     }
 }
