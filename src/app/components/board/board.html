@@ -1,6 +1,6 @@
 <div id="board">
     <loader-rings *ngIf="isLoading"></loader-rings>
-    <div class="board-container" *ngIf="!isLoading">
+    <div class="board-container" [ngClass]="{'board-container-send-mode': isSendMode}" *ngIf="!isLoading">
         <div class="sector">
             <div class="matrix-sector" [ngClass]="{'send-mode': isSendMode}">
                 <matrix [projectId]="projectId" [projectName]="projectName" [matrix]="matrix" [isSendMode]="isSendMode"

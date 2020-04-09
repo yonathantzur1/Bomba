@@ -6,6 +6,10 @@
     height: calc(100% - 15px);
 }
 
+.board-container-send-mode {
+    box-shadow: 1px 1px 6px 4px #c1c1c1;
+}
+
 .sector {
     height: 100%;
 }
@@ -33,5 +37,9 @@
 @media (max-aspect-ratio: 8/5) {
     .board-container {
         height: 100%
+    }
+
+    .board-container-send-mode {
+        box-shadow: none;
     }
 }
