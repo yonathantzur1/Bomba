@@ -17,9 +17,10 @@ import { ReportFolderComponent } from 'src/app/components/reports/reportFolder/r
 import { ReportDocumentComponent } from 'src/app/components/reports/reportFolder/reportDocument/reportDocument.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { UsersComponent } from '../components/admin/users/users.component';
+import { UserCardComponent } from '../components/admin/users/userCard/userCard.component';
+import { UserEditComponent } from '../components/admin/users/userCard/userEdit/userEdit.component';
 import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { TrackerComponent } from '../components/admin/tracker/tracker.component';
-import { UserCardComponent } from '../components/admin/users/userCard/userCard.component';
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../components/register/register.component';
@@ -76,6 +77,7 @@ import { Routing } from '../routes/app.routing';
     ReportDocumentComponent,
     NavbarComponent,
     UsersComponent,
+    UserEditComponent,
     StatisticsComponent,
     TrackerComponent,
     UserCardComponent,

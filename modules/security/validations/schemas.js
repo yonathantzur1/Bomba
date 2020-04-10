@@ -41,6 +41,14 @@ schemas[REST.POST] = {
 
 schemas[REST.PUT] = {
     "api": {
+        "admin": {
+            "users": {
+                "saveUserEdit": {
+                    username: joi.string().required(),
+                    password: joi.string().min(6)
+                }
+            }
+        },
         "projects": {
             "editProject": {
                 id: joi.string().required(),

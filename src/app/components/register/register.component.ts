@@ -71,18 +71,16 @@ export class RegisterComponent implements OnInit {
                 this.isLoading = false;
                 let result = data ? data.result : null;
 
-                // In case of server error.
-                if (result == null) {
-                    this.snackbarService.snackbar("Server error occurred");
+                if (result) {
+                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                    this.router.navigateByUrl("/");
                 }
                 // In case the username is already exists.
                 else if (result == false) {
-                    // Show microtext of the username field. 
                     $("#register-username-micro").html("The username is already in use");
                 }
                 else {
-                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.router.navigateByUrl("/");
+                    this.snackbarService.snackbar("Server error occurred");
                 }
             });
         }

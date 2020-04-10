@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BasicService } from '../basic.service';
 import { HttpClient } from '@angular/common/http';
+import { UserEdit } from 'src/app/components/admin/users/userCard/userEdit/userEdit.component';
 
 @Injectable()
 export class UsersService extends BasicService {
@@ -16,5 +17,9 @@ export class UsersService extends BasicService {
 
     changeAdminStatus(userId: string, isAdmin: boolean) {
         return super.put('/changeAdminStatus', { userId, isAdmin });
+    }
+
+    saveUserEdit(userEdit: UserEdit) {
+        return super.put('/saveUserEdit', userEdit);
     }
 }

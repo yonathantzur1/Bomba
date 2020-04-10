@@ -1,5 +1,6 @@
 <div id="userCard">
     <div class="card-container">
+        <i class="far fa-edit edit-icon" (click)="isEditMode=true;" title="Edit User"></i>
         <div class="user-name-container">
             {{user.username}}
         </div>
@@ -32,4 +33,5 @@
             </table>
         </div>
     </div>
+    <user-edit *ngIf="isEditMode" [userId]="user._id" [username]="user.username"></user-edit>
 </div>

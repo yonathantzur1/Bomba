@@ -1,7 +1,9 @@
 const DAL = require('../../DAL');
 const config = require('../../../config');
-
+const generator = require('../../generator');
+const sha512 = require('js-sha512');
 const errorHandler = require('../../handlers/errorHandler');
+const registerBL = require('../registerBL');
 
 const usersCollectionName = config.db.collections.users;
 const projectsCollectionName = config.db.collections.projects;
@@ -50,6 +52,37 @@ module.exports = {
 
         let updateObj = {
             $set: { isAdmin }
+        }
+
+        return DAL.updateOne(usersCollectionName, userFilter, updateObj);
+    },
+
+    async saveUserEdit(userEdit) {
+        let userFilter = {
+            "_id": DAL.getObjectId(userEdit._id)
+        }
+
+        let originalUsername = (await DAL.findOneSpecific(usersCollectionName, userFilter, { "username": 1 })
+            .catch(errorHandler.promiseError)).username;
+
+        if (originalUsername != userEdit.username) {
+            const isExists = await registerBL.isUserExists(userEdit.username)
+                .catch(errorHandler.promiseError);
+
+            if (isExists) {
+                return false;
+            }
+        }
+
+        let updateObj = {
+            $set: { "username": userEdit.username }
+        }
+
+        if (userEdit.password) {
+            let salt = generator.generateCode(config.security.password.saltSize);
+            let password = sha512(userEdit.password + salt);
+            updateObj["$set"]["password"] = password;
+            updateObj["$set"]["salt"] = salt;
         }
 
         return DAL.updateOne(usersCollectionName, userFilter, updateObj);

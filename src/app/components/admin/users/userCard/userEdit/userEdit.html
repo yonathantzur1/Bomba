@@ -1,0 +1,23 @@
+<div id="userEdit">
+    <card [title]="'Edit User'" [width]="380" [height]="240">
+        <div class="body">
+            <form autocomplete="off">
+                <div class="form-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input id="edit-username" name="username" [(ngModel)]="userEdit.username" placeholder="Username"
+                        type="text" class="form-control user-input"
+                        (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                    <label id="edit-username-micro" class="microtext"></label>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input id="edit-password" name="password" [(ngModel)]="userEdit.password" placeholder="Password"
+                        type="password" class="form-control user-input"
+                        (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                    <label id="edit-password-micro" class="microtext"></label>
+                </div>
+            </form>
+            <i (click)="saveEdit()" class="save-icon far fa-arrow-alt-circle-right"></i>
+        </div>
+    </card>
+</div>

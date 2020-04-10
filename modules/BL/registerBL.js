@@ -10,14 +10,14 @@ const usersCollectionName = config.db.collections.users;
 module.exports = {
     // Add user to the DB.
     async addUser(newUser) {
-        let isExists = await isUserExists(newUser.username)
+        const isExists = await this.isUserExists(newUser.username)
             .catch(errorHandler.promiseError);
 
         if (isExists) {
             return false;
         }
 
-        let salt = generator.generateCode(config.security.password.saltSize);
+        const salt = generator.generateCode(config.security.password.saltSize);
         newUser.password = sha512(newUser.password + salt);
 
         // Creat the new user object.
@@ -36,12 +36,12 @@ module.exports = {
         newUserObj._id = insertResult;
 
         return newUserObj;
+    },
+
+    async isUserExists(username) {
+        let userCount = await DAL.count(usersCollectionName, { username })
+            .catch(errorHandler.promiseError);
+
+        return !!userCount;
     }
 };
-
-async function isUserExists(username) {
-    let userCount = await DAL.count(usersCollectionName, { username })
-        .catch(errorHandler.promiseError);
-
-    return !!userCount;
-}

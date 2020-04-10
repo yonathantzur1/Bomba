@@ -2,7 +2,8 @@
     width: 600px;
     height: 370px;
     box-shadow: 1px 1px 6px 1px #c9c9c9;
-    background-color: #fff;
+    background-color: #ffffff;
+    position: relative;
 }
 
 .user-name-container {
@@ -47,5 +48,12 @@
 
 .check-admin {
     font-size: 18px;
+    cursor: pointer;
+}
+
+.edit-icon {
+    position: absolute;
+    left: 15px;
+    top: 15px;
     cursor: pointer;
 }
