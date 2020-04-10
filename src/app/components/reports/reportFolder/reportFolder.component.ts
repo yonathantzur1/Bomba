@@ -96,9 +96,9 @@ export class ReportFolderComponent implements OnInit {
             confirmFunc: (reportResult: any) => {
                 if (reportResult) {
                     this.documents.splice(position, 1);
+                    this.eventService.emit(EVENT_TYPE.DELETE_REPORT, this.projectId);
 
                     if (this.documents.length == 0) {
-                        this.eventService.emit(EVENT_TYPE.EMPTY_REPORT_FOLDER, this.projectId);
                         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
                     }
                 }

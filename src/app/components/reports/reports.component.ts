@@ -6,7 +6,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 class Report {
     projectId: string;
     projectName: string;
-    amount: number;
+    reportsAmount: number;
 }
 
 class FolderData {
@@ -43,10 +43,22 @@ export class ReportsComponent implements OnDestroy {
             this.folderData = null;
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.EMPTY_REPORT_FOLDER, (projectId: string) => {
-            this.reports = this.reports.filter((report: Report) => {
-                return report.projectId != projectId;
-            });
+        this.eventService.register(EVENT_TYPE.DELETE_REPORT, (projectId: string) => {
+            let reportIndex: number;
+
+            for (let i = 0; i < this.reports.length; i++) {
+                if (this.reports[i].projectId == projectId) {
+                    reportIndex = i;
+                    break;
+                }
+            }
+
+            let report = this.reports[reportIndex];
+            report.reportsAmount--;
+
+            if (report.reportsAmount == 0) {
+                this.reports.splice(reportIndex, 1);
+            }
         }, this.eventsIds);
 
         this.isLoading = true;
