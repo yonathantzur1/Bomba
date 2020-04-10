@@ -5,6 +5,7 @@ const config = require('./config');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const secure = require('ssl-express-www');
 
 process.on('uncaughtException', err => {
     console.error(err);
@@ -15,6 +16,7 @@ process.on('unhandledRejection', err => {
 });
 
 // app define settings.
+config.server.isForceHttps && app.use(secure);
 app.enable('trust proxy');
 app.use(bodyParser.json({ limit: config.server.maxRequestSize }));
 app.use(bodyParser.urlencoded({

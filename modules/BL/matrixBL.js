@@ -156,10 +156,14 @@ function buildSendObject(requestData) {
             port: urlData.port,
             path: urlData.path,
             method: requestData.method,
-            headers: { 'type': 'bomba' }
+            headers: {}
         },
         requestId: requestData.id,
         amount: requestData.amount
+    }
+
+    if (config.server.isProd) {
+        sendObject.options.headers['type'] = 'bomba';
     }
 
     if (requestData.body && requestData.body.template) {
@@ -185,16 +189,16 @@ function getUrlWithoutProtocol(url) {
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
-function isLocalhostRequest(url) {
-    let urlWithoutProtocol = getUrlWithoutProtocol(url).toLowerCase();
+function isLocalRequest(url) {
+    url = getUrlWithoutProtocol(url).toLowerCase();
 
-    return (urlWithoutProtocol == "localhost" || urlWithoutProtocol == "127.0.0.1");
+    return (url == "localhost" || url == "127.0.0.1" || url == config.server.dns);
 }
 
 function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
 
-        if (config.server.isProd && isLocalhostRequest(options.hostname)) {
+        if (config.server.isProd && isLocalRequest(options.hostname)) {
             reject();
         }
 

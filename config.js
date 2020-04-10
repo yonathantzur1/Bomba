@@ -2,7 +2,9 @@ module.exports = {
     server: {
         port: process.env.PORT || 8000,
         isProd: (process.env.IS_PROD == 'true'),
-        maxRequestSize: "10mb"
+        dns: process.env.BOMBA_CONNECTION_DNS,
+        maxRequestSize: "10mb",
+        isForceHttps: true // (for production environment)
     },
     requests: {
         max: 1000
