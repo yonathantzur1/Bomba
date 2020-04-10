@@ -155,7 +155,8 @@ function buildSendObject(requestData) {
             hostname: urlData.ip,
             port: urlData.port,
             path: urlData.path,
-            method: requestData.method
+            method: requestData.method,
+            headers: { 'type': 'bomba' }
         },
         requestId: requestData.id,
         amount: requestData.amount
@@ -163,7 +164,7 @@ function buildSendObject(requestData) {
 
     if (requestData.body && requestData.body.template) {
         if (requestData.body.type == "json") {
-            sendObject.options.headers = { 'Content-Type': 'application/json' };
+            sendObject.options.headers['Content-Type'] = 'application/json';
             sendObject.jsonData = jsonTryParse(requestData.body.template);
         }
 

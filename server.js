@@ -23,6 +23,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('./'));
 
+// Reject requests from bomba users.
+app.use((req, res, next) => {
+    if (req.headers["type"] == "bomba") {
+        res.status(500).end();
+    }
+    else {
+        next();
+    }
+});
+
 require('./modules/sockets/socket')(io)
 
 // Import routes.
