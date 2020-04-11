@@ -2,7 +2,8 @@
   "name": "bomba",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"nodemon --ignore src/ server.js\" \"ng serve --open=true\" \"node test.js\" ",
+    "start": "node server.js",
+    "dev": "concurrently \"nodemon --ignore src/ server.js\" \"ng serve --open=true\" \"node test.js\" ",
     "heroku-postbuild": "ng build --aot=true --buildOptimizer=true --prod",
     "build": "ng build --aot=true --buildOptimizer=true --prod"
   },
