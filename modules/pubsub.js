@@ -17,15 +17,17 @@ module.exports = () => {
             stopRequests: "stopRequests"
         },
 
-        async subscribe(channel) {
-            redis.subscribe(channel, (err, count) => {
-                if (err) {
-                    logger.error(err);
-                    return false;
-                }
-                else {
-                    return true;
-                }
+        subscribe(channel) {
+            return new Promise((resolve, reject) => {
+                redis.subscribe(channel, (err, count) => {
+                    if (err) {
+                        logger.error(err);
+                        resolve(false);
+                    }
+                    else {
+                        resolve(true);
+                    }
+                });
             });
         },
 
