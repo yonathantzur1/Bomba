@@ -121,7 +121,7 @@ module.exports = {
     },
 
 
-    removeReport(projectId, userId) {
+    removeProjectReport(projectId, userId) {
         let projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)

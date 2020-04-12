@@ -84,7 +84,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.container = document.getElementById("matrix-container");
 
         this.socketService.socketOn("requestStart", (data: any) => {
-            if (data.projectId == this.projectId) {
+            if (data.projectId == this.projectId && this.report.results[data.requestId]) {
                 this.report.results[data.requestId].isStart = true;
             }
         });
@@ -305,7 +305,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     closeReport() {
         this.closeReportPreActions();
-        this.reportService.removeReport(this.projectId);
+        this.reportService.removeProjectReport(this.projectId);
 
         this.socketService.socketEmit('selfSync',
             'syncCloseReport',

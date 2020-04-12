@@ -102,9 +102,12 @@ module.exports = {
         }
     },
 
-    stopRequests(projectId, userId) {
+    stopRequests(projectId) {
         delete this.projectsRequests[projectId];
-        reportsBL.removeReport(projectId, userId);
+    },
+
+    removeProjectReport(projectId, userId) {
+        reportsBL.removeProjectReport(projectId, userId);
     }
 }
 
@@ -179,7 +182,7 @@ function buildSendObject(requestData) {
 }
 
 function isHttpsRequst(url) {
-    return (url.indexOf("https://") == 0);
+    return url.startsWith("https://");
 }
 
 function getUrlWithoutProtocol(url) {

@@ -44,7 +44,7 @@ module.exports = (io) => {
 };
 
 function setSocketRedisAdapter(io) {
-    redisConnectionString = config.redis.connectionString;
+    const redisConnectionString = config.redis.connectionString;
 
     if (redisConnectionString && config.server.isProd) {
         io.adapter(redisAdapter({
