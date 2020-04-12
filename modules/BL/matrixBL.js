@@ -41,10 +41,13 @@ module.exports = {
         }
 
         Promise.all(promises).then(() => {
-            let totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime)
-            delete this.projectsRequests[projectId];
+            if (this.projectsRequests[projectId]) {
+                let totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
+                reportsBL.saveReport(projectId, totalTime);
+                delete this.projectsRequests[projectId];
+            }
+
             reportsBL.finishReport(projectId);
-            reportsBL.saveReport(projectId, totalTime);
             events.emit("socket.finishReport", userId, projectId);
         });
     },
