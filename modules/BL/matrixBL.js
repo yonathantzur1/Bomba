@@ -4,6 +4,7 @@ const config = require('../../config');
 const http = require('http');
 const https = require('https');
 const events = require('../events');
+const generator = require('../generator');
 
 const errorHandler = require('../handlers/errorHandler');
 
@@ -78,7 +79,8 @@ module.exports = {
                         "{number}": i,
                         "{string}": i.toString(),
                         "{date}": new Date(),
-                        "{iso}": new Date().toISOString()
+                        "{iso}": new Date().toISOString(),
+                        "{random}": generator.generateId()
                     });
 
                     sendObject.data = JSON.stringify(jsonData);
@@ -257,9 +259,17 @@ function replaceJsonValue(obj, replaceValues) {
         if (typeof value == "object" && value != null) {
             replaceJsonValue(value, replaceValues);
         }
-        else if (typeof value == "string" &&
-            Object.keys(replaceValues).includes(value)) {
-            obj[key] = replaceValues[value];
+        else if (typeof value == "string") {
+            Object.keys(replaceValues).forEach(replaceKey => {
+                if (value.includes(replaceKey)) {
+                    if (value == replaceKey) {
+                        obj[key] = replaceValues[replaceKey];
+                    }
+                    else {
+                        obj[key] = value.replace(replaceKey, replaceValues[replaceKey]);
+                    }
+                }
+            });
         }
     });
 }
