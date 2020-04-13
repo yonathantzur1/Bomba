@@ -12,6 +12,7 @@
     top: calc(50% - 100px);
     left: 0;
     text-align: center;
+    user-select: none;
 }
 
 .loading-sector > .title {
