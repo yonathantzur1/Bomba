@@ -11,7 +11,7 @@ const reportsCollectionName = config.db.collections.reports;
 
 module.exports = {
     async getUser(searchInput) {
-        // In case the input is empty, return empty result array.
+        // In case the input is empty, return empty result.
         if (!searchInput) {
             return null;
         }
@@ -46,7 +46,6 @@ module.exports = {
     },
 
     changeAdminStatus(userId, isAdmin) {
-
         let userFilter = {
             "_id": DAL.getObjectId(userId)
         }
