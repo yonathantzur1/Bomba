@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const usersBL = require('../../BL/admin/usersBL');
 const errorHandler = require('../../handlers/errorHandler');
-const sha512 = require('js-sha512');
+const validator = require('../../security/validations/validator');
 
 router.post('/getUser',
     (req, res, next) => {
@@ -24,8 +24,18 @@ router.put('/changeAdminStatus', (req, res) => {
     });
 });
 
-router.put('/saveUserEdit', (req, res) => {
-    usersBL.saveUserEdit(req.body).then(result => {
+router.put('/saveUserEdit',
+    validator,
+    (req, res) => {
+        usersBL.saveUserEdit(req.body).then(result => {
+            res.send(result);
+        }).catch(err => {
+            errorHandler.routeError(err, res);
+        });
+    });
+
+router.put('/deleteUser', (req, res) => {
+    usersBL.deleteUser(req.query.userId).then(result => {
         res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);

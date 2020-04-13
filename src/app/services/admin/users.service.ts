@@ -22,4 +22,8 @@ export class UsersService extends BasicService {
     saveUserEdit(userEdit: UserEdit) {
         return super.put('/saveUserEdit', userEdit);
     }
+
+    deleteUser(userId: string) {
+        return super.put('/deleteUser?userId=' + userId);
+    }
 }
