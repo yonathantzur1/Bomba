@@ -164,14 +164,10 @@ function buildSendObject(requestData) {
             port: urlData.port,
             path: urlData.path,
             method: requestData.method,
-            headers: {}
+            headers: { "type": "bomba" }
         },
         requestId: requestData.id,
         amount: requestData.amount
-    }
-
-    if (config.server.isProd) {
-        sendObject.options.headers['type'] = 'bomba';
     }
 
     if (requestData.body && requestData.body.template) {

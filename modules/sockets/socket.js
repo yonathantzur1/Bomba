@@ -28,6 +28,15 @@ module.exports = (io) => {
                 io.to(token.user._id).emit(eventName, data);
             }
         });
+
+        socket.on('LogoutUserSessionServer', (msg, userId) => {
+            let token = tokenHandler.decodeTokenFromSocket(socket);
+
+            // Logout the given user in case the sender is admin, or in case the logout is self.
+            if (token && (token.user.isAdmin || !userId)) {
+                io.to(userId || token.user._id).emit('LogoutUserSessionClient', msg);
+            }
+        });
     });
 
     events.on('socket.requestStart', (userId, data) => {

@@ -5,6 +5,7 @@ import { CookieService } from 'src/app/services/global/cookie.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SocketService } from 'src/app/services/global/socket.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 class Tab {
     name: string;
@@ -41,6 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private eventService: EventService,
         private globalService: GlobalService,
         private socketService: SocketService,
+        private alertService: AlertService,
         private authService: AuthService) {
         this.eventService.register(EVENT_TYPE.TAB_CLICK, (url: string) => {
             this.tabClick(url, true);
@@ -57,11 +59,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }, this.checkSocketConnectDelay * 1000);
 
         this.initializeTabs();
+
+        this.socketService.socketOn("LogoutUserSessionClient", (msg: string) => {
+            this.logout();
+            this.alertService.alert({
+                title: "System Logout",
+                text: msg,
+                showCancelButton: false,
+                type: ALERT_TYPE.INFO
+            });
+        });
     }
 
     ngOnDestroy() {
         clearInterval(this.checkSocketConnectInterval);
         this.eventService.unsubscribeEvents(this.eventsIds);
+        this.socketService.socketOff("LogoutUserSessionClient");
     }
 
     initializeTabs() {

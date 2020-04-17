@@ -4,6 +4,7 @@ import { UserCard } from '../users.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { SocketService } from 'src/app/services/global/socket.service';
 
 @Component({
     selector: 'user-card',
@@ -23,6 +24,7 @@ export class UserCardComponent implements OnDestroy {
 
     constructor(private eventService: EventService,
         private alertService: AlertService,
+        private socketService: SocketService,
         private snackbarService: SnackbarService,
         private usersService: UsersService) {
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
@@ -73,6 +75,14 @@ export class UserCardComponent implements OnDestroy {
                     if (result) {
                         this.snackbarService.snackbar(this.user.username + " was deleted");
                         this.eventService.emit(EVENT_TYPE.DELETE_USER);
+
+                        let logoutMsg = "Your account has been deleted." +
+                            "{{enter}}" +
+                            "For further details, please contact website admin.";
+
+                        this.socketService.socketEmit("LogoutUserSessionServer",
+                            logoutMsg,
+                            this.user._id);
                     }
                     else {
                         this.snackbarService.snackbar("Server error occurred");
