@@ -3,6 +3,7 @@
     height: 100%;
     padding-top: 30px;
 }
+
 .chart-container {
     position: relative;
     height: calc(100% - 160px);
@@ -161,4 +162,10 @@
 .accept-btn-disabled {
     color: darkgrey !important;
     cursor: not-allowed;
+}
+
+@media (max-aspect-ratio: 8/5) {
+    .chart-container {
+        padding: 0 30px;
+    }
 }
