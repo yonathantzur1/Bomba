@@ -59,7 +59,7 @@ module.exports = {
 
     async saveUserEdit(userEdit) {
         let userFilter = {
-            "_id": DAL.getObjectId(userEdit._id)
+            "_id": DAL.getObjectId(userEdit.id)
         }
 
         let originalUsername = (await DAL.findOneSpecific(usersCollectionName, userFilter, { "username": 1 })

@@ -7,12 +7,12 @@ import { MicrotextService, InputFieldValidation } from 'src/app/services/global/
 declare let $: any;
 
 export class UserEdit {
-    _id: string;
+    id: string;
     username: string;
     password: string;
 
-    constructor(_id: string, username: string) {
-        this._id = _id;
+    constructor(id: string, username: string) {
+        this.id = id;
         this.username = username;
     }
 }

@@ -44,7 +44,7 @@ schemas[REST.PUT] = {
         "admin": {
             "users": {
                 "saveUserEdit": {
-                    _id: joi.string().required(),
+                    id: joi.string().required(),
                     username: joi.string().required(),
                     password: joi.string().min(6).optional()
                 }
