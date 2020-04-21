@@ -35,7 +35,7 @@ app.use((req, res, next) => {
     }
 });
 
-require('./modules/sockets/socket')(io)
+require('./modules/sockets/socket')(io);
 
 // Import routes.
 require('./modules/routes/main')(app);
