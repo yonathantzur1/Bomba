@@ -3,13 +3,12 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"nodemon --ignore src/ server.js\" \"ng serve --open=true\" \"node test.js\" ",
-    "build": "ng build --aot=true --buildOptimizer=true --prod",
-    "heroku-postbuild": "npm run build"
+    "build": "ng build --aot=true --buildOptimizer=true --prod"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.901.1",
-    "@angular-devkit/build-optimizer": "^0.901.1",
-    "@angular/cli": "~9.1.1",
+    "@angular-devkit/build-angular": "^0.901.2",
+    "@angular-devkit/build-optimizer": "^0.901.2",
+    "@angular/cli": "~9.1.2",
     "@angular/common": "~9.1.2",
     "@angular/compiler": "~9.1.2",
     "@angular/compiler-cli": "~9.1.2",
