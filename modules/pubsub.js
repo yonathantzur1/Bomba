@@ -1,16 +1,20 @@
 const logger = require("./../logger");
 const config = require("./../config");
+const Redis = require("ioredis");
+
+const redisConnectionString = config.redis.connectionString;
+const redis;
+const pub;
+
+if (redisConnectionString && config.server.isProd) {
+    redis = new Redis(redisConnectionString);
+    pub = new Redis(redisConnectionString);
+}
 
 module.exports = () => {
-    const redisConnectionString = config.redis.connectionString;
-
-    if (!redisConnectionString || !config.server.isProd) {
+    if (!redis || !pub) {
         return null;
     }
-
-    const Redis = require("ioredis");
-    const redis = new Redis(redisConnectionString);
-    const pub = new Redis(redisConnectionString);
 
     let pubsub = {
         channels: {
