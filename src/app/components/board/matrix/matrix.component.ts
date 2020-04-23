@@ -63,8 +63,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
             let rowIndex = data.cellIndex[0];
             let colIndex = data.cellIndex[1];
-            let matrixRequest: Request = Object.assign({}, data.request);
-            matrixRequest.id = data.request.generateGuid();
+            let matrixRequest: Request = new Request().copy(data.request);
+            matrixRequest.generateGuid();
             this.matrix[rowIndex][colIndex] = matrixRequest;
             this.saveMatrix();
         }, this.eventsIds);
