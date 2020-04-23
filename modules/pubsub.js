@@ -3,8 +3,8 @@ const config = require("./../config");
 const Redis = require("ioredis");
 
 const redisConnectionString = config.redis.connectionString;
-const redis;
-const pub;
+let redis;
+let pub;
 
 if (redisConnectionString && config.server.isProd) {
     redis = new Redis(redisConnectionString);
