@@ -55,6 +55,7 @@ module.exports = {
     async sendMultiRequests(sendObjects, projectId, userId) {
         for (let i = 0; i < sendObjects.length && this.projectsRequests[projectId]; i++) {
             const sendObject = sendObjects[i];
+            const originalUrl = sendObject.options.hostname;
             const requestId = sendObject.requestId;
 
             if (sendObject.amount > config.requests.max) {
@@ -80,7 +81,7 @@ module.exports = {
 
                     replaceJsonValue(jsonData, {
                         "{number}": i,
-                        "{string}": i.toString(),
+                        "{text}": i.toString(),
                         "{date}": new Date(),
                         "{iso}": new Date().toISOString(),
                         "{random}": generator.generateId()
@@ -91,7 +92,7 @@ module.exports = {
 
                 let startTime = new Date();
 
-                requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
+                requestsPromises.push(sendRequest(originalUrl, sendObject.options, sendObject.data).then(() => {
                     requestStatus.success++;
                 }).catch(() => {
                     requestStatus.fail++;
@@ -199,7 +200,7 @@ function isLocalRequest(url) {
     return (url == "localhost" || url == "127.0.0.1" || url == config.server.dns);
 }
 
-function sendRequest(options, data) {
+function sendRequest(originalUrl, options, data) {
     return new Promise((resolve, reject) => {
 
         if (config.server.isProd && isLocalRequest(options.hostname)) {
@@ -208,7 +209,7 @@ function sendRequest(options, data) {
 
         let reqProtocol;
 
-        if (isHttpsRequst(options.hostname)) {
+        if (isHttpsRequst(originalUrl)) {
             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
             reqProtocol = https;
         }
@@ -216,7 +217,7 @@ function sendRequest(options, data) {
             reqProtocol = http;
         }
 
-        options.hostname = getUrlWithoutProtocol(options.hostname);
+        options.hostname = getUrlWithoutProtocol(originalUrl);
 
         const req = reqProtocol.request(options, res => {
             if (res.statusCode != 200) {

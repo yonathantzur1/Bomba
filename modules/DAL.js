@@ -23,7 +23,7 @@ let db;
 
         return (db = client.db(dbName));
     }
-})().catch(err => { logger.danger(err) });
+})().catch(err => { logger.warn(err) });
 
 async function getCollection(collectionName) {
     let db = await getDB().catch(errorHandler.promiseError);

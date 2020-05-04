@@ -66,10 +66,6 @@ module.exports = {
         logData(logger.warn, data);
     },
 
-    danger: data => {
-        logData(logger.danger, data);
-    },
-
     secure: data => {
         logData(secure.warn, data);
     }
