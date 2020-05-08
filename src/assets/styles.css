@@ -41,6 +41,10 @@ input, select {
     padding: 3px !important;
 }
 
+select {
+    cursor: pointer;
+}
+
 /* END OVERRIDE BOOTSTRAP MATERIAL CSS */
 
 :root {
