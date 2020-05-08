@@ -110,6 +110,14 @@ export class RequestCardComponent implements OnInit {
                 errMsg: "Please enter request url",
                 fieldId: "url-micro",
                 inputId: "url"
+            },
+            {
+                isFieldValid(request: Request) {
+                    return !request.url.includes(" ");
+                },
+                errMsg: "The request url is not valid",
+                fieldId: "url-micro",
+                inputId: "url"
             }
         ];
     }
