@@ -13,6 +13,13 @@ export class DefaultSettings {
         this.url = "";
         this.method = METHOD.DEFAULT;
     }
+
+    copy(settings: any) {
+        this.url = settings.url;
+        this.method = settings.method;
+
+        return this;
+    }
 }
 
 @Component({
@@ -25,7 +32,8 @@ export class DefaultSettings {
 export class RequestSettingsComponent implements OnInit {
 
     @Input() projectId: string;
-    @Input() defaultSettings: DefaultSettings;
+    @Input() originalDefaultSettings: DefaultSettings;
+    defaultSettings: DefaultSettings;
 
     method: any = METHOD;
 
@@ -35,8 +43,11 @@ export class RequestSettingsComponent implements OnInit {
         private projectService: ProjectsService) { }
 
     ngOnInit() {
-        if (!this.defaultSettings) {
+        if (!this.originalDefaultSettings) {
             this.defaultSettings = new DefaultSettings();
+        }
+        else {
+            this.defaultSettings = new DefaultSettings().copy(this.originalDefaultSettings);
         }
     }
 
