@@ -54,7 +54,7 @@ module.exports = {
 
     async sendMultiRequests(sendObjects, projectId, userId) {
         for (let i = 0; i < sendObjects.length && this.projectsRequests[projectId]; i++) {
-            const sendObject = sendObjects[i];
+            let sendObject = sendObjects[i];
             const originalUrl = sendObject.options.hostname;
             const requestId = sendObject.requestId;
 
@@ -90,9 +90,10 @@ module.exports = {
                     sendObject.data = JSON.stringify(jsonData);
                 }
 
+                sendObject.options.hostname = originalUrl;
                 let startTime = new Date();
 
-                requestsPromises.push(sendRequest(originalUrl, sendObject.options, sendObject.data).then(() => {
+                requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
                     requestStatus.success++;
                 }).catch(() => {
                     requestStatus.fail++;
@@ -200,7 +201,7 @@ function isLocalRequest(url) {
     return (url == "localhost" || url == "127.0.0.1" || url == config.server.dns);
 }
 
-function sendRequest(originalUrl, options, data) {
+function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
 
         if (config.server.isProd && isLocalRequest(options.hostname)) {
@@ -209,7 +210,7 @@ function sendRequest(originalUrl, options, data) {
 
         let reqProtocol;
 
-        if (isHttpsRequst(originalUrl)) {
+        if (isHttpsRequst(options.hostname)) {
             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
             reqProtocol = https;
         }
@@ -217,7 +218,7 @@ function sendRequest(originalUrl, options, data) {
             reqProtocol = http;
         }
 
-        options.hostname = getUrlWithoutProtocol(originalUrl);
+        options.hostname = getUrlWithoutProtocol(options.hostname);
 
         const req = reqProtocol.request(options, res => {
             if (res.statusCode != 200) {
