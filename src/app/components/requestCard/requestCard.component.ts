@@ -14,7 +14,6 @@ export class Request {
     amount: number;
     isEmpty: boolean;
 
-    // Create random guid for request.
     constructor(isEmpty?: boolean) {
         this.isEmpty = !!isEmpty;
 
