@@ -47,11 +47,8 @@ const secure = createLogger({
     ]
 });
 
-// Print log to console in case the environment is not prod.
-if (!config.server.isProd) {
-    logger.add(new transports.Console({}));
-    secure.add(new transports.Console({}));
-}
+logger.add(new transports.Console({}));
+secure.add(new transports.Console({}));
 
 module.exports = {
     info: data => {

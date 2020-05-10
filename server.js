@@ -60,5 +60,5 @@ app.get('/*', (req, res) => {
 });
 
 http.listen(config.server.port, () => {
-    console.log("Server is up!");
+    (!config.server.isProd) && console.log("Server is up!");
 });
