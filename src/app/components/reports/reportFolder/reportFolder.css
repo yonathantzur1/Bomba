@@ -16,6 +16,7 @@ loader-spinner {
 
 .document {
     width: calc(33.333% - 30px);
+    height: 120px;
     display: flex;
     justify-content: center;
     padding: 30px;
