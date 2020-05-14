@@ -76,9 +76,7 @@ module.exports = {
             });
 
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
-                if (sendObject.jsonData) {
-                    let jsonData = Object.assign({}, sendObject.jsonData);
-
+                if (sendObject.jsonData && (jsonData = jsonTryParse(sendObject.jsonData))) {
                     replaceJsonValue(jsonData, {
                         "{number}": i,
                         "{text}": i.toString(),
@@ -175,10 +173,11 @@ function buildSendObject(requestData) {
     if (requestData.body && requestData.body.template) {
         if (requestData.body.type == "json") {
             sendObject.options.headers['Content-Type'] = 'application/json';
-            sendObject.jsonData = jsonTryParse(requestData.body.template);
+            sendObject.jsonData = requestData.body.template;
         }
 
         sendObject.data = requestData.body.template;
+        sendObject.options.headers['Content-Length'] = sendObject.data.length;
     }
 
     return sendObject;
