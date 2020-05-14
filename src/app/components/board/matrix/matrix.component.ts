@@ -69,10 +69,13 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.saveMatrix();
         }, this.eventsIds);
 
+        eventService.register(EVENT_TYPE.SAVE_REQUEST_CARD, () => {
+            this.saveMatrix();
+        }, this.eventsIds);
+
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRequestCard = false;
             this.selectedRequest = null;
-            this.saveMatrix();
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT, () => {

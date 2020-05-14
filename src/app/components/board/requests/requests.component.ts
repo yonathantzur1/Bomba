@@ -35,11 +35,14 @@ export class RequestsComponent implements OnDestroy {
             this.requests.push(card);
         }, this.eventsIds);
 
+        eventService.register(EVENT_TYPE.SAVE_REQUEST_CARD, () => {
+            this.saveRequests();
+        }, this.eventsIds);
+
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRequestCard = false;
             this.isShowRequestSettings = false;
             this.selectedRequest = null;
-            this.saveRequests();
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.DROP_REQUEST_CARD, (data: any) => {

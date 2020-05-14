@@ -123,7 +123,7 @@ export class RequestCardComponent implements OnInit {
 
     ngOnInit() {
         if (this.selectedRequest) {
-            this.request = Object.assign({}, this.selectedRequest);
+            this.request = JSON.parse(JSON.stringify(this.selectedRequest));
         }
         else {
             this.request = new Request();
@@ -246,6 +246,7 @@ export class RequestCardComponent implements OnInit {
             }
 
             this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+            this.eventService.emit(EVENT_TYPE.SAVE_REQUEST_CARD);
         }
     }
 
