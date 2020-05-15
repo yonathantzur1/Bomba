@@ -63,7 +63,6 @@ export class RequestCardComponent implements OnInit {
     request: Request;
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
-    bodyOptions: Array<Body> = [];
     formatStr: string = "{  }";
     method: any = METHOD;
 
