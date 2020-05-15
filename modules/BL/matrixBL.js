@@ -177,7 +177,6 @@ function buildSendObject(requestData) {
         }
 
         sendObject.data = requestData.body.template;
-        sendObject.options.headers['Content-Length'] = sendObject.data.length;
     }
 
     return sendObject;
