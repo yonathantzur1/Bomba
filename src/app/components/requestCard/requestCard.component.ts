@@ -10,7 +10,7 @@ export class Request {
     name: string;
     method: METHOD;
     url: string;
-    body: Body;
+    body: string;
     amount: number;
     isEmpty: boolean;
 
@@ -22,7 +22,7 @@ export class Request {
             this.name = "";
             this.method = METHOD.GET;
             this.url = "";
-            this.body = new Body(BODY_TYPE.JSON, true);
+            this.body = "";
             this.amount = 1;
         }
     }
@@ -36,9 +36,7 @@ export class Request {
             this.name = request.name;
             this.method = request.method;
             this.url = request.url;
-            this.body = new Body(request.body.type,
-                request.body.isChecked,
-                request.body.template);
+            this.body = request.body;
             this.amount = request.amount;
         }
 
@@ -47,23 +45,6 @@ export class Request {
 
     generateGuid() {
         this.id = generateGuid();
-    }
-}
-
-enum BODY_TYPE {
-    JSON = "json",
-    TEXT = "text"
-}
-
-class Body {
-    type: BODY_TYPE;
-    isChecked: boolean;
-    template: string;
-
-    constructor(type: BODY_TYPE, isChecked: boolean, template?: string) {
-        this.type = type;
-        this.isChecked = isChecked;
-        this.template = template || "";
     }
 }
 
@@ -83,7 +64,6 @@ export class RequestCardComponent implements OnInit {
     validationFuncs: Array<InputFieldValidation>;
     isValidBodyJson: boolean = true;
     bodyOptions: Array<Body> = [];
-    bodyType: any = BODY_TYPE;
     formatStr: string = "{  }";
     method: any = METHOD;
 
@@ -130,15 +110,6 @@ export class RequestCardComponent implements OnInit {
             this.setDefaultSettings();
         }
 
-        Object.keys(BODY_TYPE).forEach(type => {
-            if (this.request.body.type == BODY_TYPE[type]) {
-                this.bodyOptions.push(Object.assign({}, this.request.body));
-            }
-            else {
-                this.bodyOptions.push(new Body(BODY_TYPE[type], false));
-            }
-        });
-
         this.formatJson(true);
     }
 
@@ -158,44 +129,23 @@ export class RequestCardComponent implements OnInit {
         }
     }
 
-    getSelectedBodyOption(): Body {
-        return this.bodyOptions.find((type: Body) => {
-            return type.isChecked;
-        });
-    }
-
-    selectBodyOption(index: number) {
-        let currentBodyOption = this.getSelectedBodyOption();
-
-        if (currentBodyOption) {
-            currentBodyOption.template = this.request.body.template;
-            currentBodyOption.isChecked = false;
-        }
-
-        let selectedBodyOption = this.bodyOptions[index];
-        selectedBodyOption.isChecked = true;
-        this.request.body = selectedBodyOption;
-    }
-
     formatJson(isFormat: boolean) {
-        if (this.getSelectedBodyOption().type == BODY_TYPE.JSON) {
-            setTimeout(() => {
-                try {
-                    if (this.request.body.template == "") {
-                        this.isValidBodyJson = true;
-                        return;
-                    }
-
-                    let jsn = JSON.parse(this.request.body.template);
-                    isFormat && (this.request.body.template = JSON.stringify(jsn, null, "\t"));
+        setTimeout(() => {
+            try {
+                if (this.request.body == "") {
                     this.isValidBodyJson = true;
-                }
-                catch (e) {
-                    this.isValidBodyJson = false;
+                    return;
                 }
 
-            }, 0);
-        }
+                let jsn = JSON.parse(this.request.body);
+                isFormat && (this.request.body = JSON.stringify(jsn, null, "\t"));
+                this.isValidBodyJson = true;
+            }
+            catch (e) {
+                this.isValidBodyJson = false;
+            }
+
+        }, 0);
     }
 
     bodyKeyDown(event: any) {

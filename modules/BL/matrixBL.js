@@ -5,7 +5,6 @@ const http = require('http');
 const https = require('https');
 const events = require('../events');
 const generator = require('../generator');
-
 const errorHandler = require('../handlers/errorHandler');
 
 const projectsCollectionName = config.db.collections.projects;
@@ -75,8 +74,10 @@ module.exports = {
                 events.emit("socket.requestStart", userId, requestStatus);
             });
 
+            let reqData = sendObject.data;
+
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
-                if (sendObject.jsonData && (jsonData = jsonTryParse(sendObject.jsonData))) {
+                if (reqData && (jsonData = jsonTryParse(reqData))) {
                     replaceJsonValue(jsonData, {
                         "{number}": i,
                         "{text}": i.toString(),
@@ -170,13 +171,9 @@ function buildSendObject(requestData) {
         amount: requestData.amount
     }
 
-    if (requestData.body && requestData.body.template) {
-        if (requestData.body.type == "json") {
-            sendObject.options.headers['Content-Type'] = 'application/json';
-            sendObject.jsonData = requestData.body.template;
-        }
-
-        sendObject.data = requestData.body.template;
+    if (requestData.body) {
+        sendObject.options.headers['Content-Type'] = 'application/json';
+        sendObject.data = requestData.body;
     }
 
     return sendObject;
@@ -187,16 +184,16 @@ function isHttpsRequst(url) {
 }
 
 function getUrlWithoutProtocol(url) {
-    const protocolSign = "://";
-    const protocolSplit = url.split(protocolSign);
+    const protocolSplit = url.split("://");
 
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
 function isLocalRequest(url) {
     url = getUrlWithoutProtocol(url).toLowerCase();
+    const rejectUrls = ["localhost", "127.0.0.1", config.server.dns];
 
-    return (url == "localhost" || url == "127.0.0.1" || url == config.server.dns);
+    return rejectUrls.includes(url);
 }
 
 function sendRequest(options, data) {

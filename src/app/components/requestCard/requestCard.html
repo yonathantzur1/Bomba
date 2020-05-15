@@ -28,7 +28,7 @@
                     </table>
                 </div>
                 <div class="form-group" style="position: relative;">
-                    <div *ngIf="getSelectedBodyOption().type == bodyType.JSON">
+                    <div>
                         <i class="fas fa-info info-icon" (mouseenter)="showInfo(true)"
                             (mouseleave)="showInfo(false)"></i>
                         <div *ngIf="isShowInfo">
@@ -47,14 +47,7 @@
                             {{formatStr}}</div>
                     </div>
                     <textarea id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody" placeholder="Body"
-                        type="text" class="request-body" [(ngModel)]="request.body.template"></textarea>
-                    <div class="body-type">
-                        <span *ngFor="let bodyOption of bodyOptions; index as i">
-                            <span (click)="selectBodyOption(i)" class="body-type-option"
-                                [ngClass]="{'body-type-selected': bodyOption.isChecked}">{{bodyOption.type}}</span>
-                            <span>{{(i < bodyOptions.length - 1) ? " / " : ""}}</span>
-                        </span>
-                    </div>
+                        type="text" class="request-body" [(ngModel)]="request.body"></textarea>
                 </div>
             </form>
         </div>
