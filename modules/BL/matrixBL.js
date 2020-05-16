@@ -12,6 +12,23 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     projectsRequests: {},
 
+    async testRequest(request) {
+        let sendObject = buildSendObject(request);
+
+        let response;
+        const startDate = new Date();
+
+        await sendRequest(sendObject.options, sendObject.data).then(result => {
+            response = result;
+        }).catch(err => {
+            response = err;
+        }).finally(() => {
+            response.time = getDatesDiffBySeconds(new Date(), startDate);
+        });
+
+        return response;
+    },
+
     async sendRequestsMatrix(requestsMatrix, projectId, userId) {
         let isOwnerValid = await isProjectOwnerValid(projectId, userId)
             .catch(errorHandler.promiseError);
@@ -90,14 +107,14 @@ module.exports = {
                 }
 
                 sendObject.options.hostname = originalUrl;
-                let startTime = new Date();
+                const startDate = new Date();
 
                 requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
                     requestStatus.success++;
                 }).catch(() => {
                     requestStatus.fail++;
-                }).finally(async () => {
-                    requestStatus.time += getDatesDiffBySeconds(new Date(), startTime);
+                }).finally(() => {
+                    requestStatus.time += getDatesDiffBySeconds(new Date(), startDate);
                 }));
             }
 
@@ -199,8 +216,16 @@ function isLocalRequest(url) {
 function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
 
+        let response = {
+            data: "",
+            code: null
+        }
+
         if (config.server.isProd && isLocalRequest(options.hostname)) {
-            reject();
+            response.data = "localhost reject";
+            response.code = 500;
+
+            return reject(response);
         }
 
         let reqProtocol;
@@ -216,20 +241,15 @@ function sendRequest(options, data) {
         options.hostname = getUrlWithoutProtocol(options.hostname);
 
         const req = reqProtocol.request(options, res => {
-            if (res.statusCode != 200) {
-                return reject();
-            }
+            response.code = res.statusCode;
 
             res.setEncoding('utf8');
             let rawData = '';
             res.on('data', (chunk) => { rawData += chunk; });
             res.on('end', () => {
-                if (!rawData) {
-                    resolve();
-                }
-                else {
-                    resolve(jsonTryParse(rawData) || rawData);
-                }
+                rawData && (response.data = rawData);
+
+                return (response.code == 200) ? resolve(response) : reject(response);
             });
         });
 
@@ -238,6 +258,9 @@ function sendRequest(options, data) {
         });
 
         req.on('error', (err) => {
+            response.code = 500;
+            response.data = err.message;
+
             return reject(err);
         });
 

@@ -1,5 +1,5 @@
 <div id="requestCard">
-    <card [title]="request.name.trim() || 'New Request'" [width]="650" [height]="450">
+    <card [title]="request.name.trim() || 'New Request'" [width]="750" [height]="500" [disableEscape]="isTestRequest">
         <div class="body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
@@ -51,6 +51,8 @@
                 </div>
             </form>
         </div>
-        <i (click)="addReqest()" class="save-icon far fa-arrow-alt-circle-right"></i>
+        <div (click)="testRequest()" class="test-btn">Test</div>
+        <test-request *ngIf="isTestRequest" [request]="request"></test-request>
+        <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
     </card>
 </div>

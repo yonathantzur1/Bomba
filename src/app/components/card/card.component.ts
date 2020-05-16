@@ -13,6 +13,8 @@ export class CardComponent implements OnInit {
     @Input() title: string;
     @Input() width: number;
     @Input() height: number;
+    @Input() disableEscape: boolean;
+    @Input() onClose: Function;
 
     top: string;
     left: string;
@@ -25,12 +27,12 @@ export class CardComponent implements OnInit {
     }
 
     closeWindow() {
-        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+        this.onClose ? this.onClose() : this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
     }
 
     @HostListener('document:keyup', ['$event'])
     KeyPress(event: any) {
-        if (event.code == "Escape") {
+        if (!this.disableEscape && event.code == "Escape") {
             this.closeWindow();
         }
     }

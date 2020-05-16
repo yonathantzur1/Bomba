@@ -30,6 +30,7 @@ import { CellComponent } from '../components/board/matrix/cell/cell.component'
 import { ResultInfoComponent } from '../components/board/matrix/resultInfo/resultInfo.component';
 import { CardComponent } from '../components/card/card.component';
 import { RequestCardComponent } from '../components/requestCard/requestCard.component';
+import { TestRequestComponent } from '../components/requestCard/testRequest/testRequest.component';
 import { RequestSettingsComponent } from '../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../components/board/requests/requests.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
@@ -90,6 +91,7 @@ import { Routing } from '../routes/app.routing';
     ResultInfoComponent,
     CardComponent,
     RequestCardComponent,
+    TestRequestComponent,
     RequestSettingsComponent,
     RequestsComponent,
     ProjectsComponent,

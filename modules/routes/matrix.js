@@ -2,11 +2,21 @@ const router = require('express').Router();
 const matrixBL = require('../BL/matrixBL');
 const pubsub = require("../pubsub")();
 
+const errorHandler = require('../handlers/errorHandler');
+
 pubsub && pubsub.subscribe(pubsub.channels.stopRequests).then(result => {
     result && pubsub.onMessage((channel, message) => {
         if (channel == pubsub.channels.stopRequests) {
             matrixBL.stopRequests(message);
         }
+    });
+});
+
+router.post('/testRequest', (req, res) => {
+    matrixBL.testRequest(req.body).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
     });
 });
 

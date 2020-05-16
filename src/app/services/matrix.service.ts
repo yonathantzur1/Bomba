@@ -12,6 +12,10 @@ export class MatrixService extends BasicService {
         super(http, "/api/matrix");
     }
 
+    testRequest(request: Request) {
+        return super.post('/testRequest', request);
+    }
+
     sendRequests(matrix: Request[][], projectId: string) {
         let data = { matrix, projectId };
 

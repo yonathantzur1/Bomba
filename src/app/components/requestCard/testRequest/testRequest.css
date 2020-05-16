@@ -1,0 +1,51 @@
+.test-loader {
+    position: absolute;
+    top: calc(50% - 6px);
+    left: calc(50% - 18px);
+}
+
+.break-line {
+    width: 95%;
+}
+
+.response-info {
+    padding-top: 15px;
+}
+
+.response-body {
+    height: 190px;
+    width: 95%;
+    margin: auto;
+    border: 0.5px solid #6d6d6d;
+    border-radius: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 8px;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    padding: 0;
+}
+
+.property {
+    font-size: 16px;
+    text-align: center;
+}
+
+.value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.time-unit {
+    font-size: 16px;
+    font-weight: normal;
+}

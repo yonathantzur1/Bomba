@@ -17,7 +17,7 @@ app.get('/testGet', (req, res) => {
             res.end();
         }
         else {
-            res.status(500).send("error");
+            res.sendStatus(500);
         }
     }, req.query.time);
 });
@@ -25,10 +25,10 @@ app.get('/testGet', (req, res) => {
 app.post('/testPost', (req, res) => {
     setTimeout(() => {
         if (req.body.success == "true" || req.body.success == true) {
-            res.send("success");
+            res.send({ "success": true });
         }
         else {
-            res.status(500).send("error");
+            res.status(500).send({ "success": false });
         }
     }, req.body.time);
 });
@@ -47,10 +47,10 @@ app.put('/testPut', (req, res) => {
 app.delete('/testDelete', (req, res) => {
     setTimeout(() => {
         if (req.query.success == "true") {
-            res.send("success");
+            res.send(true);
         }
         else {
-            res.status(500).send("error");
+            res.status(500).send(false);
         }
     }, req.query.time);
 });

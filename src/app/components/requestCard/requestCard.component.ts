@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
@@ -55,7 +55,7 @@ export class Request {
     styleUrls: ['./requestCard.css']
 })
 
-export class RequestCardComponent implements OnInit {
+export class RequestCardComponent implements OnInit, OnDestroy {
 
     @Input() selectedRequest: Request;
     @Input() defaultSettings: DefaultSettings;
@@ -67,6 +67,9 @@ export class RequestCardComponent implements OnInit {
     method: any = METHOD;
 
     isShowInfo: boolean = false;
+    isTestRequest: boolean = false;
+
+    eventsIds: Array<string> = [];
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
@@ -98,6 +101,10 @@ export class RequestCardComponent implements OnInit {
                 inputId: "url"
             }
         ];
+
+        this.eventService.register(EVENT_TYPE.CLOSE_TEST_REQUEST, () => {
+            this.isTestRequest = false;
+        }, this.eventsIds);
     }
 
     ngOnInit() {
@@ -110,6 +117,10 @@ export class RequestCardComponent implements OnInit {
         }
 
         this.formatJson(true);
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     showInfo(isShow: boolean) {
@@ -143,7 +154,6 @@ export class RequestCardComponent implements OnInit {
             catch (e) {
                 this.isValidBodyJson = false;
             }
-
         }, 0);
     }
 
@@ -184,7 +194,7 @@ export class RequestCardComponent implements OnInit {
         return this.microtextService.validation(this.validationFuncs, this.request);
     }
 
-    addReqest() {
+    addRequest() {
         if (this.validateRequest()) {
             // In case the request is in edit mode.
             if (this.selectedRequest) {
@@ -203,6 +213,12 @@ export class RequestCardComponent implements OnInit {
         Object.keys(dst).forEach(key => {
             src[key] = dst[key];
         });
+    }
+
+    testRequest() {
+        if (this.validateRequest()) {
+            this.isTestRequest = true;
+        }
     }
 
     hideMicrotext(id: string) {

@@ -1,0 +1,28 @@
+<div class="test-request">
+    <card [title]="'Test Request'" [width]="550" [height]="350" [onClose]="closeWindow">
+        <div [ngSwitch]="isSendRequest">
+            <loader-dots *ngSwitchCase="true" class="test-loader" css='{"font-size": "10px"}'></loader-dots>
+            <div *ngSwitchCase="false">
+                <div *ngIf="response" class="response-info">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="property">Status Code</div>
+                                <div class="value">{{response.code}}</div>
+                            </td>
+                            <td>
+                                <div class="property">Time</div>
+                                <div class="value">{{response.time.toFixed(2)}} <span class="time-unit">(s)</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr class="break-line">
+                <div class="response-body">
+                    {{response.data || "-"}}
+                </div>
+            </div>
+        </div>
+    </card>
+</div>
