@@ -4,6 +4,8 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
+declare let $: any;
+
 @Component({
     selector: 'test-request',
     templateUrl: './testRequest.html',
@@ -50,6 +52,16 @@ export class TestRequestComponent implements OnInit {
         catch (e) {
             return data;
         }
+    }
+
+    copyResponse() {
+        const textArea = document.createElement('textarea');
+        textArea.value = this.response.data || "-";
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        this.snackbarService.snackbar("Copy successfully");
     }
 
     closeWindow() {

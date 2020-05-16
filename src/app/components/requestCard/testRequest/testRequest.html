@@ -7,6 +7,13 @@
                     <table>
                         <tr>
                             <td>
+                                <div class="property">Status</div>
+                                <div class="value" [ngSwitch]="response.code == 200">
+                                    <i *ngSwitchCase="true" class="fas fa-check" style="color:#28a745;"></i>
+                                    <i *ngSwitchCase="false" class="fas fa-times" style="color:#dc3545;"></i>
+                                </div>
+                            </td>
+                            <td>
                                 <div class="property">Status Code</div>
                                 <div class="value">{{response.code}}</div>
                             </td>
@@ -20,7 +27,10 @@
                 </div>
                 <hr class="break-line">
                 <div class="response-body">
-                    {{response.data || "-"}}
+                    <i class="far fa-copy copy-icon" (click)="copyResponse()"></i>
+                    <div id="response-text">
+                        {{response.data || "-"}}
+                    </div>
                 </div>
             </div>
         </div>
