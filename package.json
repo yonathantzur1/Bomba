@@ -6,17 +6,17 @@
     "build": "ng build --aot=true --buildOptimizer=true --prod"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.901.5",
-    "@angular-devkit/build-optimizer": "^0.901.5",
-    "@angular/cli": "~9.1.5",
-    "@angular/common": "~9.1.6",
-    "@angular/compiler": "~9.1.6",
-    "@angular/compiler-cli": "~9.1.6",
-    "@angular/core": "~9.1.6",
-    "@angular/forms": "~9.1.6",
-    "@angular/platform-browser": "~9.1.6",
-    "@angular/platform-browser-dynamic": "~9.1.6",
-    "@angular/router": "~9.1.6",
+    "@angular-devkit/build-angular": "^0.901.6",
+    "@angular-devkit/build-optimizer": "^0.901.6",
+    "@angular/cli": "~9.1.6",
+    "@angular/common": "~9.1.7",
+    "@angular/compiler": "~9.1.7",
+    "@angular/compiler-cli": "~9.1.7",
+    "@angular/core": "~9.1.7",
+    "@angular/forms": "~9.1.7",
+    "@angular/platform-browser": "~9.1.7",
+    "@angular/platform-browser-dynamic": "~9.1.7",
+    "@angular/router": "~9.1.7",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@hapi/joi": "^17.1.1",
     "body-parser": "^1.19.0",
@@ -26,8 +26,8 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.3",
     "hover.css": "^2.3.2",
-    "interactjs": "^1.9.13",
-    "ioredis": "^4.16.3",
+    "interactjs": "^1.9.17",
+    "ioredis": "^4.17.1",
     "jquery": "^3.5.1",
     "js-sha512": "^0.8.0",
     "jsonwebtoken": "^8.5.1",
@@ -38,13 +38,13 @@
     "socket.io-client": "^2.3.0",
     "socket.io-redis": "^5.2.0",
     "ssl-express-www": "^3.0.7",
-    "tslib": "^1.11.2",
+    "tslib": "^2.0.0",
     "typescript": "~3.8.3",
     "winston": "^3.2.1",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.4"
   }
 }

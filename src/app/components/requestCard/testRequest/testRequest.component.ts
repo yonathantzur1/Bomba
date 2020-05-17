@@ -56,7 +56,7 @@ export class TestRequestComponent implements OnInit {
 
     copyResponse() {
         const textArea = document.createElement('textarea');
-        textArea.value = this.response.data || "-";
+        textArea.value = this.response.data;
         document.body.appendChild(textArea);
         textArea.select();
         document.execCommand('copy');
