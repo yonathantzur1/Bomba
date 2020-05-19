@@ -8,6 +8,7 @@ const registerBL = require('../registerBL');
 const usersCollectionName = config.db.collections.users;
 const projectsCollectionName = config.db.collections.projects;
 const reportsCollectionName = config.db.collections.reports;
+const logsCollectionName = config.db.collections.logs;
 
 module.exports = {
     async getUser(searchInput) {
@@ -97,18 +98,20 @@ module.exports = {
             "owner": DAL.getObjectId(userId)
         }
 
+        let username = (await DAL.findOneSpecific(usersCollectionName, userFilter, { "username": 1 })).username;
+
         let userProjects = await DAL.findSpecific(projectsCollectionName, projectFilter, { "_id": 1 });
         userProjects = userProjects.map(project => {
             return project._id;
         });
 
-        let reportFilter = { "projectId": { $in: userProjects } };
-
         let deleteUser = DAL.deleteOne(usersCollectionName, userFilter);
         let deleteUserProjects = DAL.delete(projectsCollectionName, projectFilter);
-        let deleteUserProjectsReports = DAL.delete(reportsCollectionName, reportFilter);
+        let deleteUserProjectsReports = DAL.delete(reportsCollectionName,
+            { "projectId": { $in: userProjects } });
+        let deleteUserLogs = DAL.delete(logsCollectionName, { username });
 
-        let actions = [deleteUser, deleteUserProjects, deleteUserProjectsReports];
+        let actions = [deleteUser, deleteUserProjects, deleteUserProjectsReports, deleteUserLogs];
 
         return Promise.all(actions);
     }
