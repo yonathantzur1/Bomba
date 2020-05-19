@@ -25,6 +25,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('./'));
 
+// Allow remote https requests.
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 // Reject requests from bomba users.
 app.use((req, res, next) => {
     if (req.headers["type"] == "bomba") {

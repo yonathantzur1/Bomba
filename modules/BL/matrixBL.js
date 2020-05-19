@@ -24,7 +24,7 @@ module.exports = {
 
     async testRequest(request) {
         let sendObject = buildSendObject(request);
-        let reqData = sendObject.data;
+        const reqData = sendObject.data;
 
         if (reqData && (jsonData = jsonTryParse(reqData))) {
             replaceJsonValue(jsonData, this.getReplaceObject(1));
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     async sendRequestsMatrix(requestsMatrix, projectId, userId) {
-        let isOwnerValid = await isProjectOwnerValid(projectId, userId)
+        const isOwnerValid = await isProjectOwnerValid(projectId, userId)
             .catch(errorHandler.promiseError);
 
         if (isOwnerValid == false) {
@@ -60,13 +60,12 @@ module.exports = {
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
-                let requestData = requestsMatrix[i][j];
-                requestsMatrix[i][j] = buildSendObject(requestData);
+                requestsMatrix[i][j] = buildSendObject(requestsMatrix[i][j]);
             }
         }
 
         let promises = [];
-        let requestsStartTime = new Date();
+        const requestsStartTime = new Date();
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             promises.push(this.sendMultiRequests(requestsMatrix[i], projectId, userId));
@@ -74,7 +73,7 @@ module.exports = {
 
         Promise.all(promises).then(() => {
             if (this.projectsRequests[projectId]) {
-                let totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
+                const totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
                 reportsBL.saveReport(projectId, totalTime);
                 delete this.projectsRequests[projectId];
             }
@@ -148,8 +147,8 @@ function getDatesDiffBySeconds(date1, date2) {
 }
 
 async function isProjectOwnerValid(projectId, userId) {
-    let filter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
-    let count = await DAL.count(projectsCollectionName, filter)
+    const filter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
+    const count = await DAL.count(projectsCollectionName, filter)
         .catch(errorHandler.promiseError);
 
     return count ? true : false;
@@ -157,12 +156,12 @@ async function isProjectOwnerValid(projectId, userId) {
 
 function getRequestUrlData(url) {
     let data = {};
-    let isHttps = isHttpsRequst(url);
+    const isHttps = isHttpsRequst(url);
     url = getUrlWithoutProtocol(url);
-    let portIndex = url.indexOf(":");
-    let routeIndex = url.indexOf("/");
-    let portSplit = url.split(":");
-    let routeSplit = url.split("/");
+    const portIndex = url.indexOf(":");
+    const routeIndex = url.indexOf("/");
+    const portSplit = url.split(":");
+    const routeSplit = url.split("/");
 
     if (portIndex == -1) {
         data.ip = routeSplit[0];
@@ -183,7 +182,7 @@ function getRequestUrlData(url) {
 }
 
 function buildSendObject(requestData) {
-    let urlData = getRequestUrlData(requestData.url);
+    const urlData = getRequestUrlData(requestData.url);
 
     let sendObject = {
         options: {
@@ -237,15 +236,7 @@ function sendRequest(options, data) {
             return reject(response);
         }
 
-        let reqProtocol;
-
-        if (isHttpsRequst(options.hostname)) {
-            process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-            reqProtocol = https;
-        }
-        else {
-            reqProtocol = http;
-        }
+        const reqProtocol = isHttpsRequst(options.hostname) ? https : http;
 
         options.hostname = getUrlWithoutProtocol(options.hostname);
 
@@ -282,7 +273,7 @@ function sendRequest(options, data) {
 
 function replaceJsonValue(obj, replaceValues) {
     Object.keys(obj).forEach(key => {
-        let value = obj[key];
+        const value = obj[key];
 
         if (typeof value == "object" && value != null) {
             replaceJsonValue(value, replaceValues);
