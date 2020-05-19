@@ -26,7 +26,7 @@
                     </table>
                 </div>
                 <hr class="break-line">
-                <div class="response-body">
+                <div class="response-body" *ngIf="response">
                     <i *ngIf="response.data" class="far fa-copy copy-icon" (click)="copyResponse()"></i>
                     <div id="response-text">
                         {{response.data || "-"}}

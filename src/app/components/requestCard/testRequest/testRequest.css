@@ -25,6 +25,8 @@
     font-size: 12px;
     tab-size: 4;
     white-space: pre;
+    user-select: text;
+    cursor: text;
 }
 
 table {

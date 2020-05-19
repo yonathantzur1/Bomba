@@ -12,8 +12,24 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     projectsRequests: {},
 
+    getReplaceObject: (index) => {
+        return {
+            "{number}": index,
+            "{text}": index.toString(),
+            "{date}": new Date(),
+            "{iso}": new Date().toISOString(),
+            "{random}": generator.generateId()
+        }
+    },
+
     async testRequest(request) {
         let sendObject = buildSendObject(request);
+        let reqData = sendObject.data;
+
+        if (reqData && (jsonData = jsonTryParse(reqData))) {
+            replaceJsonValue(jsonData, this.getReplaceObject(1));
+            sendObject.data = JSON.stringify(jsonData);
+        }
 
         let response;
         const startDate = new Date();
@@ -95,14 +111,7 @@ module.exports = {
 
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 if (reqData && (jsonData = jsonTryParse(reqData))) {
-                    replaceJsonValue(jsonData, {
-                        "{number}": i,
-                        "{text}": i.toString(),
-                        "{date}": new Date(),
-                        "{iso}": new Date().toISOString(),
-                        "{random}": generator.generateId()
-                    });
-
+                    replaceJsonValue(jsonData, this.getReplaceObject(i));
                     sendObject.data = JSON.stringify(jsonData);
                 }
 
