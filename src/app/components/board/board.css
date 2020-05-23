@@ -2,6 +2,9 @@
     --cards-secotr-width: 345px;
     position: relative;
     height: calc(100% - 15px);
+    border: 0.5px solid var(--main-border-color);
+    border-top: none;
+    padding: 0.5px;
 }
 
 .board-container-send-mode {
@@ -10,8 +13,6 @@
 
 .sector {
     height: 100%;
-    border: 0.5px solid var(--main-border-color);
-    border-top: none;
 }
 
 .matrix-sector {
