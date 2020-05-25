@@ -1,5 +1,11 @@
-.body {
+.card-body {
     padding: 15px;
+}
+
+.body-container {
+    height: 300px;
+    position: relative;
+    overflow-y: auto;
 }
 
 .save-icon {
@@ -21,87 +27,6 @@
 
 .http-data {
     width: 100%;
-}
-
-.request-body {
-    resize: none;
-    border: 1px solid #7882b6;
-    width: 100%;
-    height: calc(100% - 185px);
-    outline: none;
-    background-color: transparent;
-    padding: 10px;
-    padding-right: 25px;
-    font-size: 14px;
-    line-height: 1;
-    color: inherit;
-    border-radius: 3px;
-    tab-size: 4;
-    margin-top: 5px;
-}
-
-.json-format-icon {
-    position: absolute;
-    right: 6px;
-    bottom: 3px;
-    font-size: 14px;
-    color: #450000;
-    cursor: pointer;
-    padding: 5px;
-    white-space: pre;
-    user-select: none;
-}
-
-.info-icon {
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    font-size: 8px;
-    padding: 5px;
-    width: 15px;
-    height: 15px;
-    border: 0.5px solid black;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.info-arrow-icon {
-    position: absolute;
-    top: 14px;
-    right: 27px;
-    font-size: 16px;
-    color: #474747;
-}
-
-.info-container {
-    width: 180px;
-    border: 1px solid #515151;
-    position: absolute;
-    right: 34px;
-    top: -25px;
-    border-radius: 6px;
-    background-color: #fafafa;
-    padding: 5px 10px;
-}
-
-.info-title {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: left;
-    border-bottom: 0.5px solid gray;
-    padding-bottom: 3px;
-}
-
-.info-data-row {
-    font-size: 12px;
-    padding: 4px 0;
-}
-
-.invalid-json-icon {
-    color: red;
-    font-weight: bold;
 }
 
 .microtext {

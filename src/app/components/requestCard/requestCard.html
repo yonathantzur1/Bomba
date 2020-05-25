@@ -1,13 +1,13 @@
 <div id="requestCard">
     <card [title]="request.name.trim() || 'New Request'" [width]="750" [height]="500" [disableEscape]="isTestRequest">
-        <div class="body">
+        <div class="card-body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
                     <input id="name" [(ngModel)]="request.name" maxlength="25" name="reqName" placeholder="Name"
                         type="text" class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
                     <label id="name-micro" class="microtext"></label>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 3px;">
                     <table class="http-data">
                         <tr>
                             <td>
@@ -27,30 +27,13 @@
                         </tr>
                     </table>
                 </div>
-                <div class="form-group" style="position: relative;">
-                    <div>
-                        <i class="fas fa-info info-icon" (mouseenter)="showInfo(true)"
-                            (mouseleave)="showInfo(false)"></i>
-                        <div *ngIf="isShowInfo">
-                            <i class="fas fa-caret-left info-arrow-icon"></i>
-                            <div class="info-container">
-                                <div class="info-title">Special Values</div>
-                                <div class="info-data-row">{{'"{number}" = 1, 2, 3...'}}</div>
-                                <div class="info-data-row">{{'"{text}" = \'1\', \'2\', \'3\'...'}}</div>
-                                <div class="info-data-row">{{'"{date}" = Date Object'}}</div>
-                                <div class="info-data-row">{{'"{iso}" = ISO String Date'}}</div>
-                                <div class="info-data-row">{{'"{random}" = Random UUID'}}</div>
-                            </div>
-                        </div>
-                        <div (click)="formatJson(true)" [ngClass]="{'invalid-json-icon': !isValidBodyJson}"
-                            class="json-format-icon" title="Format Json">
-                            {{formatStr}}</div>
-                    </div>
-                    <textarea id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody" placeholder="Body"
-                        type="text" class="request-body" [(ngModel)]="request.body"></textarea>
+                <div class="body-container">
+                    <request-navbar [tabs]="tabs"></request-navbar>
+                    <request-body *ngIf="tabs[0].isActive" [request]="request"></request-body>
                 </div>
             </form>
         </div>
+        <test-request *ngIf="isRequestHeaders"></test-request>
         <div (click)="testRequest()" class="test-btn">Test</div>
         <test-request *ngIf="isTestRequest" [request]="request"></test-request>
         <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>

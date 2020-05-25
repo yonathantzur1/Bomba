@@ -1,0 +1,28 @@
+.tabs-container {
+    width: 100%;
+    height: 30px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 0.5px solid #afafaf;
+    border-radius: 2px;
+    margin: 10px 0px;
+    padding: 16px 0px;
+    background-color: #f1f2f4;
+}
+
+.tab {
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.select-tab {
+    height: 3px;
+    background-color: #ff5722;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    transition: margin-left 0.1s;
+}

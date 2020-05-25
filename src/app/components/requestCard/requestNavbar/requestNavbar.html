@@ -1,0 +1,8 @@
+<div id="requestNavbar">
+    <div class="tabs-container">
+        <span *ngFor="let tab of tabs; index as i" (click)="selectTab(i)" [ngStyle]="{'width': tabWidth}" class="tab">
+            {{tab.name}}
+        </span>
+        <div class="select-tab" [ngStyle]="{'width': tabWidth - 12, 'margin-left': 6 + (getSelectedTabIndex() * tabWidth)}"></div>
+    </div>
+</div>

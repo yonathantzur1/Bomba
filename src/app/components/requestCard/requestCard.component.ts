@@ -3,6 +3,7 @@ import { MicrotextService, InputFieldValidation } from 'src/app/services/global/
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
 import { METHOD } from 'src/app/enums';
+import { Tab } from './requestNavbar/requestNavbar.component';
 import { generateGuid } from 'src/app/globals';
 
 export class Request {
@@ -61,18 +62,22 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     @Input() defaultSettings: DefaultSettings;
 
     request: Request;
+    tabs: Array<Tab>;
     validationFuncs: Array<InputFieldValidation>;
-    isValidBodyJson: boolean = true;
-    formatStr: string = "{  }";
     method: any = METHOD;
 
-    isShowInfo: boolean = false;
     isTestRequest: boolean = false;
 
     eventsIds: Array<string> = [];
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
+        this.tabs = [
+            new Tab("Body", true),
+            new Tab("Headers", false),
+            new Tab("Cookies", false)
+        ];
+
         this.validationFuncs = [
             {
                 isFieldValid(request: Request) {
@@ -115,16 +120,10 @@ export class RequestCardComponent implements OnInit, OnDestroy {
             this.request = new Request();
             this.setDefaultSettings();
         }
-
-        this.formatJson(true);
     }
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
-    }
-
-    showInfo(isShow: boolean) {
-        this.isShowInfo = isShow;
     }
 
     setDefaultSettings() {
@@ -137,57 +136,6 @@ export class RequestCardComponent implements OnInit, OnDestroy {
                 this.request.method = this.defaultSettings.method;
             }
         }
-    }
-
-    formatJson(isFormat: boolean) {
-        setTimeout(() => {
-            try {
-                if (this.request.body == "") {
-                    this.isValidBodyJson = true;
-                    return;
-                }
-
-                let jsn = JSON.parse(this.request.body);
-                isFormat && (this.request.body = JSON.stringify(jsn, null, "\t"));
-                this.isValidBodyJson = true;
-            }
-            catch (e) {
-                this.isValidBodyJson = false;
-            }
-        }, 0);
-    }
-
-    bodyKeyDown(event: any) {
-        if (event.code == "Tab") {
-            this.tabEnable(event);
-        }
-
-        let key = event.key;
-        let keyCode = event.keyCode;
-
-        if (key.length == 1 || keyCode == 8 || keyCode == 46) {
-            this.formatJson(false);
-        }
-    }
-
-    tabEnable(event: any) {
-        let element: any = document.getElementById("req-body");
-
-        // get caret position/selection
-        let val = element.value;
-        let start = element.selectionStart;
-        let end = element.selectionEnd;
-
-        // set textarea value to: text before caret + tab + text after caret
-        element.value = val.substring(0, start) + '\t' + val.substring(end);
-
-        // put caret at right position again
-        element.selectionStart = element.selectionEnd = start + 1;
-
-        event.preventDefault();
-
-        // prevent the focus lose
-        return false;
     }
 
     validateRequest() {
