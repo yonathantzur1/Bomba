@@ -79,8 +79,8 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     constructor(private microtextService: MicrotextService,
         private eventService: EventService) {
         this.tabs = [
-            new Tab("Body", true),
-            new Tab("Headers", false),
+            new Tab("Body", false),
+            new Tab("Headers", true),
             new Tab("Cookies", false)
         ];
 

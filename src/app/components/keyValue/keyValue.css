@@ -14,7 +14,7 @@ input {
     display: inline-block;
     outline: none;
     height: 35px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     margin-right: 10px;
     width: calc(100% - 15px);
     padding-left: 8px !important;
@@ -27,7 +27,6 @@ input {
 }
 
 .add-btn {
-    cursor: pointer;
     padding: 9px 15px;
     background-color: #eef1f6;
     color: #5b7697;
@@ -35,6 +34,14 @@ input {
     font-size: 13px;
     border: 1px solid #888888;
     border-radius: 3px;
+}
+
+.btn-active {
+    cursor: pointer;
+    background-color: #41abff;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.4s;
 }
 
 .action-sector {
