@@ -15,10 +15,11 @@
             </tr>
             <tr>
                 <td>
-                    <input [(ngModel)]="key" placeholder="KEY" type="text" class="key-input">
+                    <input [(ngModel)]="key" (keyup.enter)="add()" placeholder="KEY" type="text" class="key-input">
                 </td>
                 <td>
-                    <input [(ngModel)]="value" placeholder="VALUE" type="text" class="value-input">
+                    <input [(ngModel)]="value" (keyup.enter)="add()" placeholder="VALUE" type="text"
+                        class="value-input">
                 </td>
                 <div class="add-btn" (click)="add()" [ngClass]="{'btn-active': isAllowToAdd()}">Add</div>
             </tr>

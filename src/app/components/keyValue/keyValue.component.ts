@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { not } from '@angular/compiler/src/output/output_ast';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 @Component({
     selector: 'key-value',
@@ -15,7 +17,8 @@ export class KeyValueComponent {
     key: string = "";
     value: string = "";
 
-    constructor(private alertService: AlertService) { }
+    constructor(private alertService: AlertService,
+        private snackbarService: SnackbarService) { }
 
     getJsonKeys(json: any) {
         return Object.keys(json);
@@ -25,8 +28,19 @@ export class KeyValueComponent {
         return !!this.key;
     }
 
+    isKeyValid() {
+        if ([" ", ",", ":"].find(char => {
+            return this.key.includes(char);
+        })) {
+            this.snackbarService.snackbar("Config name is invalid");
+            return false;
+        }
+
+        return true;
+    }
+
     add() {
-        if (this.isAllowToAdd()) {
+        if (this.isAllowToAdd() && this.isKeyValid()) {
             this.json[this.key] = this.value;
             this.key = "";
             this.value = "";

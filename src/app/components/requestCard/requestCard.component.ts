@@ -42,8 +42,8 @@ export class Request {
             this.method = request.method;
             this.url = request.url;
             this.body = request.body;
-            this.headers = request.headers;
-            this.cookies = request.cookies;
+            this.headers = Object.assign({}, request.headers);
+            this.cookies = Object.assign({}, request.cookies);
             this.amount = request.amount;
         }
 
