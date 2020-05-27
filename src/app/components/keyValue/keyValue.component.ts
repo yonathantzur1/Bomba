@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
-import { not } from '@angular/compiler/src/output/output_ast';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+
+declare let $: any;
 
 @Component({
     selector: 'key-value',
@@ -29,7 +30,7 @@ export class KeyValueComponent {
     }
 
     isKeyValid() {
-        if ([" ", ",", ":"].find(char => {
+        if ([" ", ","].find(char => {
             return this.key.includes(char);
         })) {
             this.snackbarService.snackbar("Config name is invalid");
@@ -44,6 +45,7 @@ export class KeyValueComponent {
             this.json[this.key] = this.value;
             this.key = "";
             this.value = "";
+            $("#new-key").focus();
         }
     }
 

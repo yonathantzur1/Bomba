@@ -15,7 +15,8 @@
             </tr>
             <tr>
                 <td>
-                    <input [(ngModel)]="key" (keyup.enter)="add()" placeholder="KEY" type="text" class="key-input">
+                    <input id="new-key" [(ngModel)]="key" (keyup.enter)="add()" placeholder="KEY" type="text"
+                        class="key-input">
                 </td>
                 <td>
                     <input [(ngModel)]="value" (keyup.enter)="add()" placeholder="VALUE" type="text"
