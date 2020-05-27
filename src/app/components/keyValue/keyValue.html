@@ -1,0 +1,27 @@
+<div id="keyValue">
+    <div class="data-container">
+        <table>
+            <tr *ngFor="let jsonKey of getJsonKeys(json)">
+                <td>
+                    <input disabled [ngModel]="jsonKey" name="reqUrl" type="text" class="key-input">
+                </td>
+                <td>
+                    <input disabled [(ngModel)]="json[jsonKey]" class="value-input">
+                </td>
+                <td class="action-sector">
+                    <i class="fas fa-pen action-icon"></i>
+                    <i class="fas fa-times action-icon" style="margin-left: 15px;"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input placeholder="KEY" type="text" class="key-input">
+                </td>
+                <td>
+                    <input placeholder="VALUE" type="text" class="value-input">
+                </td>
+                <div class="add-btn">Add</div>
+            </tr>
+        </table>
+    </div>
+</div>

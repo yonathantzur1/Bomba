@@ -12,6 +12,8 @@ export class Request {
     method: METHOD;
     url: string;
     body: string;
+    headers: any; // json
+    cookies: any; // json
     amount: number;
     isEmpty: boolean;
 
@@ -24,6 +26,8 @@ export class Request {
             this.method = METHOD.GET;
             this.url = "";
             this.body = "";
+            this.headers = {};
+            this.cookies = {};
             this.amount = 1;
         }
     }
@@ -38,6 +42,8 @@ export class Request {
             this.method = request.method;
             this.url = request.url;
             this.body = request.body;
+            this.headers = request.headers;
+            this.cookies = request.cookies;
             this.amount = request.amount;
         }
 

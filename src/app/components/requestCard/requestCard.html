@@ -29,7 +29,11 @@
                 </div>
                 <div class="body-container">
                     <request-navbar [tabs]="tabs"></request-navbar>
-                    <request-body *ngIf="tabs[0].isActive" [request]="request"></request-body>
+                    <div class="tab-container">
+                        <request-body class="tab-content" *ngIf="tabs[0].isActive" [request]="request"></request-body>
+                        <request-headers [headers]="request.headers" class="tab-content" *ngIf="tabs[1].isActive"></request-headers>
+                        <request-cookies [cookies]="request.cookies" class="tab-content" *ngIf="tabs[2].isActive"></request-cookies>
+                    </div>
                 </div>
             </form>
         </div>

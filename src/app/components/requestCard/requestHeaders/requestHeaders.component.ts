@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'request-headers',
@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 })
 
 export class RequestHeadersComponent {
+
+    @Input() headers: any;
 
     constructor() {
 
