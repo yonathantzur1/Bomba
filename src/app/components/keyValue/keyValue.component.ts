@@ -46,6 +46,10 @@ export class KeyValueComponent {
             this.key = "";
             this.value = "";
             $("#new-key").focus();
+
+            setTimeout(() => {
+                $("#keyValue")[0].scrollTop = $("#keyValue")[0].scrollHeight;
+            }, 0);
         }
     }
 
