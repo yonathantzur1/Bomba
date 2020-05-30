@@ -16,6 +16,7 @@
     font-size: 12px;
     cursor: pointer;
     text-align: center;
+    user-select: none;
 }
 
 .select-tab {
