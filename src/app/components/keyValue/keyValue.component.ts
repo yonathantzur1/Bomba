@@ -30,14 +30,15 @@ export class KeyValueComponent {
     }
 
     isKeyValid() {
-        if ([" ", ","].find(char => {
-            return this.key.includes(char);
-        })) {
+        let template = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
+
+        if (template.test(this.key)) {
+            return true;
+        }
+        else {
             this.snackbarService.snackbar("Config name is invalid");
             return false;
         }
-
-        return true;
     }
 
     add() {

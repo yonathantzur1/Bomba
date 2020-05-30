@@ -190,11 +190,14 @@ function buildSendObject(requestData) {
             port: urlData.port,
             path: urlData.path,
             method: requestData.method,
-            headers: { "type": "bomba" }
+            headers: requestData.headers
         },
         requestId: requestData.id,
         amount: requestData.amount
     }
+
+    sendObject.options.headers["request-type"] = "bomba";
+    sendObject.options.headers["cookie"] = convertCookieJsonToString(requestData.cookies);
 
     if (requestData.body) {
         sendObject.options.headers['Content-Type'] = 'application/json';
@@ -202,6 +205,21 @@ function buildSendObject(requestData) {
     }
 
     return sendObject;
+}
+
+function convertCookieJsonToString(cookieJson) {
+    let cookieKeys = Object.keys(cookieJson);
+    let cookie = "";
+
+    if (cookieKeys.length == 0) {
+        return cookie;
+    }
+
+    cookieKeys.forEach(key => {
+        cookie += key + "=" + cookieJson[key] + ";"
+    });
+
+    return cookie.substring(0, cookie.length - 1);
 }
 
 function isHttpsRequst(url) {

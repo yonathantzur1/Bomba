@@ -30,7 +30,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // Reject requests from bomba users.
 app.use((req, res, next) => {
-    if (req.headers["type"] == "bomba") {
+    if (req.headers["request-type"] == "bomba") {
         res.status(500).end();
     }
     else {
