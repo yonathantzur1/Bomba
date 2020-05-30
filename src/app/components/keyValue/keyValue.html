@@ -8,7 +8,7 @@
                 <input disabled [(ngModel)]="json[jsonKey]" class="value-input">
             </td>
             <td class="action-sector">
-                <i class="fas fa-pen action-icon"></i>
+                <i (click)="openEdit(jsonKey, json[jsonKey])" class="fas fa-pen action-icon"></i>
                 <i (click)="delete(jsonKey)" class="fas fa-times action-icon" style="margin-left: 15px;"></i>
             </td>
         </tr>
@@ -23,4 +23,15 @@
             <div class="add-btn" (click)="add()" [ngClass]="{'btn-active': isAllowToAdd()}">Add</div>
         </tr>
     </table>
+    <card *ngIf="isEditMode" [title]="'Edit config variable'" [width]="400" [height]="260" [onClose]="closeEdit">
+        <div class="edit-input-sector">
+            <div class="edit-title">Key</div>
+            <input disabled [ngModel]="editKey" type="text" class="key-input">
+        </div>
+        <div class="edit-input-sector">
+            <div class="edit-title">Value</div>
+            <input [(ngModel)]="editValue" placeholder="VALUE" type="text" class="value-input">
+        </div>
+        <div class="add-btn btn-active edit-save-btn" (keyup.enter)="saveEdit()" (click)="saveEdit()">Save</div>
+    </card>
 </div>

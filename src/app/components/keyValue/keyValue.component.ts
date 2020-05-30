@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 declare let $: any;
 
@@ -11,15 +12,32 @@ declare let $: any;
     styleUrls: ['./keyValue.css']
 })
 
-export class KeyValueComponent {
+export class KeyValueComponent implements OnDestroy {
 
     @Input() json: any;
 
     key: string = "";
     value: string = "";
 
+    isEditMode: boolean = false;
+    editKey: string;
+    editValue: string;
+
+    eventsIds: Array<string> = [];
+
     constructor(private alertService: AlertService,
-        private snackbarService: SnackbarService) { }
+        private eventService: EventService,
+        private snackbarService: SnackbarService) {
+        this.eventService.register(EVENT_TYPE.CLOSE_EDIT_VALUE, () => {
+            this.editKey = null;
+            this.editValue = null;
+            this.isEditMode = false;
+        }, this.eventsIds);
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
 
     getJsonKeys(json: any) {
         return Object.keys(json);
@@ -65,4 +83,18 @@ export class KeyValueComponent {
         });
     }
 
+    openEdit(key: string, value: string) {
+        this.editKey = key;
+        this.editValue = value;
+        this.isEditMode = true;
+    }
+
+    closeEdit() {
+        this.eventService.emit(EVENT_TYPE.CLOSE_EDIT_VALUE);
+    }
+
+    saveEdit() {
+        this.json[this.editKey] = this.editValue;
+        this.closeEdit();
+    }
 }
