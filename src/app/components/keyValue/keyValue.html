@@ -23,15 +23,16 @@
             <div class="add-btn" (click)="add()" [ngClass]="{'btn-active': isAllowToAdd()}">Add</div>
         </tr>
     </table>
-    <card *ngIf="isEditMode" [title]="'Edit config variable'" [width]="400" [height]="260" [onClose]="closeEdit">
+    <card *ngIf="isEditMode" [title]="'Edit Config Variable'" [width]="400" [height]="260" [onClose]="closeEdit">
         <div class="edit-input-sector">
             <div class="edit-title">Key</div>
             <input disabled [ngModel]="editKey" type="text" class="key-input">
         </div>
         <div class="edit-input-sector">
             <div class="edit-title">Value</div>
-            <input [(ngModel)]="editValue" placeholder="VALUE" type="text" class="value-input">
+            <input [(ngModel)]="editValue" (keyup.enter)="saveEdit()" placeholder="VALUE" type="text"
+                class="value-input">
         </div>
-        <div class="add-btn btn-active edit-save-btn" (keyup.enter)="saveEdit()" (click)="saveEdit()">Save</div>
+        <div class="add-btn btn-active edit-save-btn" (click)="saveEdit()">Save</div>
     </card>
 </div>
