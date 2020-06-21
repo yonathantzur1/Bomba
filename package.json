@@ -6,9 +6,9 @@
     "build": "ng build --aot=true --buildOptimizer=true --prod"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.901.8",
-    "@angular-devkit/build-optimizer": "^0.901.8",
-    "@angular/cli": "~9.1.8",
+    "@angular-devkit/build-angular": "^0.901.9",
+    "@angular-devkit/build-optimizer": "^0.901.9",
+    "@angular/cli": "~9.1.9",
     "@angular/common": "~9.1.11",
     "@angular/compiler": "~9.1.11",
     "@angular/compiler-cli": "~9.1.11",
@@ -17,7 +17,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
-    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@fortawesome/fontawesome-free": "^5.13.1",
     "@hapi/joi": "^17.1.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
@@ -40,7 +40,7 @@
     "ssl-express-www": "^3.0.7",
     "tslib": "^2.0.0",
     "typescript": "~3.8.3",
-    "winston": "^3.2.1",
+    "winston": "^3.3.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
