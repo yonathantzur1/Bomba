@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Document } from '../reportFolder.component'
+import { Document } from '../reportFolder.component';
 
 @Component({
     selector: 'report-document',
