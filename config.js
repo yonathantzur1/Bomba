@@ -10,7 +10,7 @@ module.exports = {
         max: 1000
     },
     redis: {
-        connectionString: process.env.REDIS_CONNECTION_STRING
+        connectionString: process.env.BOMBA_REDIS_CONNECTION_STRING
     },
     db: {
         name: "bomba",
