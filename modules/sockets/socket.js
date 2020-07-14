@@ -55,7 +55,7 @@ module.exports = (io) => {
 function setSocketRedisAdapter(io) {
     const redisConnectionString = config.redis.connectionString;
 
-    if (redisConnectionString && config.server.isProd) {
+    if (config.server.isProd && redisConnectionString) {
         io.adapter(redisAdapter({
             pubClient: new Redis(redisConnectionString),
             subClient: new Redis(redisConnectionString)

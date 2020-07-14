@@ -6,7 +6,7 @@ const redisConnectionString = config.redis.connectionString;
 let redis;
 let pub;
 
-if (redisConnectionString && config.server.isProd) {
+if (config.server.isProd && redisConnectionString) {
     redis = new Redis(redisConnectionString);
     pub = new Redis(redisConnectionString);
 }
