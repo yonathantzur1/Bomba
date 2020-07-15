@@ -10,6 +10,7 @@ import { BoardComponent } from '../components/board/board.component';
 import { UsersComponent } from '../components/admin/users/users.component';
 import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { TrackerComponent } from '../components/admin/tracker/tracker.component';
+import { ApiManagerComponent } from '../components/api/apiManager.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: '', component: ProjectsComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'board/:id', component: BoardComponent },
+      { path: 'api', component: ApiManagerComponent },
       { path: 'users', component: UsersComponent, canActivate: [AdminGuard] },
       { path: 'statistics', component: StatisticsComponent, canActivate: [AdminGuard] },
       { path: 'tracker', component: TrackerComponent, canActivate: [AdminGuard] },

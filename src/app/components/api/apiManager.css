@@ -1,0 +1,18 @@
+.api-title {
+    padding: 20px 0 10px 0;
+}
+
+p {
+    width: 650px;
+    font-size: 18px;
+}
+
+.copy-btn {
+    color: blue;
+    user-select: none;
+}
+
+.copy-btn:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

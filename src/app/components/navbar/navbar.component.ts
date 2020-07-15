@@ -78,7 +78,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     initializeTabs() {
-        this.tabs = [new Tab("Projects", "/"), new Tab("Reports", "/reports")];
+        this.tabs = [
+            new Tab("Projects", "/"),
+            new Tab("Reports", "/reports"),
+            new Tab("API", "/api")
+        ];
 
         if (this.isAdmin) {
             this.tabs.push(new Tab("Users", "/users"));
