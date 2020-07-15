@@ -27,7 +27,8 @@ module.exports = {
             "password": newUser.password,
             "salt": salt,
             "creationDate": new Date(),
-            "isAdmin": false
+            "isAdmin": false,
+            "apiKey": generator.generateId()
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)

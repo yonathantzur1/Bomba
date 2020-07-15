@@ -1,0 +1,26 @@
+<div id="apiManager">
+    <loader-dots *ngIf="!apiKey" css='{"font-size": "16px", "text-align": "center", "padding-top": "30px"}'>
+    </loader-dots>
+    <div *ngIf="apiKey" class="api-info">
+        <h2 class="api-title">
+            Bomba API
+        </h2>
+        <p>
+            The Bomba API allows users to activate bomba projects remotly
+            and to schedule projects to run on a specific time.
+        </p>
+        <p>
+            When you run bomba project, it sends many requests to a remote server.
+            sometimes it might be easier if you could run your projects remotly.<br>
+            For example, Building a CI/CD stage for load tests, Running QA automation and more...
+        </p>
+        <br>
+        <h4>How do I get started?</h4>
+        <p>
+            In order to get started, you need a server or a tool that can send REST requests.
+            After that, click <span (click)="copyApiKey()" class="copy-btn">here</span> to copy your API key to the
+            clipboard.
+        </p>
+    </div>
+
+</div>

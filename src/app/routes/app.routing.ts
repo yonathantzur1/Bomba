@@ -10,7 +10,7 @@ import { BoardComponent } from '../components/board/board.component';
 import { UsersComponent } from '../components/admin/users/users.component';
 import { StatisticsComponent } from '../components/admin/statistics/statistics.component';
 import { TrackerComponent } from '../components/admin/tracker/tracker.component';
-import { ApiManagerComponent } from '../components/api/apiManager.component';
+import { ApiManagerComponent } from '../components/apiManager/apiManager.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards

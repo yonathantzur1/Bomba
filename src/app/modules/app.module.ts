@@ -40,7 +40,7 @@ import { RequestSettingsComponent } from '../components/requestSettings/requestS
 import { RequestsComponent } from '../components/board/requests/requests.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ProjectCardComponent } from '../components/projects/projectCard/projectCard.component';
-import { ApiManagerComponent } from '../components/api/apiManager.component';
+import { ApiManagerComponent } from '../components/apiManager/apiManager.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
