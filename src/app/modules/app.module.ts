@@ -41,6 +41,7 @@ import { RequestsComponent } from '../components/board/requests/requests.compone
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ProjectCardComponent } from '../components/projects/projectCard/projectCard.component';
 import { ApiManagerComponent } from '../components/apiManager/apiManager.component';
+import { ApiGeneratorComponent } from '../components/apiManager/apiGenerator/apiGenerator.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
 
 // Guards
@@ -108,6 +109,7 @@ import { Routing } from '../routes/app.routing';
     ProjectsComponent,
     ProjectCardComponent,
     ApiManagerComponent,
+    ApiGeneratorComponent,
     PageNotFoundComponent
   ],
   providers: [
