@@ -1,3 +1,9 @@
+.api-content {
+    max-height: 100%;
+    overflow-y: auto;
+    width: 100%;
+}
+
 .api-info {
     width: 650px;
 }
