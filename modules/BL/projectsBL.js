@@ -12,7 +12,7 @@ module.exports = {
             $match: { owner: DAL.getObjectId(ownerId) }
         }
 
-        projectFields = {
+        let projectFields = {
             $project: {
                 "name": 1,
                 "date": 1,
@@ -26,6 +26,14 @@ module.exports = {
         let aggregateArray = [filter, projectFields, sortObj];
 
         return DAL.aggregate(projectsCollectionName, aggregateArray);
+    },
+
+    getProjectsNames(ownerId) {
+        let filter = { "owner": DAL.getObjectId(ownerId) }
+        let projectFields = { "name": 1 }
+        let sortObj = { "date": 1 };
+
+        return DAL.findSpecific(projectsCollectionName, filter, projectFields, sortObj);
     },
 
     async addProject(name, ownerId) {

@@ -1,7 +1,7 @@
 <div id="apiManager">
-    <loader-dots *ngIf="!apiKey" css='{"font-size": "14px", "text-align": "center", "padding-top": "30px"}'>
+    <loader-dots *ngIf="isLoading" css='{"font-size": "14px", "text-align": "center", "padding-top": "30px"}'>
     </loader-dots>
-    <div *ngIf="apiKey" class="api-content">
+    <div *ngIf="!isLoading" class="api-content">
         <div class="api-info">
             <h2 class="api-title">
                 Bomba API
@@ -27,8 +27,8 @@
                 To build an API request you can use the API generator.
             </p>
         </div>
-        <div class="api-gen-btn">Create API request</div>
-        <!-- <api-generator></api-generator> -->
+        <div class="api-gen-btn" (click)="openGenerator()">Create API request</div>
+        <api-generator *ngIf="isApiGenerator" [apiKey]="apiKey" [projectsNames]="projectsNames"></api-generator>
     </div>
 
 </div>

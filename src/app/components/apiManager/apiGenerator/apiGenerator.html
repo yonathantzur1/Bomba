@@ -1,3 +1,30 @@
 <div id="apiGenerator">
-    
+    <card [title]="'API Generator'" [width]="360" [height]="320">
+        <div class="card-body">
+            <form autocomplete="off">
+                <div class="form-group">
+                    <label class="input-title">API Key</label>
+                    <input disabled [type]="isShowApiKey ? 'text' : 'password'" name="apiKey" [ngModel]="apiKey"
+                        class="api-key-text">
+                    <i [title]="isShowApiKey ? 'Hide Key': 'Show Key'"
+                        class="far {{isShowApiKey ? 'fa-eye-slash' : 'fa-eye'}} show-key-icon"
+                        (click)="showHideApiKey()"></i>
+                </div>
+                <div class="form-group">
+                    <label class="input-title">Project</label>
+                    <select class="api-type">
+                        <option *ngFor="let projectName of projectsNames">{{projectName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="input-title">Type</label>
+                    <select class="api-type">
+                        <option>Start Bombing</option>
+                        <option>Stop Bombing</option>
+                        <option>Schedule Bombing</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </card>
 </div>

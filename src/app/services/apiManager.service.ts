@@ -15,4 +15,8 @@ export class ApiManagerService extends BasicService {
     getApiKey() {
         return super.get('/getApiKey');
     }
+
+    getUserProjects() {
+        return super.get('/getUserProjects');
+    }
 }
