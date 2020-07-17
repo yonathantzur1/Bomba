@@ -38,6 +38,7 @@ app.use((req, res, next) => {
     }
 });
 
+// Import socket.io modules
 require('./modules/sockets/socket')(io);
 
 // Import routes.
@@ -63,5 +64,5 @@ app.get('/*', (req, res) => {
 });
 
 http.listen(config.server.port, () => {
-    (!config.server.isProd) && console.log("Server is up!");
+    console.log("Server is up!");
 });

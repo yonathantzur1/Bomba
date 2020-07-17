@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ApiManagerService } from 'src/app/services/apiManager.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
     selector: 'api-manager',
@@ -15,11 +16,12 @@ export class ApiManagerComponent implements OnDestroy {
     isLoading: boolean;
     apiKey: string;
     projectsNames: Array<String>;
-    isApiGenerator: boolean = true;
+    isApiGenerator: boolean = false;
 
     eventsIds: Array<string> = [];
 
     constructor(private apiManagerService: ApiManagerService,
+        private globalService: GlobalService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
 
@@ -49,12 +51,7 @@ export class ApiManagerComponent implements OnDestroy {
     }
 
     copyApiKey() {
-        const textArea = document.createElement('textarea');
-        textArea.value = this.apiKey;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
+        this.globalService.copyToClipboard(this.apiKey);
         this.snackbarService.snackbar("Copy successfully");
     }
 

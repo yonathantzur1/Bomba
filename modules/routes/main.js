@@ -5,6 +5,7 @@ module.exports = (app) => {
     app.use('/api', Exclude([
         '/login/*',
         '/register/*',
+        '/client/*',
         '/auth/isUserOnSession',
         '/auth/deleteClientAuth'
     ], permissionsMiddleware.auth));
@@ -24,6 +25,9 @@ module.exports = (app) => {
     app.use('/api/admin/tracker', require('./admin/tracker'));
 
     app.use('/api/auth', require('./auth'));
+
+    // Clients API requests
+    app.use('/api/client', require('./client'));
 }
 
 // Exclude routes for middlewares.
@@ -31,21 +35,21 @@ function Exclude(paths, middleware) {
     return (req, res, next) => {
         for (let i = 0; i < paths.length; i++) {
             let path = paths[i];
-            let reqUrl = req.path;
-            let generalPathPosition = path.indexOf('/*');
-            let isExcludeMath;
+            const reqUrl = req.path;
+            const generalPathPosition = path.indexOf('/*');
+            let isExcludeMatch;
 
             //  In case the path is general and ends with /*
             if (generalPathPosition != -1) {
                 path = path.substring(0, generalPathPosition);
-                isExcludeMath = (reqUrl.indexOf(path) == 0);
+                isExcludeMatch = (reqUrl.indexOf(path) == 0);
             }
             else {
-                isExcludeMath = (path == reqUrl);
+                isExcludeMatch = (path == reqUrl);
             }
 
             // In case the exclude path is match to req path.
-            if (isExcludeMath) {
+            if (isExcludeMatch) {
                 return next();
             }
         }

@@ -3,6 +3,7 @@ import { Request } from '../requestCard.component'
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare let $: any;
 
@@ -20,6 +21,7 @@ export class TestRequestComponent implements OnInit {
     response: any;
 
     constructor(private matrixService: MatrixService,
+        private globalService: GlobalService,
         private snackbarService: SnackbarService,
         private eventService: EventService) { }
 
@@ -55,12 +57,7 @@ export class TestRequestComponent implements OnInit {
     }
 
     copyResponse() {
-        const textArea = document.createElement('textarea');
-        textArea.value = this.response.data;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
+        this.globalService.copyToClipboard(this.response.data)
         this.snackbarService.snackbar("Copy successfully");
     }
 

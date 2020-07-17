@@ -3,6 +3,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 enum API_TYPE {
     START,
@@ -38,6 +39,7 @@ export class ApiGeneratorComponent implements OnInit {
 
     constructor(private eventService: EventService,
         private alertService: AlertService,
+        private globalService: GlobalService,
         private snackbarService: SnackbarService,
         private microtextService: MicrotextService) {
     }
@@ -72,7 +74,18 @@ export class ApiGeneratorComponent implements OnInit {
         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
     }
 
-    getApi() {
+    getApiUrl() {
+        return document.location.origin + "/api/client";
+    }
 
+    getApiRequest() {
+        let apiRequest = this.getApiUrl() + "/" +
+            this.api.key + "/" +
+            this.api.project + "/" +
+            this.api.type;
+
+        this.globalService.copyToClipboard(apiRequest);
+        this.closeWindow();
+        this.snackbarService.snackbar("Copy successfully");
     }
 }
