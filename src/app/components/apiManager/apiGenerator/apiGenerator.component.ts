@@ -1,26 +1,63 @@
-import { Component, Input } from '@angular/core';
-import { ApiManagerService } from 'src/app/services/apiManager.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService } from 'src/app/services/global/microtext.service';
-import { EventService } from 'src/app/services/global/event.service';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+
+enum API_TYPE {
+    START,
+    STOP
+}
+
+class Api {
+    key: string;
+    project: string;
+    type: API_TYPE;
+
+    constructor(key: string, project: string, type: API_TYPE) {
+        this.key = key;
+        this.project = project;
+        this.type = type;
+    }
+}
 
 @Component({
     selector: 'api-generator',
     templateUrl: './apiGenerator.html',
-    providers: [ApiManagerService],
+    providers: [],
     styleUrls: ['./apiGenerator.css']
 })
 
-export class ApiGeneratorComponent {
-
+export class ApiGeneratorComponent implements OnInit {
+    api: Api;
+    apiType: any = API_TYPE;
     isShowApiKey: boolean = false;
+
     @Input() apiKey: string;
     @Input() projectsNames: Array<string>;
 
-    constructor(private apiManagerService: ApiManagerService,
-        private eventService: EventService,
+    constructor(private eventService: EventService,
+        private alertService: AlertService,
         private snackbarService: SnackbarService,
         private microtextService: MicrotextService) {
+    }
+
+    ngOnInit() {
+        if (this.projectsNames.length == 0) {
+            this.alertService.alert({
+                title: "No Projects Found",
+                text: "You have no projects to create API!\n" +
+                    "First, create new project and then use our API.",
+                type: ALERT_TYPE.INFO,
+                showCancelButton: false,
+                confirmBtnText: "OK"
+            });
+
+            this.closeWindow();
+        }
+        else {
+            this.api = new Api(this.apiKey, this.projectsNames[0], API_TYPE.START);
+        }
     }
 
     hideMicrotext(id: string) {
@@ -29,5 +66,13 @@ export class ApiGeneratorComponent {
 
     showHideApiKey() {
         this.isShowApiKey = !this.isShowApiKey;
+    }
+
+    closeWindow() {
+        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+    }
+
+    getApi() {
+
     }
 }

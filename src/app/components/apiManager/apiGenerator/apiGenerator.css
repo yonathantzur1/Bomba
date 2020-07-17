@@ -20,7 +20,7 @@
 .api-key-text {
     border: 0.5px solid #565656;
     padding: 5px 8px !important;
-    border-radius: 5px;
+    border-radius: 3px;
     width: 230px;
     background-color: transparent;
     outline: none;
@@ -36,7 +36,7 @@
     user-select: none;
 }
 
-.api-type {
+.api-select {
     width: 230px;
     border-radius: 3px;
     padding: 5px 8px !important;

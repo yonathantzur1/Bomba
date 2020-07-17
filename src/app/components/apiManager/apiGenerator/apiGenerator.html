@@ -12,16 +12,15 @@
                 </div>
                 <div class="form-group">
                     <label class="input-title">Project</label>
-                    <select class="api-type">
-                        <option *ngFor="let projectName of projectsNames">{{projectName}}</option>
+                    <select class="api-select" [(ngModel)]="api.project" name="projectName">
+                        <option [value]="projectName" *ngFor="let projectName of projectsNames">{{projectName}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="input-title">Type</label>
-                    <select class="api-type">
-                        <option>Start Bombing</option>
-                        <option>Stop Bombing</option>
-                        <option>Schedule Bombing</option>
+                    <select class="api-select" [(ngModel)]="api.type" name="selectedApiType">
+                        <option [value]="apiType.START">Start Bombing</option>
+                        <option [value]="apiType.STOP">Stop Bombing</option>
                     </select>
                 </div>
             </form>
