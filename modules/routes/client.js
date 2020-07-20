@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
     isActionExists ? res.end() : res.status(401).send("API action is not valid");
 });
 
-async function startProject(matrix, projectId, userId) {
+function startProject(matrix, projectId, userId) {
     stopProject(projectId, userId);
     events.emit("socket.selfSync", userId, "syncSendRequests", { projectId })
     matrixBL.sendRequestsMatrix(matrix, projectId, userId);
