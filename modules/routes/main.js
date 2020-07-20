@@ -1,4 +1,5 @@
 const permissionsMiddleware = require('../middlewares/permissionsMiddleware');
+const apiMiddleware = require('../middlewares/apiMiddleware');
 
 module.exports = (app) => {
     // Validate user token for each api request.
@@ -27,7 +28,7 @@ module.exports = (app) => {
     app.use('/api/auth', require('./auth'));
 
     // Clients API requests
-    app.use('/api/client', require('./client'));
+    app.use('/api/client', apiMiddleware.validateApiKey, require('./client'));
 }
 
 // Exclude routes for middlewares.

@@ -5,7 +5,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
-enum API_TYPE {
+enum API_ACTION {
     START,
     STOP
 }
@@ -13,12 +13,12 @@ enum API_TYPE {
 class Api {
     key: string;
     project: string;
-    type: API_TYPE;
+    action: API_ACTION;
 
-    constructor(key: string, project: string, type: API_TYPE) {
+    constructor(key: string, project: string, action: API_ACTION) {
         this.key = key;
         this.project = project;
-        this.type = type;
+        this.action = action;
     }
 }
 
@@ -31,7 +31,7 @@ class Api {
 
 export class ApiGeneratorComponent implements OnInit {
     api: Api;
-    apiType: any = API_TYPE;
+    apiAction: any = API_ACTION;
     isShowApiKey: boolean = false;
 
     @Input() apiKey: string;
@@ -58,7 +58,7 @@ export class ApiGeneratorComponent implements OnInit {
             this.closeWindow();
         }
         else {
-            this.api = new Api(this.apiKey, this.projectsNames[0], API_TYPE.START);
+            this.api = new Api(this.apiKey, this.projectsNames[0], API_ACTION.START);
         }
     }
 
@@ -79,10 +79,10 @@ export class ApiGeneratorComponent implements OnInit {
     }
 
     getApiRequest() {
-        let apiRequest = this.getApiUrl() + "/" +
-            this.api.key + "/" +
-            this.api.project + "/" +
-            this.api.type;
+        let apiRequest = this.getApiUrl() + "?" +
+            "key=" + this.api.key + "&" +
+            "project=" + this.api.project + "&" +
+            "action=" + this.api.action;
 
         this.globalService.copyToClipboard(apiRequest);
         this.closeWindow();

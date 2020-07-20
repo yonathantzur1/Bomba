@@ -5,6 +5,11 @@ exports.REST = Object.freeze({
     DELETE: "DELETE"
 });
 
+exports.API_ACTION = Object.freeze({
+    START: 0,
+    STOP: 1
+});
+
 exports.LOG_TYPE = Object.freeze({
     LOGIN: 0,
     LOGIN_FAIL: 1,

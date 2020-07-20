@@ -39,6 +39,10 @@ module.exports = (io) => {
         });
     });
 
+    events.on('socket.selfSync', (userId, eventName, data) => {
+        io.to(userId).emit(eventName, data);
+    });
+
     events.on('socket.requestStart', (userId, data) => {
         io.to(userId).emit('requestStart', data);
     });

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const matrixBL = require('../BL/matrixBL');
+const events = require('../events');
 const pubsub = require("../pubsub")();
 
 const errorHandler = require('../handlers/errorHandler');
@@ -26,11 +27,16 @@ router.post('/sendRequests', (req, res) => {
 });
 
 router.post('/stopRequests', (req, res) => {
-    matrixBL.stopRequests(req.body.projectId);
-    matrixBL.removeProjectReport(req.body.projectId, req.user._id);
-    pubsub && pubsub.publish(pubsub.channels.stopRequests, req.body.projectId);
-
+    stopRequests(req.body.projectId, req.user._id);
     res.end();
 });
+
+function stopRequests(projectId, userId) {
+    matrixBL.stopRequests(projectId);
+    matrixBL.removeProjectReport(projectId, userId);
+    pubsub && pubsub.publish(pubsub.channels.stopRequests, projectId);
+}
+
+events.on("stopRequests", stopRequests);
 
 module.exports = router;
