@@ -73,17 +73,31 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.socketService.socketOn("finishReport", (projectId: string) => {
-            let project = this.projects.find((project: Project) => {
-                return project.id == projectId;
-            });
+        this.socketService.socketOn("syncSendRequests", (data: any) => {
+            this.getProjectById(data.projectId).isSendMode = true;
+            this.getProjectById(data.projectId).isSendDone = false;
+        });
 
-            project.isSendDone = true;
+        this.socketService.socketOn("syncCloseReport", (data: any) => {
+            this.getProjectById(data.projectId).isSendMode = false;
+        });
+
+        this.socketService.socketOn("finishReport", (projectId: string) => {
+            this.getProjectById(projectId).isSendDone = true;
         });
     }
 
+    getProjectById(projectId): Project {
+        return this.projects.find((project: Project) => {
+            return project.id == projectId;
+        })
+    }
+
     ngOnDestroy() {
+        this.socketService.socketOff("syncSendRequests");
+        this.socketService.socketOff("syncCloseReport");
         this.socketService.socketOff("finishReport");
+        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     loadAllProjects() {
