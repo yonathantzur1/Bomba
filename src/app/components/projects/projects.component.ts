@@ -5,6 +5,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { SocketService } from 'src/app/services/global/socket.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 export class Project {
     id: string;
@@ -41,6 +42,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     constructor(private router: Router,
         private eventService: EventService,
+        private globalService: GlobalService,
         private socketService: SocketService,
         private snackbarService: SnackbarService,
         private alertService: AlertService,
@@ -51,28 +53,52 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             this.editProject = null;
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.ADD_PROJECT, (project: any) => {
-            this.projects.push(new Project(project._id,
-                project.name,
-                project.date,
-                false,
-                false));
+        this.eventService.register(EVENT_TYPE.ADD_PROJECT, (data: any) => {
+            let project = new Project(data._id, data.name, data.date, false, false);
+            this.addProject(project)
+
+            this.socketService.socketEmit('selfSync', 'syncAddProject', {
+                "userGuid": this.globalService.userGuid,
+                project
+            });
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (project: any) => {
-            for (let i = 0; i < this.projects.length; i++) {
-                if (this.projects[i].id == project._id) {
-                    this.projects[i].name = project.name;
-                }
-            }
-
+        this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (data: any) => {
+            this.editProjectName(data._id, data.name);
             this.editProject = null;
+
+            this.socketService.socketEmit('selfSync', 'syncEditProject', {
+                "userGuid": this.globalService.userGuid,
+                "projectId": data._id,
+                "projectName": data.name
+            });
         }, this.eventsIds);
 
         this.loadAllProjects();
     }
 
     ngOnInit() {
+        this.socketService.socketOn("syncAddProject", (data: any) => {
+            if (this.isSyncAllow(data.userGuid)) {
+                this.addProject(data.project);
+            }
+        });
+
+        this.socketService.socketOn("syncEditProject", (data: any) => {
+            if (this.isSyncAllow(data.userGuid)) {
+                this.editProjectName(data.projectId, data.projectName);
+            }
+        });
+
+
+        this.socketService.socketOn("syncDeleteProject", (data: any) => {
+            if (this.isSyncAllow(data.userGuid)) {
+                this.projects = this.projects.filter(project => {
+                    return project.id != data.projectId;
+                });
+            }
+        });
+
         this.socketService.socketOn("syncSendRequests", (data: any) => {
             this.getProjectById(data.projectId).isSendMode = true;
             this.getProjectById(data.projectId).isSendDone = false;
@@ -87,6 +113,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         });
     }
 
+    isSyncAllow(userGuid: string) {
+        return (this.globalService.userGuid != userGuid);
+    }
+
+    addProject(project: Project) {
+        this.projects.push(project);
+    }
+
+    editProjectName(projectId: string, projectName: string) {
+        this.projects.find((project: Project) => {
+            return project.id == projectId;
+        }).name = projectName;
+    }
+
     getProjectById(projectId): Project {
         return this.projects.find((project: Project) => {
             return project.id == projectId;
@@ -94,6 +134,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.socketService.socketOff("syncAddProject");
         this.socketService.socketOff("syncSendRequests");
         this.socketService.socketOff("syncCloseReport");
         this.socketService.socketOff("finishReport");
@@ -173,7 +214,13 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 this.projects.splice(deleteIndex, 1);
 
                 this.projectsService.deleteProject(project.id).then(result => {
-                    if (!result) {
+                    if (result) {
+                        this.socketService.socketEmit('selfSync', 'syncDeleteProject', {
+                            "userGuid": this.globalService.userGuid,
+                            "projectId": project.id
+                        });
+                    }
+                    else {
                         this.snackbarService.snackbar("Server error occurred");
 
                         // Return false deleted project to the projects list.
