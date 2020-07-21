@@ -16,7 +16,7 @@
                     [title]="project.isSendDone ? 'Report Ready': 'Sending requests...'"></span>
             </div>
         </div>
-        <project-card [editProject]="editProject" *ngIf="isShowProjectCard"></project-card>
+        <new-project-card [editProject]="editProject" *ngIf="isShowProjectCard"></new-project-card>
         <div *ngIf="projects.length > 0" (click)="isShowProjectCard=true;" class="add-project-btn">
             <i class="fas fa-plus"></i>
         </div>

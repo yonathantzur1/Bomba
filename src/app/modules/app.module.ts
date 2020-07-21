@@ -39,7 +39,7 @@ import { TestRequestComponent } from '../components/requestCard/testRequest/test
 import { RequestSettingsComponent } from '../components/requestSettings/requestSettings.component';
 import { RequestsComponent } from '../components/board/requests/requests.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
-import { ProjectCardComponent } from '../components/projects/projectCard/projectCard.component';
+import { NewProjectCardComponent } from '../components/projects/newProjectCard/newProjectCard.component';
 import { ApiManagerComponent } from '../components/apiManager/apiManager.component';
 import { ApiGeneratorComponent } from '../components/apiManager/apiGenerator/apiGenerator.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
@@ -107,7 +107,7 @@ import { Routing } from '../routes/app.routing';
     RequestSettingsComponent,
     RequestsComponent,
     ProjectsComponent,
-    ProjectCardComponent,
+    NewProjectCardComponent,
     ApiManagerComponent,
     ApiGeneratorComponent,
     PageNotFoundComponent

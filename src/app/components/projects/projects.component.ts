@@ -90,7 +90,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     getProjectById(projectId): Project {
         return this.projects.find((project: Project) => {
             return project.id == projectId;
-        })
+        });
     }
 
     ngOnDestroy() {

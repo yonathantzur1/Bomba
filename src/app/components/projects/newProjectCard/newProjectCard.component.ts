@@ -9,13 +9,13 @@ import { Project } from '../projects.component';
 declare let $: any;
 
 @Component({
-    selector: 'project-card',
-    templateUrl: './projectCard.html',
+    selector: 'new-project-card',
+    templateUrl: './newProjectCard.html',
     providers: [ProjectsService],
-    styleUrls: ['./projectCard.css']
+    styleUrls: ['./newProjectCard.css']
 })
 
-export class ProjectCardComponent implements OnInit {
+export class NewProjectCardComponent implements OnInit {
 
     @Input() editProject: Project;
     
