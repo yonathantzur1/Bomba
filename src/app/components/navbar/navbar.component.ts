@@ -22,7 +22,6 @@ class Tab {
 @Component({
     selector: 'navbar',
     templateUrl: './navbar.html',
-    providers: [],
     styleUrls: ['./navbar.css']
 })
 

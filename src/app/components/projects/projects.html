@@ -2,23 +2,16 @@
     <loader-rings *ngIf="isLoading"></loader-rings>
     <div *ngIf="!isLoading">
         <div class="projects-container">
-            <div *ngIf="projects.length == 0" (click)="isShowProjectCard=true;" class="project empty-project">
-                <span class="name">New Project</span>
+            <div *ngIf="projects.length == 0" (click)="isNewProjectCard=true;" class="project empty-project">
+                <span class="empty-project-name">New Project</span>
             </div>
-            <div *ngFor="let project of projects" (click)="openProject(project.id)" class="project"
-                [ngClass]="{'single-project' : projects.length == 1}">
-                <i (click)="deleteProject(project, $event)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
-                <i (click)="edit(project, $event)" class="far fa-edit top-icon edit-icon hvr-grow"></i>
-                <span [title]="project.name" class="name">{{project.name}}</span>
-                <span class="date">{{formatDate(project.date)}}</span>
-                <span *ngIf="project.isSendMode" class="send-mode-alert"
-                    [ngClass]="{'send-mode-done': project.isSendDone}"
-                    [title]="project.isSendDone ? 'Report Ready': 'Sending requests...'"></span>
-            </div>
+            <project *ngFor="let project of projects" [project]="project" (click)="openProject(project.id)"
+                class="project" [ngClass]="{'single-project' : projects.length == 1}">
+            </project>
         </div>
-        <new-project-card [editProject]="editProject" *ngIf="isShowProjectCard"></new-project-card>
-        <div *ngIf="projects.length > 0" (click)="isShowProjectCard=true;" class="add-project-btn">
+        <div *ngIf="projects.length > 0" (click)="isNewProjectCard=true;" class="add-project-btn">
             <i class="fas fa-plus"></i>
         </div>
+        <project-name-card *ngIf="isNewProjectCard"></project-name-card>
     </div>
 </div>

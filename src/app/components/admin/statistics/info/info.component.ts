@@ -4,7 +4,6 @@ import { InfoCard } from './infoCard/infoCard.component';
 @Component({
     selector: 'info',
     templateUrl: './info.html',
-    providers: [],
     styleUrls: ['./info.css']
 })
 

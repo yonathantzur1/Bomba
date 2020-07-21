@@ -10,7 +10,6 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 @Component({
     selector: 'requests',
     templateUrl: './requests.html',
-    providers: [],
     styleUrls: ['./requests.css']
 })
 

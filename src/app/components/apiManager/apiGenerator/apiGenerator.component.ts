@@ -25,7 +25,6 @@ class Api {
 @Component({
     selector: 'api-generator',
     templateUrl: './apiGenerator.html',
-    providers: [],
     styleUrls: ['./apiGenerator.css']
 })
 

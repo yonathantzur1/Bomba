@@ -8,7 +8,6 @@ declare let $: any;
 @Component({
     selector: 'key-value',
     templateUrl: './keyValue.html',
-    providers: [],
     styleUrls: ['./keyValue.css']
 })
 

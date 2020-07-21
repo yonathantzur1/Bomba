@@ -4,7 +4,6 @@ import { Document } from '../reportFolder.component';
 @Component({
     selector: 'report-document',
     templateUrl: './reportDocument.html',
-    providers: [],
     styleUrls: ['./reportDocument.css']
 })
 

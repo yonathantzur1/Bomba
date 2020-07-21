@@ -5,7 +5,6 @@ import { RequestResult } from '../matrix.component';
 @Component({
     selector: 'result-info',
     templateUrl: './resultInfo.html',
-    providers: [],
     styleUrls: ['./resultInfo.css']
 })
 

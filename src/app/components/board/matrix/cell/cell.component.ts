@@ -5,7 +5,6 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 @Component({
     selector: 'cell',
     templateUrl: './cell.html',
-    providers: [],
     styleUrls: ['./cell.css']
 })
 

@@ -6,7 +6,6 @@ import { generateGuid } from 'src/app/globals';
 @Component({
     selector: 'home',
     templateUrl: './home.html',
-    providers: [],
     styleUrls: ['./home.css']
 })
 

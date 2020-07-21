@@ -58,7 +58,6 @@ export class Request {
 @Component({
     selector: 'request-card',
     templateUrl: './requestCard.html',
-    providers: [],
     styleUrls: ['./requestCard.css']
 })
 

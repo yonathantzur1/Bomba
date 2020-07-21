@@ -13,7 +13,6 @@ export class Tab {
 @Component({
     selector: 'request-navbar',
     templateUrl: './requestNavbar.html',
-    providers: [],
     styleUrls: ['./requestNavbar.css']
 })
 

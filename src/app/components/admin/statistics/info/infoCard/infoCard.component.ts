@@ -13,7 +13,6 @@ export class InfoCard {
 @Component({
     selector: 'info-card',
     templateUrl: './infoCard.html',
-    providers: [],
     styleUrls: ['./infoCard.css']
 })
 

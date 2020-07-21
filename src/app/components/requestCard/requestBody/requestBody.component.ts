@@ -4,7 +4,6 @@ import { Request } from '../requestCard.component';
 @Component({
     selector: 'request-body',
     templateUrl: './requestBody.html',
-    providers: [],
     styleUrls: ['./requestBody.css']
 })
 

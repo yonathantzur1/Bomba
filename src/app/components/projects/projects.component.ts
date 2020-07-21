@@ -1,27 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Project } from './project/project.component';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
-import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-
-export class Project {
-    id: string;
-    name: string;
-    date: Date;
-    isSendMode: boolean;
-    isSendDone: boolean;
-
-    constructor(id: string, name: string, date: Date, isSendMode: boolean, isSendDone: boolean) {
-        this.id = id;
-        this.name = name;
-        this.date = date;
-        this.isSendMode = isSendMode;
-        this.isSendDone = isSendDone;
-    }
-}
 
 @Component({
     selector: 'projects',
@@ -33,7 +17,7 @@ export class Project {
 export class ProjectsComponent implements OnInit, OnDestroy {
 
     projects: Array<Project>;
-    isShowProjectCard: boolean = false;
+    isNewProjectCard: boolean = false;
     editProject: Project;
 
     isLoading: boolean = false;
@@ -45,12 +29,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         private globalService: GlobalService,
         private socketService: SocketService,
         private snackbarService: SnackbarService,
-        private alertService: AlertService,
         private projectsService: ProjectsService) {
 
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
-            this.isShowProjectCard = false;
-            this.editProject = null;
+            this.isNewProjectCard = false;
         }, this.eventsIds);
 
         this.eventService.register(EVENT_TYPE.ADD_PROJECT, (data: any) => {
@@ -65,7 +47,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
         this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (data: any) => {
             this.editProjectName(data._id, data.name);
-            this.editProject = null;
 
             this.socketService.socketEmit('selfSync', 'syncEditProject', {
                 "userGuid": this.globalService.userGuid,
@@ -73,6 +54,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 "projectName": data.name
             });
         }, this.eventsIds);
+
+        this.eventService.register(EVENT_TYPE.DELETE_PROJECT,
+            this.deleteProject.bind(this),
+            this.eventsIds);
 
         this.loadAllProjects();
     }
@@ -89,7 +74,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 this.editProjectName(data.projectId, data.projectName);
             }
         });
-
 
         this.socketService.socketOn("syncDeleteProject", (data: any) => {
             if (this.isSyncAllow(data.userGuid)) {
@@ -113,6 +97,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         });
     }
 
+    ngOnDestroy() {
+        this.socketService.socketOff("syncAddProject");
+        this.socketService.socketOff("syncEditProject");
+        this.socketService.socketOff("syncDeleteProject");
+        this.socketService.socketOff("syncSendRequests");
+        this.socketService.socketOff("syncCloseReport");
+        this.socketService.socketOff("finishReport");
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
+
     isSyncAllow(userGuid: string) {
         return (this.globalService.userGuid != userGuid);
     }
@@ -127,28 +121,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         }).name = projectName;
     }
 
-    getProjectById(projectId): Project {
+    getProjectById(projectId: string): Project {
         return this.projects.find((project: Project) => {
             return project.id == projectId;
         });
     }
 
-    ngOnDestroy() {
-        this.socketService.socketOff("syncAddProject");
-        this.socketService.socketOff("syncSendRequests");
-        this.socketService.socketOff("syncCloseReport");
-        this.socketService.socketOff("finishReport");
-        this.eventService.unsubscribeEvents(this.eventsIds);
-    }
-
     loadAllProjects() {
         this.isLoading = true;
 
-        this.projectsService.getProjects().then(projects => {
+        this.projectsService.getProjects().then(data => {
             this.isLoading = false;
 
-            if (projects) {
-                this.projects = projects.map(project => {
+            if (data) {
+                this.projects = data.map((project: any) => {
                     return new Project(project._id,
                         project.name,
                         project.date,
@@ -162,71 +148,38 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         });
     }
 
-    formatDate(date: Date) {
-        date = new Date(date);
-
-        let day: any = date.getDate();
-        let month: any = date.getMonth() + 1;
-        let year: any = date.getFullYear().toString().substr(-2);
-
-        if (day < 10) {
-            day = "0" + day;
-        }
-
-        if (month < 10) {
-            month = "0" + month;
-        }
-
-        return (day + '/' + month + '/' + year);
-    }
-
     openProject(id: string) {
         this.router.navigateByUrl("/board/" + id);
     }
 
-    edit(project: Project, event: any) {
-        event.stopPropagation();
-        this.editProject = project;
-        this.isShowProjectCard = true;
-    }
+    deleteProject(projectId: string) {
+        let deleteProject: Project;
+        let deleteIndex: number;
 
-    deleteProject(project: Project, event: any) {
-        event.stopPropagation();
-        this.alertService.alert({
-            title: "Delete Project",
-            text: 'Please confirm deletion of the project "' + project.name + '"\n\n' +
-                "The action will delete all data saved on the project and its reports.",
-            type: ALERT_TYPE.DANGER,
-            confirmFunc: () => {
-                let deleteProject: Project;
-                let deleteIndex: number;
+        for (let i = 0; i < this.projects.length; i++) {
+            let currProject = this.projects[i];
 
-                for (let i = 0; i < this.projects.length; i++) {
-                    let currProject = this.projects[i];
+            if (projectId == currProject.id) {
+                deleteProject = currProject;
+                deleteIndex = i;
+                break;
+            }
+        }
 
-                    if (project.id == currProject.id) {
-                        deleteProject = currProject;
-                        deleteIndex = i;
-                        break;
-                    }
-                }
+        this.projects.splice(deleteIndex, 1);
 
-                this.projects.splice(deleteIndex, 1);
-
-                this.projectsService.deleteProject(project.id).then(result => {
-                    if (result) {
-                        this.socketService.socketEmit('selfSync', 'syncDeleteProject', {
-                            "userGuid": this.globalService.userGuid,
-                            "projectId": project.id
-                        });
-                    }
-                    else {
-                        this.snackbarService.snackbar("Server error occurred");
-
-                        // Return false deleted project to the projects list.
-                        this.projects.splice(deleteIndex, 0, deleteProject);
-                    }
+        this.projectsService.deleteProject(projectId).then(result => {
+            if (result) {
+                this.socketService.socketEmit('selfSync', 'syncDeleteProject', {
+                    "userGuid": this.globalService.userGuid,
+                    projectId
                 });
+            }
+            else {
+                this.snackbarService.snackbar("Server error occurred");
+
+                // Insert project back to the list in case of error.
+                this.projects.splice(deleteIndex, 0, deleteProject);
             }
         });
     }

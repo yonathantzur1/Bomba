@@ -4,7 +4,6 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 @Component({
     selector: 'card',
     templateUrl: './card.html',
-    providers: [],
     styleUrls: ['./card.css']
 })
 
