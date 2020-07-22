@@ -3,19 +3,18 @@
 }
 
 .container {
-    height: 150px;
-    width: 150px;
+    height: 210px;
+    width: 300px;
     text-align: center;
     background-color: #f7f7f7;
     padding: 15px;
     box-shadow: 1px 1px 5px 1px #afafaf;
-    border-radius: 50%;
     position: relative;
     user-select: none;
 }
 
 .title {
-    font-size: 20px;
+    font-size: 24px;
     margin-top: 3px;
 }
 
@@ -28,6 +27,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 38px;
+    font-size: 44px;
     font-weight: bold;
 }
