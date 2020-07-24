@@ -1,5 +1,5 @@
 <div id="project">
-    <div class="project-container">
+    <div class="project-container" (click)="openProject()">
         <i (click)="deleteProject($event)" class="fas fa-times top-icon delete-icon hvr-grow"></i>
         <i (click)="openEditProjectName($event)" class="far fa-edit top-icon edit-icon hvr-grow"></i>
         <span [title]="project.name" class="name">{{project.name}}</span>

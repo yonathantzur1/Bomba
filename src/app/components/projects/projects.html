@@ -5,8 +5,8 @@
             <div *ngIf="projects.length == 0" (click)="isNewProjectCard=true;" class="project empty-project">
                 <span class="empty-project-name">New Project</span>
             </div>
-            <project *ngFor="let project of projects" [project]="project" (click)="openProject(project.id)"
-                class="project" [ngClass]="{'single-project' : projects.length == 1}">
+            <project *ngFor="let project of projects" [project]="project" class="project"
+                [ngClass]="{'single-project' : projects.length == 1}">
             </project>
         </div>
         <div *ngIf="projects.length > 0" (click)="isNewProjectCard=true;" class="add-project-btn">

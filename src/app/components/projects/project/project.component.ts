@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { Router } from '@angular/router';
 
 export class Project {
     id: string;
@@ -31,7 +32,8 @@ export class ProjectComponent implements OnDestroy {
 
     eventsIds: Array<string> = [];
 
-    constructor(private alertService: AlertService,
+    constructor(private router: Router,
+        private alertService: AlertService,
         private eventService: EventService) {
 
         this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
@@ -59,6 +61,10 @@ export class ProjectComponent implements OnDestroy {
         }
 
         return (day + '/' + month + '/' + year);
+    }
+
+    openProject() {
+        this.router.navigateByUrl("/board/" + this.project.id);
     }
 
     openEditProjectName(event: any) {

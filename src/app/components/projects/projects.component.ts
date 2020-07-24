@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Project } from './project/project.component';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -24,8 +23,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     eventsIds: Array<string> = [];
 
-    constructor(private router: Router,
-        private eventService: EventService,
+    constructor(private eventService: EventService,
         private globalService: GlobalService,
         private socketService: SocketService,
         private snackbarService: SnackbarService,
@@ -116,9 +114,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
 
     editProjectName(projectId: string, projectName: string) {
-        this.projects.find((project: Project) => {
-            return project.id == projectId;
-        }).name = projectName;
+        this.getProjectById(projectId).name = projectName;
     }
 
     getProjectById(projectId: string): Project {
@@ -146,10 +142,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 this.snackbarService.snackbar("Server error occurred");
             }
         });
-    }
-
-    openProject(id: string) {
-        this.router.navigateByUrl("/board/" + id);
     }
 
     deleteProject(projectId: string) {
