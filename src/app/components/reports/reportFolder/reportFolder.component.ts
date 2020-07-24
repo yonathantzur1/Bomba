@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -22,7 +22,7 @@ export class Document {
     styleUrls: ['./reportFolder.css']
 })
 
-export class ReportFolderComponent implements OnInit {
+export class ReportFolderComponent implements OnInit, OnDestroy {
 
     @Input() projectId: string;
     @Input() projectName: string;
@@ -32,10 +32,16 @@ export class ReportFolderComponent implements OnInit {
     documents: Array<Document>;
     selectedDocument: Document;
 
+    eventIds: Array<string> = [];
+
     constructor(private reportsService: ReportsService,
         private alertService: AlertService,
         private eventService: EventService,
-        private snackbarService: SnackbarService) { }
+        private snackbarService: SnackbarService) {
+        this.eventService.register(EVENT_TYPE.CLOSE_REPORT_DOCUMENT, () => {
+            this.selectedDocument = null;
+        }, this.eventIds);
+    }
 
     ngOnInit() {
         this.isLoading = true;
@@ -51,6 +57,10 @@ export class ReportFolderComponent implements OnInit {
                 this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventIds);
     }
 
     formatDate(date: Date) {
