@@ -2,8 +2,15 @@
     <div class="action-line">
         <i title="Back To Folder" class="fas fa-arrow-left action-icon" style="margin-right: auto;"
             (click)="backToFolder()"></i>
-        <i title="Report Result" class="fas fa-border-all action-icon" style="margin-left: auto;"
-            (click)="showResults()"></i>
+        <div [ngSwitch]="isMatrixMode">
+            <i *ngSwitchCase="false" title="Report Matrix" class="fas fa-border-all action-icon"
+                style="margin-left: auto;" (click)="showMatrix()"></i>
+            <i *ngSwitchCase="true" title="Report Results" class="fas fa-list-ol action-icon" style="margin-left: auto;"
+                (click)="showResults()"></i>
+        </div>
     </div>
-    <report-document [document]="document"></report-document>
+    <div [ngSwitch]="isMatrixMode">
+        <report-document *ngSwitchCase="false" [document]="document"></report-document>
+        <report-matrix *ngSwitchCase="true" [reportData]="reportData"></report-matrix>
+    </div>
 </div>

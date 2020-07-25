@@ -9,6 +9,8 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 
 export class ReportMatrixComponent {
 
+    @Input() reportData: any;
+
     constructor(private eventService: EventService) { }
 
 }

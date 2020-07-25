@@ -22,7 +22,11 @@ export class ReportsService extends BasicService {
         return super.get('/getProjectReports?projectId=' + projectId);
     }
 
-    deleteReport(projectId: string, reportId: string, ) {
+    getReportData(reportId: string) {
+        return super.get('/getReportData?reportId=' + reportId);
+    }
+
+    deleteReport(projectId: string, reportId: string) {
         return super.delete('/deleteReport?projectId=' + projectId +
             "&reportId=" + reportId);
     }
