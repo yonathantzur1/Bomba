@@ -8,7 +8,7 @@
         </span>
         <span *ngIf="isSendMode" class="matrix-top-buttons">
             <span *ngIf="requestsAmount > resultsAmount" class="matrix-top-buttons">
-                <loader-dots css='{"font-size": "10px", "padding-top": "15px"}'>
+                <loader-dots class="loader-dots" css='{"font-size": "10px", "padding-top": "15px"}'>
                 </loader-dots>
                 <i (click)="stopRequests()" class="fas fa-stop stop-requests-icon" title="Stop Requests"></i>
             </span>
@@ -24,7 +24,7 @@
     <div id="matrix-container" class="matrix-container">
         <table>
             <tr *ngFor="let row of matrix; index as i">
-                <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j; ">
+                <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j">
                     <cell [row]="i" [col]="j" [request]="matrix[i][j]"
                         [result]="report && report.results[matrix[i][j].id]" [isSendMode]="isSendMode"
                         [maxRequestAmount]="maxRequestAmount" [isLastCell]="isLastCellOnMatrix()"></cell>

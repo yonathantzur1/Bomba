@@ -1,7 +1,7 @@
 <div id="reportFolder">
     <card
         [title]="projectName + ' | ' + (selectedDocument ? 'Report - ' + formatDate(selectedDocument.date) : 'Reports')"
-        [width]="800" [height]="480">
+        [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
             <div *ngFor="let document of documents; index as i" class="document">

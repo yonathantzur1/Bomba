@@ -1,7 +1,7 @@
 #cell {
     position: relative;
-    height: 150px;
-    width: 150px;
+    height: 100%;
+    width: 100%;
     padding: 10px;
     font-size: 14px;
 }
@@ -45,6 +45,7 @@
     left: 0;
     height: 100%;
     width: 100%;
+    text-align: center;
 }
 
 .time-overlay:hover {

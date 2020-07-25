@@ -264,7 +264,7 @@ module.exports = {
         let reportData = await DAL.aggregate(reportsCollectionName, aggregateArray)
             .catch(errorHandler.promiseError);
 
-        return (reportData.length == 1) ? reportData[0] : null;
+        return (reportData.length == 1) ? reportData[0].data : null;
     },
 
     async deleteReport(projectId, reportId, userId) {

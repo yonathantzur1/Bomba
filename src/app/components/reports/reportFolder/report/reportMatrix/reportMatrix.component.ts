@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { Request } from 'src/app/components/requestCard/requestCard.component';
+import { RequestResult } from 'src/app/components/board/matrix/matrix.component';
 
 @Component({
     selector: 'report-matrix',
@@ -9,8 +10,9 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 
 export class ReportMatrixComponent {
 
-    @Input() reportData: any;
+    @Input() matrix: Request[][];
+    @Input() results: { requestId: RequestResult };
 
-    constructor(private eventService: EventService) { }
+    constructor() { }
 
 }

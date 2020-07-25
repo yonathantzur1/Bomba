@@ -14,6 +14,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 export class ReportComponent {
 
     @Input() document: Document;
+    isLoading: boolean = false;
     isMatrixMode: boolean = false;
     reportData: any;
 
@@ -30,12 +31,17 @@ export class ReportComponent {
             this.isMatrixMode = true;
         }
         else {
+            this.isLoading = true;
+
             this.reportService.getReportData(this.document._id).then(result => {
+                this.isLoading = false;
+
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
                 else {
                     this.reportData = result;
+                    this.isMatrixMode = true;
                 }
             });
         }
