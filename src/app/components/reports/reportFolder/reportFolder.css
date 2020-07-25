@@ -25,6 +25,10 @@
     align-items: center;
 }
 
+.single-document {
+    width: 220px;
+}
+
 .document-icon-container {
     position: relative;
 }
