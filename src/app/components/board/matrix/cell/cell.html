@@ -19,7 +19,7 @@
         <span *ngSwitchCase="true">
             <result-info class="result-info" [request]="request" [result]="result">
             </result-info>
-            <div *ngIf="getResultAverageTime(result); let reqAvg" class="time-overlay">
+            <div *ngIf="getResultAverageTime(); let reqAvg" class="time-overlay">
                 Average time: {{reqAvg}} (s)
             </div>
         </span>
