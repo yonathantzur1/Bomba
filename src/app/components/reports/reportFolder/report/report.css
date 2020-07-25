@@ -1,0 +1,12 @@
+.action-line {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    padding: 20px 20px 0;
+}
+
+.action-icon {
+    font-size: 24px;
+    align-self: center;
+    cursor: pointer;
+}

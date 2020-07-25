@@ -14,7 +14,9 @@ import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
 import { ReportsComponent } from '../components/reports/reports.component';
 import { ReportFolderComponent } from '../components/reports/reportFolder/reportFolder.component';
-import { ReportDocumentComponent } from '../components/reports/reportFolder/reportDocument/reportDocument.component';
+import { ReportComponent } from '../components/reports/reportFolder/report/report.component';
+import { ReportDocumentComponent } from '../components/reports/reportFolder/report/reportDocument/reportDocument.component';
+import { ReportMatrixComponent } from '../components/reports/reportFolder/report/reportMatrix/reportMatrix.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { UsersComponent } from '../components/admin/users/users.component';
 import { UserCardComponent } from '../components/admin/users/userCard/userCard.component';
@@ -83,7 +85,9 @@ import { Routing } from '../routes/app.routing';
     HomeComponent,
     ReportsComponent,
     ReportFolderComponent,
+    ReportComponent,
     ReportDocumentComponent,
+    ReportMatrixComponent,
     NavbarComponent,
     UsersComponent,
     UserEditComponent,

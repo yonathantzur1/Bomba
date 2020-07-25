@@ -73,12 +73,22 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.saveMatrix();
         }, this.eventsIds);
 
+        eventService.register(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT, () => {
+            this.saveMatrix();
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.OPEN_REQUEST_EDIT, (request: Request) => {
+            this.isShowRequestCard = true;
+            this.selectedRequest = request;
+        }, this.eventsIds);
+
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRequestCard = false;
             this.selectedRequest = null;
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.CHANGE_REQUEST_CARD_AMOUNT, () => {
+        eventService.register(EVENT_TYPE.DELETE_CELL, (index: any) => {
+            this.deleteCell(index.i, index.j);
             this.saveMatrix();
         }, this.eventsIds);
     }
@@ -174,11 +184,6 @@ export class MatrixComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             plusSectorElement.css("background-color", "");
         }, 0);
-    }
-
-    openRequestEdit(requset: Request) {
-        this.selectedRequest = requset;
-        this.isShowRequestCard = true;
     }
 
     deleteCell(i: number, j: number) {
@@ -328,14 +333,5 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.closeReport();
             }
         });
-    }
-
-    getResultAverageTime(result: RequestResult) {
-        if (result == null) {
-            return null;
-        }
-
-        let resultsAmount = result.success + result.fail;
-        return resultsAmount == 0 ? null : (result.time / resultsAmount).toFixed(3);
     }
 }

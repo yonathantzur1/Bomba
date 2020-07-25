@@ -74,26 +74,6 @@
     border-color: #353535;
 }
 
-.cell-icon {
-    position: absolute;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.info-cell {
-    left: 10px;
-    bottom: 10px;
-}
-
-.delete-cell {
-    left: 10px;
-    top: 10px;
-}
-
-.delete-cell:hover {
-    color: #656565;
-}
-
 .compress-icon {
     position: absolute;
     right: 18px;
@@ -110,12 +90,6 @@
 
 .send-btn-container:hover {
     background-color: #e7e7e7;
-}
-
-result-info {
-    position: absolute;
-    bottom: 4px;
-    left: 8px;
 }
 
 loader-dots {
@@ -140,22 +114,6 @@ loader-dots {
     cursor: pointer;
     border-right: 1px solid black;
     padding-right: 8px;
-}
-
-.time-overlay {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.time-overlay:hover {
-    opacity: 1 !important;
-    padding-top: 10px;
-    font-size: 11px;
-    transition: opacity 0.08s;
 }
 
 .load-progress-container {

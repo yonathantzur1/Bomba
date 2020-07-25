@@ -32,7 +32,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     documents: Array<Document>;
     selectedDocument: Document;
 
-    eventIds: Array<string> = [];
+    eventsIds: Array<string> = [];
 
     constructor(private reportsService: ReportsService,
         private alertService: AlertService,
@@ -40,7 +40,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService) {
         this.eventService.register(EVENT_TYPE.CLOSE_REPORT_DOCUMENT, () => {
             this.selectedDocument = null;
-        }, this.eventIds);
+        }, this.eventsIds);
     }
 
     ngOnInit() {
@@ -60,7 +60,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.eventService.unsubscribeEvents(this.eventIds);
+        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     formatDate(date: Date) {

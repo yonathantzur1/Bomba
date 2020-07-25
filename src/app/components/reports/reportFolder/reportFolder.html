@@ -2,7 +2,7 @@
     <card
         [title]="projectName + ' | ' + (selectedDocument ? 'Report - ' + formatDate(selectedDocument.date) : 'Reports')"
         [width]="800" [height]="480">
-        <loader-spinner *ngIf="isLoading"></loader-spinner>
+        <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
             <div *ngFor="let document of documents; index as i" class="document">
                 <div class="document-icon-container">
@@ -12,6 +12,6 @@
                 <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
             </div>
         </div>
-        <report-document *ngIf="selectedDocument" [document]="selectedDocument"></report-document>
+        <report *ngIf="selectedDocument" [document]="selectedDocument"></report>
     </card>
 </div>

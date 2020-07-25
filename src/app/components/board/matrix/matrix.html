@@ -25,21 +25,9 @@
         <table>
             <tr *ngFor="let row of matrix; index as i">
                 <td id="matrix-{{i + '-' + j}}" class="cell dropzone" *ngFor="let col of matrix[i]; index as j; ">
-                    <cell [request]="matrix[i][j]" [row]="i" [col]="j" [isSendMode]="isSendMode"
-                        [maxRequestAmount]="maxRequestAmount"></cell>
-                    <span *ngIf="!isSendMode">
-                        <i *ngIf="!matrix[i][j].isEmpty" class="far fa-edit cell-icon info-cell"
-                            (click)="openRequestEdit(matrix[i][j])"></i>
-                        <i *ngIf="!isLastCellOnMatrix() || !matrix[i][j].isEmpty"
-                            (click)="deleteCell(i, j);saveMatrix();" class="fas fa-times cell-icon delete-cell"></i>
-                    </span>
-                    <span *ngIf="isSendMode">
-                        <result-info [request]="matrix[i][j]" [result]="report.results[matrix[i][j].id]">
-                        </result-info>
-                        <div *ngIf="getResultAverageTime(report.results[matrix[i][j].id])" class="time-overlay">
-                            Average time: {{getResultAverageTime(report.results[matrix[i][j].id])}} (s)
-                        </div>
-                    </span>
+                    <cell [row]="i" [col]="j" [request]="matrix[i][j]"
+                        [result]="report && report.results[matrix[i][j].id]" [isSendMode]="isSendMode"
+                        [maxRequestAmount]="maxRequestAmount" [isLastCell]="isLastCellOnMatrix()"></cell>
                 </td>
                 <td *ngIf="!isSendMode" class="cell plus-sector" (click)="addCol(i)">
                     <div class="plus-icon-container">
