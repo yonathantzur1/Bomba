@@ -18,4 +18,8 @@ export class ReportDocumentComponent {
         this.eventService.emit(EVENT_TYPE.CLOSE_REPORT_DOCUMENT);
     }
 
+    showResults() {
+        
+    }
+
 }

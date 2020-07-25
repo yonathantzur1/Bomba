@@ -30,11 +30,11 @@ table {
     height: 60px;
     position: absolute;
     display: flex;
+    padding: 0 20px;
 }
 
-.arrow-back {
+.action-icon {
     font-size: 24px;
     align-self: center;
-    margin-left: 20px;
     cursor: pointer;
 }

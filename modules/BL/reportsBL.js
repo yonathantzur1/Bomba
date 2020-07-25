@@ -31,7 +31,8 @@ module.exports = {
             owner: DAL.getObjectId(userId)
         }
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, { $set: { "report": setReport } });
+        return DAL.updateOne(projectsCollectionName, projectFilter, { $set: { "report": setReport } })
+            .catch(errorHandler.promiseError);;
     },
 
     updateRequestStart(projectId, requestId) {
@@ -44,7 +45,8 @@ module.exports = {
         let jsonStr = '{ "$set": { "' + "report.results." + requestId + '.isStart": true } }';
         let updateObj = JSON.parse(jsonStr);
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
+            .catch(errorHandler.promiseError);;
     },
 
     updateRequestStatus(requestStatus) {
@@ -59,7 +61,8 @@ module.exports = {
             ', "report.results.' + requestStatus.requestId + '.time": ' + requestStatus.time + ' } }';
         let updateObj = JSON.parse(jsonStr);
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
+            .catch(errorHandler.promiseError);;
     },
 
     finishReport(projectId) {
@@ -73,7 +76,8 @@ module.exports = {
             $set: { "report.isDone": true }
         };
 
-        DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
+        DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
+            .catch(errorHandler.promiseError);;
     },
 
     async saveReport(projectId, totalTime) {
@@ -81,21 +85,21 @@ module.exports = {
             _id: DAL.getObjectId(projectId)
         }
 
-        let projectFields = { "report": 1 };
+        let projectFields = { "_id": 1, "matrix": 1, "report": 1 };
 
-        let queryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
+        let projectQueryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
             .catch(errorHandler.promiseError);
 
         let report = {
-            "projectId": DAL.getObjectId(queryResult._id),
-            "date": queryResult.report.creationDate,
+            "projectId": DAL.getObjectId(projectQueryResult._id),
+            "date": projectQueryResult.report.creationDate,
             "success": 0,
             "fail": 0,
             "totalTime": totalTime,
             "longestTime": 0
         };
 
-        let results = queryResult.report.results;
+        let results = projectQueryResult.report.results;
 
         let requestsTotalTime = 0
         let totalRequests = 0;
@@ -117,7 +121,12 @@ module.exports = {
 
         report.requestAverageTime = requestsTotalTime / totalRequests; // seconds
 
-        DAL.insert(reportsCollectionName, report);
+        report.projectData = {
+            "matrix": projectQueryResult.matrix,
+            "report": projectQueryResult.report
+        }
+
+        DAL.insert(reportsCollectionName, report).catch(errorHandler.promiseError);;
     },
 
 
@@ -127,7 +136,8 @@ module.exports = {
             owner: DAL.getObjectId(userId)
         };
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } });
+        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } })
+            .catch(errorHandler.promiseError);;
     },
 
     getAllReports(userId) {
@@ -176,7 +186,8 @@ module.exports = {
 
         let aggregateArray = [joinFilter, unwindObject, reportFilter, group, fields, sort];
 
-        return DAL.aggregate(reportsCollectionName, aggregateArray);
+        return DAL.aggregate(reportsCollectionName, aggregateArray)
+            .catch(errorHandler.promiseError);;
     },
 
     async getProjectReports(projectId, userId) {
@@ -199,7 +210,8 @@ module.exports = {
 
         let fields = {
             $project: {
-                "project": 0
+                "project": 0,
+                "projectData": 0
             }
         };
 
@@ -209,7 +221,8 @@ module.exports = {
 
         let aggregateArray = [joinFilter, reportFilter, fields, sort];
 
-        return DAL.aggregate(reportsCollectionName, aggregateArray);
+        return DAL.aggregate(reportsCollectionName, aggregateArray)
+            .catch(errorHandler.promiseError);;
     },
 
     async deleteReport(projectId, reportId, userId) {
@@ -230,6 +243,7 @@ module.exports = {
             "projectId": DAL.getObjectId(projectId)
         }
 
-        return DAL.deleteOne(reportsCollectionName, reportFilter);
+        return DAL.deleteOne(reportsCollectionName, reportFilter)
+            .catch(errorHandler.promiseError);;
     }
 }
