@@ -190,7 +190,8 @@ function buildSendObject(requestData) {
             port: urlData.port,
             path: urlData.path,
             method: requestData.method,
-            headers: requestData.headers
+            headers: requestData.headers,
+            timeout: config.requests.timeout
         },
         requestId: requestData.id,
         amount: requestData.amount
@@ -248,7 +249,6 @@ function sendRequest(options, data) {
         }
 
         if (config.server.isProd && isLocalRequest(options.hostname)) {
-            response.data = "localhost reject";
             response.code = 500;
 
             return reject(response);
@@ -279,7 +279,7 @@ function sendRequest(options, data) {
             response.code = 500;
             response.data = err.message;
 
-            return reject(err);
+            return reject(response);
         });
 
         // Write data to request body.

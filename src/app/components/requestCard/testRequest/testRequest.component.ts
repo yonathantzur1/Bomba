@@ -5,8 +5,6 @@ import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
-declare let $: any;
-
 @Component({
     selector: 'test-request',
     templateUrl: './testRequest.html',
@@ -33,6 +31,7 @@ export class TestRequestComponent implements OnInit {
 
             if (!result) {
                 this.snackbarService.snackbar("Server error occurred");
+                this.closeWindow();
             }
             else {
                 this.response = result;

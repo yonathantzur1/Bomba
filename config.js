@@ -7,7 +7,8 @@ module.exports = {
         isForceHttps: true // (for production environment)
     },
     requests: {
-        max: 1000
+        max: 1000,
+        timeout: 60 * 1000 // milliseconds
     },
     redis: {
         connectionString: process.env.BOMBA_REDIS_CONNECTION_STRING
