@@ -18,7 +18,7 @@ module.exports = {
             "{text}": index.toString(),
             "{date}": new Date(),
             "{iso}": new Date().toISOString(),
-            "{random}": generator.generateId()
+            "{random}": generator.generateId // Callback to generate different guid for each occurrence. 
         }
     },
 
@@ -299,11 +299,17 @@ function replaceJsonValue(obj, replaceValues) {
         else if (typeof value == "string") {
             Object.keys(replaceValues).forEach(replaceKey => {
                 if (value.includes(replaceKey)) {
+                    let replaceValue = replaceValues[replaceKey];
+
+                    if (typeof replaceValue == "function") {
+                        replaceValue = replaceValue();
+                    }
+
                     if (value == replaceKey) {
-                        obj[key] = replaceValues[replaceKey];
+                        obj[key] = replaceValue;
                     }
                     else {
-                        obj[key] = value.replace(replaceKey, replaceValues[replaceKey]);
+                        obj[key] = value.replace(replaceKey, replaceValue);
                     }
                 }
             });
