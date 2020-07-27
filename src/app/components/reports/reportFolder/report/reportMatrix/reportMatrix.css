@@ -1,5 +1,6 @@
 .cell {
     min-width: 140px;
+    max-width: 140px;
     height: 140px;
     border: 0.5px solid gray;
     position: relative;
