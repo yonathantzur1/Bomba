@@ -9,12 +9,12 @@ table {
 }
 
 .property {
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
 }
 
 .value {
-    font-size: 42px;
+    font-size: 40px;
     font-weight: bold;
     margin-top: 15px;
     text-align: center;
