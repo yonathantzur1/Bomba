@@ -4,8 +4,7 @@
         [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
-            <div *ngFor="let document of documents; index as i" [ngClass]="{'single-document' : documents.length == 1}"
-                class="document">
+            <div *ngFor="let document of documents; index as i" class="document">
                 <div class="document-icon-container">
                     <i (click)="deleteDocument(i)" class="delete-icon fas fa-times"></i>
                     <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">

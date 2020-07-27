@@ -47,7 +47,7 @@ export class KeyValueComponent implements OnDestroy {
     }
 
     isKeyValid() {
-        let template = new RegExp('^[A-Za-z_][A-Za-z0-9_]*$');
+        let template = new RegExp('^[A-Za-z_][A-Za-z0-9_-]*$');
 
         if (template.test(this.key)) {
             return true;

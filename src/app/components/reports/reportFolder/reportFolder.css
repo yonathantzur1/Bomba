@@ -15,7 +15,7 @@
 }
 
 .document {
-    width: 33.333%;
+    width: 25%;
     height: 120px;
     display: flex;
     justify-content: center;
@@ -23,10 +23,6 @@
     user-select: none;
     position: relative;
     align-items: center;
-}
-
-.single-document {
-    width: 220px;
 }
 
 .document-icon-container {
