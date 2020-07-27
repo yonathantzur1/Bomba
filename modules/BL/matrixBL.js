@@ -127,11 +127,11 @@ module.exports = {
             }
 
             await Promise.all(requestsPromises);
-            reportsBL.updateRequestStatus(requestStatus).then(() => {
-                if (this.projectsRequests[projectId]) {
-                    events.emit("socket.requestStatus", userId, requestStatus);
-                }
-            });
+            await reportsBL.updateRequestStatus(requestStatus);
+
+            if (this.projectsRequests[projectId]) {
+                events.emit("socket.requestStatus", userId, requestStatus);
+            }
         }
     },
 
