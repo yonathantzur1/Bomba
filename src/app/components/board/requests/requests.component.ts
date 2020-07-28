@@ -81,7 +81,7 @@ export class RequestsComponent implements OnDestroy {
 
         this.alertService.alert({
             title: "Delete Request",
-            text: 'Please confirm deletion of the request "' + this.requests[index].name + '"\n\n' +
+            text: 'Please confirm the deletion of the request "' + this.requests[index].name + '"\n\n' +
                 "The action will delete all data saved on the request.",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {

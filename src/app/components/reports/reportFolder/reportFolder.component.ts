@@ -100,7 +100,8 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
         this.alertService.alert({
             title: "Delete Report",
-            text: "Please confirm deletion of the report\nfrom date: " + this.formatDate(document.date),
+            text: "Please confirm the deletion of the report" + "\n" +
+                "from: " + this.formatDate(document.date),
             type: ALERT_TYPE.DANGER,
             preConfirm: this.reportsService.deleteReport(this.projectId, document._id),
             confirmFunc: (reportResult: any) => {
