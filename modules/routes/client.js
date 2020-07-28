@@ -3,26 +3,29 @@ const matrixBL = require('../BL/matrixBL');
 const events = require('../events');
 const API_ACTION = require('../enums').API_ACTION;
 
-const errorHandler = require('../handlers/errorHandler');
-
 router.get('/', (req, res) => {
     let apiKeyData = req.api;
-    let action = req.query.action;
+    let action_type = req.query.action;
     let isActionExists = true;
+    let action;
 
-    if (action == API_ACTION.START) {
-        startProject(apiKeyData.project.matrix,
-            apiKeyData.project._id,
-            apiKeyData.user._id);
-    }
-    else if (action == API_ACTION.STOP) {
-        stopProject(apiKeyData.project._id, apiKeyData.user._id);
-    }
-    else {
-        isActionExists = false;
+    switch (action_type) {
+        case API_ACTION.START.toString():
+            action = "start";
+            startProject(apiKeyData.project.matrix,
+                apiKeyData.project._id,
+                apiKeyData.user._id);
+            break;
+        case API_ACTION.STOP.toString():
+            action = "stop";
+            stopProject(apiKeyData.project._id, apiKeyData.user._id);
+            break;
+        default:
+            isActionExists = false;
+            break;
     }
 
-    isActionExists ? res.end() : res.status(401).send("API action is not valid");
+    isActionExists ? res.send({ action }) : res.status(401).send("API action is not valid");
 });
 
 function startProject(matrix, projectId, userId) {
