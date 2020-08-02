@@ -1,12 +1,16 @@
 <div id="reportDocument">
     <div class="document-icon-container">
-        <i (click)="deleteDocument(i)" class="delete-icon fas fa-times"></i>
+        <i (click)="deleteDocument(index)" class="delete-icon fas fa-times"></i>
         <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
     </div>
     <span class="document-name-container">
-        <div contenteditable [title]="document.name || 'Report ' + (index + 1)" (keydown)="restrictName($event)"
-            (blur)="changeReportName($event.target)" class="document-name">
-            {{document.name || "Report " + (index + 1)}}</div>
+        <div [hidden]="document.name == null" id="report-{{index}}" class="document-name" contenteditable
+            [title]="document.name" (keydown)="restrictName($event)" (blur)="changeReportName($event.target)">
+            {{document.name}}
+        </div>
+        <div [hidden]="document.name != null" (click)="openReportNameEdit(index)" class="document-name default-name">
+            Type name...
+        </div>
         <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
     </span>
 </div>

@@ -3,6 +3,8 @@ import { Document } from '../reportFolder.component';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
+declare let $: any;
+
 @Component({
     selector: 'report-document',
     templateUrl: './reportDocument.html',
@@ -17,6 +19,7 @@ export class ReportDocumentComponent {
 
     @Input() formatDate: Function;
     @Input() openDocument: Function;
+    @Input() deleteDocument: Function;
 
     reportNameMaxLength: number = 30;
 
@@ -37,13 +40,13 @@ export class ReportDocumentComponent {
     changeReportName(element: any) {
         const document: Document = this.document;
         const newName: string = element.innerText = element.innerText.trim();
-        const isNameValid: boolean = newName.length > 0 && newName.length <= this.reportNameMaxLength;
+        const isNameValid: boolean = newName.length <= this.reportNameMaxLength;
 
         if (!isNameValid) {
             element.innerText = document.name;
         }
         else {
-            document.name = newName;
+            document.name = newName || null;
         }
 
         element.scrollLeft = 0;
@@ -51,6 +54,14 @@ export class ReportDocumentComponent {
         isNameValid && this.reportsService.setReportName(document._id, document.projectId, document.name).then(result => {
             (!result) && this.snackbarService.snackbar("Error while saving report name");
         });
+    }
+
+    openReportNameEdit(index: number) {
+        this.document.name = "";
+
+        setTimeout(() => {
+            $("#report-" + index).focus();
+        }, 0);
     }
 
 }

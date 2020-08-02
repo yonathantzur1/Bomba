@@ -89,7 +89,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
             month = "0" + month;
         }
 
-        return (day + '/' + month + '/' + year + " " + hour + ":" + minutes);
+        return [day, month, year].join("/").concat(" " + hour + ":" + minutes);
     }
 
     openDocument(document: Document) {

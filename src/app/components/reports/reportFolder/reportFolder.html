@@ -5,8 +5,8 @@
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
             <report-document class="document" *ngFor="let document of documents; index as i" [document]="document"
-                [index]="i" [formatDate]="formatDate.bind(this)" [formatDate]="formatDate.bind(this)"
-                [openDocument]="openDocument.bind(this)"></report-document>
+                [index]="i" [formatDate]="formatDate.bind(this)" [openDocument]="openDocument.bind(this)"
+                [deleteDocument]="deleteDocument.bind(this)"></report-document>
         </div>
         <report *ngIf="selectedDocument" [document]="selectedDocument"></report>
     </card>

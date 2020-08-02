@@ -60,7 +60,7 @@ schemas[REST.PUT] = {
             "setReportName": {
                 reportId: joi.string().required(),
                 projectId: joi.string().required(),
-                name: joi.string().max(30).required()
+                name: joi.string().max(30).allow(null)
             }
         }
     }
