@@ -7,6 +7,33 @@ const reportsCollectionName = config.db.collections.reports;
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
+
+    async setReportName(reportId, projectId, name, userId) {
+        let projectFilter = {
+            "_id": DAL.getObjectId(projectId),
+            "owner": DAL.getObjectId(userId)
+        }
+
+        let projectCount = await DAL.count(projectsCollectionName, projectFilter)
+            .catch(errorHandler.promiseError);
+
+        if (projectCount != 1) {
+            return false;
+        }
+
+        let reportFilter = {
+            "_id": DAL.getObjectId(reportId),
+            "projectId": DAL.getObjectId(projectId)
+        }
+
+        let updateObj = {
+            $set: { name }
+        }
+
+        return DAL.updateOne(reportsCollectionName, reportFilter, updateObj)
+            .catch(errorHandler.promiseError);
+    },
+
     async initReport(matrix, projectId, userId) {
         let results = {};
 
@@ -276,7 +303,7 @@ module.exports = {
         let projectCount = await DAL.count(projectsCollectionName, projectFilter)
             .catch(errorHandler.promiseError);
 
-        if (projectCount < 1) {
+        if (projectCount != 1) {
             return false;
         }
 

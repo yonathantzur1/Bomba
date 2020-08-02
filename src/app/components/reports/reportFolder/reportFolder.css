@@ -34,16 +34,6 @@
     cursor: pointer;
 }
 
-.document-date {
-    font-size: 14px;
-    margin-left: 5px;
-    cursor: pointer;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .delete-icon {
     position: absolute;
     top: -3px;
@@ -58,4 +48,30 @@
     border-radius: 50%;
     border: 0.5px solid black;
     cursor: pointer;
+}
+
+.document-name-container {
+    position: relative;
+}
+
+.document-name {
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 14px;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.document-name:not(:focus) {
+    text-overflow: ellipsis;
+}
+
+.document-date {
+    font-size: 14px;
+    margin-left: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

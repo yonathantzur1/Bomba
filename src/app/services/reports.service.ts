@@ -10,6 +10,10 @@ export class ReportsService extends BasicService {
         super(http, "/api/reports");
     }
 
+    setReportName(reportId: string, projectId: string, name: string) {
+        return super.put('/setReportName', { reportId, projectId, name });
+    }
+
     removeProjectReport(projectId: string) {
         return super.delete('/removeProjectReport?projectId=' + projectId);
     }

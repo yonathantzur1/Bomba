@@ -49,7 +49,7 @@ module.exports = (req, res, next) => {
         }
     }
     catch (err) {
-        logger.error(err);
+        logger.secure(err);
         res.sendStatus(400);
     }
 };

@@ -55,6 +55,13 @@ schemas[REST.PUT] = {
                 id: joi.string().required(),
                 name: joi.string().max(20).required()
             }
+        },
+        "reports": {
+            "setReportName": {
+                reportId: joi.string().required(),
+                projectId: joi.string().required(),
+                name: joi.string().max(30).required()
+            }
         }
     }
 };

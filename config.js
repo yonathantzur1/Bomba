@@ -26,7 +26,7 @@ module.exports = {
     logs: {
         directoryName: "/logs",
         mainLogName: "bomba.log",
-        secureLogName: "bomba.log",
+        secureLogName: "secure.log",
         maxLogSize: 5000000, // bytes
         maxLogFiles: 3
     },

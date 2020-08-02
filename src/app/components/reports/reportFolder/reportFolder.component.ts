@@ -7,6 +7,7 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 export class Document {
     _id: string;
     projectId: string;
+    name: string;
     date: Date;
     success: number;
     fail: number;
@@ -26,6 +27,8 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
     @Input() projectId: string;
     @Input() projectName: string;
+
+    reportNameMaxLength: number = 30;
 
     isLoading: boolean = false;
 
@@ -70,7 +73,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         let minutes: any = date.getMinutes();
         let day: any = date.getDate();
         let month: any = date.getMonth() + 1;
-        let year: any = date.getFullYear().toString().substr(-2);
+        const year: any = date.getFullYear().toString().substr(-2);
 
         if (hour < 10) {
             hour = "0" + hour;
@@ -96,7 +99,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     }
 
     deleteDocument(position: number) {
-        let document: Document = this.documents[position];
+        const document: Document = this.documents[position];
 
         this.alertService.alert({
             title: "Delete Report",
@@ -120,4 +123,35 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         });
     }
 
+    restrictName(event: any) {
+        if (event.code == "Enter") {
+            event.target.blur();
+            event.preventDefault();
+        }
+        else if (new RegExp('^[A-Za-zא-ת0-9]$').test(event.key) &&
+            event.target.innerText.length > this.reportNameMaxLength - 1) {
+            event.preventDefault();
+        }
+    }
+
+    changeReportName(element: any, index: number) {
+        const document = this.documents[index];
+        const newName = element.innerText;
+        const isNameValid = newName.length > 0 && newName.length <= this.reportNameMaxLength;
+
+        if (!isNameValid) {
+            element.innerText = document.name;
+        }
+        else {
+            document.name = newName;
+        }
+
+        element.scrollLeft = 0;
+
+        isNameValid && this.reportsService.setReportName(document._id, document.projectId, document.name).then(result => {
+            if (!result) {
+                this.snackbarService.snackbar("Error while saving report name");
+            }
+        });
+    }
 }

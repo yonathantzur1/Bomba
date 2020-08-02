@@ -1,7 +1,17 @@
 const router = require('express').Router();
+const validator = require('../security/validations/validator');
 const errorHandler = require('../handlers/errorHandler');
 
 const reportsBL = require('../BL/reportsBL');
+
+router.put('/setReportName', validator, (req, res) => {
+    reportsBL.setReportName(req.body.reportId, req.body.projectId,
+        req.body.name, req.user._id).then(result => {
+            res.send(result);
+        }).catch(err => {
+            errorHandler.routeError(err, res);
+        });
+});
 
 router.delete('/removeProjectReport', (req, res) => {
     reportsBL.removeProjectReport(req.query.projectId, req.user._id).then(result => {
