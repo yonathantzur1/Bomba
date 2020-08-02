@@ -4,18 +4,9 @@
         [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
-            <div *ngFor="let document of documents; index as i" class="document">
-                <div class="document-icon-container">
-                    <i (click)="deleteDocument(i)" class="delete-icon fas fa-times"></i>
-                    <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
-                </div>
-                <span class="document-name-container">
-                    <div contenteditable [title]="document.name || 'Report ' + (i + 1)" (keydown)="restrictName($event)"
-                        (blur)="changeReportName($event.target, i)" class="document-name">
-                        {{document.name || "Report " + (i + 1)}}</div>
-                    <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
-                </span>
-            </div>
+            <report-document class="document" *ngFor="let document of documents; index as i" [document]="document"
+                [index]="i" [formatDate]="formatDate.bind(this)" [formatDate]="formatDate.bind(this)"
+                [openDocument]="openDocument.bind(this)"></report-document>
         </div>
         <report *ngIf="selectedDocument" [document]="selectedDocument"></report>
     </card>
