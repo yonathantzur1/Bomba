@@ -10,9 +10,8 @@
                     <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
                 </div>
                 <span class="document-name-container">
-                    <div [title]="document.name || 'Report ' + (i + 1)" contenteditable id="name{{i}}"
-                        (keydown)="restrictName($event)" (blur)="changeReportName($event.target, i)"
-                        class="document-name">
+                    <div contenteditable [title]="document.name || 'Report ' + (i + 1)" (keydown)="restrictName($event)"
+                        (blur)="changeReportName($event.target, i)" class="document-name">
                         {{document.name || "Report " + (i + 1)}}</div>
                     <div (click)="openDocument(document)" class="document-date">{{formatDate(document.date)}}</div>
                 </span>

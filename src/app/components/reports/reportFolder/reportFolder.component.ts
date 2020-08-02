@@ -128,16 +128,16 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
             event.target.blur();
             event.preventDefault();
         }
-        else if (new RegExp('^[A-Za-zא-ת0-9]$').test(event.key) &&
+        else if (new RegExp('^.$').test(event.key) &&
             event.target.innerText.length > this.reportNameMaxLength - 1) {
             event.preventDefault();
         }
     }
 
     changeReportName(element: any, index: number) {
-        const document = this.documents[index];
-        const newName = element.innerText;
-        const isNameValid = newName.length > 0 && newName.length <= this.reportNameMaxLength;
+        const document: Document = this.documents[index];
+        const newName: string = element.innerText.trim();
+        const isNameValid: boolean = newName.length > 0 && newName.length <= this.reportNameMaxLength;
 
         if (!isNameValid) {
             element.innerText = document.name;

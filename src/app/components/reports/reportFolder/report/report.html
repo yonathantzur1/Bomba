@@ -11,7 +11,7 @@
     </div>
     <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
     <div *ngIf="!isLoading" [ngSwitch]="isMatrixMode">
-        <report-document *ngSwitchCase="false" [document]="document"></report-document>
+        <report-numbers *ngSwitchCase="false" [document]="document"></report-numbers>
         <report-matrix *ngSwitchCase="true" [matrix]="reportData.matrix" [results]="reportData.results"></report-matrix>
     </div>
 </div>
