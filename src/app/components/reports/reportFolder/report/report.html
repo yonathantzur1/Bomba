@@ -5,7 +5,7 @@
         <div *ngIf="!isLoading" [ngSwitch]="isMatrixMode">
             <i *ngSwitchCase="false" title="Report Matrix" class="fas fa-table action-icon"
                 style="margin-left: auto;" (click)="showMatrix()"></i>
-            <i *ngSwitchCase="true" title="Report Results" class="fas fa-list-ol action-icon" style="margin-left: auto;"
+            <i *ngSwitchCase="true" title="Report Numbers" class="fas fa-list-ol action-icon" style="margin-left: auto;"
                 (click)="showResults()"></i>
         </div>
     </div>

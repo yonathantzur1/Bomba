@@ -1,6 +1,6 @@
 <div id="reportFolder">
     <card
-        [title]="projectName + ' | ' + (selectedDocument ? 'Report - ' + formatDate(selectedDocument.date) : 'Reports')"
+        [title]="projectName + ' | ' + (selectedDocument ? 'Report   ' + formatDate(selectedDocument.date) : 'Reports')"
         [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument">

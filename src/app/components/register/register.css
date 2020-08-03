@@ -48,6 +48,6 @@ form {
     position: absolute;
     color: var(--microtext-color) !important;
     left: 25px;
-    bottom: -6px;
+    bottom: -7px;
     user-select: none;
 }
