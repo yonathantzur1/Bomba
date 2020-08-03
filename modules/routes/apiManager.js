@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const apiManagerBL = require('../BL/apiManagerBL');
 const projectsBL = require('../BL/projectsBL');
 const errorHandler = require('../handlers/errorHandler');
 

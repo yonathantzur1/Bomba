@@ -4,20 +4,17 @@ const events = require('../events');
 const API_ACTION = require('../enums').API_ACTION;
 
 router.get('/', (req, res) => {
-    let apiKeyData = req.api;
-    let action_type = req.query.action;
+    const apiKeyData = req.api;
+    const action_type = req.query.action;
     let isActionExists = true;
-    let action;
 
     switch (action_type) {
         case API_ACTION.START.toString():
-            action = "start";
             startProject(apiKeyData.project.matrix,
                 apiKeyData.project._id,
                 apiKeyData.user._id);
             break;
         case API_ACTION.STOP.toString():
-            action = "stop";
             stopProject(apiKeyData.project._id, apiKeyData.user._id);
             break;
         default:
@@ -25,7 +22,7 @@ router.get('/', (req, res) => {
             break;
     }
 
-    isActionExists ? res.send({ action }) : res.status(401).send("API action is not valid");
+    isActionExists ? res.end() : res.status(401).send("API action is not valid");
 });
 
 function startProject(matrix, projectId, userId) {
