@@ -54,6 +54,11 @@ function isFileAllow(reqUrl) {
     return (allowedExt.filter(ext => reqUrl.indexOf(ext) > 0).length > 0);
 }
 
+// Health route to check if server alive.
+app.get('/health', (req, res) => {
+    res.end();
+});
+
 // Redirect angular requests back to client side.
 app.get('/*', (req, res) => {
     let buildFolder = 'dist/';
