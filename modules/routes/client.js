@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
             break;
     }
 
-    isActionExists ? res.end() : res.status(401).send("API action is not valid");
+    isActionExists ? res.send("ok") : res.status(401).send("API action is not valid");
 });
 
 function startProject(matrix, projectId, userId) {
