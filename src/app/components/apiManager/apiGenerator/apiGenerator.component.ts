@@ -47,7 +47,7 @@ export class ApiGeneratorComponent implements OnInit {
         if (this.projectsNames.length == 0) {
             this.alertService.alert({
                 title: "No Projects Found",
-                text: "You have no projects to create API.\n" +
+                text: "You have no projects.\n" +
                     "First, create new project and then use our API.",
                 type: ALERT_TYPE.INFO,
                 showCancelButton: false,

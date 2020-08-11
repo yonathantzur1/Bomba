@@ -10,7 +10,7 @@
 
 .project {
     width: calc(25% - 20px);
-    height: 200px;
+    height: 220px;
     margin: 10px;
 }
 
@@ -42,17 +42,26 @@
 .add-project-btn {
     position: fixed;
     bottom: 30px;
-    right: 40px;
-    width: 45px;
+    right: 30px;
+    width: 120px;
     height: 45px;
-    border-radius: 50%;
-    box-shadow: 1px 1px 5px 2px rgb(171, 171, 171);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
-    background-color: #f7f7f7;
+    font-size: 14px;
+    background-color: #fafafb;
+}
+
+.add-project-btn:hover {
+    box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
+    background-color: white;
+}
+
+.add-icon {
+    margin-right: 5px;
 }
 
 @media (max-aspect-ratio: 8/5) {
@@ -64,5 +73,6 @@
 @media (max-width: 1280px) {
     .project {
         width: calc(33.333% - 20px);
+        height: 200px;
     }
 }

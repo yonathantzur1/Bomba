@@ -39,6 +39,6 @@ p {
 
 @media (max-aspect-ratio: 8/5) {
     .api-content {
-        width: 0 20px;
+        padding: 0 20px;
     }
 }

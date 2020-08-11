@@ -1,9 +1,9 @@
 #requests {
-    --cards-top-height: 35px;
+    --cards-top-height: 38px;
 }
 
 .cards-top {
-    font-size: 16px;
+    font-size: 18px;
     height: var(--cards-top-height);
     display: flex;
     justify-content: center;
@@ -90,4 +90,5 @@
     left: 10px;
     bottom: 10px;
     cursor: pointer;
+    font-size: 15px;
 }

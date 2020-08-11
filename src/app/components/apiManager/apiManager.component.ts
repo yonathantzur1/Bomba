@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { ApiManagerService } from 'src/app/services/apiManager.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
     selector: 'api-manager',
@@ -21,7 +20,6 @@ export class ApiManagerComponent implements OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private apiManagerService: ApiManagerService,
-        private globalService: GlobalService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
 
@@ -31,7 +29,7 @@ export class ApiManagerComponent implements OnDestroy {
 
         Promise.all([apiKeyQuery, userProjectsQuery]).then((results: Array<any>) => {
             this.isLoading = false;
-            
+
             if (results.filter(result => result == null).length > 0) {
                 this.snackbarService.snackbar("Server error occurred");
             }
@@ -48,11 +46,6 @@ export class ApiManagerComponent implements OnDestroy {
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
-    }
-
-    copyApiKey() {
-        this.globalService.copyToClipboard(this.apiKey);
-        this.snackbarService.snackbar("Copy successfully");
     }
 
     openGenerator() {
