@@ -5,6 +5,8 @@
     border: 0.5px solid var(--main-border-color);
     border-top: none;
     padding: 0.5px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .board-container-send-mode {

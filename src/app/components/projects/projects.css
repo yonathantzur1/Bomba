@@ -10,7 +10,7 @@
 
 .project {
     width: calc(25% - 20px);
-    height: 220px;
+    height: 230px;
     margin: 10px;
 }
 
@@ -74,5 +74,10 @@
     .project {
         width: calc(33.333% - 20px);
         height: 200px;
+    }
+
+    .add-project-btn {
+        bottom: 20px;
+        right: 20px;
     }
 }
