@@ -19,17 +19,19 @@
                             </td>
                             <td>
                                 <div class="property">Time</div>
-                                <div class="value">{{response.time.toFixed(2)}} <span class="time-unit">(s)</span>
+                                <div class="value">
+                                    {{response.time.toFixed(2)}} <span class="time-unit">(s)</span>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </div>
-                <hr class="break-line">
-                <div class="response-body" *ngIf="response">
-                    <i *ngIf="response.data" class="far fa-copy copy-icon" (click)="copyResponse()"></i>
-                    <div id="response-text">
-                        {{response.data || "-"}}
+                    <hr class="break-line">
+                    <div *ngIf="!response.data || response.timeout" class="empty-response">
+                        {{response.timeout ? "Timeout" : "Empty Response"}}
+                    </div>
+                    <div *ngIf="response.data && !response.timeout" class="response-body">
+                        <i class="far fa-copy copy-icon" (click)="copyResponse()"></i>
+                        <div id="response-text">{{response.data}}</div>
                     </div>
                 </div>
             </div>

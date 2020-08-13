@@ -247,7 +247,8 @@ function sendRequest(options, data) {
 
         let response = {
             data: "",
-            code: null
+            code: null,
+            timeout: false
         }
 
         if (config.server.isProd && isLocalRequest(options.hostname)) {
@@ -275,6 +276,7 @@ function sendRequest(options, data) {
 
         req.on('timeout', () => {
             req.abort();
+            response.timeout = true;
         });
 
         req.on('error', (err) => {

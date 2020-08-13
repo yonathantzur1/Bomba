@@ -29,6 +29,15 @@
     cursor: text;
 }
 
+.empty-response {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 140px);
+    color: #6c757d;
+    font-size: 18px;
+}
+
 table {
     width: 100%;
 }
