@@ -147,6 +147,14 @@ export class RequestCardComponent implements OnInit, OnDestroy {
         return this.microtextService.validation(this.validationFuncs, this.request);
     }
 
+    validateTestRequest() {
+        const testValidations = this.validationFuncs.filter(validation => {
+            return validation.inputId != "name";
+        });
+
+        return this.microtextService.validation(testValidations, this.request);
+    }
+
     addRequest() {
         if (this.validateRequest()) {
             // In case the request is in edit mode.
@@ -169,7 +177,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     }
 
     testRequest() {
-        if (this.validateRequest()) {
+        if (this.validateTestRequest()) {
             this.isTestRequest = true;
         }
     }
