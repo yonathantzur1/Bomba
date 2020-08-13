@@ -83,7 +83,7 @@ export class ProjectNameCardComponent implements OnInit {
 
     @HostListener('document:keyup', ['$event'])
     KeyPress(event: any) {
-        if (event.code == "Enter") {
+        if (event.key == "Enter") {
             this.addProject();
         }
     }

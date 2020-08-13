@@ -27,7 +27,7 @@ export class ReportDocumentComponent {
         private snackbarService: SnackbarService) { }
 
     restrictName(event: any) {
-        if (event.code == "Enter") {
+        if (event.key == "Enter") {
             event.target.blur();
             event.preventDefault();
         }
