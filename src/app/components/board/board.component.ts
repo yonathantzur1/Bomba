@@ -20,6 +20,7 @@ declare let interact: any;
 
 export class BoardComponent implements OnInit, OnDestroy {
     dropzoneInteract: any;
+    emptyDropzoneInteract: any;
     draggableInteract: any;
 
     projectId: string;
@@ -104,6 +105,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.dropzoneInteract.unset();
+        this.emptyDropzoneInteract.unset();
         this.draggableInteract.unset();
         this.eventService.unsubscribeEvents(this.eventsIds);
         this.socketService.socketOff("syncMatrix");
@@ -144,7 +146,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     dropRequestCard(cardId: string, matrixCellId: string) {
-        let data = {
+        const data = {
             requestIndex: this.getRequestCardIndexFromId(cardId),
             cellIndex: this.getMatrixCellIndexFromId(matrixCellId)
         };
@@ -153,49 +155,51 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
 
     getRequestCardIndexFromId(cardId: string): number {
-        let cardIdParts = cardId.split("-");
+        const cardIdParts = cardId.split("-");
 
         return parseInt(cardIdParts[cardIdParts.length - 1]);
     }
 
     getMatrixCellIndexFromId(matrixCellId: string): Array<number> {
-        let matrixIdParts = matrixCellId.split("-");
-        let i = parseInt(matrixIdParts[matrixIdParts.length - 2]);
-        let j = parseInt(matrixIdParts[matrixIdParts.length - 1]);
+        const matrixIdParts = matrixCellId.split("-");
+        const i = parseInt(matrixIdParts[matrixIdParts.length - 2]);
+        const j = parseInt(matrixIdParts[matrixIdParts.length - 1]);
 
         return [i, j];
     }
 }
 
 function enableDragAndDrop(self: any) {
+    self.emptyDropzoneInteract = interact('.empty-dropzone').dropzone({});
+
     // enable draggables to be dropped into this
     self.dropzoneInteract = interact('.dropzone').dropzone({
-        overlap: 0.4,
+        overlap: 0.5,
 
-        ondropactivate: event => {
+        ondropactivate: (event: any) => {
             // add active dropzone feedback
             event.target.classList.add('drop-active');
         },
-        ondragenter: event => {
-            let dropzoneElement = event.target;
+        ondragenter: (event: any) => {
+            const dropzoneElement = event.target;
 
             // feedback the possibility of a drop
             dropzoneElement.classList.add('drop-target');
         },
-        ondragleave: event => {
-            let dropzoneElement = event.target;
+        ondragleave: (event: any) => {
+            const dropzoneElement = event.target;
 
             // remove the drop feedback style
             dropzoneElement.classList.remove('drop-target');
         },
-        ondrop: event => {
-            let draggableElement = event.relatedTarget;
-            let dropzoneElement = event.target;
+        ondrop: (event: any) => {
+            const draggableElement = event.relatedTarget;
+            const dropzoneElement = event.target;
 
             self.dropRequestCard(draggableElement.id, dropzoneElement.id);
 
         },
-        ondropdeactivate: event => {
+        ondropdeactivate: (event: any) => {
             // remove active dropzone feedback
             event.target.classList.remove('drop-active');
             event.target.classList.remove('drop-target');
@@ -206,13 +210,13 @@ function enableDragAndDrop(self: any) {
         inertia: false,
         autoScroll: true,
         onmove: dragMoveListener,
-        onstart: event => {
+        onstart: (event: any) => {
             event.currentTarget.style.position = "fixed";
         },
-        onend: event => {
+        onend: (event: any) => {
             event.currentTarget.remove();
         }
-    }).on("down", event => {
+    }).on("down", (event: any) => {
         let original = event.currentTarget;
 
         original.setAttribute('allowDrag', 'true');

@@ -1,7 +1,6 @@
 #matrix {
-    position: relative;
-    --top-height: 38px;
-    --cell_size: 145px;
+    --top-height: 35px;
+    --cell_size: 155px;
 }
 
 .matrix-top {
@@ -25,9 +24,8 @@
 }
 
 .matrix-container {
-    margin: 15px;
-    width: auto;
-    height: calc(100% - 68px);
+    margin: 10px;
+    height: calc(100% - var(--top-height) - 20px);
     overflow: auto;
     user-select: none;
     position: relative;

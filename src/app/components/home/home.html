@@ -1,5 +1,6 @@
-<div id="home">
-    <div *ngIf="!isLoading">
+<div id="home" [ngSwitch]="isLoading">
+    <loader-rings *ngSwitchCase="true"></loader-rings>
+    <div *ngSwitchCase="false">
         <div class="sector">
             <navbar [isAdmin]="isAdmin"></navbar>
         </div>
@@ -7,5 +8,4 @@
             <router-outlet></router-outlet>
         </div>
     </div>
-    <loader-rings *ngIf="isLoading"></loader-rings>
 </div>
