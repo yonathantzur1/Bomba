@@ -23,7 +23,11 @@ module.exports = {
         let board = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
             .catch(errorHandler.promiseError);
 
-        board && (board.maxRequestAmount = config.requests.max);
+        if (board) {
+            board.maxRequestAmount = config.requests.max;
+            board.defaultSettings = board.defaultSettings || {};
+            board.defaultSettings.timeout = board.defaultSettings.timeout || config.requests.timeout;
+        }
 
         return board;
     },

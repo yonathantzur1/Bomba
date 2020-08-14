@@ -57,13 +57,13 @@
 }
 
 .add-icon {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .plus-txt {
     position: absolute;
     font-size: 14px;
-    bottom: calc(50% - 30px);
+    bottom: calc(50% - 32px);
 }
 
 .drop-target {

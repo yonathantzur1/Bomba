@@ -44,7 +44,7 @@ router.delete('/deleteProject',
     validator,
     (req, res) => {
         projectsBL.deleteProject(req.query.id, req.user._id).then(result => {
-            res.send(result ? true : false);
+            res.send(!!result);
         }).catch(err => {
             errorHandler.routeError(err, res);
         });
@@ -52,7 +52,7 @@ router.delete('/deleteProject',
 
 router.put('/saveRequestSettings', (req, res) => {
     projectsBL.saveRequestSettings(req.body.id, req.body.defaultSettings, req.user._id).then(result => {
-        res.send(result ? true : false);
+        res.send(!!result);
     }).catch(err => {
         errorHandler.routeError(err, res);
     });

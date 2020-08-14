@@ -1,5 +1,5 @@
 <div id="requestSettings">
-    <card [title]="'Request Settings'" [width]="360" [height]="210">
+    <card [title]="'Request Settings'" [width]="360" [height]="230">
         <div class="body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
@@ -14,6 +14,21 @@
                         <option [value]="method.PUT">{{method.PUT}}</option>
                         <option [value]="method.DELETE">{{method.DELETE}}</option>
                     </select>
+                </div>
+                <div class="form-group timeout-sector">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="timeout-title">Request Timeout</div>
+                                <input (change)="timeoutChanged()" [min]="minTimeout" [max]="maxTimeout"
+                                    [(ngModel)]="defaultSettings.timeout" id="timeout" name="timeout" type="number"
+                                    class="timeout-input form-control">
+                            </td>
+                            <td>
+                                <span class="timeout-unit">(milliseconds)</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </form>
         </div>

@@ -13,3 +13,29 @@
 .save-icon:hover {
     color: #696969;
 }
+
+.timeout-sector {
+    margin-top: 30px;
+}
+
+td {
+    position: relative;
+}
+
+.timeout-title {
+    position: absolute;
+    top: -8px;
+    color: gray;
+    font-size: 12px;
+}
+
+.timeout-input {
+    width: 100px;
+}
+
+.timeout-unit {
+    font-size: 12px;
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+}
