@@ -235,13 +235,6 @@ function getUrlWithoutProtocol(url) {
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
-function isLocalRequest(url) {
-    url = getUrlWithoutProtocol(url).toLowerCase();
-    const rejectUrls = ["localhost", "127.0.0.1", config.server.dns];
-
-    return rejectUrls.includes(url);
-}
-
 function sendRequest(options, data) {
     return new Promise((resolve, reject) => {
 
@@ -249,12 +242,6 @@ function sendRequest(options, data) {
             data: "",
             code: null,
             timeout: false
-        }
-
-        if (config.server.isProd && isLocalRequest(options.hostname)) {
-            response.code = 500;
-
-            return reject(response);
         }
 
         const reqProtocol = isHttpsRequst(options.hostname) ? https : http;
