@@ -5,9 +5,7 @@ let schemas = {};
 
 //#region get
 
-schemas[REST.GET] = {
-
-};
+schemas[REST.GET] = {};
 
 //#endregion
 
@@ -30,6 +28,17 @@ schemas[REST.POST] = {
         "projects": {
             "addProject": {
                 name: joi.string().max(20).required()
+            }
+        },
+        "matrix": {
+            "testRequest": {
+                request: joi.required(),
+                requestTimeout: joi.number().min(1).max(100000).required()
+            },
+            "sendRequests": {
+                matrix: joi.required(),
+                projectId: joi.string().required(),
+                requestTimeout: joi.number().min(1).max(100000).required()
             }
         }
     }

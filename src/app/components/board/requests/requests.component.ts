@@ -48,11 +48,6 @@ export class RequestsComponent implements OnDestroy {
             data.request = this.requests[data.requestIndex];
             this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, data);
         }, this.eventsIds);
-
-        eventService.register(EVENT_TYPE.SET_DEFAULT_REQUEST_SETTINGS,
-            (defaultSettings: DefaultSettings) => {
-                this.defaultSettings = defaultSettings;
-            }, this.eventsIds);
     }
 
     ngOnDestroy() {

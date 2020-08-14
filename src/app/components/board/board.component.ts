@@ -43,10 +43,17 @@ export class BoardComponent implements OnInit, OnDestroy {
         private globalService: GlobalService,
         private snackbarService: SnackbarService,
         private boardService: BoardService) {
+
         this.eventService.emit(EVENT_TYPE.TAB_CLICK, "/");
+
         this.eventService.register(EVENT_TYPE.REQUESTS_SEND_MODE, (mode: boolean) => {
             this.isSendMode = mode;
         }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.SET_DEFAULT_REQUEST_SETTINGS,
+            (defaultSettings: DefaultSettings) => {
+                this.defaultSettings = defaultSettings;
+            }, this.eventsIds);
     }
 
     ngOnInit() {

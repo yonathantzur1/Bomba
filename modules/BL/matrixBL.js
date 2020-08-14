@@ -22,8 +22,8 @@ module.exports = {
         }
     },
 
-    async testRequest(request) {
-        let sendObject = buildSendObject(request);
+    async testRequest(request, requestTimeout) {
+        let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
 
         if (reqData && (jsonData = jsonTryParse(reqData))) {
@@ -45,7 +45,7 @@ module.exports = {
         return response;
     },
 
-    async sendRequestsMatrix(requestsMatrix, projectId, userId) {
+    async sendRequestsMatrix(requestsMatrix, projectId, requestTimeout, userId) {
         const isOwnerValid = await isProjectOwnerValid(projectId, userId)
             .catch(errorHandler.promiseError);
 
@@ -60,7 +60,7 @@ module.exports = {
 
         for (let i = 0; i < requestsMatrix.length; i++) {
             for (let j = 0; j < requestsMatrix[i].length; j++) {
-                requestsMatrix[i][j] = buildSendObject(requestsMatrix[i][j]);
+                requestsMatrix[i][j] = buildSendObject(requestsMatrix[i][j], requestTimeout);
             }
         }
 
@@ -183,7 +183,7 @@ function getRequestUrlData(url) {
     return data;
 }
 
-function buildSendObject(requestData) {
+function buildSendObject(requestData, requestTimeout) {
     const urlData = getRequestUrlData(requestData.url);
 
     let sendObject = {
@@ -193,7 +193,7 @@ function buildSendObject(requestData) {
             path: urlData.path,
             method: requestData.method,
             headers: requestData.headers,
-            timeout: config.requests.timeout
+            timeout: requestTimeout
         },
         requestId: requestData.id,
         amount: requestData.amount

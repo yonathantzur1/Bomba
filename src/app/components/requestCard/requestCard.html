@@ -40,7 +40,8 @@
             </form>
         </div>
         <div (click)="testRequest()" class="test-btn">Test</div>
-        <test-request *ngIf="isTestRequest" [request]="request"></test-request>
+        <test-request *ngIf="isTestRequest" [request]="request" [requestTimeout]="defaultSettings.timeout">
+        </test-request>
         <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
     </card>
 </div>

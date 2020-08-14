@@ -14,6 +14,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 
 export class TestRequestComponent implements OnInit {
     @Input() request: Request;
+    @Input() requestTimeout: number;
 
     isSendRequest: boolean;
     response: any;
@@ -26,7 +27,7 @@ export class TestRequestComponent implements OnInit {
     ngOnInit() {
         this.isSendRequest = true;
 
-        this.matrixService.testRequest(this.request).then(result => {
+        this.matrixService.testRequest(this.request, this.requestTimeout).then(result => {
             this.isSendRequest = false;
 
             if (!result) {

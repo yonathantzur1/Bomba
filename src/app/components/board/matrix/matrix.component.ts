@@ -40,6 +40,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     @Input() isSendMode: boolean;
     @Input() report: any;
     @Input() maxRequestAmount: number;
+    @Input() requestTimeout: number;
 
     requestsAmount: number;
     resultsAmount: number;
@@ -246,7 +247,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
                 this.sendRequestsPreActions();
-                this.matrixService.sendRequests(this.matrix, this.projectId);
+                this.matrixService.sendRequests(this.matrix, this.projectId, this.requestTimeout);
                 this.socketService.socketEmit('selfSync', 'syncSendRequests',
                     {
                         "userGuid": this.globalService.userGuid,

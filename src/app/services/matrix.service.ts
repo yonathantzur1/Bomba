@@ -12,12 +12,14 @@ export class MatrixService extends BasicService {
         super(http, "/api/matrix");
     }
 
-    testRequest(request: Request) {
-        return super.post('/testRequest', request);
+    testRequest(request: Request, requestTimeout: number) {
+        let data = { request, requestTimeout };
+
+        return super.post('/testRequest', data);
     }
 
-    sendRequests(matrix: Request[][], projectId: string) {
-        let data = { matrix, projectId };
+    sendRequests(matrix: Request[][], projectId: string, requestTimeout: number) {
+        let data = { matrix, projectId, requestTimeout };
 
         return super.post('/sendRequests', data);
     }
