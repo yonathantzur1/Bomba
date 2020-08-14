@@ -132,14 +132,12 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     }
 
     setDefaultSettings() {
-        if (this.defaultSettings) {
-            if (this.defaultSettings.url) {
-                this.request.url = this.defaultSettings.url;
-            }
+        if (this.defaultSettings.url) {
+            this.request.url = this.defaultSettings.url;
+        }
 
-            if (this.defaultSettings.method != METHOD.DEFAULT) {
-                this.request.method = this.defaultSettings.method;
-            }
+        if (this.defaultSettings.method && this.defaultSettings.method != METHOD.DEFAULT) {
+            this.request.method = this.defaultSettings.method;
         }
     }
 
