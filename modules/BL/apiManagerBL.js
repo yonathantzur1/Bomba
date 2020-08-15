@@ -18,13 +18,23 @@ module.exports = {
 
         let projectFilter = { "name": projectName, "owner": user._id };
 
-        let project = await DAL.findOne(projectsCollectionName, projectFilter)
+        projectFields = {
+            _id: 1,
+            matrix: 1,
+            defaultSettings: 1
+        };
+
+        let project = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
             .catch(errorHandler.promiseError);
 
-        if (!project) {
+        if (project) {
+            project.defaultSettings = project.defaultSettings || {};
+            project.timeout = project.defaultSettings.timeout || config.requests.timeout;
+
+            return { project, user };
+        }
+        else {
             return null;
         }
-
-        return { project, user };
     }
 };

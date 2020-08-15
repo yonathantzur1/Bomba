@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
         case API_ACTION.START.toString():
             startProject(apiKeyData.project.matrix,
                 apiKeyData.project._id,
+                apiKeyData.project.timeout,
                 apiKeyData.user._id);
             break;
         case API_ACTION.STOP.toString():
@@ -25,10 +26,10 @@ router.get('/', (req, res) => {
     isActionExists ? res.send("ok") : res.status(401).send("API action is not valid");
 });
 
-function startProject(matrix, projectId, userId) {
+function startProject(matrix, projectId, timeout, userId) {
     stopProject(projectId, userId);
     events.emit("socket.selfSync", userId, "syncSendRequests", { projectId })
-    matrixBL.sendRequestsMatrix(matrix, projectId, userId);
+    matrixBL.sendRequestsMatrix(matrix, projectId, timeout, userId);
 }
 
 function stopProject(projectId, userId) {
