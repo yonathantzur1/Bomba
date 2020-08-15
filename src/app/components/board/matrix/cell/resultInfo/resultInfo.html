@@ -1,0 +1,26 @@
+<div id="resultInfo" *ngIf="!request.isEmpty && result">
+    <div class="result-sector">
+        <i *ngIf="result.isStart && (result.success + result.fail + result.timeout < request.amount)"
+            class="far fa-hourglass sending-icon"></i>
+        <div *ngIf="result.success + result.fail + result.timeout == request.amount">
+            <div title="success" *ngIf="result.success != 0" class="result-type-container">
+                <i class="fas fa-check result-icon success-icon"></i>
+                <span *ngIf="result.fail != 0 || result.timeout != 0">
+                    <span class="break-line">|</span> <span>{{result.success}}</span>
+                </span>
+            </div>
+            <div title="fail" *ngIf="result.fail != 0" class="result-type-container">
+                <i class="fas fa-times result-icon fail-icon"></i>
+                <span *ngIf="result.success != 0 || result.timeout != 0">
+                    <span class="break-line">|</span> <span>{{result.fail}}</span>
+                </span>
+            </div>
+            <div title="timeout" *ngIf="result.timeout != 0" class="result-type-container">
+                <i class="fas fa-exclamation-triangle result-icon timeout-icon"></i>
+                <span *ngIf="result.success != 0 || result.fail != 0">
+                    <span class="break-line">|</span> <span>{{result.timeout}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ declare let $: any;
 export class RequestResult {
     success: number;
     fail: number;
+    timeout: number;
     time: number;
     isStart: boolean;
 
@@ -145,8 +146,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
         if (result) {
             result.success = data.success;
             result.fail = data.fail;
+            result.timeout = data.timeout;
             result.time = data.time;
-            this.resultsAmount += result.success + result.fail;
+            this.resultsAmount += result.success + result.fail + result.timeout;
         }
     }
 
@@ -298,9 +300,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
         let amount = 0;
 
         Object.keys(this.report.results).forEach(reqId => {
-            let result = this.report.results[reqId];
+            const result: RequestResult = this.report.results[reqId];
 
-            amount += result.success + result.fail;
+            amount += result.success + result.fail + result.timeout;
         });
 
         return amount;

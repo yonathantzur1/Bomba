@@ -8,9 +8,9 @@
 }
 
 .result-icon {
-    margin-right: 5px;
     height: 16px;
     font-size: 14px;
+    width: 20px;
 }
 
 .success-icon {
@@ -19,7 +19,15 @@
 
 .fail-icon {
     color: #dc3545;
-    margin-right: 9px;
+    margin-left: 1px;
+    width: 19px;
+}
+
+.timeout-icon {
+    color: #ff7600;
+    font-size: 12px;
+    margin-left: -2px;
+    width: 22px;
 }
 
 .break-line {

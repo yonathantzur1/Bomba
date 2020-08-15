@@ -99,6 +99,7 @@ module.exports = {
                 requestId,
                 "success": 0,
                 "fail": 0,
+                "timeout": 0,
                 "time": 0
             }
 
@@ -119,8 +120,13 @@ module.exports = {
 
                 requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
                     requestStatus.success++;
-                }).catch(() => {
-                    requestStatus.fail++;
+                }).catch((err) => {
+                    if (err.timeout) {
+                        requestStatus.timeout++;
+                    }
+                    else {
+                        requestStatus.fail++;
+                    }
                 }).finally(() => {
                     requestStatus.time += getDatesDiffBySeconds(new Date(), startDate);
                 }));

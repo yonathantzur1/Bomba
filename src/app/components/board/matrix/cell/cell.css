@@ -87,6 +87,7 @@
     position: absolute;
     bottom: 4px;
     left: 8px;
+    z-index: 1;
 }
 
 input[type=number]::-webkit-inner-spin-button, 

@@ -83,9 +83,10 @@ module.exports = {
             report: { $ne: null }
         }
 
-        let jsonStr = '{ "$set": { "report.results.' + requestStatus.requestId + '.success": ' + requestStatus.success +
-            ', "report.results.' + requestStatus.requestId + '.fail": ' + requestStatus.fail +
-            ', "report.results.' + requestStatus.requestId + '.time": ' + requestStatus.time + ' } }';
+        let jsonStr = `{ "$set": { "report.results.${requestStatus.requestId}.success": ${requestStatus.success},
+            "report.results.${requestStatus.requestId}.fail": ${requestStatus.fail},
+            "report.results.${requestStatus.requestId}.timeout": ${requestStatus.timeout},
+            "report.results.${requestStatus.requestId}.time": ${requestStatus.time} } }`;
         let updateObj = JSON.parse(jsonStr);
 
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
@@ -135,11 +136,11 @@ module.exports = {
             let result = results[requestId];
 
             report.success += result.success;
-            report.fail += result.fail;
-            totalRequests += result.success + result.fail;
+            report.fail += result.fail + result.timeout;
+            totalRequests += result.success + result.fail + result.timeout;
             requestsTotalTime += result.time;
 
-            let requestsAvgTime = result.time / (result.success + result.fail);
+            let requestsAvgTime = result.time / totalRequests;
 
             if (requestsAvgTime > report.longestTime) {
                 report.longestTime = requestsAvgTime;

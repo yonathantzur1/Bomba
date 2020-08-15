@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Request } from '../../../requestCard/requestCard.component';
-import { RequestResult } from '../matrix.component';
+import { Request } from '../../../../requestCard/requestCard.component';
+import { RequestResult } from '../../matrix.component';
 
 @Component({
     selector: 'result-info',
