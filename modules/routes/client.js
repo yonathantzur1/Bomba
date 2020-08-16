@@ -8,6 +8,10 @@ router.get('/', (req, res) => {
     const action_type = req.query.action;
     let isActionExists = true;
 
+    if (isMatrixEmpty(apiKeyData.project.matrix)) {
+        return res.status(500).send("API for empty project is not valid");
+    }
+
     switch (action_type) {
         case API_ACTION.START.toString():
             startProject(apiKeyData.project.matrix,
@@ -23,8 +27,20 @@ router.get('/', (req, res) => {
             break;
     }
 
-    isActionExists ? res.send("ok") : res.status(401).send("API action is not valid");
+    isActionExists ? res.send("ok") : res.status(500).send("API action is not valid");
 });
+
+function isMatrixEmpty(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            if (matrix[i][j].isEmpty == false) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 
 function startProject(matrix, projectId, timeout, userId) {
     stopProject(projectId, userId);

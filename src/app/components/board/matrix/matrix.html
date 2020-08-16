@@ -2,7 +2,7 @@
     <div class="matrix-top">
         <span *ngIf="!isSendMode" class="matrix-top-buttons">
             <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress compress-icon"></i>
-            <div *ngIf="isMatrixNotEmpty()" (click)="sendRequests()" class="send-btn-container">
+            <div *ngIf="!isMatrixEmpty()" (click)="sendRequests()" class="send-btn-container">
                 <i class="far fa-paper-plane"></i>
             </div>
         </span>

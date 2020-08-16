@@ -15,7 +15,7 @@
                     <span class="break-line">|</span> <span>{{result.fail}}</span>
                 </span>
             </div>
-            <div title="Timeout" *ngIf="true || result.timeout != 0" class="result-type-container">
+            <div title="Timeout" *ngIf="result.timeout != 0" class="result-type-container">
                 <i class="fas fa-exclamation-triangle result-icon timeout-icon"></i>
                 <span *ngIf="result.success != 0 || result.fail != 0">
                     <span class="break-line">|</span> <span>{{result.timeout}}</span>
