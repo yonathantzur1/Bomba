@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     const action_type = req.query.action;
     let isActionExists = true;
 
-    if (isMatrixEmpty(apiKeyData.project.matrix)) {
+    if (!apiKeyData.project.matrix || isMatrixEmpty(apiKeyData.project.matrix)) {
         return res.status(500).send("API for empty project is not valid");
     }
 
