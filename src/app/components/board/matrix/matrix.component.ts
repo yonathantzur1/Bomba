@@ -21,6 +21,7 @@ export class RequestResult {
     constructor() {
         this.success = 0;
         this.fail = 0;
+        this.timeout = 0;
         this.time = 0;
         this.isStart = false;
     }

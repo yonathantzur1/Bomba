@@ -42,6 +42,7 @@ module.exports = {
                 results[matrix[i][j].id] = {
                     "success": 0,
                     "fail": 0,
+                    "timeout": 0,
                     "time": 0,
                     "isStart": false
                 }
