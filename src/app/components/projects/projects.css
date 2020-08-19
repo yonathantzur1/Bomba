@@ -53,6 +53,7 @@
     align-items: center;
     font-size: 14px;
     background-color: #fafafb;
+    user-select: none;
 }
 
 .add-project-btn:hover {

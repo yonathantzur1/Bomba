@@ -24,8 +24,9 @@
 }
 
 .matrix-container {
-    margin: 10px;
-    height: calc(100% - var(--top-height) - 20px);
+    margin: 5px;
+    padding: 5px;
+    height: calc(100% - var(--top-height) - 10px);
     overflow: auto;
     user-select: none;
     position: relative;

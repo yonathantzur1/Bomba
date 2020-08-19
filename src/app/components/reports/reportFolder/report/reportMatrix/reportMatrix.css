@@ -8,12 +8,11 @@
 }
 
 .results-container {
-    width: calc(100% - 30px);
-    height: calc(100% - 50px);
+    width: 100%;
+    height: calc(100% - 45px);
     position: absolute;
-    top: 50px;
+    top: 45px;
     left: 0;
     overflow: auto;
-    padding: 10px 0 0;
-    margin-left: 15px;
+    padding: 10px;
 }
