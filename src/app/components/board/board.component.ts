@@ -223,14 +223,6 @@ function enableDragAndDrop(self: any) {
         onend: (event: any) => {
             event.currentTarget.remove();
         }
-    }).on("down", (event: any) => {
-        let original = event.currentTarget;
-
-        original.setAttribute('allowDrag', 'true');
-        original.onmouseleave = () => {
-            original.setAttribute('allowDrag', 'false');
-            original.onmouseleave = null;
-        };
     }).on("move", elementMoveListener);
 }
 
@@ -238,10 +230,7 @@ function elementMoveListener(event: any) {
     let interaction = event.interaction;
     let original = event.currentTarget;
 
-    if (interaction.pointerIsDown &&
-        !interaction.interacting() &&
-        original.getAttribute('allowDrag') == 'true' &&
-        original.getAttribute('clonable') != 'false') {
+    if (interaction.pointerIsDown && !interaction.interacting()) {
         let clone = original.cloneNode(true);
 
         // Remove all icons from clone element.
