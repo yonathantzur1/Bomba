@@ -196,7 +196,7 @@ function buildSendObject(requestData, requestTimeout) {
         options: {
             hostname: urlData.ip,
             port: urlData.port,
-            path: urlData.path,
+            path: encodeURI(urlData.path),
             method: requestData.method,
             headers: requestData.headers,
             timeout: requestTimeout
