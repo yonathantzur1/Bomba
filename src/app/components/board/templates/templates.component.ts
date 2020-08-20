@@ -8,12 +8,12 @@ import { DefaultSettings } from '../../requestSettings/requestSettings.component
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 @Component({
-    selector: 'requests',
-    templateUrl: './requests.html',
-    styleUrls: ['./requests.css']
+    selector: 'templates',
+    templateUrl: './templates.html',
+    styleUrls: ['./templates.css']
 })
 
-export class RequestsComponent implements OnDestroy {
+export class TemplatesComponent implements OnDestroy {
 
     @Input() projectId: string;
     @Input() requests: Array<Request>;

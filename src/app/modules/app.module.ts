@@ -40,7 +40,7 @@ import { RequestCookiesComponent } from '../components/requestCard/requestCookie
 import { KeyValueComponent } from '../components/keyValue/keyValue.component';
 import { TestRequestComponent } from '../components/requestCard/testRequest/testRequest.component';
 import { RequestSettingsComponent } from '../components/requestSettings/requestSettings.component';
-import { RequestsComponent } from '../components/board/requests/requests.component';
+import { TemplatesComponent } from '../components/board/templates/templates.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ProjectComponent } from '../components/projects/project/project.component';
 import { ProjectNameCardComponent } from '../components/projects/projectNameCard/projectNameCard.component';
@@ -112,7 +112,7 @@ import { Routing } from '../routes/app.routing';
     KeyValueComponent,
     TestRequestComponent,
     RequestSettingsComponent,
-    RequestsComponent,
+    TemplatesComponent,
     ProjectsComponent,
     ProjectComponent,
     ProjectNameCardComponent,

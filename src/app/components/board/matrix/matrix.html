@@ -1,10 +1,10 @@
 <div id="matrix">
     <div class="matrix-top">
         <span *ngIf="!isSendMode" class="matrix-top-buttons">
-            <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress compress-icon"></i>
-            <div *ngIf="!isMatrixEmpty()" (click)="sendRequests()" class="send-btn-container">
-                <i class="far fa-paper-plane"></i>
-            </div>
+            <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress top-icon compress-icon"></i>
+            <i title="Set Environment" class="fas fa-broadcast-tower top-icon env-icon"></i>
+            <i title="Send Requests" *ngIf="!isMatrixEmpty()" (click)="sendRequests()"
+                class="far fa-paper-plane top-icon send-btn-container"></i>
         </span>
         <span *ngIf="isSendMode" class="matrix-top-buttons">
             <span *ngIf="requestsAmount > resultsAmount" class="matrix-top-buttons">

@@ -1,8 +1,8 @@
-<div id="requests" class="empty-dropzone">
+<div id="templates" class="empty-dropzone">
     <div class="cards-top">
-        <i class="fas fa-cog top-icon settings-icon" (click)="isShowRequestSettings=true;"></i>
+        <i title="Request Settings" class="fas fa-cog top-icon settings-icon" (click)="isShowRequestSettings=true;"></i>
         <span>Templates</span>
-        <i *ngIf="requests.length > 0" class="far fa-plus-square top-icon plus-icon"
+        <i title="New Requests" *ngIf="requests.length > 0" class="far fa-plus-square top-icon plus-icon"
             (click)="isShowRequestCard=true;"></i>
     </div>
     <div class="cards-container">

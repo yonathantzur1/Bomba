@@ -78,22 +78,26 @@
     border-color: #353535;
 }
 
-.compress-icon {
-    position: absolute;
-    right: 18px;
-    font-size: 18px;
+.top-icon {
     cursor: pointer;
+    position: absolute;
+    font-size: 18px;
+}
+
+.compress-icon {
+    right: 16px;
+}
+
+.env-icon {
+    right: 45px;
 }
 
 .send-btn-container {
-    cursor: pointer;
-    position: absolute;
-    left: 18px;
-    font-size: 18px;
+    left: 16px;
 }
 
-.send-btn-container:hover {
-    background-color: #e7e7e7;
+.top-icon:hover {
+    color: #656565;
 }
 
 .loader-dots {

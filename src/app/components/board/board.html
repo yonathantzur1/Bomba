@@ -8,7 +8,8 @@
                 </matrix>
             </div>
             <div class="cards-sector" *ngIf="!isSendMode">
-                <requests [projectId]="projectId" [requests]="requests" [defaultSettings]="defaultSettings"></requests>
+                <templates [projectId]="projectId" [requests]="requests" [defaultSettings]="defaultSettings">
+                </templates>
             </div>
         </div>
     </div>
