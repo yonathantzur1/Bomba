@@ -1,12 +1,18 @@
 <div id="report">
     <div class="action-line">
-        <i title="Back To Folder" class="fas fa-arrow-left action-icon" style="margin-right: auto;"
-            (click)="backToFolder()"></i>
+        <span data-tooltip="Back To Folder" class="action-icon tooltip-bottom-left" style="margin-right: auto;"
+            (click)="backToFolder()">
+            <i class="fas fa-arrow-left"></i>
+        </span>
         <div *ngIf="!isLoading" [ngSwitch]="isMatrixMode">
-            <i *ngSwitchCase="false" title="Report Matrix" class="fas fa-table action-icon"
-                style="margin-left: auto;" (click)="showMatrix()"></i>
-            <i *ngSwitchCase="true" title="Report Numbers" class="fas fa-list-ol action-icon" style="margin-left: auto;"
-                (click)="showResults()"></i>
+            <span *ngSwitchCase="false" data-tooltip="Show Matrix" class="action-icon tooltip-bottom-right"
+                (click)="showMatrix()">
+                <i class="fas fa-table"></i>
+            </span>
+            <span *ngSwitchCase="true" data-tooltip="Show Numbers" class="action-icon tooltip-bottom-right"
+                (click)="showResults()">
+                <i class="fas fa-list-ol"></i>
+            </span>
         </div>
     </div>
     <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>

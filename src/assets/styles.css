@@ -47,6 +47,20 @@ select {
 
 /* END OVERRIDE BOOTSTRAP MATERIAL CSS */
 
+[data-tooltip]:before {
+    font-size: 12px !important;
+    padding: 5px 8px !important;
+}
+
+[data-tooltip]:after, [data-tooltip]:before {
+    transition: opacity 0s ease 0s !important;
+    transition-delay: 0s !important;
+}
+
+[data-tooltip]:hover:after, [data-tooltip]:hover:before {
+    transition-delay: .8s !important;
+}
+
 :root {
     /* Define css global variables */
     --main-background-color: #f7f7f7;

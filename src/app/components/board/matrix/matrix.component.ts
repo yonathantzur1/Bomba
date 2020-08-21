@@ -310,9 +310,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
     }
 
     closeReportPreActions() {
-        this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
+        this.isSendMode = false;
         this.report.results = {};
         this.resultsAmount = 0;
+        this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
     }
 
     closeReport() {

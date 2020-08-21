@@ -23,6 +23,7 @@
     "bootstrap": "^4.5.2",
     "bootstrap-material-design": "^4.1.3",
     "chart.js": "^2.9.3",
+    "css-tooltip": "^0.3.3",
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.3",
     "hover.css": "^2.3.2",

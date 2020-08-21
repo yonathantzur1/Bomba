@@ -1,7 +1,11 @@
 <div id="userCard">
     <div class="card-container">
-        <i class="far fa-edit top-icon edit-icon" (click)="isEditMode=true;" title="Edit User"></i>
-        <i class="far fa-trash-alt top-icon delete-icon" (click)="deleteUser()" title="Delete User"></i>
+        <span data-tooltip="Edit User" class="tooltip-bottom-left top-icon edit-icon" (click)="isEditMode=true;">
+            <i class="far fa-edit"></i>
+        </span>
+        <span data-tooltip="Delete User" class="tooltip-bottom-right top-icon delete-icon" (click)="deleteUser()">
+            <i class="far fa-trash-alt"></i>
+        </span>
         <div class="user-name-container">
             {{user.username}}
         </div>

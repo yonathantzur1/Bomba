@@ -38,8 +38,8 @@
 .info-title {
     margin-bottom: 46px;
     font-size: 18px;
-    border-bottom: 0.5px solid var(--main-text-color);
-    width: 150px;
+    border-bottom: 0.5px solid #b7b7b7;
+    width: 80%;
     margin: auto;
     padding-bottom: 8px;
 }

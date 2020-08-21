@@ -1,16 +1,20 @@
 <div id="templates" class="empty-dropzone">
     <div class="cards-top">
-        <i title="Request Settings" class="fas fa-cog top-icon settings-icon" (click)="isShowRequestSettings=true;"></i>
+        <span data-tooltip="Request Settings" class="tooltip-top-left top-icon settings-icon"
+            (click)="isShowRequestSettings=true;">
+            <i class="fas fa-cog"></i>
+        </span>
         <span>Templates</span>
-        <i title="New Requests" *ngIf="requests.length > 0" class="far fa-plus-square top-icon plus-icon"
-            (click)="isShowRequestCard=true;"></i>
+        <span *ngIf="requests.length > 0" data-tooltip="Add Request" class="tooltip-top-right top-icon plus-icon"
+            (click)="isShowRequestCard=true;">
+            <i class="far fa-plus-square"></i>
+        </span>
     </div>
     <div class="cards-container">
         <div id="card-{{i}}" class="card-sector draggable" (click)="openRequestEdit(request)"
             *ngFor="let request of requests; index as i">
             <div class="card-name" [title]="request.name">{{request.name}}</div>
-            <i name="delete-icon" title="delete request" (click)="deleteRequest(i, $event)"
-                class="far fa-trash-alt delete-request-icon"></i>
+            <i name="delete-icon" (click)="deleteRequest(i, $event)" class="far fa-trash-alt delete-request-icon"></i>
         </div>
         <div *ngIf="requests.length == 0" class="card-sector add-card" (click)="isShowRequestCard=true;">
             <div class="new-card-content">

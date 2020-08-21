@@ -1,19 +1,24 @@
 <div id="matrix">
     <div class="matrix-top">
         <span *ngIf="!isSendMode" class="matrix-top-buttons">
-            <i (click)="compressMatrix()" title="Compress Matrix" class="fas fa-compress top-icon compress-icon"></i>
-            <i title="Set Environment" class="fas fa-broadcast-tower top-icon env-icon"></i>
-            <i title="Send Requests" *ngIf="!isMatrixEmpty()" (click)="sendRequests()"
-                class="far fa-paper-plane top-icon send-btn-container"></i>
+            <span data-tooltip="Compress" class="top-icon compress-icon" (click)="compressMatrix()">
+                <i class="fas fa-compress"></i>
+            </span>
+            <span data-tooltip="Environments" class="top-icon env-icon">
+                <i class="fas fa-broadcast-tower"></i>
+            </span>
+            <span *ngIf="!isMatrixEmpty()" data-tooltip="Send" class="top-icon send-btn-icon" (click)="sendRequests()">
+                <i class="far fa-paper-plane"></i>
+            </span>
         </span>
         <span *ngIf="isSendMode" class="matrix-top-buttons">
             <span *ngIf="requestsAmount > resultsAmount" class="matrix-top-buttons">
                 <loader-dots class="loader-dots" css='{"font-size": "10px", "padding-top": "15px"}'>
                 </loader-dots>
-                <i (click)="stopRequests()" class="fas fa-stop stop-requests-icon" title="Stop Requests"></i>
+                <i (click)="stopRequests()" class="fas fa-stop stop-requests-icon"></i>
             </span>
             <span *ngIf="requestsAmount == resultsAmount" class="matrix-top-buttons">
-                <i (click)="closeReport()" title="Close Report" class="fas fa-times report-icon close-report-icon"></i>
+                <i (click)="closeReport()" class="fas fa-times report-icon close-report-icon"></i>
             </span>
         </span>
         <span>{{projectName + " - " + (isSendMode ? "Report": "Matrix")}}</span>

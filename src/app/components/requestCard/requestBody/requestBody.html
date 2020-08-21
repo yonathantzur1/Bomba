@@ -13,9 +13,10 @@
                     <div class="info-data-row">{{'"{random}" = Random UUID'}}</div>
                 </div>
             </div>
-            <div (click)="formatJson(true)" [ngClass]="{'invalid-json-icon': !isValidBodyJson}" class="json-format-icon"
-                title="Format Json">
-                {{formatStr}}</div>
+            <div (click)="formatJson(true)" [ngClass]="{'invalid-json-icon': !isValidBodyJson}"
+                class="tooltip-top-right json-format-icon" data-tooltip="Format Json">
+                {{formatStr}}
+            </div>
         </div>
         <textarea id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody" placeholder="Body" type="text"
             class="request-body" [(ngModel)]="request.body"></textarea>
