@@ -74,7 +74,7 @@ export class KeyValueComponent implements OnDestroy {
     delete(key: string) {
         this.alertService.alert({
             title: "Delete (" + key + ")",
-            text: "Are you sure you want to remove this config variable?",
+            text: "Are you sure you want to remove this variable?",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
                 delete this.json[key];

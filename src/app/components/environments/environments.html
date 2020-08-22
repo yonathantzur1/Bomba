@@ -1,10 +1,27 @@
-<div id="environments">
-    <card [title]="'Environments'" [width]="500" [height]="250">
+<div id="environments" [ngSwitch]="isAddEnvironment">
+    <card *ngSwitchCase="false" [title]="'Manage Environments'" [width]="560" [height]="320">
         <div class="empty-env">
             <p class="title">No Active Environment</p>
-            <p>An environment is a set of variables that allow you to switch the
-                context of your requests.</p>
-            <button type="button" class="btn btn-primary add-env-btn">Add Environment</button>
+            <p class="info">
+                An environment is a set of variables that allow you to switch the context of your requests.
+            </p>
+            <p class="info">
+                You can declare a variable in an environment and give it a starting value, then use it in a
+                request by putting the variable name within curly-braces. Create an environment to get started.
+            </p>
+            <button type="button" (click)="isAddEnvironment=true;" class="btn btn-primary add-env-btn">
+                Add Environment
+            </button>
         </div>
+    </card>
+    <card *ngSwitchCase="true" [title]="'Manage Environments'" [width]="700" [height]="500">
+        <div class="env-body">
+            <p class="title">Add Environment</p>
+            <input maxlength="50" [(ngModel)]="envName" placeholder="Environment Name" type="text" class="form-control env-name">
+            <div class="env-values">
+                <key-value [json]="envValues"></key-value>
+            </div>
+        </div>
+        <i (click)="addEnv()" class="add-env-icon far fa-arrow-alt-circle-right"></i>
     </card>
 </div>

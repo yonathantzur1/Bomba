@@ -8,6 +8,15 @@ import { Component, Input } from '@angular/core';
 
 export class EnvironmentsComponent {
 
+    isAddEnvironment: boolean = false;
+
+    envName: string;
+    envValues: any = {};
+
     constructor() { }
+
+    addEnv() {
+        
+    }
 
 }
