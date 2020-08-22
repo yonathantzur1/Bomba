@@ -32,6 +32,7 @@ import { MatrixComponent } from '../components/board/matrix/matrix.component';
 import { CellComponent } from '../components/board/matrix/cell/cell.component'
 import { ResultInfoComponent } from '../components/board/matrix/cell/resultInfo/resultInfo.component';
 import { CardComponent } from '../components/card/card.component';
+import { EnvironmentsComponent } from '../components/environments/environments.component';
 import { RequestCardComponent } from '../components/requestCard/requestCard.component';
 import { RequestNavbarComponent } from '../components/requestCard/requestNavbar/requestNavbar.component';
 import { RequestBodyComponent } from '../components/requestCard/requestBody/requestBody.component';
@@ -104,6 +105,7 @@ import { Routing } from '../routes/app.routing';
     CellComponent,
     ResultInfoComponent,
     CardComponent,
+    EnvironmentsComponent,
     RequestCardComponent,
     RequestNavbarComponent,
     RequestBodyComponent,

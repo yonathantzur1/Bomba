@@ -50,6 +50,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     container: HTMLElement;
     cellSize: number = 150;
     isShowRequestCard: boolean = false;
+    isShowEnvironments: boolean = false;
     selectedRequest: Request;
 
     eventsIds: Array<string> = [];
@@ -86,6 +87,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.isShowEnvironments = false;
             this.isShowRequestCard = false;
             this.selectedRequest = null;
         }, this.eventsIds);

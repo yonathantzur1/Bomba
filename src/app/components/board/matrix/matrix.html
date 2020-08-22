@@ -1,10 +1,10 @@
 <div id="matrix">
     <div class="matrix-top">
         <span *ngIf="!isSendMode" class="matrix-top-buttons">
-            <span data-tooltip="Compress" class="top-icon compress-icon" (click)="compressMatrix()">
+            <span data-tooltip="Compress Matrix" class="top-icon compress-icon" (click)="compressMatrix()">
                 <i class="fas fa-compress"></i>
             </span>
-            <span data-tooltip="Environments" class="top-icon env-icon">
+            <span data-tooltip="Manage Environments" class="top-icon env-icon" (click)="isShowEnvironments=true;">
                 <i class="fas fa-broadcast-tower"></i>
             </span>
             <span *ngIf="!isMatrixEmpty()" data-tooltip="Send" class="top-icon send-btn-icon" (click)="sendRequests()">
@@ -51,5 +51,6 @@
             </tr>
         </table>
     </div>
-    <request-card [selectedRequest]="selectedRequest" *ngIf="isShowRequestCard"></request-card>
+    <request-card *ngIf="isShowRequestCard" [selectedRequest]="selectedRequest"></request-card>
+    <environments *ngIf="isShowEnvironments"></environments>
 </div>

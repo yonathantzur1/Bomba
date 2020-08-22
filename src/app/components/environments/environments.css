@@ -1,0 +1,15 @@
+.empty-env {
+    text-align: center;
+    width: 350px;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.add-env-btn {
+    margin-top: 10px;
+    text-transform: none;
+}
