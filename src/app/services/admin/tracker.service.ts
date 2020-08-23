@@ -17,7 +17,7 @@ export class TrackerService extends BasicService {
         datesRange: Object,
         clientTimeZone: number,
         username: string) {
-        let data = {
+        const data = {
             logType,
             range,
             datesRange,

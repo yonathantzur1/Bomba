@@ -52,5 +52,5 @@
         </table>
     </div>
     <request-card *ngIf="isShowRequestCard" [selectedRequest]="selectedRequest"></request-card>
-    <environments *ngIf="isShowEnvironments"></environments>
+    <environments *ngIf="isShowEnvironments" [projectId]="projectId"></environments>
 </div>

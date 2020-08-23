@@ -13,19 +13,19 @@ export class MatrixService extends BasicService {
     }
 
     testRequest(request: Request, requestTimeout: number) {
-        let data = { request, requestTimeout };
+        const data = { request, requestTimeout };
 
         return super.post('/testRequest', data);
     }
 
     sendRequests(matrix: Request[][], projectId: string, requestTimeout: number) {
-        let data = { matrix, projectId, requestTimeout };
+        const data = { matrix, projectId, requestTimeout };
 
         return super.post('/sendRequests', data);
     }
 
     stopRequests(projectId: string) {
-        let data = { projectId };
+        const data = { projectId };
 
         return super.post('/stopRequests', data);
     }

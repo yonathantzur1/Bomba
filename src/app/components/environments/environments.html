@@ -17,9 +17,10 @@
     <card *ngSwitchCase="true" [title]="'Manage Environments'" [width]="700" [height]="500">
         <div class="env-body">
             <p class="title">Add Environment</p>
-            <input maxlength="50" [(ngModel)]="envName" placeholder="Environment Name" type="text" class="form-control env-name">
+            <input maxlength="50" [(ngModel)]="newEnvironment.name" placeholder="Environment Name" type="text"
+                class="form-control env-name">
             <div class="env-values">
-                <key-value [json]="envValues"></key-value>
+                <key-value [json]="newEnvironment.values"></key-value>
             </div>
         </div>
         <i (click)="addEnv()" class="add-env-icon far fa-arrow-alt-circle-right"></i>

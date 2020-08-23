@@ -1,0 +1,14 @@
+const router = require('express').Router();
+const errorHandler = require('../handlers/errorHandler');
+
+const environmentsBL = require('../BL/environmentsBL');
+
+router.post('/addEnv', (req, res) => {
+    environmentsBL.addEnv(req.body.projectId, req.body.env, req.user._id).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
+module.exports = router;

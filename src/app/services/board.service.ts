@@ -17,19 +17,13 @@ export class BoardService extends BasicService {
     }
 
     saveMatrix(projectId: string, matrix: Request[][]) {
-        let data = {
-            projectId,
-            matrix
-        }
+        const data = { projectId, matrix }
 
         return super.put('/saveMatrix', data);
     }
 
     saveRequests(projectId: string, requests: Array<Request>) {
-        let data = {
-            projectId,
-            requests
-        }
+        const data = { projectId, requests }
 
         return super.put('/saveRequests', data);
     }
