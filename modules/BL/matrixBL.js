@@ -118,7 +118,7 @@ module.exports = {
                 sendObject.options.hostname = originalUrl;
                 const startDate = new Date();
 
-                requestsPromises.push(sendRequest(sendObject.options, sendObject.data).then(() => {
+                requestsPromises.push(sendRequest(sendObject.options, sendObject.data, true).then(() => {
                     requestStatus.success++;
                 }).catch((err) => {
                     if (err.timeout) {
@@ -241,7 +241,7 @@ function getUrlWithoutProtocol(url) {
     return (protocolSplit.length == 1) ? url : protocolSplit[1];
 }
 
-function sendRequest(options, data) {
+function sendRequest(options, data, isIgnoreResponse) {
     return new Promise((resolve, reject) => {
 
         let response = {
@@ -259,7 +259,14 @@ function sendRequest(options, data) {
 
             res.setEncoding('utf8');
             let rawData = '';
-            res.on('data', (chunk) => { rawData += chunk; });
+
+            if (isIgnoreResponse) {
+                res.on('data', () => { });
+            }
+            else {
+                res.on('data', (chunk) => { rawData += chunk; });
+            }
+
             res.on('end', () => {
                 rawData && (response.data = rawData);
 
