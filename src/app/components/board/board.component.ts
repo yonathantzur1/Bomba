@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Request } from '../requestCard/requestCard.component';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
+import { Environment } from '../environments/environments.component';
 
 declare let interact: any;
 
@@ -29,6 +30,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     requests: Array<Request>;
     report: any;
     defaultSettings: DefaultSettings;
+    environments: Array<Environment>;
     maxRequestAmount: number;
 
     isLoading: boolean = false;
@@ -54,6 +56,16 @@ export class BoardComponent implements OnInit, OnDestroy {
             (defaultSettings: DefaultSettings) => {
                 this.defaultSettings = defaultSettings;
             }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.ADD_ENVIRONMENT, (environment: Environment) => {
+            this.environments.push(environment);
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envName: string) => {
+            this.environments = this.environments.filter(env => {
+                return env.name != envName;
+            });
+        }, this.eventsIds);
     }
 
     ngOnInit() {
@@ -77,6 +89,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                     this.matrix = this.mapMatrix(project.matrix);
                     this.requests = this.mapRequests(project.requests);
                     this.defaultSettings = project.defaultSettings;
+                    this.environments = project.environments;
                     this.maxRequestAmount = project.maxRequestAmount;
                 }
 

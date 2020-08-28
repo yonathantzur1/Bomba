@@ -17,4 +17,8 @@ export class EnvironmentsService extends BasicService {
 
         return super.post('/addEnv', data);
     }
+
+    deleteEnv(projectId: string, envName: string) {
+        return super.delete('/deleteEnv?projectId=' + projectId + "&envName=" + envName);
+    }
 }

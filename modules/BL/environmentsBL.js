@@ -12,7 +12,8 @@ module.exports = {
             "environments.name": env.name
         };
 
-        const envAmount = await DAL.count(projectsCollectionName, envFilter);
+        const envAmount = await DAL.count(projectsCollectionName, envFilter)
+            .catch(errorHandler.promiseError);
 
         if (envAmount > 0) {
             return "-1";
@@ -21,8 +22,21 @@ module.exports = {
         const projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
         const projectUpdate = { $push: { "environments": env } }
 
-        const updateResult = DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate);
+        const updateResult = DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+            .catch(errorHandler.promiseError);
 
         return !!updateResult;
+    },
+
+    deleteEnv(projectId, envName, userId) {
+        const projectFilter = {
+            _id: DAL.getObjectId(projectId),
+            owner: DAL.getObjectId(userId)
+        };
+
+        const projectUpdate = { $pull: { "environments": { name: envName } } };
+
+        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+            .catch(errorHandler.promiseError);
     }
 };

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MatrixService } from '../../../services/matrix.service';
 import { BoardService } from 'src/app/services/board.service';
 import { Request } from '../../requestCard/requestCard.component';
+import { Environment } from '../../environments/environments.component';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
@@ -41,6 +42,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     @Input() matrix: Request[][];
     @Input() isSendMode: boolean;
     @Input() report: any;
+    @Input() environments: Array<Environment>;
     @Input() maxRequestAmount: number;
     @Input() requestTimeout: number;
 

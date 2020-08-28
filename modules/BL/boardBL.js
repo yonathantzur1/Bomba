@@ -17,7 +17,8 @@ module.exports = {
             matrix: 1,
             requests: 1,
             report: 1,
-            defaultSettings: 1
+            defaultSettings: 1,
+            environments: 1
         };
 
         let board = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)

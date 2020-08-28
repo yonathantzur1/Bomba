@@ -5,7 +5,7 @@
                 <i class="fas fa-compress"></i>
             </span>
             <span data-tooltip="Manage Environments" class="top-icon env-icon" (click)="isShowEnvironments=true;">
-                <i class="fas fa-broadcast-tower"></i>
+                <i class="fas fa-sliders-h"></i>
             </span>
             <span *ngIf="!isMatrixEmpty()" data-tooltip="Send" class="top-icon send-btn-icon" (click)="sendRequests()">
                 <i class="far fa-paper-plane"></i>
@@ -52,5 +52,5 @@
         </table>
     </div>
     <request-card *ngIf="isShowRequestCard" [selectedRequest]="selectedRequest"></request-card>
-    <environments *ngIf="isShowEnvironments" [projectId]="projectId"></environments>
+    <environments *ngIf="isShowEnvironments" [projectId]="projectId" [environments]="environments"></environments>
 </div>

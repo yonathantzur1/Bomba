@@ -1,28 +1,55 @@
-<div id="environments" [ngSwitch]="isAddEnvironment">
-    <card *ngSwitchCase="false" [title]="'Manage Environments'" [width]="560" [height]="320">
+<div id="environments" [ngSwitch]="currWindowType">
+    <card *ngSwitchCase="windowType.EMPTY" [title]="'Manage Environments'" [width]="560" [height]="320">
         <div class="empty-env">
             <p class="title">No Active Environment</p>
             <p class="info">
-                An environment is a set of variables that allow you to switch the context of your requests.
+                An environment is a set of variables that allows you to switch the context of your requests.
             </p>
             <p class="info">
                 You can declare a variable in an environment and give it a starting value, then use it in a
                 request by putting the variable name within curly-braces. Create an environment to get started.
             </p>
-            <button type="button" (click)="isAddEnvironment=true;" class="btn btn-primary add-env-btn">
+            <button type="button" (click)="currWindowType=windowType.ADD;" class="btn btn-primary add-env-btn">
                 Add Environment
             </button>
         </div>
     </card>
-    <card *ngSwitchCase="true" [title]="'Manage Environments'" [width]="700" [height]="500">
+    <card *ngSwitchCase="windowType.ADD" [title]="'Manage Environments'" [width]="700" [height]="500">
         <div class="env-body">
             <p class="title">Add Environment</p>
-            <input maxlength="50" [(ngModel)]="newEnvironment.name" placeholder="Environment Name" type="text"
-                class="form-control env-name">
-            <div class="env-values">
+            <div class="form-group">
+                <input id="new-env-name" maxlength="50" [(ngModel)]="newEnvironment.name" placeholder="Environment Name"
+                    type="text" class="form-control new-env-name"
+                    (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                <label id="new-env-name-micro" class="microtext"></label>
+            </div>
+            <div class="new-env-values">
                 <key-value [json]="newEnvironment.values"></key-value>
             </div>
         </div>
         <i (click)="addEnv()" class="add-env-icon far fa-arrow-alt-circle-right"></i>
+    </card>
+    <card *ngSwitchCase="windowType.LIST" [title]="'Manage Environments'" [width]="600" [height]="400">
+        <div class="env-body">
+            <p class="info" style="font-size: 13px;">
+                An environment is a set of variables that allows you to switch the context of your requests.
+                You can use it in a request by putting the variable name within curly-braces.
+            </p>
+            <div class="env-items-container">
+                <div class="env-item" *ngFor="let env of environments">
+                    <span class="env-name">{{env.name}}</span>
+                    <div class="action-btns">
+                        <span data-tooltip="Duplicate Environment" class="tooltip-bottom-right action-icon"
+                            (click)="duplicateEnv(env.values)">
+                            <i class="far fa-clone"></i>
+                        </span>
+                        <span data-tooltip="Delete Environment" class="tooltip-bottom-right action-icon"
+                            (click)="deleteEnv(env.name)">
+                            <i class="far fa-trash-alt"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </card>
 </div>
