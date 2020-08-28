@@ -18,11 +18,19 @@ export class Environment {
         this.values = {};
         this.isActice = false;
     }
+
+    copy(env: Environment) {
+        this.name = env.name;
+        this.values = JSON.parse(JSON.stringify(env.values));
+
+        return this;
+    }
 }
 
 enum WINDOW_TYPE {
     EMPTY,
     ADD,
+    UPDATE,
     LIST
 }
 
@@ -39,7 +47,7 @@ export class EnvironmentsComponent implements OnInit {
     @Input() environments: Array<Environment>;
 
     isAddEnvironment: boolean = false;
-    newEnvironment: Environment = new Environment();
+    environment: Environment = new Environment();
     validationFuncs: Array<InputFieldValidation>;
 
     currWindowType: WINDOW_TYPE;
@@ -63,6 +71,10 @@ export class EnvironmentsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.setWindowType();
+    }
+
+    setWindowType() {
         if (this.environments.length == 0) {
             this.currWindowType = WINDOW_TYPE.EMPTY;
         }
@@ -71,9 +83,21 @@ export class EnvironmentsComponent implements OnInit {
         }
     }
 
+    back() {
+        this.setWindowType();
+        this.environment = new Environment();
+    }
+
+    openAddWindow() {
+        this.currWindowType = WINDOW_TYPE.ADD;
+        setTimeout(() => {
+            $("#new-env-name").focus();
+        }, 0);
+    }
+
     addEnv() {
-        if (this.microtextService.validation(this.validationFuncs, this.newEnvironment)) {
-            this.environmentsService.addEnv(this.projectId, this.newEnvironment).then(result => {
+        if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+            this.environmentsService.addEnv(this.projectId, this.environment).then(result => {
                 // In case of server error.
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
@@ -83,15 +107,29 @@ export class EnvironmentsComponent implements OnInit {
                     $("#new-env-name-micro").html("The name is already in use");
                 }
                 else {
-                    this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.newEnvironment);
+                    this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
-                    this.newEnvironment = new Environment();
+                    this.environment = new Environment();
                 }
             });
         }
     }
 
-    deleteEnv(envName: string) {
+    updateEnv() {
+
+    }
+
+    editEnv(env: Environment) {
+        this.environment = new Environment().copy(env);
+        this.currWindowType = WINDOW_TYPE.UPDATE;
+    }
+
+    duplicateEnv(values: any) {
+        this.environment.values = JSON.parse(JSON.stringify(values));
+        this.currWindowType = WINDOW_TYPE.ADD;
+    }
+
+    deleteEnv(name: string) {
         this.alertService.alert({
             title: "Delete Environment",
             text: "Are you sure you want to delete this environment?",
@@ -99,12 +137,12 @@ export class EnvironmentsComponent implements OnInit {
             confirmFunc: () => {
                 const isLastEnv: boolean = (this.environments.length == 1);
 
-                this.environmentsService.deleteEnv(this.projectId, envName).then(result => {
+                this.environmentsService.deleteEnv(this.projectId, name).then(result => {
                     if (!result) {
                         this.snackbarService.snackbar("Server error occurred");
                     }
                     else {
-                        this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, envName);
+                        this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, name);
 
                         if (isLastEnv) {
                             this.currWindowType = WINDOW_TYPE.EMPTY;
@@ -113,11 +151,6 @@ export class EnvironmentsComponent implements OnInit {
                 });
             }
         });
-    }
-
-    duplicateEnv(envValues: any) {
-        this.newEnvironment.values = JSON.parse(JSON.stringify(envValues));
-        this.currWindowType = WINDOW_TYPE.ADD;
     }
 
     // Hide microtext in a specific field.

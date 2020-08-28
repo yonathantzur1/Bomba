@@ -1,6 +1,6 @@
 .form-group {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .empty-env {
@@ -12,15 +12,11 @@
 
 .title {
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .info {
     text-align: left;
-}
-
-.add-env-btn {
-    margin-top: 10px;
-    text-transform: none;
 }
 
 .env-body {
@@ -28,37 +24,55 @@
 }
 
 .new-env-name {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+    font-size: 16px !important;
 }
 
 .new-env-values {
-    height: calc(100% - 160px);
+    height: calc(100% - 150px);
     overflow-y: auto;
 }
 
-.add-env-icon {
+.env-btn {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
-    font-size: 24px;
+    bottom: 20px;
+    font-size: 14px;
     cursor: pointer;
+    padding: 8px 0;
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 3px;
+    text-align: center;
+    user-select: none;
 }
 
-.add-env-icon:hover {
-    color: #696969;
+.cancel-env-btn {
+    right: 130px;
+}
+
+.set-env-btn {
+    right: 20px;
+    background-color: #41abff;
+    color: white;
+}
+
+.env-btn:hover {
+    background-color: #e8e8e8;
+}
+
+.set-env-btn:hover {
+    background-color: #5db7ff;
 }
 
 .microtext {
     font-size: 11px;
-    position: absolute;
     color: var(--microtext-color) !important;
-    bottom: -22px;
-    left: 0px;
+    margin-bottom: 10px;
 }
 
 .env-items-container {
     margin-top: 20px;
-    height: calc(100% - 130px);
+    height: calc(100% - 145px);
     overflow-y: auto;
 }
 
@@ -72,14 +86,16 @@
 
 .env-name {
     margin-left: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(100% - 120px);
 }
 
 .action-btns {
     right: 10px;
+    top: 5px;
     position: absolute;
-    display: flex;
-    align-items: center;
-    height: 100%;
 }
 
 .action-icon {

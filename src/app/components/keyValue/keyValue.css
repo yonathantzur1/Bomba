@@ -41,6 +41,7 @@ input:focus {
     font-size: 13px;
     border: 1px solid #888888;
     border-radius: 3px;
+    user-select: none;
 }
 
 .btn-active {
@@ -49,6 +50,10 @@ input:focus {
     color: white;
     font-weight: bold;
     transition: background-color 0.4s;
+}
+
+.btn-active:hover {
+    background-color: #5db7ff;
 }
 
 .action-sector {
