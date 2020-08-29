@@ -55,6 +55,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
     isShowEnvironments: boolean = false;
     selectedRequest: Request;
 
+    selectedEnv: Environment;
+
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
@@ -127,6 +129,10 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
         this.requestsAmount = this.getMatrixRequestsAmount();
         this.resultsAmount = this.report ? this.getResultsAmount() : 0;
+
+        this.selectedEnv = this.environments.find(env => {
+            return env.isActice;
+        }) || null;
     }
 
     ngOnDestroy() {

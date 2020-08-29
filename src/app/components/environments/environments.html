@@ -20,7 +20,7 @@
         <div class="env-body">
             <p class="title">{{(currWindowType === windowType.ADD) ? "Add Environment" : "Update Environment"}}</p>
             <div class="form-group">
-                <input id="new-env-name" maxlength="50" [(ngModel)]="environment.name" placeholder="Environment Name"
+                <input id="new-env-name" maxlength="20" [(ngModel)]="environment.name" placeholder="Environment Name"
                     type="text" class="form-control new-env-name"
                     (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
                 <label id="new-env-name-micro" class="microtext"></label>

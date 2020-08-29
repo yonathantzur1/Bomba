@@ -4,6 +4,10 @@
             <span data-tooltip="Compress Matrix" class="top-icon compress-icon" (click)="compressMatrix()">
                 <i class="fas fa-compress"></i>
             </span>
+            <select class="env-select" [(ngModel)]="selectedEnv">
+                <option [ngValue]="null">No Environment</option>
+                <option *ngFor="let env of environments" [ngValue]="env">{{env.name}}</option>
+            </select>
             <span data-tooltip="Manage Environments" class="top-icon env-icon" (click)="isShowEnvironments=true;">
                 <i class="fas fa-sliders-h"></i>
             </span>

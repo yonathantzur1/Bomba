@@ -84,12 +84,24 @@
     font-size: 18px;
 }
 
+.env-select {
+    position: absolute;
+    right: 45px;
+    width: 165px;
+    outline: none;
+    background-color: #f3f3f3;
+    border: 0.5px solid #9e9e9e;
+    border-radius: 3px;
+    padding: 2px 8px !important;
+    font-size: 13px !important;
+}
+
 .compress-icon {
-    right: 16px;
+    left: 50px;
 }
 
 .env-icon {
-    right: 45px;
+    right: 16px;
 }
 
 .send-btn-icon {
