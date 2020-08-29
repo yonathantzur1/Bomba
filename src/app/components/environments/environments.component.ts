@@ -5,6 +5,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { stringify } from '@angular/compiler/src/util';
 
 declare let $: any;
 
@@ -182,6 +183,10 @@ export class EnvironmentsComponent implements OnInit {
             }
         }
 
+        let allNames: Map<string, boolean> = new Map();
+        this.environments.forEach(env => {
+            allNames.set(env.name, true);
+        });
         let newName = "";
 
         if (lastValue && parts[parts.length - 2] == "Copy") {
@@ -194,7 +199,7 @@ export class EnvironmentsComponent implements OnInit {
             do {
                 newName = baseName + (++lastValue);
             }
-            while (this.isEnvNameExists(newName));
+            while (this.isEnvNameExists(newName, allNames));
         }
         else if (parts.length >= 2 && parts[parts.length - 1] == "Copy") {
             let index = 2;
@@ -203,12 +208,12 @@ export class EnvironmentsComponent implements OnInit {
             do {
                 newName = baseName + (index++);
             }
-            while (this.isEnvNameExists(newName));
+            while (this.isEnvNameExists(newName, allNames));
         }
         else {
             newName = name + " Copy";
 
-            if (this.isEnvNameExists(newName)) {
+            if (this.isEnvNameExists(newName, allNames)) {
                 return this.createCopyEvnName(newName);
             }
         }
@@ -216,10 +221,8 @@ export class EnvironmentsComponent implements OnInit {
         return newName;
     }
 
-    isEnvNameExists(name: string): boolean {
-        return !!this.environments.find(env => {
-            return env.name == name;
-        });
+    isEnvNameExists(name: string, allNames: Map<string, boolean>): boolean {
+        return !!allNames.get(name);
     }
 
     deleteEnv(name: string) {
