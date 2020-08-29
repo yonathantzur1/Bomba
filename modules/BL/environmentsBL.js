@@ -6,6 +6,8 @@ const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
     async addEnv(projectId, env, userId) {
+        env.name = env.name.trim();
+
         const envFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
@@ -28,7 +30,22 @@ module.exports = {
         return !!updateResult;
     },
 
-    deleteEnv(projectId, envName, userId) {
+    updateEnv(projectId, currEnvName, env, userId) {
+        env.name = env.name.trim();
+
+        const envFilter = {
+            _id: DAL.getObjectId(projectId),
+            owner: DAL.getObjectId(userId),
+            "environments.name": currEnvName
+        };
+
+        const envUpdate = { $set: { "environments.$": env } };
+
+        return DAL.updateOne(projectsCollectionName, envFilter, envUpdate)
+            .catch(errorHandler.promiseError);;
+    },
+
+    async deleteEnv(projectId, envName, userId) {
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
@@ -36,7 +53,9 @@ module.exports = {
 
         const projectUpdate = { $pull: { "environments": { name: envName } } };
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+        const deleteResult = await DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
+
+        return !!deleteResult && deleteResult.environments.length > 0;
     }
 };

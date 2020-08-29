@@ -41,7 +41,7 @@
                 You can use it in a request by putting the variable name within curly-braces.
             </p>
             <div class="env-items-container">
-                <div class="env-item" *ngFor="let env of environments">
+                <div class="env-item" *ngFor="let env of getSortEnvironments(environments)">
                     <span class="env-name">{{env.name}}</span>
                     <div class="action-btns">
                         <span data-tooltip="Update Environment" class="tooltip-bottom-right action-icon"
@@ -49,7 +49,7 @@
                             <i class="far fa-edit"></i>
                         </span>
                         <span data-tooltip="Duplicate Environment" class="tooltip-bottom-right action-icon"
-                            (click)="duplicateEnv(env.values)">
+                            (click)="duplicateEnv(env)">
                             <i class="far fa-clone"></i>
                         </span>
                         <span data-tooltip="Delete Environment" class="tooltip-bottom-right action-icon"

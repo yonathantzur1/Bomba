@@ -53,6 +53,8 @@ export class EnvironmentsComponent implements OnInit {
     currWindowType: WINDOW_TYPE;
     windowType: any = WINDOW_TYPE;
 
+    currEnvName: string;
+
     constructor(private environmentsService: EnvironmentsService,
         private alertService: AlertService,
         private snackbarService: SnackbarService,
@@ -61,7 +63,13 @@ export class EnvironmentsComponent implements OnInit {
         this.validationFuncs = [
             {
                 isFieldValid(env: Environment) {
-                    return !!env.name;
+                    const isValid = !!env.name;
+
+                    if (isValid) {
+                        env.name = env.name.trim()
+                    }
+
+                    return isValid;
                 },
                 errMsg: "Please enter environment name",
                 fieldId: "new-env-name-micro",
@@ -72,6 +80,12 @@ export class EnvironmentsComponent implements OnInit {
 
     ngOnInit() {
         this.setWindowType();
+    }
+
+    getSortEnvironments(environments: Array<Environment>) {
+        return environments.sort((a: Environment, b: Environment) => {
+            return a.name < b.name ? -1 : 1;
+        });
     }
 
     setWindowType() {
@@ -116,17 +130,96 @@ export class EnvironmentsComponent implements OnInit {
     }
 
     updateEnv() {
-
+        if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+            this.environmentsService.updateEnv(this.projectId, this.currEnvName, this.environment).then(result => {
+                if (!result) {
+                    this.snackbarService.snackbar("Server error occurred");
+                }
+                else {
+                    const updateData = {
+                        "currEnvName": this.currEnvName,
+                        "environment": this.environment
+                    }
+                    this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, updateData);
+                    this.currWindowType = WINDOW_TYPE.LIST;
+                    this.environment = new Environment();
+                }
+            });
+        }
     }
 
     editEnv(env: Environment) {
         this.environment = new Environment().copy(env);
+        this.currEnvName = env.name;
         this.currWindowType = WINDOW_TYPE.UPDATE;
     }
 
-    duplicateEnv(values: any) {
-        this.environment.values = JSON.parse(JSON.stringify(values));
-        this.currWindowType = WINDOW_TYPE.ADD;
+    duplicateEnv(env: Environment) {
+        let duplicateEnv = new Environment().copy(env);
+        duplicateEnv.name = this.createCopyEvnName(env.name);
+
+        this.environmentsService.addEnv(this.projectId, duplicateEnv).then(result => {
+            // In case of server error.
+            if (!result || result == "-1") {
+                this.snackbarService.snackbar("Server error occurred");
+            }
+            else {
+                this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, duplicateEnv);
+            }
+        });
+    }
+
+    createCopyEvnName(name: string): string {
+        const parts = name.split(" ");
+        let lastValue: number;
+
+        if (parts.length > 2) {
+            try {
+                lastValue = parseInt(parts[parts.length - 1]);
+            }
+            catch (e) {
+                lastValue = null;
+            }
+        }
+
+        let newName = "";
+
+        if (lastValue && parts[parts.length - 2] == "Copy") {
+            let baseName = "";
+
+            for (let i = 0; i < parts.length - 1; i++) {
+                baseName += parts[i] + " ";
+            }
+
+            do {
+                newName = baseName + (++lastValue);
+            }
+            while (this.isEnvNameExists(newName));
+        }
+        else if (parts.length >= 2 && parts[parts.length - 1] == "Copy") {
+            let index = 2;
+            let baseName = name + " ";
+
+            do {
+                newName = baseName + (index++);
+            }
+            while (this.isEnvNameExists(newName));
+        }
+        else {
+            newName = name + " Copy";
+
+            if (this.isEnvNameExists(newName)) {
+                return this.createCopyEvnName(newName);
+            }
+        }
+
+        return newName;
+    }
+
+    isEnvNameExists(name: string): boolean {
+        return !!this.environments.find(env => {
+            return env.name == name;
+        });
     }
 
     deleteEnv(name: string) {

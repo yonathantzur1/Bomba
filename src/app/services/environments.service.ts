@@ -18,6 +18,12 @@ export class EnvironmentsService extends BasicService {
         return super.post('/addEnv', data);
     }
 
+    updateEnv(projectId: string, currEnvName: string, env: Environment) {
+        const data = { projectId, currEnvName, env };
+
+        return super.put('/updateEnv', data);
+    }
+
     deleteEnv(projectId: string, envName: string) {
         return super.delete('/deleteEnv?projectId=' + projectId + "&envName=" + envName);
     }
