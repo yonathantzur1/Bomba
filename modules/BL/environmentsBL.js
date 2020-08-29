@@ -45,7 +45,7 @@ module.exports = {
             .catch(errorHandler.promiseError);;
     },
 
-    async deleteEnv(projectId, envName, userId) {
+    deleteEnv(projectId, envName, userId) {
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
@@ -53,9 +53,7 @@ module.exports = {
 
         const projectUpdate = { $pull: { "environments": { name: envName } } };
 
-        const deleteResult = await DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
-
-        return !!deleteResult && deleteResult.environments.length > 0;
     }
 };
