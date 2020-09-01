@@ -5,7 +5,6 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
-import { stringify } from '@angular/compiler/src/util';
 
 declare let $: any;
 
