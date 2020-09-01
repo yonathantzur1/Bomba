@@ -16,7 +16,7 @@
 .title {
     font-size: 26px;
     padding-bottom: 5px;
-    border-bottom: 0.5px solid gray;
+    border-bottom: 1px solid gray;
     width: 140px;
     margin: auto;
 }
