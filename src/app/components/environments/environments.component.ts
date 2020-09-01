@@ -12,17 +12,18 @@ declare let $: any;
 export class Environment {
     name: string;
     values: any;
-    isActice: boolean;
+    isActive: boolean;
 
     constructor() {
         this.name = "";
         this.values = {};
-        this.isActice = false;
+        this.isActive = false;
     }
 
     copy(env: Environment) {
         this.name = env.name;
         this.values = JSON.parse(JSON.stringify(env.values));
+        this.isActive = env.isActive;
 
         return this;
     }
@@ -247,6 +248,10 @@ export class EnvironmentsComponent implements OnInit {
                 });
             }
         });
+    }
+
+    closeWindow() {
+        this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
     }
 
     // Hide microtext in a specific field.

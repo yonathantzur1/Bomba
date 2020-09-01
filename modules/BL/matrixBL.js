@@ -45,7 +45,7 @@ module.exports = {
         return response;
     },
 
-    async sendRequestsMatrix(requestsMatrix, projectId, requestTimeout, userId) {
+    async sendRequestsMatrix(requestsMatrix, projectId, requestTimeout, env, userId) {
         const isOwnerValid = await isProjectOwnerValid(projectId, userId)
             .catch(errorHandler.promiseError);
 

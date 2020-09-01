@@ -38,7 +38,8 @@ schemas[REST.POST] = {
             "sendRequests": {
                 matrix: joi.required(),
                 projectId: joi.string().required(),
-                requestTimeout: joi.number().min(1).max(100000).required()
+                requestTimeout: joi.number().min(1).max(100000).required(),
+                env: joi.any()
             }
         }
     }

@@ -62,9 +62,16 @@ export class BoardComponent implements OnInit, OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.UPDATE_ENVIRONMENT, (data: any) => {
-            for (let i = 0; i < this.environments.length; i++) {
-                if (this.environments[i].name == data.currEnvName) {
-                    this.environments[i] = data.environment;
+            for (let env of this.environments) {
+                if (env.name == data.currEnvName) {
+                    Object.keys(env).forEach(prop => {
+                        if (typeof data.environment[prop] == "object") {
+                            env[prop] = JSON.parse(JSON.stringify(data.environment[prop]))
+                        }
+                        else {
+                            env[prop] = data.environment[prop];
+                        }
+                    });
                     break;
                 }
             }
@@ -73,6 +80,13 @@ export class BoardComponent implements OnInit, OnDestroy {
         eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envName: string) => {
             this.environments = this.environments.filter(env => {
                 return env.name != envName;
+            });
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.ACTIVE_ENVIRONMENT, (envName: string) => {
+            this.environments = this.environments.map(env => {
+                env.isActive = (env.name == envName);
+                return env;
             });
         }, this.eventsIds);
     }

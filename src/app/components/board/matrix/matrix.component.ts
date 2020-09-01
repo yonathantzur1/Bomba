@@ -7,6 +7,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { ReportsService } from 'src/app/services/reports.service';
+import { EnvironmentsService } from 'src/app/services/environments.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
@@ -31,7 +32,7 @@ export class RequestResult {
 @Component({
     selector: 'matrix',
     templateUrl: './matrix.html',
-    providers: [MatrixService, BoardService, ReportsService],
+    providers: [MatrixService, BoardService, ReportsService, EnvironmentsService],
     styleUrls: ['./matrix.css']
 })
 
@@ -66,6 +67,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         public alertService: AlertService,
         private matrixService: MatrixService,
         private reportService: ReportsService,
+        private environmentsService: EnvironmentsService,
         private boardService: BoardService) {
 
         eventService.register(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, (data: any) => {
@@ -131,7 +133,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.resultsAmount = this.report ? this.getResultsAmount() : 0;
 
         this.selectedEnv = this.environments.find(env => {
-            return env.isActice;
+            return env.isActive;
         }) || null;
     }
 
@@ -145,6 +147,17 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     isSyncAllow(projectId: string, userGuid: string) {
         return (this.projectId == projectId && this.globalService.userGuid != userGuid);
+    }
+
+    selectEnv() {
+        this.selectedEnv && this.eventService.emit(EVENT_TYPE.ACTIVE_ENVIRONMENT, this.selectedEnv.name);
+
+        this.environmentsService.updateActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.name : null)
+            .then(result => {
+                if (!result) {
+                    this.snackbarService.snackbar("Server error occurred");
+                }
+            });
     }
 
     updateRequestStatus(data: any) {
@@ -260,7 +273,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
                 this.sendRequestsPreActions();
-                this.matrixService.sendRequests(this.matrix, this.projectId, this.requestTimeout);
+                this.matrixService.sendRequests(this.matrix, this.projectId, this.requestTimeout, this.selectedEnv)
+                    .then(result => {
+                        if (!result) {
+                            this.snackbarService.snackbar("Server error occurred");
+                        }
+                    });
                 this.socketService.socketEmit('selfSync', 'syncSendRequests',
                     {
                         "userGuid": this.globalService.userGuid,

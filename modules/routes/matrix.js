@@ -26,8 +26,10 @@ router.post('/sendRequests', validator, (req, res) => {
     matrixBL.sendRequestsMatrix(req.body.matrix,
         req.body.projectId,
         req.body.requestTimeout,
+        req.body.env,
         req.user._id);
-    res.end();
+
+    res.send(true);
 });
 
 router.post('/stopRequests', (req, res) => {

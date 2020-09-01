@@ -4,6 +4,7 @@ import { BasicService } from './basic.service';
 import { HttpClient } from '@angular/common/http';
 
 import { Request } from '../components/requestCard/requestCard.component'
+import { Environment } from '../components/environments/environments.component';
 
 @Injectable()
 export class MatrixService extends BasicService {
@@ -18,8 +19,8 @@ export class MatrixService extends BasicService {
         return super.post('/testRequest', data);
     }
 
-    sendRequests(matrix: Request[][], projectId: string, requestTimeout: number) {
-        const data = { matrix, projectId, requestTimeout };
+    sendRequests(matrix: Request[][], projectId: string, requestTimeout: number, env: Environment) {
+        const data = { matrix, projectId, requestTimeout, env };
 
         return super.post('/sendRequests', data);
     }

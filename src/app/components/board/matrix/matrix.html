@@ -4,7 +4,7 @@
             <span data-tooltip="Compress Matrix" class="top-icon compress-icon" (click)="compressMatrix()">
                 <i class="fas fa-compress"></i>
             </span>
-            <select class="env-select" [(ngModel)]="selectedEnv">
+            <select class="env-select" [(ngModel)]="selectedEnv" (change)="selectEnv()">
                 <option [ngValue]="null">No Environment</option>
                 <option *ngFor="let env of environments" [ngValue]="env">{{env.name}}</option>
             </select>

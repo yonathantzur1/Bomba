@@ -33,7 +33,7 @@ module.exports = {
     updateEnv(projectId, currEnvName, env, userId) {
         env.name = env.name.trim();
 
-        const envFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
             "environments.name": currEnvName
@@ -41,7 +41,7 @@ module.exports = {
 
         const envUpdate = { $set: { "environments.$": env } };
 
-        return DAL.updateOne(projectsCollectionName, envFilter, envUpdate)
+        return DAL.updateOne(projectsCollectionName, projectFilter, envUpdate)
             .catch(errorHandler.promiseError);;
     },
 
@@ -55,5 +55,36 @@ module.exports = {
 
         return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
+    },
+
+    async updateActiveEnv(projectId, envName, userId) {
+        const oldEnvFilter = {
+            _id: DAL.getObjectId(projectId),
+            owner: DAL.getObjectId(userId),
+            "environments.isActive": true
+        };
+
+        const oldEnvUpdate = { $set: { "environments.$.isActive": false } };
+
+        await DAL.updateOne(projectsCollectionName, oldEnvFilter, oldEnvUpdate)
+            .catch(errorHandler.promiseError);
+
+        // In case the user select "no environment"
+        if (!envName) {
+            return true;
+        }
+
+        const newEnvFilter = {
+            _id: DAL.getObjectId(projectId),
+            owner: DAL.getObjectId(userId),
+            "environments.name": envName
+        };
+
+        const newEnvUpdate = { $set: { "environments.$.isActive": true } };
+
+        const result = await DAL.updateOne(projectsCollectionName, newEnvFilter, newEnvUpdate)
+            .catch(errorHandler.promiseError);
+
+        return result.environments.length > 0;
     }
 };
