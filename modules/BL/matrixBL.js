@@ -54,6 +54,7 @@ module.exports = {
         }
 
         this.projectsRequests[projectId] = true;
+        setEnvironmentOnMatrix(env.values, requestsMatrix);
 
         await reportsBL.initReport(requestsMatrix, projectId, userId)
             .catch(errorHandler.promiseError);
@@ -328,4 +329,34 @@ function jsonTryParse(obj) {
     catch (e) {
         return null;
     }
+}
+
+function setEnvironmentOnMatrix(values, matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            let request = matrix[i][j];
+
+            Object.keys(values).forEach(key => {
+                const src = "{" + key + "}";
+                const target = values[key];
+                request.url = replaceEnvValue(request.url, src, target);
+                request.body = replaceEnvValue(request.body, src, target);
+                request.cookies = replaceEnvValue(request.cookies, src, target);
+                request.headers = replaceEnvValue(request.headers, src, target);
+            });
+        }
+    }
+}
+
+function replaceEnvValue(param, src, dst) {
+    if (typeof param == "string") {
+        return replaceAll(param, src, dst);
+    }
+    else if (typeof param == "object") {
+        return JSON.parse(replaceAll(JSON.stringify(param), src, dst));
+    }
+}
+
+function replaceAll(str, src, dst) {
+    return str.replace(new RegExp(src, 'g'), dst);
 }
