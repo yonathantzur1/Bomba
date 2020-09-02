@@ -55,6 +55,7 @@
             </tr>
         </table>
     </div>
-    <request-card *ngIf="isShowRequestCard" [selectedRequest]="selectedRequest"></request-card>
+    <request-card *ngIf="isShowRequestCard" [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest"
+        [environment]="selectedEnv"></request-card>
     <environments *ngIf="isShowEnvironments" [projectId]="projectId" [environments]="environments"></environments>
 </div>

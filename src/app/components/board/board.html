@@ -5,8 +5,7 @@
             <div class="matrix-sector" [ngClass]="{'send-mode': isSendMode}">
                 <matrix [projectId]="projectId" [projectName]="projectName" [matrix]="matrix" [isSendMode]="isSendMode"
                     [report]="report" [environments]="environments" [maxRequestAmount]="maxRequestAmount"
-                    [requestTimeout]="defaultSettings.timeout">
-                </matrix>
+                    [defaultSettings]="defaultSettings"></matrix>
             </div>
             <div class="cards-sector" *ngIf="!isSendMode">
                 <templates [projectId]="projectId" [requests]="requests" [defaultSettings]="defaultSettings">

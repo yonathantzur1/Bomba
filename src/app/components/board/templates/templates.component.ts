@@ -6,6 +6,7 @@ import { SocketService } from 'src/app/services/global/socket.service';
 import { Request } from '../../requestCard/requestCard.component'
 import { DefaultSettings } from '../../requestSettings/requestSettings.component'
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { Environment } from '../../environments/environments.component';
 
 @Component({
     selector: 'templates',
@@ -22,6 +23,7 @@ export class TemplatesComponent implements OnDestroy {
     isShowRequestCard: boolean = false;
     isShowRequestSettings: boolean = false;
     selectedRequest: Request;
+    selectedEnvironment: Environment;
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
@@ -47,6 +49,10 @@ export class TemplatesComponent implements OnDestroy {
         eventService.register(EVENT_TYPE.DROP_REQUEST_CARD, (data: any) => {
             data.request = this.requests[data.requestIndex];
             this.eventService.emit(EVENT_TYPE.ADD_REQUEST_CARD_TO_MATRIX, data);
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.SELECT_ENVIRONMENT, (env: Environment) => {
+            this.selectedEnvironment = env;
         }, this.eventsIds);
     }
 

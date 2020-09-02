@@ -4,6 +4,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { Environment } from '../../environments/environments.component';
 
 @Component({
     selector: 'test-request',
@@ -15,6 +16,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class TestRequestComponent implements OnInit {
     @Input() request: Request;
     @Input() requestTimeout: number;
+    @Input() environment: Environment;
 
     isSendRequest: boolean;
     response: any;
@@ -27,7 +29,7 @@ export class TestRequestComponent implements OnInit {
     ngOnInit() {
         this.isSendRequest = true;
 
-        this.matrixService.testRequest(this.request, this.requestTimeout).then(result => {
+        this.matrixService.testRequest(this.request, this.requestTimeout, this.environment).then(result => {
             this.isSendRequest = false;
 
             if (!result) {

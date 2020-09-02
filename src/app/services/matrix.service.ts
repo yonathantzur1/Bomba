@@ -13,8 +13,8 @@ export class MatrixService extends BasicService {
         super(http, "/api/matrix");
     }
 
-    testRequest(request: Request, requestTimeout: number) {
-        const data = { request, requestTimeout };
+    testRequest(request: Request, requestTimeout: number, env: Environment) {
+        const data = { request, requestTimeout, env };
 
         return super.post('/testRequest', data);
     }

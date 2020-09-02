@@ -52,10 +52,9 @@ export class BoardComponent implements OnInit, OnDestroy {
             this.isSendMode = mode;
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.SET_DEFAULT_REQUEST_SETTINGS,
-            (defaultSettings: DefaultSettings) => {
-                this.defaultSettings = defaultSettings;
-            }, this.eventsIds);
+        eventService.register(EVENT_TYPE.SET_DEFAULT_REQUEST_SETTINGS, (defaultSettings: DefaultSettings) => {
+            this.defaultSettings = defaultSettings;
+        }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.ADD_ENVIRONMENT, (environment: Environment) => {
             this.environments.push(environment);

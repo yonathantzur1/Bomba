@@ -15,7 +15,7 @@ pubsub && pubsub.subscribe(pubsub.channels.stopRequests).then(result => {
 });
 
 router.post('/testRequest', validator, (req, res) => {
-    matrixBL.testRequest(req.body.request, req.body.requestTimeout).then(result => {
+    matrixBL.testRequest(req.body.request, req.body.requestTimeout, req.body.env).then(result => {
         res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);

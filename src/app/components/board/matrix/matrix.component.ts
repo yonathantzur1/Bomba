@@ -10,6 +10,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { EnvironmentsService } from 'src/app/services/environments.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { DefaultSettings } from '../../requestSettings/requestSettings.component';
 
 declare let $: any;
 
@@ -45,7 +46,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     @Input() report: any;
     @Input() environments: Array<Environment>;
     @Input() maxRequestAmount: number;
-    @Input() requestTimeout: number;
+    @Input() defaultSettings: DefaultSettings;
 
     requestsAmount: number;
     resultsAmount: number;
@@ -135,6 +136,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.selectedEnv = this.environments.find(env => {
             return env.isActive;
         }) || null;
+        this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, this.selectedEnv);
     }
 
     ngOnDestroy() {
@@ -151,7 +153,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     selectEnv() {
         this.selectedEnv && this.eventService.emit(EVENT_TYPE.ACTIVE_ENVIRONMENT, this.selectedEnv.name);
-
+        this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, this.selectedEnv);
         this.environmentsService.updateActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.name : null)
             .then(result => {
                 if (!result) {
@@ -273,8 +275,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
             type: ALERT_TYPE.INFO,
             confirmFunc: () => {
                 this.sendRequestsPreActions();
-                this.matrixService.sendRequests(this.matrix, this.projectId, this.requestTimeout, this.selectedEnv)
-                    .then(result => {
+                this.matrixService.sendRequests(this.matrix, this.projectId,
+                    this.defaultSettings.timeout, this.selectedEnv).then(result => {
                         if (!result) {
                             this.snackbarService.snackbar("Server error occurred");
                         }

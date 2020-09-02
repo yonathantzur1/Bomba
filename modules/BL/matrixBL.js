@@ -22,7 +22,8 @@ module.exports = {
         }
     },
 
-    async testRequest(request, requestTimeout) {
+    async testRequest(request, requestTimeout, env) {
+        setEnvironmentOnRequest(env.values, request);
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
 
@@ -334,18 +335,25 @@ function jsonTryParse(obj) {
 function setEnvironmentOnMatrix(values, matrix) {
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
-            let request = matrix[i][j];
-
-            Object.keys(values).forEach(key => {
-                const src = "{" + key + "}";
-                const target = values[key];
-                request.url = replaceEnvValue(request.url, src, target);
-                request.body = replaceEnvValue(request.body, src, target);
-                request.cookies = replaceEnvValue(request.cookies, src, target);
-                request.headers = replaceEnvValue(request.headers, src, target);
-            });
+            setEnvironmentOnRequest(values, matrix[i][j])
         }
     }
+}
+
+function setEnvironmentOnRequest(values, request) {
+    Object.keys(values).forEach(key => {
+        const src = "{" + key + "}";
+        const target = values[key];
+        request.url = replaceEnvValue(request.url, src, target);
+        request.body &&
+            (request.body = JSON.stringify(replaceEnvValue(JSON.parse(request.body), src, target)));
+        request.cookies = replaceEnvValue(request.cookies, src, target);
+        request.headers = replaceEnvValue(request.headers, src, target);
+
+        if (request.body) {
+            request.body = JSON.stringify(replaceEnvValue(JSON.parse(request.body), src, target));
+        }
+    });
 }
 
 function replaceEnvValue(param, src, dst) {
@@ -353,8 +361,12 @@ function replaceEnvValue(param, src, dst) {
         return replaceAll(param, src, dst);
     }
     else if (typeof param == "object") {
-        return JSON.parse(replaceAll(JSON.stringify(param), src, dst));
+        Object.keys(param).forEach(key => {
+            param[key] = replaceEnvValue(param[key], src, dst);
+        });
     }
+
+    return param;
 }
 
 function replaceAll(str, src, dst) {
