@@ -18,6 +18,9 @@
     <card *ngSwitchCase="currWindowType === windowType.ADD || currWindowType === windowType.UPDATE"
         [title]="'Manage Environments'" [width]="700" [height]="500">
         <div class="env-body">
+            <div class="loader-back" *ngIf="isLoading">
+                <loader-spinner class="loader"></loader-spinner>
+            </div>
             <p class="title">{{(currWindowType === windowType.ADD) ? "Add Environment" : "Update Environment"}}</p>
             <div class="form-group">
                 <input id="new-env-name" maxlength="20" [(ngModel)]="environment.name" placeholder="Environment Name"
@@ -35,6 +38,9 @@
     </card>
     <card *ngSwitchCase="currWindowType === windowType.LIST" [title]="'Manage Environments'" [width]="600"
         [height]="400">
+        <div class="loader-back" *ngIf="isLoading">
+            <loader-spinner class="loader"></loader-spinner>
+        </div>
         <div class="env-body">
             <p class="info" style="font-size: 13px;">
                 An environment is a set of variables that allows you to switch the context of your requests.

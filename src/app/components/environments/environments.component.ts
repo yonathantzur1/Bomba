@@ -56,6 +56,8 @@ export class EnvironmentsComponent implements OnInit {
 
     currEnvName: string;
 
+    isLoading: boolean = false;
+
     constructor(private environmentsService: EnvironmentsService,
         private alertService: AlertService,
         private snackbarService: SnackbarService,
@@ -112,7 +114,10 @@ export class EnvironmentsComponent implements OnInit {
 
     addEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+            this.isLoading = true;
             this.environmentsService.addEnv(this.projectId, this.environment).then(result => {
+                this.isLoading = false;
+
                 // In case of server error.
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
@@ -132,7 +137,10 @@ export class EnvironmentsComponent implements OnInit {
 
     updateEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+            this.isLoading = true;
             this.environmentsService.updateEnv(this.projectId, this.currEnvName, this.environment).then(result => {
+                this.isLoading = false;
+
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
@@ -159,7 +167,10 @@ export class EnvironmentsComponent implements OnInit {
         let duplicateEnv = new Environment().copy(env);
         duplicateEnv.name = this.createCopyEvnName(env.name);
 
+        this.isLoading = true;
         this.environmentsService.addEnv(this.projectId, duplicateEnv).then(result => {
+            this.isLoading = false;
+
             // In case of server error.
             if (!result || result == "-1") {
                 this.snackbarService.snackbar("Server error occurred");
@@ -232,8 +243,11 @@ export class EnvironmentsComponent implements OnInit {
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
                 const isLastEnv: boolean = (this.environments.length == 1);
+                this.isLoading = true;
 
                 this.environmentsService.deleteEnv(this.projectId, name).then(result => {
+                    this.isLoading = false;
+
                     if (!result) {
                         this.snackbarService.snackbar("Server error occurred");
                     }
