@@ -345,8 +345,6 @@ function setEnvironmentOnRequest(values, request) {
         const src = "{" + key + "}";
         const target = values[key];
         request.url = replaceEnvValue(request.url, src, target);
-        request.body &&
-            (request.body = JSON.stringify(replaceEnvValue(JSON.parse(request.body), src, target)));
         request.cookies = replaceEnvValue(request.cookies, src, target);
         request.headers = replaceEnvValue(request.headers, src, target);
 
