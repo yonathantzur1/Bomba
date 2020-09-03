@@ -1,5 +1,6 @@
 const DAL = require('../DAL');
 const config = require('../../config');
+const generator = require('../generator');
 const errorHandler = require('../handlers/errorHandler');
 
 const projectsCollectionName = config.db.collections.projects;
@@ -7,6 +8,7 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     async addEnv(projectId, env, userId) {
         env.name = env.name.trim();
+        env.id = generator.generateId();
 
         const envFilter = {
             _id: DAL.getObjectId(projectId),
@@ -27,7 +29,7 @@ module.exports = {
         const updateResult = DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
 
-        return !!updateResult;
+        return !!updateResult ? env.id : false;
     },
 
     updateEnv(projectId, currEnvName, env, userId) {

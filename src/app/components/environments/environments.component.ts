@@ -9,6 +9,7 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 declare let $: any;
 
 export class Environment {
+    id: string;
     name: string;
     values: any;
     isActive: boolean;
@@ -20,6 +21,7 @@ export class Environment {
     }
 
     copy(env: Environment) {
+        this.id = env.id;
         this.name = env.name;
         this.values = JSON.parse(JSON.stringify(env.values));
         this.isActive = env.isActive;
@@ -115,18 +117,19 @@ export class EnvironmentsComponent implements OnInit {
     addEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
             this.isLoading = true;
-            this.environmentsService.addEnv(this.projectId, this.environment).then(result => {
+            this.environmentsService.addEnv(this.projectId, this.environment).then(envId => {
                 this.isLoading = false;
 
                 // In case of server error.
-                if (!result) {
+                if (!envId) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
                 // In case the env name is exists.
-                else if (result == "-1") {
+                else if (envId == "-1") {
                     $("#new-env-name-micro").html("The name is already in use");
                 }
                 else {
+                    this.environment.id = envId;
                     this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
                     this.environment = new Environment();
