@@ -1,7 +1,8 @@
 <div id="matrix">
     <div class="matrix-top">
         <span *ngIf="!isSendMode" class="matrix-top-buttons">
-            <span data-tooltip="Compress Matrix" class="top-icon compress-icon" (click)="compressMatrix()">
+            <span data-tooltip="Compress Matrix" [ngClass]="{'compress-left': isMatrixEmpty()}"
+                class="top-icon compress-icon" (click)="compressMatrix()">
                 <i class="fas fa-compress"></i>
             </span>
             <select class="env-select" [(ngModel)]="selectedEnv" (change)="selectEnv()">

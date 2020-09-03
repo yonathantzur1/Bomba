@@ -103,6 +103,12 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.deleteCell(index.i, index.j);
             this.saveMatrix();
         }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envName: string) => {
+            if (this.selectedEnv.name == envName) {
+                this.selectedEnv = null;
+            }
+        }, this.eventsIds);
     }
 
     ngOnInit() {
