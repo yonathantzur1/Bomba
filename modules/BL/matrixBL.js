@@ -76,7 +76,7 @@ module.exports = {
         Promise.all(promises).then(() => {
             if (this.projectsRequests[projectId]) {
                 const totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
-                reportsBL.saveReport(projectId, totalTime);
+                reportsBL.saveReport(projectId, totalTime, env.id);
                 delete this.projectsRequests[projectId];
             }
 
