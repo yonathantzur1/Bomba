@@ -33,7 +33,6 @@
 }
 
 .cell {
-    position: relative;
     border: 1px dashed black;
     text-align: center;
     background-color: #f5f5f5;
