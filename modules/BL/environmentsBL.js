@@ -4,6 +4,7 @@ const generator = require('../generator');
 const errorHandler = require('../handlers/errorHandler');
 
 const projectsCollectionName = config.db.collections.projects;
+const reportsCollectionName = config.db.collections.reports;
 
 module.exports = {
     async addEnv(projectId, env, userId) {
@@ -47,16 +48,32 @@ module.exports = {
             .catch(errorHandler.promiseError);;
     },
 
-    deleteEnv(projectId, envName, userId) {
+    async deleteEnv(projectId, envId, userId) {
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
         };
 
-        const projectUpdate = { $pull: { "environments": { name: envName } } };
+        const projectUpdate = { $pull: { "environments": { id: envId } } };
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
+        const deleteEnvResult = await DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
+
+        if (!deleteEnvResult) {
+            return false;
+        }
+
+        const reportsFilter = {
+            projectId: DAL.getObjectId(projectId),
+            environmentId: envId
+        };
+
+        const reportUpdate = { $set: { "environmentId": null } };
+
+        DAL.updateOne(reportsCollectionName, reportsFilter, reportUpdate)
+            .catch(errorHandler.promiseError);
+
+        return true;
     },
 
     async updateActiveEnv(projectId, envName, userId) {

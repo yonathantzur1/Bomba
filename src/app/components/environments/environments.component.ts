@@ -239,7 +239,7 @@ export class EnvironmentsComponent implements OnInit {
         return !!allNames.get(name);
     }
 
-    deleteEnv(name: string) {
+    deleteEnv(envId: string) {
         this.alertService.alert({
             title: "Delete Environment",
             text: "Are you sure you want to delete this environment?",
@@ -248,14 +248,14 @@ export class EnvironmentsComponent implements OnInit {
                 const isLastEnv: boolean = (this.environments.length == 1);
                 this.isLoading = true;
 
-                this.environmentsService.deleteEnv(this.projectId, name).then(result => {
+                this.environmentsService.deleteEnv(this.projectId, envId).then(result => {
                     this.isLoading = false;
 
                     if (!result) {
                         this.snackbarService.snackbar("Server error occurred");
                     }
                     else {
-                        this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, name);
+                        this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, envId);
 
                         if (isLastEnv) {
                             this.currWindowType = WINDOW_TYPE.EMPTY;

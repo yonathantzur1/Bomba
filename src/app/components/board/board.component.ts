@@ -76,9 +76,9 @@ export class BoardComponent implements OnInit, OnDestroy {
             }
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envName: string) => {
+        eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envId: string) => {
             this.environments = this.environments.filter(env => {
-                return env.name != envName;
+                return env.id != envId;
             });
         }, this.eventsIds);
 

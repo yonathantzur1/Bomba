@@ -24,8 +24,8 @@ export class EnvironmentsService extends BasicService {
         return super.put('/updateEnv', data);
     }
 
-    deleteEnv(projectId: string, envName: string) {
-        return super.delete('/deleteEnv?projectId=' + projectId + "&envName=" + envName);
+    deleteEnv(projectId: string, envId: string) {
+        return super.delete('/deleteEnv?projectId=' + projectId + "&envId=" + envId);
     }
 
     updateActiveEnv(projectId: string, envName: string) {

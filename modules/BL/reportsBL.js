@@ -221,13 +221,15 @@ module.exports = {
     },
 
     getProjectReports(projectId, userId) {
+        // Get all reports by project id.
         let reportFilter = {
             $match: {
                 "projectId": DAL.getObjectId(projectId)
             }
         }
 
-        let joinFilter = {
+        // Add project object to each report.
+        let joinProjectFilter = {
             $lookup:
             {
                 from: projectsCollectionName,
@@ -237,24 +239,64 @@ module.exports = {
             }
         }
 
+        // convert single project array to object.
+        let unwindProject = {
+            $unwind: {
+                path: "$project"
+            }
+        }
+
+        // Filter reports that belongs to the user (secure validation).
         let reportOwnerFilter = {
             $match: {
                 "project.owner": DAL.getObjectId(userId)
             }
         }
 
-        let fields = {
-            $project: {
-                "project": 0,
-                "data": 0
+        // Filter the report environment (To array).
+        let addEnvironment = {
+            $addFields: {
+                environment: {
+                    $filter: {
+                        input: "$project.environments",
+                        as: "env",
+                        cond: { $eq: ["$$env.id", "$environmentId"] }
+                    }
+                }
             }
         };
 
+        // convert single environment array to object.
+        let unwindEnvironment = {
+            $unwind: {
+                path: "$environment",
+                preserveNullAndEmptyArrays: true
+            }
+        }
+
+        // Set only the environment name on the report.
+        let envField = {
+            $addFields: {
+                "environment": "$environment.name"
+            }
+        };
+
+        // Remove unused properties from report object.
+        let fields = {
+            $project: {
+                "project": 0,
+                "data": 0,
+                "environmentId": 0
+            }
+        };
+
+        // Sort the reports by creation date.
         let sort = {
             $sort: { "date": -1 }
         }
 
-        let aggregateArray = [reportFilter, joinFilter, reportOwnerFilter, fields, sort];
+        let aggregateArray = [reportFilter, joinProjectFilter, unwindProject,
+            reportOwnerFilter, addEnvironment, unwindEnvironment, envField, fields, sort];
 
         return DAL.aggregate(reportsCollectionName, aggregateArray)
             .catch(errorHandler.promiseError);

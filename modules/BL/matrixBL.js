@@ -23,7 +23,7 @@ module.exports = {
     },
 
     async testRequest(request, requestTimeout, env) {
-        setEnvironmentOnRequest(env.values, request);
+        env && setEnvironmentOnRequest(env.values, request);
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
 
@@ -55,7 +55,7 @@ module.exports = {
         }
 
         this.projectsRequests[projectId] = true;
-        setEnvironmentOnMatrix(env.values, requestsMatrix);
+        env && setEnvironmentOnMatrix(env.values, requestsMatrix);
 
         await reportsBL.initReport(requestsMatrix, projectId, userId)
             .catch(errorHandler.promiseError);
@@ -76,7 +76,7 @@ module.exports = {
         Promise.all(promises).then(() => {
             if (this.projectsRequests[projectId]) {
                 const totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
-                reportsBL.saveReport(projectId, totalTime, env.id);
+                reportsBL.saveReport(projectId, totalTime, env ? env.id : null);
                 delete this.projectsRequests[projectId];
             }
 

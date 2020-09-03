@@ -20,7 +20,7 @@ router.put('/updateEnv', (req, res) => {
 });
 
 router.delete('/deleteEnv', (req, res) => {
-    environmentsBL.deleteEnv(req.query.projectId, req.query.envName, req.user._id).then(result => {
+    environmentsBL.deleteEnv(req.query.projectId, req.query.envId, req.user._id).then(result => {
         res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);
