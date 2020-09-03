@@ -20,7 +20,7 @@ module.exports = {
             .catch(errorHandler.promiseError);
 
         if (envAmount > 0) {
-            return "-1";
+            return { result: "-1" };
         }
 
         const projectFilter = { _id: DAL.getObjectId(projectId), owner: DAL.getObjectId(userId) };
@@ -29,7 +29,7 @@ module.exports = {
         const updateResult = DAL.updateOne(projectsCollectionName, projectFilter, projectUpdate)
             .catch(errorHandler.promiseError);
 
-        return !!updateResult ? env.id : false;
+        return { result: !!updateResult ? env.id : false };
     },
 
     updateEnv(projectId, currEnvName, env, userId) {

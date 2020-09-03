@@ -117,19 +117,19 @@ export class EnvironmentsComponent implements OnInit {
     addEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
             this.isLoading = true;
-            this.environmentsService.addEnv(this.projectId, this.environment).then(envId => {
+            this.environmentsService.addEnv(this.projectId, this.environment).then(data => {
                 this.isLoading = false;
 
                 // In case of server error.
-                if (!envId) {
+                if (!data.result) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
                 // In case the env name is exists.
-                else if (envId == "-1") {
+                else if (data.result == "-1") {
                     $("#new-env-name-micro").html("The name is already in use");
                 }
                 else {
-                    this.environment.id = envId;
+                    this.environment.id = data.result;
                     this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
                     this.environment = new Environment();
