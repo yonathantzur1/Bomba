@@ -1,11 +1,9 @@
-<div id="home" [ngSwitch]="isLoading">
-    <loader-rings *ngSwitchCase="true"></loader-rings>
-    <div *ngSwitchCase="false">
-        <div class="sector">
-            <navbar [isAdmin]="isAdmin"></navbar>
-        </div>
-        <div class="sector main-container">
-            <router-outlet></router-outlet>
-        </div>
+<div id="home">
+    <loader-rings *ngIf="isLoading"></loader-rings>
+    <div class="sector" *ngIf="!isLoading">
+        <navbar [isAdmin]="isAdmin"></navbar>
+    </div>
+    <div [hidden]="isLoading" class="sector main-container">
+        <router-outlet></router-outlet>
     </div>
 </div>

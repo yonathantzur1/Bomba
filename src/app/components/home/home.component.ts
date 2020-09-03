@@ -18,7 +18,7 @@ export class HomeComponent {
     constructor(private authService: AuthService,
         private globalService: GlobalService) {
         this.isLoading = true;
-        
+
         this.authService.getCurrUser().then((user: any) => {
             this.currUser = user;
         });
