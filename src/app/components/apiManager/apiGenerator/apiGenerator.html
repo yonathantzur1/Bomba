@@ -1,5 +1,5 @@
 <div id="apiGenerator">
-    <card [title]="'API Requst Generator'" [width]="360" [height]="300">
+    <card [title]="'API Requst Generator'" [width]="380" [height]="300">
         <div class="card-body">
             <form autocomplete="off">
                 <div class="form-group">
@@ -24,8 +24,8 @@
                 <div class="form-group">
                     <label class="input-title">Action</label>
                     <select class="api-input api-select" [(ngModel)]="api.action" name="selectedApiAction">
-                        <option [value]="apiAction.START">Start Bombing</option>
-                        <option [value]="apiAction.STOP">Stop Bombing</option>
+                        <option [value]="apiAction.START">Run</option>
+                        <option [value]="apiAction.STOP">Stop</option>
                     </select>
                 </div>
             </form>

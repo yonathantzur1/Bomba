@@ -36,9 +36,3 @@ p {
     padding: 3px 15px;
     user-select: none;
 }
-
-@media (max-aspect-ratio: 8/5) {
-    .api-content {
-        padding: 0 20px;
-    }
-}

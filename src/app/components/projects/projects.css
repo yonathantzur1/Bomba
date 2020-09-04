@@ -66,8 +66,8 @@
 }
 
 @media (max-aspect-ratio: 8/5) {
-    .projects-container {
-        padding: 15px 20px;
+    .project {
+        height: 230px !important;
     }
 }
 

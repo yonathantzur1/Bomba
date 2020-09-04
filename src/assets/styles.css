@@ -47,6 +47,9 @@ select {
 
 /* END OVERRIDE BOOTSTRAP MATERIAL CSS */
 
+
+/* START OVERRIDE data-tooltip CSS */
+
 [data-tooltip]:before {
     font-size: 12px !important;
     padding: 5px 8px !important;
@@ -60,6 +63,8 @@ select {
 [data-tooltip]:hover:after, [data-tooltip]:hover:before {
     transition-delay: .8s !important;
 }
+
+/* STOP OVERRIDE data-tooltip CSS */
 
 :root {
     /* Define css global variables */
