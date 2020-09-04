@@ -105,7 +105,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envId: string) => {
-            if (this.selectedEnv.id == envId) {
+            if (this.selectedEnv && this.selectedEnv.id == envId) {
                 this.selectedEnv = null;
             }
         }, this.eventsIds);
