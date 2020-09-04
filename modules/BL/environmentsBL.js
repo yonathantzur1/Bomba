@@ -76,7 +76,7 @@ module.exports = {
         return true;
     },
 
-    async updateActiveEnv(projectId, envName, userId) {
+    async updateActiveEnv(projectId, envId, userId) {
         const oldEnvFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
@@ -88,15 +88,15 @@ module.exports = {
         await DAL.updateOne(projectsCollectionName, oldEnvFilter, oldEnvUpdate)
             .catch(errorHandler.promiseError);
 
-        // In case the user select "no environment"
-        if (!envName) {
+        // In case the user select "no environment".
+        if (!envId) {
             return true;
         }
 
         const newEnvFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
-            "environments.name": envName
+            "environments.id": envId
         };
 
         const newEnvUpdate = { $set: { "environments.$.isActive": true } };

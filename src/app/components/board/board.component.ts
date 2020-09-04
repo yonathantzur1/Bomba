@@ -82,9 +82,9 @@ export class BoardComponent implements OnInit, OnDestroy {
             });
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.ACTIVE_ENVIRONMENT, (envName: string) => {
+        eventService.register(EVENT_TYPE.ACTIVE_ENVIRONMENT, (envId: string) => {
             this.environments = this.environments.map(env => {
-                env.isActive = (env.name == envName);
+                env.isActive = (env.id == envId);
                 return env;
             });
         }, this.eventsIds);
