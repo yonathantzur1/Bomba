@@ -17,4 +17,41 @@
 .document {
     width: 25%;
     height: 100px;
+    position: relative;
+}
+
+.env-folder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    height: 90px;
+    position: relative;
+    user-select: none;
+}
+
+.folder-icon {
+    width: 50px;
+    cursor: pointer;
+}
+
+.folder-text {
+    position: absolute;
+    bottom: 2px;
+    width: 80%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+}
+
+.back-icon {
+    font-size: 24px;
+    align-self: center;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 1;
 }

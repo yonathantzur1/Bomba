@@ -14,7 +14,7 @@ export class AlertService {
     public title: string;
     public text: string;
     public type: ALERT_TYPE;
-    public preConfirm: Promise<any>;
+    public preConfirm: Function;
     public confirmFunc: Function;
     public closeFunc: Function;
     public finalFunc: Function;
@@ -57,7 +57,7 @@ export class AlertService {
     confirm() {
         if (this.preConfirm) {
             this.isLoading = true;
-            this.preConfirm.then((result: any) => {
+            this.preConfirm().then((result: any) => {
                 this.isLoading = true;
                 this.confirmFunc && this.confirmFunc(result);
                 this.activateAlertClose()

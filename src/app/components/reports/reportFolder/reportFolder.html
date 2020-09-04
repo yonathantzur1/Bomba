@@ -1,12 +1,26 @@
 <div id="reportFolder">
-    <card
-        [title]="projectName + ' | ' + (selectedDocument ? 'Report   ' + formatDate(selectedDocument.date) : 'Reports')"
-        [width]="880" [height]="550">
+    <card [title]="getTitle()" [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
-        <div class="documents-container" *ngIf="!isLoading && !selectedDocument">
+        <div class="documents-container" *ngIf="!isLoading && !selectedDocument && !selectedEnvFolder">
+            <div *ngFor="let envFolder of envFolders" class="env-folder">
+                <img src="assets/icons/folder.svg" (click)="openEnvFolder(envFolder)" class="folder-icon">
+                <div [title]="envFolder.name + ' (' + envFolder.documents.length + ')'" class="folder-text">
+                    {{envFolder.name}}
+                    <span style="font-size: 14px;">({{envFolder.documents.length}})</span>
+                </div>
+            </div>
             <report-document class="document" *ngFor="let document of documents; index as i" [document]="document"
                 [index]="i" [formatDate]="formatDate.bind(this)" [openDocument]="openDocument.bind(this)"
                 [deleteDocument]="deleteDocument.bind(this)"></report-document>
+        </div>
+        <div class="documents-container" style="padding-top: 30px;" *ngIf="selectedEnvFolder && !selectedDocument">
+            <span data-tooltip="Back To Folder" class="back-icon tooltip-bottom-left" (click)="backToMain()">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <report-document class="document" *ngFor="let document of selectedEnvFolder.documents; index as i"
+                [document]="document" [index]="i" [formatDate]="formatDate.bind(this)"
+                [openDocument]="openDocument.bind(this)" [deleteDocument]="deleteDocument.bind(this)">
+            </report-document>
         </div>
         <report *ngIf="selectedDocument" [document]="selectedDocument"></report>
     </card>
