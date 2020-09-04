@@ -33,19 +33,19 @@ module.exports = {
         return { result: !!updateResult ? env.id : false };
     },
 
-    updateEnv(projectId, currEnvName, env, userId) {
+    updateEnv(projectId, env, userId) {
         env.name = env.name.trim();
 
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
-            "environments.name": currEnvName
+            "environments.id": env.id
         };
 
         const envUpdate = { $set: { "environments.$": env } };
 
         return DAL.updateOne(projectsCollectionName, projectFilter, envUpdate)
-            .catch(errorHandler.promiseError);;
+            .catch(errorHandler.promiseError);
     },
 
     async deleteEnv(projectId, envId, userId) {

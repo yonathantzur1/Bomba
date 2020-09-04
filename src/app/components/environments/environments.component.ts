@@ -56,8 +56,6 @@ export class EnvironmentsComponent implements OnInit {
     currWindowType: WINDOW_TYPE;
     windowType: any = WINDOW_TYPE;
 
-    currEnvName: string;
-
     isLoading: boolean = false;
 
     constructor(private environmentsService: EnvironmentsService,
@@ -141,18 +139,14 @@ export class EnvironmentsComponent implements OnInit {
     updateEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
             this.isLoading = true;
-            this.environmentsService.updateEnv(this.projectId, this.currEnvName, this.environment).then(result => {
+            this.environmentsService.updateEnv(this.projectId, this.environment).then(result => {
                 this.isLoading = false;
 
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
                 else {
-                    const updateData = {
-                        "currEnvName": this.currEnvName,
-                        "environment": this.environment
-                    }
-                    this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, updateData);
+                    this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
                     this.environment = new Environment();
                 }
@@ -162,7 +156,6 @@ export class EnvironmentsComponent implements OnInit {
 
     editEnv(env: Environment) {
         this.environment = new Environment().copy(env);
-        this.currEnvName = env.name;
         this.currWindowType = WINDOW_TYPE.UPDATE;
     }
 

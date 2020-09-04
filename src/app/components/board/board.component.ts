@@ -60,15 +60,15 @@ export class BoardComponent implements OnInit, OnDestroy {
             this.environments.push(environment);
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.UPDATE_ENVIRONMENT, (data: any) => {
+        eventService.register(EVENT_TYPE.UPDATE_ENVIRONMENT, (environment: Environment) => {
             for (let env of this.environments) {
-                if (env.name == data.currEnvName) {
-                    Object.keys(env).forEach(prop => {
-                        if (typeof data.environment[prop] == "object") {
-                            env[prop] = JSON.parse(JSON.stringify(data.environment[prop]))
+                if (env.id == environment.id) {
+                    Object.keys(environment).forEach(prop => {
+                        if (typeof environment[prop] == "object") {
+                            env[prop] = JSON.parse(JSON.stringify(environment[prop]))
                         }
                         else {
-                            env[prop] = data.environment[prop];
+                            env[prop] = environment[prop];
                         }
                     });
                     break;

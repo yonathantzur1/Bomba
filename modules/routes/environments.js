@@ -12,7 +12,7 @@ router.post('/addEnv', (req, res) => {
 });
 
 router.put('/updateEnv', (req, res) => {
-    environmentsBL.updateEnv(req.body.projectId, req.body.currEnvName, req.body.env, req.user._id).then(result => {
+    environmentsBL.updateEnv(req.body.projectId, req.body.env, req.user._id).then(result => {
         res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);
