@@ -2,7 +2,8 @@
     <card [title]="getTitle()" [width]="880" [height]="550">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument && !selectedEnvFolder">
-            <div *ngFor="let envFolder of envFolders" class="env-folder">
+            <div *ngFor="let envFolder of envFolders" [ngClass]="{'only-folders': documents.length == 0}"
+                class="env-folder">
                 <img src="assets/icons/folder.svg" (click)="openEnvFolder(envFolder)" class="folder-icon">
                 <div [title]="envFolder.name + ' (' + envFolder.documents.length + ')'" class="folder-text">
                     {{envFolder.name}}

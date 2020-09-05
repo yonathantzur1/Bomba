@@ -30,6 +30,10 @@
     user-select: none;
 }
 
+.only-folders {
+    width: 20%;
+}
+
 .folder-icon {
     width: 50px;
     cursor: pointer;
