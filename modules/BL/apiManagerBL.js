@@ -6,22 +6,23 @@ const usersCollectionName = config.db.collections.users;
 const projectsCollectionName = config.db.collections.projects;
 
 module.exports = {
-    async getApiKeyData(apiKey, projectName) {
-        let userFilter = { apiKey };
+    async getApiKeyData(apiKey, projectName, envName) {
+        const userFilter = { apiKey };
 
-        let user = await DAL.findOne(usersCollectionName, userFilter)
+        const user = await DAL.findOne(usersCollectionName, userFilter)
             .catch(errorHandler.promiseError);
 
         if (!user) {
             return null;
         }
 
-        let projectFilter = { "name": projectName, "owner": user._id };
+        const projectFilter = { "name": projectName, "owner": user._id };
 
-        projectFields = {
+        const projectFields = {
             _id: 1,
             matrix: 1,
-            defaultSettings: 1
+            defaultSettings: 1,
+            environments: 1
         };
 
         let project = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
@@ -30,6 +31,16 @@ module.exports = {
         if (project) {
             project.defaultSettings = project.defaultSettings || {};
             project.timeout = project.defaultSettings.timeout || config.requests.timeout;
+
+            if (envName) {
+                project.env = project.environments.find(env => env.name == envName);
+
+                if (!project.env) {
+                    return null;
+                }
+            }
+
+            delete project.environments;
 
             return { project, user };
         }

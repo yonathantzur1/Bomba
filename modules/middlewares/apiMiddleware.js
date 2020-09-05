@@ -4,15 +4,16 @@ module.exports = {
     async validateApiKey(req, res, next) {
         let apiKey = req.query.key;
         let projectName = req.query.project;
+        let envName = req.query.env;
 
-        let apiKeyData = await apiManagerBL.getApiKeyData(apiKey, projectName);
+        let apiKeyData = await apiManagerBL.getApiKeyData(apiKey, projectName, envName);
 
         if (apiKeyData) {
             req.api = apiKeyData;
             next();
         }
         else {
-            res.status(401).send("API key or project name is not valid");
+            res.status(401).send("There is an invalid parameter");
         }
     }
 };

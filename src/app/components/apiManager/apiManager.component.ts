@@ -3,6 +3,16 @@ import { ApiManagerService } from 'src/app/services/apiManager.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
+export class ProjectApi {
+    name: string;
+    envs: Array<string>;
+
+    constructor(name: string, envs: Array<string>) {
+        this.name = name;
+        this.envs = envs;
+    }
+}
+
 @Component({
     selector: 'api-manager',
     templateUrl: './apiManager.html',
@@ -14,7 +24,7 @@ export class ApiManagerComponent implements OnDestroy {
 
     isLoading: boolean;
     apiKey: string;
-    projectsNames: Array<String>;
+    projects: Array<any>;
     isApiGenerator: boolean = false;
 
     eventsIds: Array<string> = [];
@@ -24,7 +34,7 @@ export class ApiManagerComponent implements OnDestroy {
         private snackbarService: SnackbarService) {
 
         let apiKeyQuery = this.apiManagerService.getApiKey();
-        let userProjectsQuery = this.apiManagerService.getUserProjects();
+        let userProjectsQuery = this.apiManagerService.getProjectsForApi();
         this.isLoading = true;
 
         Promise.all([apiKeyQuery, userProjectsQuery]).then((results: Array<any>) => {
@@ -35,7 +45,7 @@ export class ApiManagerComponent implements OnDestroy {
             }
             else {
                 this.apiKey = results[0].key;
-                this.projectsNames = results[1];
+                this.projects = results[1];
             }
         });
 

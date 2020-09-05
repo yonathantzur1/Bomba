@@ -4,6 +4,7 @@ import { MicrotextService } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { ProjectApi } from '../apiManager.component';
 
 enum API_ACTION {
     START,
@@ -13,11 +14,13 @@ enum API_ACTION {
 class Api {
     key: string;
     project: string;
+    env: string;
     action: API_ACTION;
 
-    constructor(key: string, project: string, action: API_ACTION) {
+    constructor(key: string, project: string, env: string, action: API_ACTION) {
         this.key = key;
         this.project = project;
+        this.env = env;
         this.action = action;
     }
 }
@@ -34,7 +37,7 @@ export class ApiGeneratorComponent implements OnInit {
     isShowApiKey: boolean = false;
 
     @Input() apiKey: string;
-    @Input() projectsNames: Array<string>;
+    @Input() projects: Array<ProjectApi>;
 
     constructor(private eventService: EventService,
         private alertService: AlertService,
@@ -44,7 +47,7 @@ export class ApiGeneratorComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.projectsNames.length == 0) {
+        if (this.projects.length == 0) {
             this.alertService.alert({
                 title: "No Projects Found",
                 text: "You have no projects.\n" +
@@ -57,7 +60,7 @@ export class ApiGeneratorComponent implements OnInit {
             this.closeWindow();
         }
         else {
-            this.api = new Api(this.apiKey, this.projectsNames[0], API_ACTION.START);
+            this.api = new Api(this.apiKey, this.projects[0].name, null, API_ACTION.START);
         }
     }
 
@@ -77,10 +80,15 @@ export class ApiGeneratorComponent implements OnInit {
         return document.location.origin + "/api/client";
     }
 
+    getSelectedProject() {
+        return this.projects.find(project => project.name == this.api.project);
+    }
+
     getApiRequest() {
         let apiRequest = this.getApiUrl() + "?" +
             "key=" + this.api.key + "&" +
             "project=" + this.api.project + "&" +
+            (this.api.env ? ("env=" + this.api.env + "&") : '') +
             "action=" + this.api.action;
 
         this.globalService.copyToClipboard(apiRequest);

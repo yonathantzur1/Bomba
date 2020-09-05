@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
             startProject(apiKeyData.project.matrix,
                 apiKeyData.project._id,
                 apiKeyData.project.timeout,
+                apiKeyData.project.env,
                 apiKeyData.user._id);
             break;
         case API_ACTION.STOP.toString():
@@ -42,10 +43,10 @@ function isMatrixEmpty(matrix) {
     return true;
 }
 
-function startProject(matrix, projectId, timeout, userId) {
+function startProject(matrix, projectId, timeout, env, userId) {
     stopProject(projectId, userId);
     events.emit("socket.selfSync", userId, "syncSendRequests", { projectId })
-    matrixBL.sendRequestsMatrix(matrix, projectId, timeout, userId);
+    matrixBL.sendRequestsMatrix(matrix, projectId, timeout, env, userId);
 }
 
 function stopProject(projectId, userId) {

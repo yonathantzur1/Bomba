@@ -28,9 +28,9 @@ module.exports = {
         return DAL.aggregate(projectsCollectionName, aggregateArray);
     },
 
-    getProjectsNames(ownerId) {
+    getProjectsForApi(ownerId) {
         const filter = { "owner": DAL.getObjectId(ownerId) }
-        const projectFields = { "name": 1 }
+        const projectFields = { "name": 1, "environments.name": 1 }
         const sortObj = { "date": 1 };
 
         return DAL.findSpecific(projectsCollectionName, filter, projectFields, sortObj);
