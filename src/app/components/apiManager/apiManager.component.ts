@@ -5,11 +5,11 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 
 export class ProjectApi {
     name: string;
-    envs: Array<string>;
+    environments: Array<string>;
 
-    constructor(name: string, envs: Array<string>) {
+    constructor(name: string, environments: Array<string>) {
         this.name = name;
-        this.envs = envs;
+        this.environments = environments;
     }
 }
 
