@@ -24,6 +24,7 @@ module.exports = {
 
     async testRequest(request, requestTimeout, env) {
         env && setEnvironmentOnRequest(env.values, request);
+        request.url = replaceStringValue(request.url, this.getReplaceObject(1));
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
 
@@ -88,7 +89,6 @@ module.exports = {
     async sendMultiRequests(sendObjects, projectId, userId) {
         for (let i = 0; i < sendObjects.length && this.projectsRequests[projectId]; i++) {
             let sendObject = sendObjects[i];
-            const originalUrl = sendObject.options.hostname;
             const requestId = sendObject.requestId;
 
             if (sendObject.amount > config.requests.max) {
@@ -109,15 +109,23 @@ module.exports = {
                 events.emit("socket.requestStart", userId, requestStatus);
             });
 
-            let reqData = sendObject.data;
+            const originalUrl = sendObject.options.hostname;
+            const originalPath = sendObject.options.path;
+            const reqData = sendObject.data;
 
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
+                const replaceObj = this.getReplaceObject(i);
+
                 if (reqData && (jsonData = jsonTryParse(reqData))) {
-                    replaceJsonValue(jsonData, this.getReplaceObject(i));
+                    replaceJsonValue(jsonData, replaceObj);
                     sendObject.data = JSON.stringify(jsonData);
                 }
 
                 sendObject.options.hostname = originalUrl;
+
+                const decodePath = decodeURI(originalPath);
+                sendObject.options.path = encodeURI(replaceStringValue(decodePath, replaceObj));
+
                 const startDate = new Date();
 
                 requestsPromises.push(sendRequest(sendObject.options, sendObject.data, true).then(() => {
@@ -295,6 +303,27 @@ function sendRequest(options, data, isIgnoreResponse) {
     });
 }
 
+function replaceStringValue(str, replaceValues) {
+    for (let replaceKey of Object.keys(replaceValues)) {
+        if (str.includes(replaceKey)) {
+            let replaceValue = replaceValues[replaceKey];
+
+            if (typeof replaceValue == "function") {
+                replaceValue = replaceValue();
+            }
+
+            if (str == replaceKey) {
+                return replaceValue;
+            }
+            else {
+                str = replaceAll(str, replaceKey, replaceValue);
+            }
+        }
+    }
+
+    return str;
+}
+
 function replaceJsonValue(obj, replaceValues) {
     Object.keys(obj).forEach(key => {
         const value = obj[key];
@@ -303,22 +332,7 @@ function replaceJsonValue(obj, replaceValues) {
             replaceJsonValue(value, replaceValues);
         }
         else if (typeof value == "string") {
-            Object.keys(replaceValues).forEach(replaceKey => {
-                if (value.includes(replaceKey)) {
-                    let replaceValue = replaceValues[replaceKey];
-
-                    if (typeof replaceValue == "function") {
-                        replaceValue = replaceValue();
-                    }
-
-                    if (value == replaceKey) {
-                        obj[key] = replaceValue;
-                    }
-                    else {
-                        obj[key] = value.replace(replaceKey, replaceValue);
-                    }
-                }
-            });
+            obj[key] = replaceStringValue(value, replaceValues);
         }
     });
 }
