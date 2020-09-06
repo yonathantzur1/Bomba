@@ -342,7 +342,7 @@ function setEnvironmentOnMatrix(values, matrix) {
 
 function setEnvironmentOnRequest(values, request) {
     Object.keys(values).forEach(key => {
-        const src = "{" + key + "}";
+        const src = "{{" + key + "}}";
         const target = values[key];
         request.url = replaceEnvValue(request.url, src, target);
         request.cookies = replaceEnvValue(request.cookies, src, target);

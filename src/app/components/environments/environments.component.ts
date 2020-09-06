@@ -58,6 +58,8 @@ export class EnvironmentsComponent implements OnInit {
 
     isLoading: boolean = false;
 
+    example = "{{variable}}";
+
     constructor(private environmentsService: EnvironmentsService,
         private alertService: AlertService,
         private snackbarService: SnackbarService,
