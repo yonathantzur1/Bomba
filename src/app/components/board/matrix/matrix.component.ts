@@ -362,6 +362,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 "userGuid": this.globalService.userGuid,
                 "projectId": this.projectId
             });
+
+        this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, this.selectedEnv);
     }
 
     stopRequests() {

@@ -12,24 +12,14 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     projectsRequests: {},
 
-    getReplaceObject: (index) => {
-        return {
-            "{number}": index,
-            "{text}": index.toString(),
-            "{date}": new Date(),
-            "{iso}": new Date().toISOString(),
-            "{random}": generator.generateId // Callback to generate different guid for each occurrence. 
-        }
-    },
-
     async testRequest(request, requestTimeout, env) {
         env && setEnvironmentOnRequest(env.values, request);
-        request.url = replaceStringValue(request.url, this.getReplaceObject(1));
+        request.url = replaceStringValue(request.url, getReplaceObject(1));
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
 
         if (reqData && (jsonData = jsonTryParse(reqData))) {
-            replaceJsonValue(jsonData, this.getReplaceObject(1));
+            replaceJsonValue(jsonData, getReplaceObject(1));
             sendObject.data = JSON.stringify(jsonData);
         }
 
@@ -114,7 +104,7 @@ module.exports = {
             const reqData = sendObject.data;
 
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
-                const replaceObj = this.getReplaceObject(i);
+                const replaceObj = getReplaceObject(i);
 
                 if (reqData && (jsonData = jsonTryParse(reqData))) {
                     replaceJsonValue(jsonData, replaceObj);
@@ -162,6 +152,16 @@ module.exports = {
 
 function getDatesDiffBySeconds(date1, date2) {
     return Math.abs((date1.getTime() - date2.getTime()) / 1000);
+}
+
+function getReplaceObject(index) {
+    return {
+        "{number}": index,
+        "{text}": index.toString(),
+        "{date}": new Date(),
+        "{iso}": new Date().toISOString(),
+        "{random}": generator.generateId
+    }
 }
 
 async function isProjectOwnerValid(projectId, userId) {
