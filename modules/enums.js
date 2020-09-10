@@ -13,7 +13,8 @@ exports.API_ACTION = Object.freeze({
 exports.LOG_TYPE = Object.freeze({
     LOGIN: 0,
     LOGIN_FAIL: 1,
-    REGISTER: 2
+    REGISTER: 2,
+    PROJECT_RUN: 3
 });
 
 exports.STATISTICS_RANGE = Object.freeze({

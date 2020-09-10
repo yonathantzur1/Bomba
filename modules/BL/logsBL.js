@@ -28,6 +28,14 @@ module.exports = {
             username,
             req
         );
+    },
+
+    projectRun(username, req) {
+        insertLog(
+            LOG_TYPE.PROJECT_RUN,
+            username,
+            req
+        );
     }
 };
 

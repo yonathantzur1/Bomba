@@ -85,6 +85,10 @@ export class TrackerComponent {
                     {
                         text: "New Users",
                         logType: LOG_TYPE.REGISTER,
+                    },
+                    {
+                        text: "Projects Runs",
+                        logType: LOG_TYPE.PROJECT_RUN,
                     }
                 ],
                 onClick: function () {

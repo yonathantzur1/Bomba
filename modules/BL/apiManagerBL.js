@@ -8,8 +8,9 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     async getApiKeyData(apiKey, projectName, envName) {
         const userFilter = { apiKey };
+        const userFields = { "_id": 1, "username": 1 };
 
-        const user = await DAL.findOne(usersCollectionName, userFilter)
+        const user = await DAL.findOneSpecific(usersCollectionName, userFilter, userFields)
             .catch(errorHandler.promiseError);
 
         if (!user) {

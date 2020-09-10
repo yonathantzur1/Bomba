@@ -9,7 +9,8 @@ export enum METHOD {
 export enum LOG_TYPE {
     LOGIN,
     LOGIN_FAIL,
-    REGISTER
+    REGISTER,
+    PROJECT_RUN
 }
 
 export enum STATISTICS_RANGE {

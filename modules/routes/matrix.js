@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const matrixBL = require('../BL/matrixBL');
+const logsBL = require('../BL/logsBL');
 const events = require('../events');
 const validator = require('../security/validations/validator');
 const pubsub = require("../pubsub")();
@@ -28,6 +29,7 @@ router.post('/sendRequests', validator, (req, res) => {
         req.body.requestTimeout,
         req.body.env,
         req.user._id);
+    logsBL.projectRun(req.user.username, req);
 
     res.send(true);
 });

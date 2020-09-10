@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const matrixBL = require('../BL/matrixBL');
+const logsBL = require('../BL/logsBL');
 const events = require('../events');
 const API_ACTION = require('../enums').API_ACTION;
 
@@ -19,6 +20,7 @@ router.get('/', (req, res) => {
                 apiKeyData.project.timeout,
                 apiKeyData.project.env,
                 apiKeyData.user._id);
+            logsBL.projectRun(apiKeyData.user.username, req);
             break;
         case API_ACTION.STOP.toString():
             stopProject(apiKeyData.project._id, apiKeyData.user._id);
