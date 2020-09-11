@@ -74,7 +74,7 @@ app.post('/randomPost', (req, res) => {
         else {
             res.status(500).send("error");
         }
-    }, req.query.time);
+    }, req.body.time);
 });
 
 app.put('/randomPut', (req, res) => {
@@ -85,7 +85,7 @@ app.put('/randomPut', (req, res) => {
         else {
             res.status(500).send("error");
         }
-    }, req.query.time);
+    }, req.body.time);
 });
 
 app.delete('/randomDelete', (req, res) => {
