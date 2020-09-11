@@ -78,11 +78,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     }
 
     getTitle() {
-        let title = this.projectName;
-
-        if (!this.selectedDocument) {
-            title += "  |  Reports"
-        }
+        let title = this.projectName + "  |  Reports";
 
         if (this.selectedEnvFolder) {
             title += "  |  " + this.selectedEnvFolder.name;
