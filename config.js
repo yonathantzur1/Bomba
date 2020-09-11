@@ -10,6 +10,7 @@ module.exports = {
         timeout: 60 * 1000 // milliseconds
     },
     redis: {
+        // (redis://:<password>@<ip>:<port>)
         connectionString: process.env.BOMBA_REDIS_CONNECTION_STRING
     },
     db: {
