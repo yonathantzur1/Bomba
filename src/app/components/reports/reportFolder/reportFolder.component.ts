@@ -86,6 +86,10 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
         if (this.selectedDocument) {
             title += '  |  ' + this.formatDate(this.selectedDocument.date);
+
+            if (this.selectedDocument.name) {
+                title += "  (" + this.selectedDocument.name + ")";
+            }
         }
 
         return title;
