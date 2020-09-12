@@ -5,8 +5,6 @@ const events = require('../events');
 const validator = require('../security/validations/validator');
 const pubsub = require("../pubsub")();
 
-const errorHandler = require('../handlers/errorHandler');
-
 pubsub && pubsub.subscribe(pubsub.channels.stopRequests).then(result => {
     result && pubsub.onMessage((channel, message) => {
         if (channel == pubsub.channels.stopRequests) {
@@ -16,11 +14,11 @@ pubsub && pubsub.subscribe(pubsub.channels.stopRequests).then(result => {
 });
 
 router.post('/testRequest', validator, (req, res) => {
-    matrixBL.testRequest(req.body.request, req.body.requestTimeout, req.body.env).then(result => {
-        res.send(result);
-    }).catch(err => {
-        errorHandler.routeError(err, res);
-    });
+    matrixBL.testRequest(req.body.request,
+        req.body.requestTimeout,
+        req.body.env,
+        req.user._id);
+    res.send(true);
 });
 
 router.post('/sendRequests', validator, (req, res) => {

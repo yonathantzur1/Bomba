@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Request } from '../requestCard.component'
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { Environment } from '../../environments/environments.component';
+import { SocketService } from 'src/app/services/global/socket.service';
 
 @Component({
     selector: 'test-request',
@@ -13,7 +14,7 @@ import { Environment } from '../../environments/environments.component';
     styleUrls: ['./testRequest.css']
 })
 
-export class TestRequestComponent implements OnInit {
+export class TestRequestComponent implements OnInit, OnDestroy {
     @Input() request: Request;
     @Input() requestTimeout: number;
     @Input() environment: Environment;
@@ -23,6 +24,7 @@ export class TestRequestComponent implements OnInit {
 
     constructor(private matrixService: MatrixService,
         private globalService: GlobalService,
+        private socketService: SocketService,
         private snackbarService: SnackbarService,
         private eventService: EventService) { }
 
@@ -30,17 +32,24 @@ export class TestRequestComponent implements OnInit {
         this.isSendRequest = true;
 
         this.matrixService.testRequest(this.request, this.requestTimeout, this.environment).then(result => {
-            this.isSendRequest = false;
-
             if (!result) {
+                this.isSendRequest = false;
                 this.snackbarService.snackbar("Server error occurred");
                 this.closeWindow();
             }
-            else {
+        });
+
+        this.socketService.socketOn("testResult", (result: any, requestId: string) => {
+            if (this.request.id == requestId) {
+                this.isSendRequest = false;
                 this.response = result;
                 this.response.data = this.formatJson(this.response.data);
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.socketService.socketOff("testResult");
     }
 
     formatJson(data: string) {

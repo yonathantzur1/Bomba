@@ -12,7 +12,7 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     projectsRequests: {},
 
-    async testRequest(request, requestTimeout, env) {
+    async testRequest(request, requestTimeout, env, userId) {
         env && setEnvironmentOnRequest(env.values, request);
         request.url = replaceStringValue(request.url, getReplaceObject(1));
         let sendObject = buildSendObject(request, requestTimeout);
@@ -34,7 +34,7 @@ module.exports = {
             response.time = getDatesDiffBySeconds(new Date(), startDate);
         });
 
-        return response;
+        events.emit("socket.testResult", userId, response, request.id);
     },
 
     async sendRequestsMatrix(requestsMatrix, projectId, requestTimeout, env, userId) {

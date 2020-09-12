@@ -54,7 +54,7 @@ function isFileAllow(reqUrl) {
     return (allowedExt.filter(ext => reqUrl.indexOf(ext) > 0).length > 0);
 }
 
-// Health route to check if the server is alive.
+// Health route.
 app.get('/health', (req, res) => {
     res.end();
 });

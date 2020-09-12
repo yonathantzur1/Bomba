@@ -54,6 +54,10 @@ module.exports = (io) => {
     events.on('socket.finishReport', (userId, projectId) => {
         io.to(userId).emit('finishReport', projectId);
     });
+
+    events.on('socket.testResult', (userId, response, requestId) => {
+        io.to(userId).emit('testResult', response, requestId);
+    });
 };
 
 function setSocketRedisAdapter(io) {
