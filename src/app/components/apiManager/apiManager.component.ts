@@ -22,6 +22,7 @@ export class ProjectApi {
 
 export class ApiManagerComponent implements OnDestroy {
 
+    title: string = "Bomba {API}";
     isLoading: boolean;
     apiKey: string;
     projects: Array<any>;
