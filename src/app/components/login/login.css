@@ -8,8 +8,7 @@
 
 .login-head-container {
     position: absolute;
-    top: calc(50% - 265px);
-    padding-left: 35px;
+    top: calc(50% - 275px);
     text-align: center;
     user-select: none;
     display: flex;
@@ -20,12 +19,12 @@
 .login-head-icon {
     height: 70px;
     width: 70px;
-    margin-top: -20px;
-    margin-left: 10px;
+    margin-top: -30px;
+    margin-right: -15px;
 }
 
-.login-label {
-    font-family: Mona Shark;
+.login-title {
+    font-family: Colus;
     color: #343a40;
     font-size: 65px;
     position: relative;

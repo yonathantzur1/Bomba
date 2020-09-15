@@ -14,11 +14,11 @@
     height: 70px;
     width: 70px;
     margin-top: -20px;
-    margin-left: 10px;
+    margin-right: -15px;
 }
 
-.head-label {
-    font-family: Mona Shark;
+.head-title {
+    font-family: Colus;
     color: #343a40;
     font-size: 65px;
     top: 20px;
