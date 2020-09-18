@@ -33,13 +33,13 @@ schemas[REST.POST] = {
         "matrix": {
             "testRequest": {
                 request: joi.required(),
-                requestTimeout: joi.number().min(1).max(100000).required(),
+                requestTimeout: joi.number().min(1).max(120000).required(),
                 env: joi.any()
             },
             "sendRequests": {
                 matrix: joi.required(),
                 projectId: joi.string().required(),
-                requestTimeout: joi.number().min(1).max(100000).required(),
+                requestTimeout: joi.number().min(1).max(120000).required(),
                 env: joi.any()
             }
         }

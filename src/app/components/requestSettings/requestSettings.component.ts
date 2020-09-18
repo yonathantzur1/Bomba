@@ -35,7 +35,7 @@ export class RequestSettingsComponent implements OnInit {
     currTimeout: number;
 
     minTimeout: number = 1;
-    maxTimeout: number = 100000;
+    maxTimeout: number = 120000;
 
     method: any = METHOD;
 
@@ -63,7 +63,10 @@ export class RequestSettingsComponent implements OnInit {
     }
 
     timeoutChanged() {
-        if (!this.defaultSettings.timeout) {
+        if (this.defaultSettings.timeout === 0) {
+            this.defaultSettings.timeout = this.minTimeout;
+        }
+        else if (!this.defaultSettings.timeout) {
             this.defaultSettings.timeout = this.currTimeout;
         }
         else if (this.defaultSettings.timeout < this.minTimeout) {
@@ -72,9 +75,8 @@ export class RequestSettingsComponent implements OnInit {
         else if (this.defaultSettings.timeout > this.maxTimeout) {
             this.defaultSettings.timeout = this.maxTimeout;
         }
-        else {
-            this.currTimeout = this.defaultSettings.timeout;
-        }
+
+        this.currTimeout = this.defaultSettings.timeout;
     }
 
     @HostListener('document:keyup', ['$event'])
