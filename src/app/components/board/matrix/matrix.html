@@ -26,7 +26,10 @@
                 <i (click)="closeReport()" class="fas fa-times report-icon close-report-icon"></i>
             </span>
         </span>
-        <span>{{projectName + " - " + (isSendMode ? "Report": "Matrix")}}</span>
+        <span class="matrix-title">
+            <span>{{projectName + (isSendMode ? " - Report " : "")}}</span>
+            <span class="title-env">{{isSendMode && selectedEnv ? "(" + selectedEnv.name + ")": ""}}</span>
+        </span>
     </div>
     <div *ngIf="isSendMode" class="load-progress-container">
         <div class="load-progress" [ngStyle]="{'width': (resultsAmount / requestsAmount * 100) + '%'}"></div>

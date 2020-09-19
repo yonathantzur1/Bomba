@@ -36,7 +36,7 @@ export class CellComponent {
         }
 
         let resultsAmount = this.result.success + this.result.fail;
-        return !!resultsAmount ? (this.result.time / resultsAmount).toFixed(3) : null;
+        return !!resultsAmount ? (this.result.time / resultsAmount).toFixed(2) : null;
     }
 
     amountChanged() {

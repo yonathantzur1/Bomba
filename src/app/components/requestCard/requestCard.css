@@ -49,6 +49,7 @@
     width: 55px;
     text-align: center;
     user-select: none;
+    background-color: #f8f9fa;
 }
 
 .tab-container {
