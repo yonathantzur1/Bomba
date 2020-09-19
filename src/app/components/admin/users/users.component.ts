@@ -29,7 +29,7 @@ export class UsersComponent implements OnDestroy {
 
     constructor(private usersService: UsersService,
         private eventService: EventService) {
-        this.eventService.register(EVENT_TYPE.DELETE_USER, () => {
+        eventService.register(EVENT_TYPE.DELETE_USER, () => {
             this.user = null;
         }, this.eventsIds);
     }

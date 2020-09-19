@@ -29,11 +29,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         private snackbarService: SnackbarService,
         private projectsService: ProjectsService) {
 
-        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isNewProjectCard = false;
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.ADD_PROJECT, (data: any) => {
+        eventService.register(EVENT_TYPE.ADD_PROJECT, (data: any) => {
             let project = new Project(data._id, data.name, data.date, false, false);
             this.addProject(project)
 
@@ -43,7 +43,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             });
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.EDIT_PROJECT, (data: any) => {
+        eventService.register(EVENT_TYPE.EDIT_PROJECT, (data: any) => {
             this.editProjectName(data._id, data.name);
 
             this.socketService.socketEmit('selfSync', 'syncEditProject', {
@@ -53,7 +53,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
             });
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.DELETE_PROJECT,
+        eventService.register(EVENT_TYPE.DELETE_PROJECT,
             this.deleteProject.bind(this),
             this.eventsIds);
 

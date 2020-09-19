@@ -77,3 +77,9 @@
     color: red;
     font-weight: bold;
 }
+
+:disabled {
+    background-color: #e9ecef !important;
+    border-color: #c5c5c5 !important;
+    border-radius: 5px !important;
+}

@@ -60,6 +60,6 @@
         </table>
     </div>
     <request-card *ngIf="isShowRequestCard" [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest"
-        [environment]="selectedEnv"></request-card>
+        [environment]="selectedEnv" [isDisabled]="isRequestDisabled"></request-card>
     <environments *ngIf="isShowEnvironments" [projectId]="projectId" [environments]="environments"></environments>
 </div>

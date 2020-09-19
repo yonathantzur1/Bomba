@@ -36,7 +36,7 @@ export class ProjectComponent implements OnDestroy {
         private alertService: AlertService,
         private eventService: EventService) {
 
-        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isEditProjectCard = false;
         }, this.eventsIds);
     }

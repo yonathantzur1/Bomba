@@ -65,8 +65,9 @@ export class Request {
 export class RequestCardComponent implements OnInit, OnDestroy {
 
     @Input() selectedRequest: Request;
-    @Input() defaultSettings: DefaultSettings;
+    @Input() defaultSettings: DefaultSettings = new DefaultSettings();
     @Input() environment: Environment;
+    @Input() isDisabled: boolean = false;
 
     request: Request;
     tabs: Array<Tab>;
@@ -114,7 +115,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
             }
         ];
 
-        this.eventService.register(EVENT_TYPE.CLOSE_TEST_REQUEST, () => {
+        eventService.register(EVENT_TYPE.CLOSE_TEST_REQUEST, () => {
             this.isTestRequest = false;
         }, this.eventsIds);
     }

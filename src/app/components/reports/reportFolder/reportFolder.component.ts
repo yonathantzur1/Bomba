@@ -45,6 +45,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     envFolders: Array<EnvironmentFolder> = [];
     selectedDocument: Document;
     selectedEnvFolder: EnvironmentFolder;
+    isRequestViewMode: boolean = false;
 
     eventsIds: Array<string> = [];
 
@@ -52,8 +53,16 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
-        this.eventService.register(EVENT_TYPE.CLOSE_REPORT_DOCUMENT, () => {
+        eventService.register(EVENT_TYPE.CLOSE_REPORT_DOCUMENT, () => {
             this.selectedDocument = null;
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.OPEN_REQUEST_VIEW, () => {
+            this.isRequestViewMode = true;
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.isRequestViewMode = false;
         }, this.eventsIds);
     }
 
@@ -200,5 +209,9 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
     backToMain() {
         this.selectedEnvFolder = null;
+    }
+
+    closeWindow() {
+        this.eventService.emit(EVENT_TYPE.CLOSE_REPORT_FOLDER);
     }
 }

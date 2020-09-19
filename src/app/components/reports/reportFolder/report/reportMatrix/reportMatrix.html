@@ -9,4 +9,6 @@
             </tr>
         </table>
     </div>
+    <request-card *ngIf="selectedRequest" [selectedRequest]="selectedRequest" [environment]="null" [isDisabled]="true">
+    </request-card>
 </div>

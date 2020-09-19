@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Request } from 'src/app/components/requestCard/requestCard.component';
 import { RequestResult } from 'src/app/components/board/matrix/matrix.component';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
 @Component({
     selector: 'report-matrix',
@@ -8,11 +9,27 @@ import { RequestResult } from 'src/app/components/board/matrix/matrix.component'
     styleUrls: ['./reportMatrix.css']
 })
 
-export class ReportMatrixComponent {
+export class ReportMatrixComponent implements OnDestroy {
 
     @Input() matrix: Request[][];
     @Input() results: { requestId: RequestResult };
 
-    constructor() { }
+    selectedRequest: Request;
+
+    eventsIds: Array<string> = [];
+
+    constructor(private eventService: EventService) {
+        eventService.register(EVENT_TYPE.OPEN_REQUEST_VIEW, (request: Request) => {
+            this.selectedRequest = request;
+        }, this.eventsIds);
+
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.selectedRequest = null;
+        }, this.eventsIds);
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventsIds);
+    }
 
 }

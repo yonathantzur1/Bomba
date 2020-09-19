@@ -30,6 +30,10 @@ export class CellComponent {
         this.eventService.emit(EVENT_TYPE.OPEN_REQUEST_EDIT, this.request);
     }
 
+    openRequestView() {
+        this.eventService.emit(EVENT_TYPE.OPEN_REQUEST_VIEW, this.request);
+    }
+
     getResultAverageTime() {
         if (this.result == null) {
             return null;

@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private socketService: SocketService,
         private alertService: AlertService,
         private authService: AuthService) {
-        this.eventService.register(EVENT_TYPE.TAB_CLICK, (url: string) => {
+        eventService.register(EVENT_TYPE.TAB_CLICK, (url: string) => {
             this.tabClick(url, true);
         }, this.eventsIds);
     }

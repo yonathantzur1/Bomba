@@ -1,17 +1,19 @@
 <div id="requestCard">
-    <card [title]="request.name.trim() || 'New Request'" [width]="750" [height]="500" [disableEscape]="isTestRequest">
+    <card [title]="isDisabled ? 'Request Data' : (request.name.trim() || 'New Request')" [width]="750"
+        [height]="isDisabled ? 470 : 500" [disableEscape]="isTestRequest">
         <div class="card-body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
-                    <input id="name" [(ngModel)]="request.name" maxlength="25" name="reqName" placeholder="Name"
-                        type="text" class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                    <input [disabled]="isDisabled" id="name" [(ngModel)]="request.name" maxlength="25" name="reqName"
+                        placeholder="Name" type="text" class="form-control"
+                        (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
                     <label id="name-micro" class="microtext"></label>
                 </div>
                 <div class="form-group" style="margin-bottom: 3px;">
                     <table class="http-data">
                         <tr>
                             <td>
-                                <select [(ngModel)]="request.method" name="methodSelect"
+                                <select [disabled]="isDisabled" [(ngModel)]="request.method" name="methodSelect"
                                     class="form-control method-select">
                                     <option [value]="method.GET">{{method.GET}}</option>
                                     <option [value]="method.POST">{{method.POST}}</option>
@@ -20,8 +22,9 @@
                                 </select>
                             </td>
                             <td style="position: relative;">
-                                <input id="url" [(ngModel)]="request.url" name="reqUrl" placeholder="URL" type="text"
-                                    class="form-control" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
+                                <input [disabled]="isDisabled" id="url" [(ngModel)]="request.url" name="reqUrl"
+                                    placeholder="URL" type="text" class="form-control"
+                                    (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
                                 <label id="url-micro" class="microtext"></label>
                             </td>
                         </tr>
@@ -30,18 +33,21 @@
                 <div class="body-container">
                     <request-navbar [tabs]="tabs"></request-navbar>
                     <div class="tab-container">
-                        <request-body class="tab-content" *ngIf="tabs[0].isActive" [request]="request"></request-body>
-                        <request-headers [headers]="request.headers" class="tab-content" *ngIf="tabs[1].isActive">
-                        </request-headers>
-                        <request-cookies [cookies]="request.cookies" class="tab-content" *ngIf="tabs[2].isActive">
-                        </request-cookies>
+                        <request-body class="tab-content" *ngIf="tabs[0].isActive" [isDisabled]="isDisabled"
+                            [request]="request"></request-body>
+                        <key-value class="tab-content" [isDisabled]="isDisabled" [json]="request.headers"
+                            *ngIf="tabs[1].isActive"></key-value>
+                        <key-value class="tab-content" [isDisabled]="isDisabled" [json]="request.cookies"
+                            *ngIf="tabs[2].isActive"></key-value>
                     </div>
                 </div>
             </form>
         </div>
-        <div (click)="testRequest()" class="test-btn">Test</div>
-        <test-request *ngIf="isTestRequest" [request]="request" [requestTimeout]="defaultSettings.timeout"
-            [environment]="environment"></test-request>
-        <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
+        <span *ngIf="!isDisabled">
+            <div (click)="testRequest()" class="test-btn">Test</div>
+            <test-request *ngIf="isTestRequest" [request]="request" [requestTimeout]="defaultSettings.timeout"
+                [environment]="environment"></test-request>
+            <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
+        </span>
     </card>
 </div>

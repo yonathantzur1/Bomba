@@ -14,6 +14,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 export class ReportComponent {
 
     @Input() document: Document;
+
     isLoading: boolean = false;
     isMatrixMode: boolean = false;
     reportData: any;

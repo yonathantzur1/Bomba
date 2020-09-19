@@ -27,11 +27,11 @@ export class UserCardComponent implements OnDestroy {
         private socketService: SocketService,
         private snackbarService: SnackbarService,
         private usersService: UsersService) {
-        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isEditMode = false;
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.EDIT_USERNAME, (username: string) => {
+        eventService.register(EVENT_TYPE.EDIT_USERNAME, (username: string) => {
             this.user.username = username;
         }, this.eventsIds);
     }

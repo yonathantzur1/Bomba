@@ -50,7 +50,7 @@ export class ApiManagerComponent implements OnDestroy {
             }
         });
 
-        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isApiGenerator = false;
         }, this.eventsIds);
     }

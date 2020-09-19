@@ -14,6 +14,7 @@ declare let $: any;
 export class KeyValueComponent implements OnDestroy {
 
     @Input() json: any;
+    @Input() isDisabled: boolean;
 
     key: string = "";
     value: string = "";
@@ -27,7 +28,7 @@ export class KeyValueComponent implements OnDestroy {
     constructor(private alertService: AlertService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
-        this.eventService.register(EVENT_TYPE.CLOSE_EDIT_VALUE, () => {
+        eventService.register(EVENT_TYPE.CLOSE_EDIT_VALUE, () => {
             this.editKey = null;
             this.editValue = null;
             this.isEditMode = false;

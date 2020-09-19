@@ -1,6 +1,6 @@
 <div id="requestBody">
     <div style="position: relative;">
-        <div>
+        <div *ngIf="!isDisabled">
             <i class="fas fa-info info-icon" (mouseenter)="showInfo(true)" (mouseleave)="showInfo(false)"></i>
             <div *ngIf="isShowInfo">
                 <i class="fas fa-caret-left info-arrow-icon"></i>
@@ -18,7 +18,7 @@
                 {{formatStr}}
             </div>
         </div>
-        <textarea id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody" placeholder="Body" type="text"
-            class="request-body" [(ngModel)]="request.body"></textarea>
+        <textarea [disabled]="isDisabled" id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody"
+            [placeholder]="isDisabled && !request.body ? 'Empty Body' : 'Body'" type="text" class="request-body" [(ngModel)]="request.body"></textarea>
     </div>
 </div>

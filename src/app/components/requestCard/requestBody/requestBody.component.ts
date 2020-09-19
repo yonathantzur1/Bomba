@@ -10,6 +10,7 @@ import { Request } from '../requestCard.component';
 export class RequestBodyComponent implements OnInit {
 
     @Input() request: Request;
+    @Input() isDisabled: boolean;
 
     isShowInfo: boolean = false;
     isValidBodyJson: boolean = true;

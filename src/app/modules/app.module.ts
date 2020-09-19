@@ -36,8 +36,6 @@ import { EnvironmentsComponent } from '../components/environments/environments.c
 import { RequestCardComponent } from '../components/requestCard/requestCard.component';
 import { RequestNavbarComponent } from '../components/requestCard/requestNavbar/requestNavbar.component';
 import { RequestBodyComponent } from '../components/requestCard/requestBody/requestBody.component';
-import { RequestHeadersComponent } from '../components/requestCard/requestHeaders/requestHeaders.component';
-import { RequestCookiesComponent } from '../components/requestCard/requestCookies/requestCookies.component';
 import { KeyValueComponent } from '../components/keyValue/keyValue.component';
 import { TestRequestComponent } from '../components/requestCard/testRequest/testRequest.component';
 import { RequestSettingsComponent } from '../components/requestSettings/requestSettings.component';
@@ -109,8 +107,6 @@ import { Routing } from '../routes/app.routing';
     RequestCardComponent,
     RequestNavbarComponent,
     RequestBodyComponent,
-    RequestHeadersComponent,
-    RequestCookiesComponent,
     KeyValueComponent,
     TestRequestComponent,
     RequestSettingsComponent,

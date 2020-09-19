@@ -39,11 +39,11 @@ export class ReportsComponent implements OnDestroy {
         private eventService: EventService,
         private snackbarService: SnackbarService) {
 
-        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+        eventService.register(EVENT_TYPE.CLOSE_REPORT_FOLDER, () => {
             this.folderData = null;
         }, this.eventsIds);
 
-        this.eventService.register(EVENT_TYPE.DELETE_REPORT, (projectId: string) => {
+        eventService.register(EVENT_TYPE.DELETE_REPORT, (projectId: string) => {
             let reportIndex: number;
 
             for (let i = 0; i < this.reports.length; i++) {

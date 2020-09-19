@@ -17,10 +17,11 @@
                 class="fas fa-times cell-icon delete-cell"></i>
         </span>
         <span *ngSwitchCase="true">
-            <result-info class="result-info" [request]="request" [result]="result">
-            </result-info>
-            <div *ngIf="getResultAverageTime(); let reqAvg" class="time-overlay">
-                Average time: {{reqAvg}} (s)
+            <result-info class="result-info" [request]="request" [result]="result"></result-info>
+            <div class="data-overlay" (click)="openRequestView()">
+                <span *ngIf="getResultAverageTime(); let reqAvg">
+                    Average time: {{reqAvg}} (s)
+                </span>
             </div>
         </span>
     </div>

@@ -56,6 +56,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     isShowRequestCard: boolean = false;
     isShowEnvironments: boolean = false;
     selectedRequest: Request;
+    isRequestDisabled: boolean = true;
 
     selectedEnv: Environment;
 
@@ -93,10 +94,17 @@ export class MatrixComponent implements OnInit, OnDestroy {
             this.selectedRequest = request;
         }, this.eventsIds);
 
+        eventService.register(EVENT_TYPE.OPEN_REQUEST_VIEW, (request: Request) => {
+            this.isShowRequestCard = true;
+            this.selectedRequest = request;
+            this.isRequestDisabled = true;
+        }, this.eventsIds);
+
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowEnvironments = false;
             this.isShowRequestCard = false;
             this.selectedRequest = null;
+            this.isRequestDisabled = false;
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.DELETE_CELL, (index: any) => {
