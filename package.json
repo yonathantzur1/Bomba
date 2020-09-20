@@ -3,7 +3,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"nodemon --ignore src/ server.js\" \"node test.js\" \"ng serve --open=true\" ",
-    "build": "ng build --buildOptimizer=true --prod"
+    "build": "ng build --aot=true --buildOptimizer=true --prod"
   },
   "dependencies": {
     "@angular-devkit/build-angular": "^0.1001.2",
