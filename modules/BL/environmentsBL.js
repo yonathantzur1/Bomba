@@ -76,7 +76,7 @@ module.exports = {
         return true;
     },
 
-    async updateActiveEnv(projectId, envId, userId) {
+    async setActiveEnv(projectId, envId, userId) {
         const oldEnvFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),

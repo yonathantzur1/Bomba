@@ -1,6 +1,6 @@
 <div id="requestCard">
-    <card [title]="isDisabled ? 'Request Data' : (request.name.trim() || 'New Request')" [width]="750"
-        [height]="isDisabled ? 470 : 500" [disableEscape]="isTestRequest">
+    <card [title]="isDisabled ? 'Request Data' : (request.name.trim() || 'New Request')" [width]="750" [height]="500"
+        [disableEscape]="isTestRequest">
         <div class="card-body">
             <form style="position: relative;" autocomplete="off">
                 <div class="form-group">
@@ -43,11 +43,11 @@
                 </div>
             </form>
         </div>
-        <span *ngIf="!isDisabled">
+        <span>
             <div (click)="testRequest()" class="test-btn">Test</div>
             <test-request *ngIf="isTestRequest" [request]="request" [requestTimeout]="defaultSettings.timeout"
                 [environment]="environment"></test-request>
-            <i (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
+            <i *ngIf="!isDisabled" (click)="addRequest()" class="save-icon far fa-arrow-alt-circle-right"></i>
         </span>
     </card>
 </div>

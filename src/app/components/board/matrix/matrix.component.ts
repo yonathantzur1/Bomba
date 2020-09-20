@@ -168,7 +168,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     selectEnv() {
         this.selectedEnv && this.eventService.emit(EVENT_TYPE.ACTIVE_ENVIRONMENT, this.selectedEnv.id);
         this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, this.selectedEnv);
-        this.environmentsService.updateActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.id : null)
+        this.environmentsService.setActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.id : null)
             .then(result => {
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");

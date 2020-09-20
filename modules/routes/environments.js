@@ -27,8 +27,8 @@ router.delete('/deleteEnv', (req, res) => {
     });
 });
 
-router.put('/updateActiveEnv', (req, res) => {
-    environmentsBL.updateActiveEnv(req.body.projectId, req.body.envId, req.user._id).then(result => {
+router.put('/setActiveEnv', (req, res) => {
+    environmentsBL.setActiveEnv(req.body.projectId, req.body.envId, req.user._id).then(result => {
         res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);

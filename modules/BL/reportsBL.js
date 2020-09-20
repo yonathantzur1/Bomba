@@ -109,7 +109,7 @@ module.exports = {
             .catch(errorHandler.promiseError);
     },
 
-    async saveReport(projectId, totalTime, envId) {
+    async saveReport(projectId, totalTime, env) {
         let projectFilter = {
             _id: DAL.getObjectId(projectId)
         }
@@ -121,7 +121,7 @@ module.exports = {
 
         let report = {
             "projectId": DAL.getObjectId(projectQueryResult._id),
-            "environmentId": envId,
+            "environmentId": env ? env.id : null,
             "date": projectQueryResult.report.creationDate,
             "success": 0,
             "fail": 0,
@@ -153,7 +153,8 @@ module.exports = {
 
         report.data = {
             "matrix": projectQueryResult.matrix,
-            "results": projectQueryResult.report.results
+            "results": projectQueryResult.report.results,
+            "environmentValues": env ? env.values : null
         }
 
         DAL.insert(reportsCollectionName, report).catch(errorHandler.promiseError);

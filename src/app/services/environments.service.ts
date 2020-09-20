@@ -28,9 +28,9 @@ export class EnvironmentsService extends BasicService {
         return super.delete('/deleteEnv?projectId=' + projectId + "&envId=" + envId);
     }
 
-    updateActiveEnv(projectId: string, envId: string) {
+    setActiveEnv(projectId: string, envId: string) {
         const data = { projectId, envId };
 
-        return super.put('/updateActiveEnv', data);
+        return super.put('/setActiveEnv', data);
     }
 }
