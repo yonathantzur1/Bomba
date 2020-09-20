@@ -9,6 +9,6 @@
             </tr>
         </table>
     </div>
-    <request-card *ngIf="selectedRequest" [selectedRequest]="selectedRequest" [environment]="null" [isDisabled]="true">
-    </request-card>
+    <request-card *ngIf="selectedRequest" [selectedRequest]="selectedRequest"
+        [defaultSettings]="{'timeout': reqTimeout}" [envValues]="envValues" [isDisabled]="true"></request-card>
 </div>

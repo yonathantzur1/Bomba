@@ -4,7 +4,6 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { MatrixService } from 'src/app/services/matrix.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { Environment } from '../../environments/environments.component';
 import { SocketService } from 'src/app/services/global/socket.service';
 
 @Component({
@@ -17,7 +16,7 @@ import { SocketService } from 'src/app/services/global/socket.service';
 export class TestRequestComponent implements OnInit, OnDestroy {
     @Input() request: Request;
     @Input() requestTimeout: number;
-    @Input() environment: Environment;
+    @Input() envValues: any;
 
     isSendRequest: boolean;
     response: any;
@@ -31,7 +30,7 @@ export class TestRequestComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.isSendRequest = true;
 
-        this.matrixService.testRequest(this.request, this.requestTimeout, this.environment).then(result => {
+        this.matrixService.testRequest(this.request, this.requestTimeout, this.envValues).then(result => {
             if (!result) {
                 this.isSendRequest = false;
                 this.snackbarService.snackbar("Server error occurred");

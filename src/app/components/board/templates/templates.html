@@ -23,7 +23,7 @@
         </div>
     </div>
     <request-card *ngIf="isShowRequestCard" [defaultSettings]="defaultSettings" [selectedRequest]="selectedRequest"
-        [environment]="selectedEnvironment"></request-card>
+        [envValues]="selectedEnv ? selectedEnv.values : null"></request-card>
     <request-settings [projectId]="projectId" [originalDefaultSettings]="defaultSettings" *ngIf="isShowRequestSettings">
     </request-settings>
 </div>

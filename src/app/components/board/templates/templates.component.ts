@@ -23,7 +23,7 @@ export class TemplatesComponent implements OnDestroy {
     isShowRequestCard: boolean = false;
     isShowRequestSettings: boolean = false;
     selectedRequest: Request;
-    selectedEnvironment: Environment;
+    selectedEnv: Environment;
     eventsIds: Array<string> = [];
 
     constructor(private eventService: EventService,
@@ -52,7 +52,7 @@ export class TemplatesComponent implements OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.SELECT_ENVIRONMENT, (env: Environment) => {
-            this.selectedEnvironment = env;
+            this.selectedEnv = env;
         }, this.eventsIds);
     }
 

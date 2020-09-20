@@ -52,6 +52,13 @@
     background-color: #f8f9fa;
 }
 
+.test-btn-main {
+    bottom: 9px;
+    left: calc(50% - 50px);
+    font-size: 16px;
+    width: 100px;
+}
+
 .tab-container {
     width: 100%;
     height: calc(100% - 70px);

@@ -12,8 +12,8 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
     projectsRequests: {},
 
-    async testRequest(request, requestTimeout, env, userId) {
-        env && setEnvironmentOnRequest(env.values, request);
+    async testRequest(request, requestTimeout, envValues, userId) {
+        envValues && setEnvironmentOnRequest(envValues, request);
         request.url = replaceStringValue(request.url, getReplaceObject(1));
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
@@ -67,7 +67,7 @@ module.exports = {
         Promise.all(promises).then(() => {
             if (this.projectsRequests[projectId]) {
                 const totalTime = getDatesDiffBySeconds(new Date(), requestsStartTime);
-                reportsBL.saveReport(projectId, totalTime, env);
+                reportsBL.saveReport(projectId, totalTime, requestTimeout, env);
                 delete this.projectsRequests[projectId];
             }
 

@@ -18,6 +18,8 @@
     <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
     <div *ngIf="!isLoading" [ngSwitch]="isMatrixMode">
         <report-numbers *ngSwitchCase="false" [document]="document"></report-numbers>
-        <report-matrix *ngSwitchCase="true" [matrix]="reportData.matrix" [results]="reportData.results"></report-matrix>
+        <report-matrix *ngSwitchCase="true" [reqTimeout]="reportData.requestTimeout"
+            [envValues]="reportData.environmentValues" [matrix]="reportData.matrix" [results]="reportData.results">
+        </report-matrix>
     </div>
 </div>

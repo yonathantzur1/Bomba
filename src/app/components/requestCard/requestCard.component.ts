@@ -5,7 +5,6 @@ import { DefaultSettings } from '../requestSettings/requestSettings.component';
 import { METHOD } from 'src/app/enums';
 import { Tab } from './requestNavbar/requestNavbar.component';
 import { generateGuid } from 'src/app/globals';
-import { Environment } from '../environments/environments.component';
 
 export class Request {
     id: string;
@@ -66,7 +65,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
 
     @Input() selectedRequest: Request;
     @Input() defaultSettings: DefaultSettings = new DefaultSettings();
-    @Input() environment: Environment;
+    @Input() envValues: any;
     @Input() isDisabled: boolean = false;
 
     request: Request;
