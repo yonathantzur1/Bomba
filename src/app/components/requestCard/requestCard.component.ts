@@ -120,6 +120,10 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        if (this.isDisabled && this.envValues) {
+            this.setEnvironmentOnRequest(this.envValues, this.selectedRequest)
+        }
+
         if (this.selectedRequest) {
             this.request = JSON.parse(JSON.stringify(this.selectedRequest));
         }
@@ -184,5 +188,36 @@ export class RequestCardComponent implements OnInit, OnDestroy {
 
     hideMicrotext(id: string) {
         this.microtextService.hideMicrotext(id);
+    }
+
+    setEnvironmentOnRequest(values: any, request: Request) {
+        Object.keys(values).forEach(key => {
+            const src = "{{" + key + "}}";
+            const target = values[key];
+            request.url = this.replaceEnvValue(request.url, src, target);
+            request.cookies = this.replaceEnvValue(request.cookies, src, target);
+            request.headers = this.replaceEnvValue(request.headers, src, target);
+
+            if (request.body) {
+                request.body = JSON.stringify(this.replaceEnvValue(JSON.parse(request.body), src, target));
+            }
+        });
+    }
+
+    replaceEnvValue(param: any, src: string, dst: string) {
+        if (typeof param == "string") {
+            return this.replaceAll(param, src, dst);
+        }
+        else if (typeof param == "object") {
+            Object.keys(param).forEach(key => {
+                param[key] = this.replaceEnvValue(param[key], src, dst);
+            });
+        }
+
+        return param;
+    }
+
+    replaceAll(str: string, src: string, dst: string) {
+        return str.replace(new RegExp(src, 'g'), dst);
     }
 }
