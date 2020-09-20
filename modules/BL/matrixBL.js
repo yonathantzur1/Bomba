@@ -17,8 +17,9 @@ module.exports = {
         request.url = replaceStringValue(request.url, getReplaceObject(1));
         let sendObject = buildSendObject(request, requestTimeout);
         const reqData = sendObject.data;
+        let jsonData;
 
-        if (reqData && (jsonData = jsonTryParse(reqData))) {
+        if (jsonData = jsonTryParse(reqData)) {
             replaceJsonValue(jsonData, getReplaceObject(1));
             sendObject.data = JSON.stringify(jsonData);
         }
@@ -105,8 +106,9 @@ module.exports = {
 
             for (let i = 1; i <= sendObject.amount && this.projectsRequests[projectId]; i++) {
                 const replaceObj = getReplaceObject(i);
+                let jsonData;
 
-                if (reqData && (jsonData = jsonTryParse(reqData))) {
+                if (jsonData = jsonTryParse(reqData)) {
                     replaceJsonValue(jsonData, replaceObj);
                     sendObject.data = JSON.stringify(jsonData);
                 }
@@ -361,9 +363,10 @@ function setEnvironmentOnRequest(values, request) {
         request.url = replaceEnvValue(request.url, src, target);
         request.cookies = replaceEnvValue(request.cookies, src, target);
         request.headers = replaceEnvValue(request.headers, src, target);
+        let jsonBody;
 
-        if (request.body) {
-            request.body = JSON.stringify(replaceEnvValue(JSON.parse(request.body), src, target));
+        if (jsonBody = jsonTryParse(request.body)) {
+            request.body = JSON.stringify(replaceEnvValue(jsonBody, src, target));
         }
     });
 }

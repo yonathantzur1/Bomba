@@ -190,6 +190,15 @@ export class RequestCardComponent implements OnInit, OnDestroy {
         this.microtextService.hideMicrotext(id);
     }
 
+    jsonTryParse(strObj: string) {
+        try {
+            return JSON.parse(strObj);
+        }
+        catch (e) {
+            return null;
+        }
+    }
+
     setEnvironmentOnRequest(values: any, request: Request) {
         Object.keys(values).forEach(key => {
             const src = "{{" + key + "}}";
@@ -197,9 +206,10 @@ export class RequestCardComponent implements OnInit, OnDestroy {
             request.url = this.replaceEnvValue(request.url, src, target);
             request.cookies = this.replaceEnvValue(request.cookies, src, target);
             request.headers = this.replaceEnvValue(request.headers, src, target);
+            let jsonBody: any;
 
-            if (request.body) {
-                request.body = JSON.stringify(this.replaceEnvValue(JSON.parse(request.body), src, target));
+            if (jsonBody = this.jsonTryParse(request.body)) {
+                request.body = JSON.stringify(this.replaceEnvValue(jsonBody, src, target));
             }
         });
     }
