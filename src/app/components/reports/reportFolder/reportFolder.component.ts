@@ -179,12 +179,12 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
     deleteReport(docId: string, docEnv: string, projectId: string) {
         this.eventService.emit(EVENT_TYPE.DELETE_REPORT, this.projectId);
-        const removeAction = (doc: Document) => {
+        const removeDocFilter = (doc: Document) => {
             return doc._id != docId;
         };
 
         if (this.selectedEnvFolder) {
-            this.selectedEnvFolder.documents = this.selectedEnvFolder.documents.filter(removeAction);
+            this.selectedEnvFolder.documents = this.selectedEnvFolder.documents.filter(removeDocFilter);
 
             if (this.selectedEnvFolder.documents.length == 0) {
                 this.envFolders = this.envFolders.filter(folder => {
@@ -195,11 +195,11 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
             }
         }
         else {
-            this.documents = this.documents.filter(removeAction);
+            this.documents = this.documents.filter(removeDocFilter);
         }
 
         if (this.documents.length == 0 && this.envFolders.length == 0) {
-            this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+            this.closeWindow();
         }
     }
 
