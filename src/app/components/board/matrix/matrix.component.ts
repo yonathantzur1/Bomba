@@ -56,7 +56,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
     isShowRequestCard: boolean = false;
     isShowEnvironments: boolean = false;
     selectedRequest: Request;
-    isRequestDisabled: boolean = true;
+    isRequestDisabled: boolean = false;
 
     selectedEnv: Environment;
 
