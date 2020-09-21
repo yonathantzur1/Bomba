@@ -144,6 +144,13 @@ export class MatrixComponent implements OnInit, OnDestroy {
             }
         });
 
+        this.socketService.socketOn("syncSelectedEnv", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.selectedEnv = data.envId ? this.environments.find(env => env.id == data.envId) : null;
+                this.setEnv(this.selectedEnv);
+            }
+        });
+
         this.requestsAmount = this.getMatrixRequestsAmount();
         this.resultsAmount = this.report ? this.getResultsAmount() : 0;
 
@@ -159,20 +166,32 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.socketService.socketOff("requestStatus");
         this.socketService.socketOff("syncSendRequests");
         this.socketService.socketOff("syncCloseReport");
+        this.socketService.socketOff("syncSelectedEnv");
     }
 
     isSyncAllow(projectId: string, userGuid: string) {
         return (this.projectId == projectId && this.globalService.userGuid != userGuid);
     }
 
+    setEnv(env: Environment) {
+        this.eventService.emit(EVENT_TYPE.ACTIVE_ENVIRONMENT, env ? env.id : null);
+        this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, env);
+    }
+
     selectEnv() {
-        this.selectedEnv && this.eventService.emit(EVENT_TYPE.ACTIVE_ENVIRONMENT, this.selectedEnv.id);
-        this.eventService.emit(EVENT_TYPE.SELECT_ENVIRONMENT, this.selectedEnv);
+        this.setEnv(this.selectedEnv);
         this.environmentsService.setActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.id : null)
             .then(result => {
                 if (!result) {
                     this.snackbarService.snackbar("Server error occurred");
                 }
+            });
+        this.socketService.socketEmit('selfSync',
+            'syncSelectedEnv',
+            {
+                "userGuid": this.globalService.userGuid,
+                "projectId": this.projectId,
+                "envId": this.selectedEnv ? this.selectedEnv.id : null
             });
     }
 
