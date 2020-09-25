@@ -6,14 +6,14 @@ export enum METHOD {
     DELETE = "DELETE"
 }
 
-export enum LOG_TYPE {
+export const enum LOG_TYPE {
     LOGIN,
     LOGIN_FAIL,
     REGISTER,
     PROJECT_RUN
 }
 
-export enum STATISTICS_RANGE {
+export const enum STATISTICS_RANGE {
     YEARLY,
     WEEKLY
 }
