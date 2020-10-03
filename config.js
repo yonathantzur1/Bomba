@@ -28,7 +28,7 @@ module.exports = {
         mainLogName: "bomba.log",
         secureLogName: "secure.log",
         maxLogSize: 5000000, // bytes
-        maxLogFiles: 3
+        maxLogFiles: 5
     },
     security: {
         jwt: {
