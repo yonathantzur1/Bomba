@@ -209,6 +209,13 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
             else {
                 duplicateEnv.id = data.result;
                 this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, duplicateEnv);
+                this.socketService.socketEmit('selfSync',
+                    'syncAddedEnv',
+                    {
+                        "userGuid": this.globalService.userGuid,
+                        "projectId": this.projectId,
+                        "environment": duplicateEnv
+                    });
             }
         });
     }
