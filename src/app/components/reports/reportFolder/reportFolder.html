@@ -1,5 +1,5 @@
 <div id="reportFolder">
-    <card [title]="getTitle()" [width]="880" [height]="550" [disableEscape]="isRequestViewMode" [onClose]="closeWindow">
+    <card [title]="getTitle()" [width]="895" [height]="555" [disableEscape]="isRequestViewMode" [onClose]="closeWindow">
         <loader-spinner class="loader-spinner" *ngIf="isLoading"></loader-spinner>
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument && !selectedEnvFolder">
             <div *ngFor="let envFolder of envFolders" [ngClass]="{'only-folders': documents.length == 0}"
