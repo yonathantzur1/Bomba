@@ -6,17 +6,16 @@ const errorHandler = require('../handlers/errorHandler');
 
 // Getting the current login user.
 router.get('/getCurrUser', (req, res) => {
-    let user = req.user;
-
     // Return user with only specific details.
-    let userClientObject = {
-        "_id": user._id,
-        "username": user.username
+    const user = {
+        "_id": req.user._id,
+        "username": req.user.username,
+        "isAdmin": req.user.isAdmin
     }
 
     logsBL.login(user.username, req);
     loginBL.updateLastLogin(user._id);
-    res.send(userClientObject);
+    res.send(user);
 });
 
 // Checking if the session of the user is open.

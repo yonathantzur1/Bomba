@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 
 import { EnvironmentsService } from '../../services/environments.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { SocketService } from 'src/app/services/global/socket.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare let $: any;
 
@@ -44,7 +46,7 @@ enum WINDOW_TYPE {
     styleUrls: ['./environments.css']
 })
 
-export class EnvironmentsComponent implements OnInit {
+export class EnvironmentsComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() projectId: string;
     @Input() environments: Array<Environment>;
@@ -64,6 +66,8 @@ export class EnvironmentsComponent implements OnInit {
         private alertService: AlertService,
         private snackbarService: SnackbarService,
         private microtextService: MicrotextService,
+        private socketService: SocketService,
+        private globalService: GlobalService,
         private eventService: EventService) {
         this.validationFuncs = [
             {
@@ -85,6 +89,26 @@ export class EnvironmentsComponent implements OnInit {
 
     ngOnInit() {
         this.setWindowType();
+    }
+
+    ngOnDestroy() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const envs = changes.environments ? changes.environments.currentValue : null;
+
+        if (envs) {
+            if (envs.length == 0) {
+                this.currWindowType = WINDOW_TYPE.EMPTY;
+            }
+            else {
+                this.currWindowType = WINDOW_TYPE.LIST;
+            }
+        }
+    }
+
+    isSyncAllow(projectId: string, userGuid: string) {
+        return (this.projectId == projectId && this.globalService.userGuid != userGuid);
     }
 
     getSortEnvironments(environments: Array<Environment>) {
@@ -132,6 +156,15 @@ export class EnvironmentsComponent implements OnInit {
                     this.environment.id = data.result;
                     this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
+
+                    this.socketService.socketEmit('selfSync',
+                        'syncAddedEnv',
+                        {
+                            "userGuid": this.globalService.userGuid,
+                            "projectId": this.projectId,
+                            "environment": this.environment
+                        });
+
                     this.environment = new Environment();
                 }
             });
@@ -241,7 +274,6 @@ export class EnvironmentsComponent implements OnInit {
             text: "Are you sure you want to delete this environment?",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
-                const isLastEnv: boolean = (this.environments.length == 1);
                 this.isLoading = true;
 
                 this.environmentsService.deleteEnv(this.projectId, envId).then(result => {
@@ -253,9 +285,13 @@ export class EnvironmentsComponent implements OnInit {
                     else {
                         this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, envId);
 
-                        if (isLastEnv) {
-                            this.currWindowType = WINDOW_TYPE.EMPTY;
-                        }
+                        this.socketService.socketEmit('selfSync',
+                            'syncDeletedEnv',
+                            {
+                                "userGuid": this.globalService.userGuid,
+                                "projectId": this.projectId,
+                                "envId": envId
+                            });
                     }
                 });
             }

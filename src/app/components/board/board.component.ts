@@ -58,6 +58,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         eventService.register(EVENT_TYPE.ADD_ENVIRONMENT, (environment: Environment) => {
             this.environments.push(environment);
+            this.environments = this.environments.slice();
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.UPDATE_ENVIRONMENT, (environment: Environment) => {
@@ -143,6 +144,18 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.defaultSettings = data.defaultSettings;
             }
         });
+
+        this.socketService.socketOn("syncAddedEnv", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, data.environment);
+            }
+        });
+
+        this.socketService.socketOn("syncDeletedEnv", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, data.envId);
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -153,6 +166,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.socketService.socketOff("syncMatrix");
         this.socketService.socketOff("syncRequests");
         this.socketService.socketOff("syncDefaultSettings");
+        this.socketService.socketOff("syncAddedEnv");
+        this.socketService.socketOff("syncDeletedEnv");
     }
 
     isSyncAllow(projectId: string, userGuid: string) {
