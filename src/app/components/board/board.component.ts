@@ -172,13 +172,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.emptyDropzoneInteract.unset();
         this.draggableInteract.unset();
         this.eventService.unsubscribeEvents(this.eventsIds);
-        this.socketService.socketOff("syncMatrix");
-        this.socketService.socketOff("syncRequests");
-        this.socketService.socketOff("syncDefaultSettings");
-        this.socketService.socketOff("syncAddedEnv");
-        this.socketService.socketOff("syncDeletedEnv");
-        this.socketService.socketOff("syncUpdatedEnv");
-        this.socketService.socketOff("syncDeleteProject");
+        this.socketService.socketOff(["syncMatrix", "syncRequests", "syncDefaultSettings",
+            "syncAddedEnv", "syncDeletedEnv", "syncUpdatedEnv", "syncDeleteProject"]);
     }
 
     isSyncAllow(projectId: string, userGuid: string) {

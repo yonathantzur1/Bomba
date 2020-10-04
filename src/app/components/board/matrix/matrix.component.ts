@@ -162,11 +162,8 @@ export class MatrixComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
-        this.socketService.socketOff("requestStart");
-        this.socketService.socketOff("requestStatus");
-        this.socketService.socketOff("syncSendRequests");
-        this.socketService.socketOff("syncCloseReport");
-        this.socketService.socketOff("syncSelectedEnv");
+        this.socketService.socketOff(["requestStart", "requestStatus", "syncSendRequests",
+            "syncCloseReport", "syncSelectedEnv"]);
     }
 
     isSyncAllow(projectId: string, userGuid: string) {

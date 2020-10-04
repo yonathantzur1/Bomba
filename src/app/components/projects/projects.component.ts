@@ -96,12 +96,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.socketService.socketOff("syncAddProject");
-        this.socketService.socketOff("syncEditProject");
-        this.socketService.socketOff("syncDeleteProject");
-        this.socketService.socketOff("syncSendRequests");
-        this.socketService.socketOff("syncCloseReport");
-        this.socketService.socketOff("finishReport");
+        this.socketService.socketOff(["syncAddProject", "syncEditProject", "syncDeleteProject",
+            "syncSendRequests", "syncCloseReport", "finishReport"]);
         this.eventService.unsubscribeEvents(this.eventsIds);
     }
 

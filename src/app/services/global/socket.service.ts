@@ -48,8 +48,8 @@ export class SocketService {
         this.socket && this.socket.on(name, func);
     }
 
-    socketOff(name: string) {
-        this.socket && this.socket.off(name);
+    socketOff(names: Array<string>) {
+        this.socket && names.forEach(name => this.socket.off(name));
     }
 
     isSocketConnect() {

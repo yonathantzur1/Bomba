@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         clearInterval(this.checkSocketConnectInterval);
         this.eventService.unsubscribeEvents(this.eventsIds);
-        this.socketService.socketOff("LogoutUserSessionClient");
+        this.socketService.socketOff(["LogoutUserSessionClient"]);
     }
 
     initializeTabs() {

@@ -48,7 +48,7 @@ export class TestRequestComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.socketService.socketOff("testResult");
+        this.socketService.socketOff(["testResult"]);
     }
 
     formatJson(data: string) {
