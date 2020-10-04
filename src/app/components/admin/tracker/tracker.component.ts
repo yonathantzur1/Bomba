@@ -6,8 +6,8 @@ import { MicrotextService, InputFieldValidation } from '../../../services/global
 
 import { STATISTICS_RANGE, LOG_TYPE } from '../../../enums';
 
-declare let $: any;
-declare let Chart: any;
+declare const $: any;
+declare const Chart: any;
 
 class ChartData {
     logType: LOG_TYPE;

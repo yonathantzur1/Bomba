@@ -8,7 +8,7 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 import { SocketService } from 'src/app/services/global/socket.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
-declare let $: any;
+declare const $: any;
 
 export class Environment {
     id: string;

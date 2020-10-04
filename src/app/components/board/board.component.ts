@@ -10,7 +10,7 @@ import { Request } from '../requestCard/requestCard.component';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
 import { Environment } from '../environments/environments.component';
 
-declare let interact: any;
+declare const interact: any;
 
 @Component({
     selector: 'board',

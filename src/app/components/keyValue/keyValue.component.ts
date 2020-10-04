@@ -3,7 +3,7 @@ import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service'
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'key-value',

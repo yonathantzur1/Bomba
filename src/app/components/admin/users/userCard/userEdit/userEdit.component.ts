@@ -4,7 +4,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
 
-declare let $: any;
+declare const $: any;
 
 export class UserEdit {
     id: string;

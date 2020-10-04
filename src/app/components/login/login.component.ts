@@ -9,7 +9,7 @@ import { MicrotextService, InputFieldValidation } from '../../services/global/mi
 import { LoginService } from '../../services/login.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
-declare let $: any;
+declare const $: any;
 
 export class User {
     username: string;

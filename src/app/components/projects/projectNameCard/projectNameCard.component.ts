@@ -6,7 +6,7 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 import { Project } from '../project/project.component';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'project-name-card',

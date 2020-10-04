@@ -7,7 +7,7 @@ export class InputFieldValidation {
     inputId: string;
 }
 
-declare let $: any;
+declare const $: any;
 
 @Injectable()
 export class MicrotextService {

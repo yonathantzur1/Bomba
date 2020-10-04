@@ -12,7 +12,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { DefaultSettings } from '../../requestSettings/requestSettings.component';
 
-declare let $: any;
+declare const $: any;
 
 export class RequestResult {
     success: number;

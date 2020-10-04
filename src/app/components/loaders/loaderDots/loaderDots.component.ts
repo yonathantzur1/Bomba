@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-declare let $: any;
+declare const $: any;
 
 // Assign global counter variable.
 let loaderDotsComponentInstances = 0;

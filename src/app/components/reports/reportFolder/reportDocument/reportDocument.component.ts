@@ -3,7 +3,7 @@ import { Document } from '../reportFolder.component';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'report-document',

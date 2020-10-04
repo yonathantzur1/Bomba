@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-declare let io: any;
+declare const io: any;
 
 @Injectable()
 export class SocketService {

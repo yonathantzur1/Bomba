@@ -10,7 +10,7 @@ import { RegisterService } from 'src/app/services/register.service';
 import { User } from 'src/app/components/login/login.component';
 import { GlobalService } from 'src/app/services/global/global.service';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
     selector: 'register',
