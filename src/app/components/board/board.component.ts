@@ -159,6 +159,12 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, data.environment);
             }
         });
+
+        this.socketService.socketOn("syncDeleteProject", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.router.navigateByUrl('');
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -172,6 +178,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.socketService.socketOff("syncAddedEnv");
         this.socketService.socketOff("syncDeletedEnv");
         this.socketService.socketOff("syncUpdatedEnv");
+        this.socketService.socketOff("syncDeleteProject");
     }
 
     isSyncAllow(projectId: string, userGuid: string) {
