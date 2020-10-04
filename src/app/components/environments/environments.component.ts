@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 import { EnvironmentsService } from '../../services/environments.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
@@ -46,7 +46,7 @@ enum WINDOW_TYPE {
     styleUrls: ['./environments.css']
 })
 
-export class EnvironmentsComponent implements OnInit, OnDestroy, OnChanges {
+export class EnvironmentsComponent implements OnInit, OnChanges {
 
     @Input() projectId: string;
     @Input() environments: Array<Environment>;
@@ -89,9 +89,6 @@ export class EnvironmentsComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnInit() {
         this.setWindowType();
-    }
-
-    ngOnDestroy() {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -155,7 +152,6 @@ export class EnvironmentsComponent implements OnInit, OnDestroy, OnChanges {
                 else {
                     this.environment.id = data.result;
                     this.eventService.emit(EVENT_TYPE.ADD_ENVIRONMENT, this.environment);
-                    this.currWindowType = WINDOW_TYPE.LIST;
 
                     this.socketService.socketEmit('selfSync',
                         'syncAddedEnv',
@@ -183,6 +179,15 @@ export class EnvironmentsComponent implements OnInit, OnDestroy, OnChanges {
                 else {
                     this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, this.environment);
                     this.currWindowType = WINDOW_TYPE.LIST;
+
+                    this.socketService.socketEmit('selfSync',
+                        'syncUpdatedEnv',
+                        {
+                            "userGuid": this.globalService.userGuid,
+                            "projectId": this.projectId,
+                            "environment": this.environment
+                        });
+
                     this.environment = new Environment();
                 }
             });

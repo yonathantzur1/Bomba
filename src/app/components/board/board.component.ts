@@ -62,19 +62,16 @@ export class BoardComponent implements OnInit, OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.UPDATE_ENVIRONMENT, (environment: Environment) => {
-            for (let env of this.environments) {
-                if (env.id == environment.id) {
-                    Object.keys(environment).forEach(prop => {
-                        if (typeof environment[prop] == "object") {
-                            env[prop] = JSON.parse(JSON.stringify(environment[prop]))
-                        }
-                        else {
-                            env[prop] = environment[prop];
-                        }
-                    });
-                    break;
+            const env = this.environments.find(env => env.id == environment.id);
+
+            Object.keys(environment).forEach(prop => {
+                if (typeof environment[prop] == "object") {
+                    env[prop] = JSON.parse(JSON.stringify(environment[prop]))
                 }
-            }
+                else {
+                    env[prop] = environment[prop];
+                }
+            });
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.DELETE_ENVIRONMENT, (envId: string) => {
@@ -156,6 +153,12 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, data.envId);
             }
         });
+
+        this.socketService.socketOn("syncUpdatedEnv", (data: any) => {
+            if (this.isSyncAllow(data.projectId, data.userGuid)) {
+                this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, data.environment);
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -168,6 +171,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.socketService.socketOff("syncDefaultSettings");
         this.socketService.socketOff("syncAddedEnv");
         this.socketService.socketOff("syncDeletedEnv");
+        this.socketService.socketOff("syncUpdatedEnv");
     }
 
     isSyncAllow(projectId: string, userGuid: string) {
