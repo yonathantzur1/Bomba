@@ -95,12 +95,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
         const envs = changes.environments ? changes.environments.currentValue : null;
 
         if (envs) {
-            if (envs.length == 0) {
-                this.currWindowType = WINDOW_TYPE.EMPTY;
-            }
-            else {
-                this.currWindowType = WINDOW_TYPE.LIST;
-            }
+            this.currWindowType = (envs.length == 0) ? WINDOW_TYPE.EMPTY : WINDOW_TYPE.LIST;
         }
     }
 
