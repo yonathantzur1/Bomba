@@ -54,7 +54,7 @@ export class TrackerComponent {
     constructor(private dateService: DateService,
         private trackerService: TrackerService,
         private microtextService: MicrotextService) {
-        let self = this;
+        const self = this;
 
         this.validationFuncs = [
             {

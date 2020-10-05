@@ -34,8 +34,8 @@ export class ApiManagerComponent implements OnDestroy {
         private eventService: EventService,
         private snackbarService: SnackbarService) {
 
-        let apiKeyQuery = this.apiManagerService.getApiKey();
-        let userProjectsQuery = this.apiManagerService.getProjectsForApi();
+        const apiKeyQuery = this.apiManagerService.getApiKey();
+        const userProjectsQuery = this.apiManagerService.getProjectsForApi();
         this.isLoading = true;
 
         Promise.all([apiKeyQuery, userProjectsQuery]).then((results: Array<any>) => {

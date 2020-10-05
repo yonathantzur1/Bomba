@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         // In case the login fields are valid.
         if (this.microtextService.validation(this.validationFuncs, this.user)) {
             this.isLoading = true;
-            let self = this;
+            const self = this;
 
             this.loginService.login(this.user).then((data: any) => {
                 let result = data ? data.result : null;

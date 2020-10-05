@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const encryption = require('../security/encryption');
 
-let self = module.exports = {
+const self = module.exports = {
     getTokenFromUserObject(user) {
         let tokenUserObject = {
             "_id": user._id,

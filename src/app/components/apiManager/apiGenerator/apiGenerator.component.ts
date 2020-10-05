@@ -85,7 +85,7 @@ export class ApiGeneratorComponent implements OnInit {
     }
 
     getApiRequest() {
-        let apiRequest = this.getApiUrl() + "?" +
+        const apiRequest = this.getApiUrl() + "?" +
             "key=" + this.api.key + "&" +
             "project=" + this.api.project + "&" +
             (this.api.env ? ("env=" + this.api.env + "&") : '') +

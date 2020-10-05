@@ -29,7 +29,7 @@ export class EventService {
     }
 
     emit(name: EVENT_TYPE, data?: any) {
-        let self = this;
+        const self = this;
 
         // Emit the event after view rendering.
         setTimeout(() => {
@@ -42,7 +42,7 @@ export class EventService {
     }
 
     unsubscribeEvents(eventsIds: Array<string>) {
-        let self = this;
+        const self = this;
 
         Object.keys(self.events).forEach((name: string) => {
             self.events[name] = self.events[name].filter((event: Event) => {
