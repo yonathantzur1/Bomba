@@ -6,19 +6,17 @@ const errorHandler = require('../handlers/errorHandler');
 
 // Getting the current login user.
 router.get('/getCurrUser', (req, res) => {
-    // Return user with only specific details.
     const user = {
-        "_id": req.user._id,
         "username": req.user.username,
         "isAdmin": req.user.isAdmin
     }
 
     logsBL.login(user.username, req);
-    loginBL.updateLastLogin(user._id);
+    loginBL.updateLastLogin(req.user._id);
     res.send(user);
 });
 
-// Checking if the session of the user is open.
+// Checking if the user session is open.
 router.get('/isUserOnSession', (req, res) => {
     if (!tokenHandler.validateUserAuthCookies(req)) {
         res.send(false);
@@ -27,7 +25,7 @@ router.get('/isUserOnSession', (req, res) => {
         loginBL.getUserById(req.user._id).then(user => {
             let cookieUid = tokenHandler.getUidFromRequest(req);
 
-            // Double check uid (after main server token validae middleware)
+            // Second check of user uid (after main server token validae middleware)
             // from the original DB user object.
             if (user && user.uid == cookieUid) {
                 tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res, true);
