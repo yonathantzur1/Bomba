@@ -38,7 +38,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
               "node_modules/interactjs/dist/interact.min.js",
-              "node_modules/socket.io-client/dist/socket.io.slim.js",
+              "node_modules/socket.io-client/dist/socket.io.min.js",
               "node_modules/chart.js/dist/Chart.min.js"
             ]
           },
