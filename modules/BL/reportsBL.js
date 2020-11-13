@@ -135,7 +135,7 @@ module.exports = {
         let totalRequests = 0;
 
         Object.keys(results).forEach(requestId => {
-            let result = results[requestId];
+            const result = results[requestId];
 
             report.success += result.success;
             report.fail += result.fail + result.timeout;
@@ -163,7 +163,7 @@ module.exports = {
 
 
     removeProjectReport(projectId, userId) {
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
         };
@@ -173,52 +173,41 @@ module.exports = {
     },
 
     getAllReports(userId) {
-        let reportFilter = {
-            $match: { "project.owner": DAL.getObjectId(userId) }
+        const projectsFilter = {
+            $match: { "owner": DAL.getObjectId(userId) }
         }
 
-        let joinFilter = {
+        const joinFilter = {
             $lookup:
             {
-                from: projectsCollectionName,
-                localField: 'projectId',
-                foreignField: '_id',
-                as: 'project'
+                from: reportsCollectionName,
+                localField: '_id',
+                foreignField: 'projectId',
+                as: 'reports'
             }
         };
 
-        let unwindObject = {
-            $unwind: {
-                path: "$project"
-            }
-        };
-
-        let group = {
-            $group: {
-                _id: {
-                    "projectId": "$projectId",
-                    "projectName": "$project.name"
-                },
-                count: { $sum: 1 }
-            }
-        }
-
-        let fields = {
+        const fields = {
             $project: {
                 "_id": 0,
-                "projectId": "$_id.projectId",
-                "projectName": "$_id.projectName",
-                "reportsAmount": "$count"
+                "projectId": "$_id",
+                "projectName": "$name",
+                "lastReportDate": { "$max": "$reports.date" },
+                "reportsAmount": { "$size": "$reports" }
             }
         };
 
-        let sort = {
-            $sort: { "projectName": 1 }
+        const reportsAmountFilter = {
+            $match: { "reportsAmount": { "$gt": 0 } }
         }
 
-        let aggregateArray = [joinFilter, unwindObject, reportFilter, group, fields, sort];
+        const sort = {
+            $sort: { "lastReportDate": -1 }
+        }
 
-        return DAL.aggregate(reportsCollectionName, aggregateArray)
+        const aggregateArray = [projectsFilter, joinFilter, fields, reportsAmountFilter, sort];
+
+        return DAL.aggregate(projectsCollectionName, aggregateArray)
             .catch(errorHandler.promiseError);
     },
 
