@@ -9,33 +9,31 @@ const projectsCollectionName = config.db.collections.projects;
 module.exports = {
 
     async setReportName(reportId, projectId, name, userId) {
-        let projectFilter = {
+        const projectFilter = {
             "_id": DAL.getObjectId(projectId),
             "owner": DAL.getObjectId(userId)
         }
 
-        let projectCount = await DAL.count(projectsCollectionName, projectFilter)
+        const projectCount = await DAL.count(projectsCollectionName, projectFilter)
             .catch(errorHandler.promiseError);
 
         if (projectCount != 1) {
             return false;
         }
 
-        let reportFilter = {
+        const reportFilter = {
             "_id": DAL.getObjectId(reportId),
             "projectId": DAL.getObjectId(projectId)
         }
 
-        let updateObj = {
-            $set: { name }
-        }
+        const updateObj = { $set: { name } }
 
         return DAL.updateOne(reportsCollectionName, reportFilter, updateObj)
             .catch(errorHandler.promiseError);
     },
 
     async initReport(matrix, projectId, userId) {
-        let results = {};
+        let results = {}
 
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[i].length; j++) {
@@ -49,12 +47,12 @@ module.exports = {
             }
         }
 
-        let setReport = {
+        const setReport = {
             creationDate: new Date(),
             results
         }
 
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
         }
@@ -65,13 +63,13 @@ module.exports = {
 
     updateRequestStart(projectId, requestId) {
         // Update only if report exists in document.
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId),
             report: { $ne: null }
         }
 
-        let jsonStr = '{ "$set": { "' + "report.results." + requestId + '.isStart": true } }';
-        let updateObj = JSON.parse(jsonStr);
+        const jsonStr = `{ "$set": { "report.results.${requestId}.isStart": true } }`;
+        const updateObj = JSON.parse(jsonStr);
 
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
             .catch(errorHandler.promiseError);
@@ -79,16 +77,16 @@ module.exports = {
 
     updateRequestStatus(requestStatus) {
         // Update only if report exists in document.
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(requestStatus.projectId),
             report: { $ne: null }
         }
 
-        let jsonStr = `{ "$set": { "report.results.${requestStatus.requestId}.success": ${requestStatus.success},
+        const jsonStr = `{ "$set": { "report.results.${requestStatus.requestId}.success": ${requestStatus.success},
             "report.results.${requestStatus.requestId}.fail": ${requestStatus.fail},
             "report.results.${requestStatus.requestId}.timeout": ${requestStatus.timeout},
             "report.results.${requestStatus.requestId}.time": ${requestStatus.time} } }`;
-        let updateObj = JSON.parse(jsonStr);
+        const updateObj = JSON.parse(jsonStr);
 
         return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
             .catch(errorHandler.promiseError);
@@ -96,27 +94,27 @@ module.exports = {
 
     finishReport(projectId) {
         // Update only if report exists in document.
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId),
             report: { $ne: null }
         }
 
-        let updateObj = {
+        const updateObj = {
             $set: { "report.isDone": true }
-        };
+        }
 
         DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
             .catch(errorHandler.promiseError);
     },
 
     async saveReport(projectId, totalTime, requestTimeout, env) {
-        let projectFilter = {
+        const projectFilter = {
             _id: DAL.getObjectId(projectId)
         }
 
-        let projectFields = { "_id": 1, "matrix": 1, "report": 1 };
+        const projectFields = { "_id": 1, "matrix": 1, "report": 1 }
 
-        let projectQueryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
+        const projectQueryResult = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
             .catch(errorHandler.promiseError);
 
         let report = {
@@ -127,9 +125,9 @@ module.exports = {
             "fail": 0,
             "totalTime": totalTime,
             "longestTime": 0
-        };
+        }
 
-        let results = projectQueryResult.report.results;
+        const results = projectQueryResult.report.results;
 
         let requestsTotalTime = 0
         let totalRequests = 0;
@@ -142,7 +140,7 @@ module.exports = {
             totalRequests += result.success + result.fail + result.timeout;
             requestsTotalTime += result.time;
 
-            let requestsAvgTime = result.time / totalRequests;
+            const requestsAvgTime = result.time / totalRequests;
 
             if (requestsAvgTime > report.longestTime) {
                 report.longestTime = requestsAvgTime;
@@ -166,7 +164,7 @@ module.exports = {
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId)
-        };
+        }
 
         return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } })
             .catch(errorHandler.promiseError);
@@ -185,7 +183,7 @@ module.exports = {
                 foreignField: 'projectId',
                 as: 'reports'
             }
-        };
+        }
 
         const fields = {
             $project: {
@@ -195,7 +193,7 @@ module.exports = {
                 "lastReportDate": { "$max": "$reports.date" },
                 "reportsAmount": { "$size": "$reports" }
             }
-        };
+        }
 
         const reportsAmountFilter = {
             $match: { "reportsAmount": { "$gt": 0 } }
@@ -213,14 +211,14 @@ module.exports = {
 
     getProjectReports(projectId, userId) {
         // Get all reports by project id.
-        let reportFilter = {
+        const reportFilter = {
             $match: {
                 "projectId": DAL.getObjectId(projectId)
             }
         }
 
         // Add project object to each report.
-        let joinProjectFilter = {
+        const joinProjectFilter = {
             $lookup:
             {
                 from: projectsCollectionName,
@@ -230,22 +228,22 @@ module.exports = {
             }
         }
 
-        // convert single project array to object.
-        let unwindProject = {
+        // Convert single project array to object.
+        const unwindProject = {
             $unwind: {
                 path: "$project"
             }
         }
 
         // Filter reports that belongs to the user (secure validation).
-        let reportOwnerFilter = {
+        const reportOwnerFilter = {
             $match: {
                 "project.owner": DAL.getObjectId(userId)
             }
         }
 
         // Filter the report environment (To array).
-        let addEnvironment = {
+        const addEnvironment = {
             $addFields: {
                 environment: {
                     $filter: {
@@ -255,10 +253,10 @@ module.exports = {
                     }
                 }
             }
-        };
+        }
 
-        // convert single environment array to object.
-        let unwindEnvironment = {
+        // Convert single environment array to object.
+        const unwindEnvironment = {
             $unwind: {
                 path: "$environment",
                 preserveNullAndEmptyArrays: true
@@ -266,27 +264,27 @@ module.exports = {
         }
 
         // Set only the environment name on the report.
-        let envField = {
+        const envField = {
             $addFields: {
                 "environment": "$environment.name"
             }
-        };
+        }
 
         // Remove unused properties from report object.
-        let fields = {
+        const fields = {
             $project: {
                 "project": 0,
                 "data": 0,
                 "environmentId": 0
             }
-        };
+        }
 
         // Sort the reports by creation date.
-        let sort = {
+        const sort = {
             $sort: { "date": -1 }
         }
 
-        let aggregateArray = [reportFilter, joinProjectFilter, unwindProject,
+        const aggregateArray = [reportFilter, joinProjectFilter, unwindProject,
             reportOwnerFilter, addEnvironment, unwindEnvironment, envField, fields, sort];
 
         return DAL.aggregate(reportsCollectionName, aggregateArray)
@@ -294,13 +292,13 @@ module.exports = {
     },
 
     async getReportData(reportId, userId) {
-        let reportFilter = {
+        const reportFilter = {
             $match: {
                 "_id": DAL.getObjectId(reportId)
             }
         }
 
-        let joinFilter = {
+        const joinFilter = {
             $lookup:
             {
                 from: projectsCollectionName,
@@ -310,40 +308,40 @@ module.exports = {
             }
         }
 
-        let reportOwnerFilter = {
+        const reportOwnerFilter = {
             $match: {
                 "project.owner": DAL.getObjectId(userId)
             }
         }
 
-        let fields = {
+        const fields = {
             $project: {
                 "data": 1
             }
-        };
+        }
 
-        let aggregateArray = [reportFilter, joinFilter, reportOwnerFilter, fields];
+        const aggregateArray = [reportFilter, joinFilter, reportOwnerFilter, fields];
 
-        let reportData = await DAL.aggregate(reportsCollectionName, aggregateArray)
+        const reportData = await DAL.aggregate(reportsCollectionName, aggregateArray)
             .catch(errorHandler.promiseError);
 
         return (reportData.length == 1) ? reportData[0].data : null;
     },
 
     async deleteReport(projectId, reportId, userId) {
-        let projectFilter = {
+        const projectFilter = {
             "_id": DAL.getObjectId(projectId),
             "owner": DAL.getObjectId(userId)
         }
 
-        let projectCount = await DAL.count(projectsCollectionName, projectFilter)
+        const projectCount = await DAL.count(projectsCollectionName, projectFilter)
             .catch(errorHandler.promiseError);
 
         if (projectCount != 1) {
             return false;
         }
 
-        let reportFilter = {
+        const reportFilter = {
             "_id": DAL.getObjectId(reportId),
             "projectId": DAL.getObjectId(projectId)
         }
