@@ -95,9 +95,11 @@ export class MatrixComponent implements OnInit, OnDestroy {
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.OPEN_REQUEST_VIEW, (request: Request) => {
-            this.isShowRequestCard = true;
-            this.selectedRequest = request;
-            this.isRequestDisabled = true;
+            if (this.requestsAmount == this.resultsAmount) {
+                this.isShowRequestCard = true;
+                this.selectedRequest = request;
+                this.isRequestDisabled = true;
+            }
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
