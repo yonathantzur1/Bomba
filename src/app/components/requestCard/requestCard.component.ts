@@ -121,6 +121,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isDisabled && this.envValues) {
+            this.selectedRequest = JSON.parse(JSON.stringify(this.selectedRequest));
             this.setEnvironmentOnRequest(this.envValues, this.selectedRequest)
         }
 
