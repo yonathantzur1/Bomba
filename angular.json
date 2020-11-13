@@ -29,8 +29,7 @@
               "node_modules/bootstrap/dist/css/bootstrap-reboot.min.css",
               "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
               "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css",
-              "node_modules/hover.css/css/hover-min.css",
-              "node_modules/css-tooltip/dist/css-tooltip.min.css"
+              "node_modules/hover.css/css/hover-min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -53,7 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
