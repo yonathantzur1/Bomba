@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ProjectApi } from '../apiManager.component';
 
@@ -40,28 +39,13 @@ export class ApiGeneratorComponent implements OnInit {
     @Input() projects: Array<ProjectApi>;
 
     constructor(private eventService: EventService,
-        private alertService: AlertService,
         private globalService: GlobalService,
         private snackbarService: SnackbarService,
         private microtextService: MicrotextService) {
     }
 
     ngOnInit() {
-        if (this.projects.length == 0) {
-            this.alertService.alert({
-                title: "No Projects Found",
-                text: "You have no projects.\n" +
-                    "First, create new project and then use our API.",
-                type: ALERT_TYPE.INFO,
-                showCancelButton: false,
-                confirmBtnText: "OK"
-            });
-
-            this.closeWindow();
-        }
-        else {
-            this.api = new Api(this.apiKey, this.projects[0].name, null, API_ACTION.START);
-        }
+        this.api = new Api(this.apiKey, this.projects[0].name, null, API_ACTION.START);
     }
 
     hideMicrotext(id: string) {

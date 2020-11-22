@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ApiManagerService } from 'src/app/services/apiManager.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 export class ProjectApi {
     name: string;
@@ -31,6 +32,7 @@ export class ApiManagerComponent implements OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private apiManagerService: ApiManagerService,
+        private alertService: AlertService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
 
@@ -60,7 +62,19 @@ export class ApiManagerComponent implements OnDestroy {
     }
 
     openGenerator() {
-        this.isApiGenerator = true;
+        if (this.projects.length > 0) {
+            this.isApiGenerator = true;
+        }
+        else {
+            this.alertService.alert({
+                title: "No Projects Found",
+                text: "You have no projects.\n" +
+                    "First, create new project and then use our API.",
+                type: ALERT_TYPE.INFO,
+                showCancelButton: false,
+                confirmBtnText: "OK"
+            });
+        }
     }
 
 }
