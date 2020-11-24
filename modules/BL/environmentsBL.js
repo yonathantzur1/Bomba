@@ -70,7 +70,7 @@ module.exports = {
 
         const reportUpdate = { $set: { "environmentId": null } };
 
-        DAL.updateOne(reportsCollectionName, reportsFilter, reportUpdate)
+        DAL.update(reportsCollectionName, reportsFilter, reportUpdate)
             .catch(errorHandler.promiseError);
 
         return true;

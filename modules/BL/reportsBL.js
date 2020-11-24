@@ -266,7 +266,7 @@ module.exports = {
         // Set only the environment name on the report.
         const envField = {
             $addFields: {
-                "environment": "$environment.name"
+                "environment": "$environment"
             }
         }
 
@@ -274,7 +274,10 @@ module.exports = {
         const fields = {
             $project: {
                 "project": 0,
-                "data": 0
+                "data": 0,
+                "environmentId": 0,
+                "environment.isActive": 0,
+                "environment.values": 0
             }
         }
 

@@ -18,8 +18,7 @@ class ContextMenuIds {
 export class Document {
     _id: string;
     projectId: string;
-    environment: string;
-    environmentId: string;
+    environment: any;
     name: string;
     date: Date;
     success: number;
@@ -145,12 +144,12 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         let envDocs = {};
 
         docs.forEach((doc: Document) => {
-            if (doc.environmentId) {
-                if (envDocs[doc.environmentId]) {
-                    envDocs[doc.environmentId].docs.push(doc);
+            if (doc.environment) {
+                if (envDocs[doc.environment.id]) {
+                    envDocs[doc.environment.id].docs.push(doc);
                 }
                 else {
-                    envDocs[doc.environmentId] = { name: doc.environment, docs: [doc] };
+                    envDocs[doc.environment.id] = { name: doc.environment.name, docs: [doc] };
                 }
             }
             else {
