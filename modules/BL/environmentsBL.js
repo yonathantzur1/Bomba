@@ -33,19 +33,35 @@ module.exports = {
         return { result: !!updateResult ? env.id : false };
     },
 
-    updateEnv(projectId, env, userId) {
+    async updateEnv(projectId, env, userId) {
         env.name = env.name.trim();
 
         const projectFilter = {
             _id: DAL.getObjectId(projectId),
             owner: DAL.getObjectId(userId),
             "environments.id": env.id
-        };
+        }
+
+        const projectFields = {
+            "environments.id": 1,
+            "environments.name": 1
+        }
+
+        const project = await DAL.findOneSpecific(projectsCollectionName, projectFilter, projectFields)
+            .catch(errorHandler.promiseError);
+
+        for (let projectEnv of project.environments) {
+            if (projectEnv.id != env.id && projectEnv.name == env.name) {
+                return { result: "-1" };
+            }
+        }
 
         const envUpdate = { $set: { "environments.$": env } };
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, envUpdate)
+        const updateResult = await DAL.updateOne(projectsCollectionName, projectFilter, envUpdate)
             .catch(errorHandler.promiseError);
+
+        return { result: !!updateResult };
     },
 
     async deleteEnv(projectId, envId, userId) {

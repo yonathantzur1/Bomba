@@ -165,11 +165,16 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
     updateEnv() {
         if (this.microtextService.validation(this.validationFuncs, this.environment)) {
             this.isLoading = true;
-            this.environmentsService.updateEnv(this.projectId, this.environment).then(result => {
+            this.environmentsService.updateEnv(this.projectId, this.environment).then(data => {
                 this.isLoading = false;
 
-                if (!result) {
+                // In case of server error.
+                if (!data || !data.result) {
                     this.snackbarService.error();
+                }
+                // In case the env name is exists.
+                else if (data.result == "-1") {
+                    $("#new-env-name-micro").html("The name is already in use");
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, this.environment);
