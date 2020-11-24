@@ -38,7 +38,7 @@ export class SnackbarService {
     }
 
     error() {
-        this.snackbar("Server error occurred");
+        this.snackbar("Oops... Something went wrong");
     }
 
     hideSnackbar() {
