@@ -85,7 +85,7 @@ export class UserCardComponent implements OnDestroy {
                             this.user._id);
                     }
                     else {
-                        this.snackbarService.snackbar("Server error occurred");
+                        this.snackbarService.error();
                     }
                 });
             }

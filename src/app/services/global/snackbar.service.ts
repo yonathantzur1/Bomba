@@ -33,8 +33,12 @@ export class SnackbarService {
         };
 
         this.currentTimeout = setTimeout(() => {
-            this.initialize()
+            this.initialize();
         }, delay || this.delay);
+    }
+
+    error() {
+        this.snackbar("Server error occurred");
     }
 
     hideSnackbar() {

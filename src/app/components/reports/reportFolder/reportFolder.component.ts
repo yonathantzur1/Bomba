@@ -107,7 +107,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
                 this.groupDocumentsByEnvironment(docs);
             }
             else {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
                 this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
             }
         });
@@ -209,7 +209,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
                     this.deleteReport(document._id, document.environment, this.projectId);
                 }
                 else {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
             }
         });
@@ -254,7 +254,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
                     this.envFolders = this.envFolders.filter(folder => folder.id != envId);
                 }
                 else {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
             }
         });

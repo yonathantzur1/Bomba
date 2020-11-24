@@ -182,7 +182,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.environmentsService.setActiveEnv(this.projectId, this.selectedEnv ? this.selectedEnv.id : null)
             .then(result => {
                 if (!result) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
             });
         this.socketService.socketEmit('selfSync',
@@ -310,7 +310,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.matrixService.sendRequests(this.matrix, this.projectId,
                     this.defaultSettings.timeout, this.selectedEnv).then(result => {
                         if (!result) {
-                            this.snackbarService.snackbar("Server error occurred");
+                            this.snackbarService.error();
                         }
                     });
                 this.socketService.socketEmit('selfSync', 'syncSendRequests',

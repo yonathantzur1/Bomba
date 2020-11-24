@@ -44,7 +44,7 @@ export class ApiManagerComponent implements OnDestroy {
             this.isLoading = false;
 
             if (results.filter(result => result == null).length > 0) {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
             }
             else {
                 this.apiKey = results[0].key;

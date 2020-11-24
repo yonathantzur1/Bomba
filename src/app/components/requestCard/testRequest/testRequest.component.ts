@@ -33,7 +33,7 @@ export class TestRequestComponent implements OnInit, OnDestroy {
         this.matrixService.testRequest(this.request, this.requestTimeout, this.envValues).then(result => {
             if (!result) {
                 this.isSendRequest = false;
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
                 this.closeWindow();
             }
         });

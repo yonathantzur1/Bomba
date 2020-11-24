@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
                 // In case of server error.
                 if (result == null) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
                 // In case the login details is incorrect.
                 else if (result == false) {

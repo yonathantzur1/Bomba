@@ -80,7 +80,7 @@ export class UserEditComponent implements OnInit {
                     $("#edit-username-micro").html("The username is already in use");
                 }
                 else {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
             });
         }

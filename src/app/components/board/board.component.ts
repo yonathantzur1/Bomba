@@ -100,7 +100,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.isLoading = false;
 
                 if (!project) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                     this.router.navigateByUrl('');
                     return;
                 }

@@ -71,7 +71,7 @@ export class ReportsComponent implements OnDestroy {
                 this.reports = reports;
             }
             else {
-                this.snackbarService.snackbar("Server error occurred")
+                this.snackbarService.error()
             }
         });
     }
@@ -112,7 +112,7 @@ export class ReportsComponent implements OnDestroy {
                     this.reports = this.reports.filter(report => report.projectId != projectId);
                 }
                 else {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
             }
         });

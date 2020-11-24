@@ -38,7 +38,7 @@ export class ReportComponent {
                 this.isLoading = false;
 
                 if (!result) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
                 else {
                     this.reportData = result;

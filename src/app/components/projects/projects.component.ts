@@ -135,7 +135,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 });
             }
             else {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
             }
         });
     }
@@ -164,7 +164,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                 });
             }
             else {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
 
                 // Insert project back to the list in case of error.
                 this.projects.splice(deleteIndex, 0, deleteProject);

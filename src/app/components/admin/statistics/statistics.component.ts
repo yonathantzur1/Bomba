@@ -37,7 +37,7 @@ export class StatisticsComponent {
                 ];
             }
             else {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
             }
         });
     }

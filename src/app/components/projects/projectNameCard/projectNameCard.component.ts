@@ -63,7 +63,7 @@ export class ProjectNameCardComponent implements OnInit {
 
             actionPromise.then(data => {
                 if (!data) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
                 else if (data.result == false) {
                     $("#name-micro").html("The project name is already in use");

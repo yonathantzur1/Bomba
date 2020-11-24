@@ -138,7 +138,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
 
                 // In case of server error.
                 if (!data || !data.result) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
                 // In case the env name is exists.
                 else if (data.result == "-1") {
@@ -169,7 +169,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
                 this.isLoading = false;
 
                 if (!result) {
-                    this.snackbarService.snackbar("Server error occurred");
+                    this.snackbarService.error();
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, this.environment);
@@ -204,7 +204,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
 
             // In case of server error.
             if (!data || !data.result || data.result == "-1") {
-                this.snackbarService.snackbar("Server error occurred");
+                this.snackbarService.error();
             }
             else {
                 duplicateEnv.id = data.result;
@@ -287,7 +287,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
                     this.isLoading = false;
 
                     if (!result) {
-                        this.snackbarService.snackbar("Server error occurred");
+                        this.snackbarService.error();
                     }
                     else {
                         this.eventService.emit(EVENT_TYPE.DELETE_ENVIRONMENT, envId);
