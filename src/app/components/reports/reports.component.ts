@@ -32,8 +32,8 @@ export class ReportsComponent implements OnDestroy {
 
     reports: Array<Report>;
     folderData: FolderData;
-    contextMenuItems: Array<MenuItem>;
     contextMenu: ContextMenu;
+    contextMenuItems: Array<MenuItem>;
 
     isLoading: boolean = false;
 

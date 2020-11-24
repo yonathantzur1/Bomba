@@ -3,11 +3,23 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
+import { ContextMenu, MenuItem } from '../../contextMenu/contextMenu.component';
+
+class ContextMenuIds {
+    projectId: string;
+    envId: string;
+
+    constructor(projectId: string, envId: string) {
+        this.projectId = projectId;
+        this.envId = envId;
+    }
+}
 
 export class Document {
     _id: string;
     projectId: string;
     environment: string;
+    environmentId: string;
     name: string;
     date: Date;
     success: number;
@@ -18,10 +30,12 @@ export class Document {
 }
 
 class EnvironmentFolder {
+    id: string;
     name: string;
     documents: Array<Document>;
 
-    constructor(name: string, documents: Array<Document>) {
+    constructor(id: string, name: string, documents: Array<Document>) {
+        this.id = id;
         this.name = name;
         this.documents = documents;
     }
@@ -46,6 +60,8 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
     selectedDocument: Document;
     selectedEnvFolder: EnvironmentFolder;
     isRequestViewMode: boolean = false;
+    contextMenu: ContextMenu;
+    contextMenuItems: Array<MenuItem>;
 
     eventsIds: Array<string> = [];
 
@@ -53,6 +69,11 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private eventService: EventService,
         private snackbarService: SnackbarService) {
+
+        eventService.register(EVENT_TYPE.CLOSE_CONTEXT_MENU, () => {
+            this.contextMenu = null;
+        }, this.eventsIds);
+
         eventService.register(EVENT_TYPE.CLOSE_REPORT_DOCUMENT, () => {
             this.selectedDocument = null;
         }, this.eventsIds);
@@ -64,6 +85,16 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isRequestViewMode = false;
         }, this.eventsIds);
+
+        this.contextMenuItems = [
+            new MenuItem("Open", "far fa-folder-open", (ids: ContextMenuIds) => {
+                const envFolder = this.envFolders.find(folder => folder.id == ids.envId);
+                this.openEnvFolder(envFolder);
+            }),
+            new MenuItem("Delete", "far fa-trash-alt", (ids: ContextMenuIds) => {
+                this.deleteEnvFolder(ids.projectId, ids.envId);
+            })
+        ];
     }
 
     ngOnInit() {
@@ -84,6 +115,12 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.eventService.unsubscribeEvents(this.eventsIds);
+    }
+
+    openContextMenu(event: any, envId: string) {
+        event.preventDefault();
+        const contextId = new ContextMenuIds(this.projectId, envId);
+        this.contextMenu = new ContextMenu(event.clientX, event.clientY + 10, contextId);
     }
 
     getTitle() {
@@ -108,12 +145,12 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         let envDocs = {};
 
         docs.forEach((doc: Document) => {
-            if (doc.environment) {
-                if (envDocs[doc.environment]) {
-                    envDocs[doc.environment].push(doc);
+            if (doc.environmentId) {
+                if (envDocs[doc.environmentId]) {
+                    envDocs[doc.environmentId].docs.push(doc);
                 }
                 else {
-                    envDocs[doc.environment] = [doc];
+                    envDocs[doc.environmentId] = { name: doc.environment, docs: [doc] };
                 }
             }
             else {
@@ -121,8 +158,9 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
             }
         });
 
-        Object.keys(envDocs).forEach(envName => {
-            this.envFolders.push(new EnvironmentFolder(envName, envDocs[envName]));
+        Object.keys(envDocs).forEach(envId => {
+            const envDocsData = envDocs[envId];
+            this.envFolders.push(new EnvironmentFolder(envId, envDocsData.name, envDocsData.docs));
         });
     }
 
@@ -201,6 +239,25 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
         if (this.documents.length == 0 && this.envFolders.length == 0) {
             this.closeWindow();
         }
+    }
+
+    deleteEnvFolder(projectId: string, envId: string) {
+        const envName = this.envFolders.find(folder => folder.id == envId).name;
+
+        this.alertService.alert({
+            title: "Delete Folder",
+            text: "Please confirm the deletion of the folder \n'" + envName + "'",
+            type: ALERT_TYPE.DANGER,
+            preConfirm: () => { return this.reportsService.deleteEnvFolder(projectId, envId) },
+            confirmFunc: (result: any) => {
+                if (result) {
+                    this.envFolders = this.envFolders.filter(folder => folder.id != envId);
+                }
+                else {
+                    this.snackbarService.snackbar("Server error occurred");
+                }
+            }
+        });
     }
 
     openEnvFolder(envFolder: EnvironmentFolder) {

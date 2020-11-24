@@ -61,4 +61,12 @@ router.delete('/deleteFolder', (req, res) => {
     });
 });
 
+router.delete('/deleteEnvFolder', (req, res) => {
+    reportsBL.deleteEnvFolder(req.query.projectId, req.query.envId, req.user._id).then(result => {
+        res.send(!!result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;

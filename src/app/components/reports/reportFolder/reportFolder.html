@@ -4,7 +4,8 @@
         <div class="documents-container" *ngIf="!isLoading && !selectedDocument && !selectedEnvFolder">
             <div *ngFor="let envFolder of envFolders" [ngClass]="{'only-folders': documents.length == 0}"
                 class="env-folder">
-                <img src="assets/icons/folder.svg" (click)="openEnvFolder(envFolder)" class="folder-icon">
+                <img src="assets/icons/folder.svg" (click)="openEnvFolder(envFolder)"
+                    (contextmenu)="openContextMenu($event, envFolder.id)" class="folder-icon">
                 <div [title]="envFolder.name + ' (' + envFolder.documents.length + ')'" class="folder-text">
                     {{envFolder.name}}
                     <span style="font-size: 14px;">({{envFolder.documents.length}})</span>
@@ -24,5 +25,6 @@
             </report-document>
         </div>
         <report *ngIf="selectedDocument" [document]="selectedDocument"></report>
+        <context-menu *ngIf="contextMenu" [contextMenu]="contextMenu" [items]="contextMenuItems"></context-menu>
     </card>
 </div>

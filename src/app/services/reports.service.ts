@@ -38,4 +38,9 @@ export class ReportsService extends BasicService {
     deleteFolder(projectId: string) {
         return super.delete('/deleteFolder?projectId=' + projectId);
     }
+
+    deleteEnvFolder(projectId: string, envId: string) {
+        return super.delete('/deleteEnvFolder?projectId=' + projectId +
+            "&envId=" + envId);
+    }
 }

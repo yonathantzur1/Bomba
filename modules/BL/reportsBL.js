@@ -274,8 +274,7 @@ module.exports = {
         const fields = {
             $project: {
                 "project": 0,
-                "data": 0,
-                "environmentId": 0
+                "data": 0
             }
         }
 
@@ -365,6 +364,28 @@ module.exports = {
 
         const reportFilter = {
             "projectId": DAL.getObjectId(projectId)
+        }
+
+        return DAL.delete(reportsCollectionName, reportFilter)
+            .catch(errorHandler.promiseError);
+    },
+
+    async deleteEnvFolder(projectId, environmentId, userId) {
+        const projectFilter = {
+            "_id": DAL.getObjectId(projectId),
+            "owner": DAL.getObjectId(userId)
+        }
+
+        const projectCount = await DAL.count(projectsCollectionName, projectFilter)
+            .catch(errorHandler.promiseError);
+
+        if (projectCount != 1) {
+            return false;
+        }
+
+        const reportFilter = {
+            "projectId": DAL.getObjectId(projectId),
+            environmentId
         }
 
         return DAL.delete(reportsCollectionName, reportFilter)
