@@ -348,5 +348,26 @@ module.exports = {
 
         return DAL.deleteOne(reportsCollectionName, reportFilter)
             .catch(errorHandler.promiseError);
+    },
+
+    async deleteFolder(projectId, userId) {
+        const projectFilter = {
+            "_id": DAL.getObjectId(projectId),
+            "owner": DAL.getObjectId(userId)
+        }
+
+        const projectCount = await DAL.count(projectsCollectionName, projectFilter)
+            .catch(errorHandler.promiseError);
+
+        if (projectCount != 1) {
+            return false;
+        }
+
+        const reportFilter = {
+            "projectId": DAL.getObjectId(projectId)
+        }
+
+        return DAL.delete(reportsCollectionName, reportFilter)
+            .catch(errorHandler.promiseError);
     }
 }

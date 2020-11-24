@@ -34,4 +34,8 @@ export class ReportsService extends BasicService {
         return super.delete('/deleteReport?projectId=' + projectId +
             "&reportId=" + reportId);
     }
+
+    deleteFolder(projectId: string) {
+        return super.delete('/deleteFolder?projectId=' + projectId);
+    }
 }

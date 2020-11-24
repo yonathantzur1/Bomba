@@ -1,0 +1,10 @@
+<div id="contextMenu">
+    <div class="overlay" (click)="closeContextMenu($event)" (contextmenu)="closeContextMenu($event)"></div>
+    <div class="list-container" [ngStyle]="{'left.px': contextMenu.xPos, 'top.px': contextMenu.yPos}">
+        <div class="list-item" (click)="item.action(contextMenu.id);closeContextMenu($event);"
+            *ngFor="let item of items">
+            <i *ngIf="item.icon" [class]="item.icon"></i>
+            <span class="text">{{item.text}}</span>
+        </div>
+    </div>
+</div>

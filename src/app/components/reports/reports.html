@@ -8,7 +8,8 @@
     </div>
     <div *ngIf="!isLoading" class="folders-container">
         <div *ngFor="let report of reports" class="folder">
-            <img src="assets/icons/folder.svg" (click)="openFolder(report)" class="folder-icon">
+            <img src="assets/icons/folder.svg" (click)="openFolder(report)"
+                (contextmenu)="openContextMenu($event, report.projectId)" class="folder-icon">
             <div [title]="report.projectName + ' (' + report.reportsAmount + ')'" class="folder-text">
                 {{report.projectName}}
                 <span style="font-size: 14px;">({{report.reportsAmount}})</span>
@@ -17,4 +18,5 @@
     </div>
     <report-folder *ngIf="folderData" [projectId]="folderData.projectId" [projectName]="folderData.projectName">
     </report-folder>
+    <context-menu *ngIf="contextMenu" [contextMenu]="contextMenu" [items]="contextMenuItems"></context-menu>
 </div>

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../components/app/app.component';
+import { ContextMenuComponent } from '../components/contextMenu/contextMenu.component';
 import { LoaderDotsComponent } from '../components/loaders/loaderDots/loaderDots.component';
 import { LoaderRingsComponent } from '../components/loaders/loaderRings/loaderRings.component';
 import { LoaderSpinnerComponent } from '../components/loaders/loaderSpinner/loaderSpinner.component';
@@ -76,6 +77,7 @@ import { Routing } from '../routes/app.routing';
   declarations: [
     // -----Components-----
     AppComponent,
+    ContextMenuComponent,
     LoaderDotsComponent,
     LoaderRingsComponent,
     LoaderSpinnerComponent,

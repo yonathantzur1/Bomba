@@ -1,0 +1,44 @@
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.list-container {
+    position: fixed;
+    background-color: white;
+    box-shadow: 1px 1px 5px 1px #b7b7b7;
+    border-radius: 5px;
+    padding: 3px 0;
+    width: 150px;
+    z-index: 2;
+    user-select: none;
+}
+
+.list-item {
+    padding: 5px 10px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+}
+
+.list-item:hover {
+    background-color: #EEEEEE;
+}
+
+i {
+    position: absolute;
+    left: 10px;
+}
+
+.text {
+    position: absolute;
+    left: 35px;
+}

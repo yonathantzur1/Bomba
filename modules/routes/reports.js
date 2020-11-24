@@ -53,4 +53,12 @@ router.delete('/deleteReport', (req, res) => {
     });
 });
 
+router.delete('/deleteFolder', (req, res) => {
+    reportsBL.deleteFolder(req.query.projectId, req.user._id).then(result => {
+        res.send(!!result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
 module.exports = router;
