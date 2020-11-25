@@ -1,5 +1,5 @@
 <div id="apiGenerator">
-    <card [title]="'API Requst Generator'" [width]="380" [height]="350">
+    <card [title]="'API Requst Generator'" [width]="430" [height]="405">
         <div class="card-body">
             <form autocomplete="off">
                 <div class="form-group">
@@ -23,7 +23,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="input-title">Env</label>
+                    <label class="input-title">Environment</label>
                     <select class="api-input api-select" [(ngModel)]="api.env" name="envName">
                         <option [ngValue]="null">No Environment</option>
                         <option [value]="envName" *ngFor="let envName of getSelectedProject().environments">{{envName}}

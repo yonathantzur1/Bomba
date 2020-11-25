@@ -1,20 +1,24 @@
 .card-body {
-    padding: 20px 15px;
+    padding: 30px 20px 0px 20px;
+}
+
+form {
+    margin: 0;
 }
 
 .form-group {
     display: flex;
     align-items: center;
+    position: relative;
+    margin-bottom: 25px !important;
 }
 
 .input-title {
-    width: 50px;
-    margin-right: 10px;
-    margin-bottom: 0;
-    white-space: nowrap;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
     user-select: none;
+    position: absolute;
+    top: -15px;
+    left: 2px;
 }
 
 .show-key-icon {
@@ -25,8 +29,8 @@
 }
 
 .api-input {
-    width: 255px;
-    height: 33px;
+    width: calc(100% - 38px);
+    height: 35px;
 }
 
 .api-input-text {
@@ -49,7 +53,7 @@
 
 .api-url {
     text-align: left;
-    font-size: 12px !important;
+    font-size: 13px !important;
 }
 
 .copy-btn {
@@ -63,6 +67,8 @@
     color: white;
     text-align: center;
     margin: auto;
+    margin-top: -10px;
+    width: 155px;
 }
 
 .copy-icon {
