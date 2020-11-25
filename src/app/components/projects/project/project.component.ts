@@ -2,6 +2,10 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { Router } from '@angular/router';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { SocketService } from 'src/app/services/global/socket.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 export class Project {
     id: string;
@@ -22,6 +26,7 @@ export class Project {
 @Component({
     selector: 'project',
     templateUrl: './project.html',
+    providers: [ProjectsService],
     styleUrls: ['./project.css']
 })
 
@@ -34,7 +39,11 @@ export class ProjectComponent implements OnDestroy {
 
     constructor(private router: Router,
         private alertService: AlertService,
-        private eventService: EventService) {
+        private socketService: SocketService,
+        private globalService: GlobalService,
+        private snackbarService: SnackbarService,
+        private eventService: EventService,
+        private projectsService: ProjectsService) {
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isEditProjectCard = false;
@@ -79,8 +88,21 @@ export class ProjectComponent implements OnDestroy {
             text: 'Please confirm the deletion of the project "' + this.project.name + '"\n\n' +
                 "The action will delete all data saved on the project and its reports.",
             type: ALERT_TYPE.DANGER,
-            confirmFunc: () => {
-                this.eventService.emit(EVENT_TYPE.DELETE_PROJECT, this.project.id);
+            preConfirm: () => {
+                return this.projectsService.deleteProject(this.project.id);
+            },
+            confirmFunc: (result: any) => {
+                if (result) {
+                    this.socketService.socketEmit('selfSync', 'syncDeleteProject', {
+                        "userGuid": this.globalService.userGuid,
+                        "projectId": this.project.id
+                    });
+
+                    this.eventService.emit(EVENT_TYPE.DELETE_PROJECT, this.project.id);
+                }
+                else {
+                    this.snackbarService.error();
+                }
             }
         });
     }

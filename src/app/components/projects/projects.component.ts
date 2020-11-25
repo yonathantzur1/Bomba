@@ -141,34 +141,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
 
     deleteProject(projectId: string) {
-        let deleteProject: Project;
-        let deleteIndex: number;
-
-        for (let i = 0; i < this.projects.length; i++) {
-            let currProject = this.projects[i];
-
-            if (projectId == currProject.id) {
-                deleteProject = currProject;
-                deleteIndex = i;
-                break;
-            }
-        }
-
-        this.projects.splice(deleteIndex, 1);
-
-        this.projectsService.deleteProject(projectId).then(result => {
-            if (result) {
-                this.socketService.socketEmit('selfSync', 'syncDeleteProject', {
-                    "userGuid": this.globalService.userGuid,
-                    projectId
-                });
-            }
-            else {
-                this.snackbarService.error();
-
-                // Insert project back to the list in case of error.
-                this.projects.splice(deleteIndex, 0, deleteProject);
-            }
-        });
+        this.projects = this.projects.filter(project => project.id != projectId);
     }
 }
