@@ -24,7 +24,10 @@ export class AlertComponent {
 
     @HostListener('document:keyup', ['$event'])
     KeyPress(event: any) {
-        if (event.code == "Escape" && !this.alertService.disableEscapeExit) {
+        if (event.key == "Enter") {
+            this.confirmClick();
+        }
+        else if (event.key == "Escape" && !this.alertService.disableEscapeExit) {
             this.closeClick();
         }
     }
