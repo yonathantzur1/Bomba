@@ -21,7 +21,8 @@ schemas[REST.POST] = {
         },
         "register": {
             "register": {
-                username: joi.string().required(),
+                username: joi.string().regex(/^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/).required(),
+                email: joi.string().regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required(),
                 password: joi.string().min(6).required()
             }
         },

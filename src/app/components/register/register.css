@@ -21,7 +21,7 @@ form {
 }
 
 .user-input {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     width: calc(100% - 30px);
     display: inline-block;
 }
@@ -48,6 +48,6 @@ form {
     position: absolute;
     color: var(--microtext-color) !important;
     left: 25px;
-    bottom: -7px;
+    bottom: -16px;
     user-select: none;
 }

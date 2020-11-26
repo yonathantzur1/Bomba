@@ -10,15 +10,20 @@ const registerBL = require('../BL/registerBL');
 router.post('/register',
     validator,
     (req, res, next) => {
+        req.body.email = req.body.email.toLowerCase();
         req.body.username = req.body.username.toLowerCase();
         next();
     },
     (req, res) => {
-        registerBL.addUser(req.body).then(user => {
-            if (!user) {
-                res.send({ result: user });
+        registerBL.addUser(req.body).then(result => {
+            if (!result) {
+                res.send({ result });
+            }
+            else if (!result.isValid) {
+                res.send({ "result": result.data });
             }
             else {
+                const user = result.data;
                 let token = tokenHandler.getTokenFromUserObject(user);
                 tokenHandler.setTokenOnCookie(token, res);
                 res.send({ result: true });

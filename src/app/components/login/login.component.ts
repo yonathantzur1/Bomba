@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from '../../services/global/event.service';
-import { AlertService, ALERT_TYPE } from '../../services/global/alert.service';
 import { SnackbarService } from '../../services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from '../../services/global/microtext.service';
 
@@ -37,7 +36,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     eventsIds: Array<string> = [];
 
     constructor(private router: Router,
-        public alertService: AlertService,
         public snackbarService: SnackbarService,
         private microtextService: MicrotextService,
         public eventService: EventService,
@@ -53,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 isFieldValid(user: User) {
                     return !!user.username;
                 },
-                errMsg: "Please enter username",
+                errMsg: "Please enter username or email address",
                 fieldId: "login-username-micro",
                 inputId: "login-username"
             },
@@ -95,21 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }
                 // In case the login details is incorrect.
                 else if (result == false) {
-                    this.snackbarService.snackbar("Username or password is wrong");
-                }
-                // In case the user was not found.
-                else if (result == "-1") {
-                    this.alertService.alert({
-                        title: "User does not exist",
-                        text: "Would you like to register?",
-                        type: ALERT_TYPE.INFO,
-                        confirmBtnText: "Yes",
-                        closeBtnText: "No",
-                        confirmFunc: () => {
-                            self.globalService.setData("registerUsername", self.user.username);
-                            self.isShowRegister = true;
-                        }
-                    });
+                    this.snackbarService.snackbar("Incorrect username or password");
                 }
                 else {
                     // In case the user is locked via brute attack.

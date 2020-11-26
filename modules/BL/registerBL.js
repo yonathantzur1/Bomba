@@ -10,11 +10,26 @@ const usersCollectionName = config.db.collections.users;
 module.exports = {
     // Add user to the DB.
     async addUser(newUser) {
-        const isExists = await this.isUserExists(newUser.username)
+        let result = { isValid: null, data: null };
+
+        const isUsernameExists = await this.isUsernameExists(newUser.username)
             .catch(errorHandler.promiseError);
 
-        if (isExists) {
-            return false;
+        if (isUsernameExists) {
+            result.isValid = false;
+            result.data = "-1";
+
+            return result;
+        }
+
+        const isEmailExists = await this.isEmailExists(newUser.email)
+            .catch(errorHandler.promiseError);
+
+        if (isEmailExists) {
+            result.isValid = false;
+            result.data = "-2";
+
+            return result;
         }
 
         const salt = generator.generateCode(config.security.password.saltSize);
@@ -24,6 +39,7 @@ module.exports = {
         let newUserObj = {
             "uid": generator.generateId(),
             "username": newUser.username,
+            "email": newUser.email,
             "password": newUser.password,
             "salt": salt,
             "creationDate": new Date(),
@@ -36,11 +52,21 @@ module.exports = {
 
         newUserObj._id = insertResult;
 
-        return newUserObj;
+        result.isValid = true;
+        result.data = newUserObj;
+
+        return result;
     },
 
-    async isUserExists(username) {
+    async isUsernameExists(username) {
         let userCount = await DAL.count(usersCollectionName, { username })
+            .catch(errorHandler.promiseError);
+
+        return !!userCount;
+    },
+
+    async isEmailExists(email) {
+        let userCount = await DAL.count(usersCollectionName, { email })
             .catch(errorHandler.promiseError);
 
         return !!userCount;

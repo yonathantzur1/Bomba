@@ -12,7 +12,7 @@
 				<div class="col-12 no-padding">
 					<input [(ngModel)]="user.username" id="login-username" class="form-control user-input" type="text"
 						name="username" (keydown)="hideMicrotext($event.srcElement.id + '-micro')"
-						placeholder="Username" autocapitalize="off" autocomplete="off">
+						placeholder="Username or email address" autocapitalize="off" autocomplete="off">
 					<label id="login-username-micro" class="microtext"></label>
 				</div>
 			</div>
@@ -35,5 +35,5 @@
 			</div>
 		</form>
 	</div>
-	<register *ngIf="isShowRegister"></register>
+	<register *ngIf="isShowRegister" [loginString]="user.username"></register>
 </div>

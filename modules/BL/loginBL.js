@@ -15,15 +15,17 @@ module.exports = {
     },
 
     async getUser(userAuth) {
-        let user = await DAL.findOne(usersCollectionName, { "username": userAuth.username })
+        let user = await DAL.findOne(usersCollectionName,
+            {
+                $or: [
+                    { "username": userAuth.username },
+                    { "email": userAuth.username }
+                ]
+            })
             .catch(errorHandler.promiseError);
 
-        // In case the username was not found.
-        if (!user) {
-            return "-1";
-        }
-        // In case the password is wrong.
-        else if (sha512(userAuth.password + user.salt) != user.password) {
+        // In case the auth details are wrong.
+        if (!user || sha512(userAuth.password + user.salt) != user.password) {
             return false;
         }
         else {

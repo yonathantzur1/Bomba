@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -7,10 +7,21 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 import { RegisterService } from 'src/app/services/register.service';
 
-import { User } from 'src/app/components/login/login.component';
 import { GlobalService } from 'src/app/services/global/global.service';
 
 declare const $: any;
+
+export class NewUser {
+    username: string;
+    email: string;
+    password: string;
+
+    constructor() {
+        this.username = "";
+        this.email = "";
+        this.password = "";
+    }
+}
 
 @Component({
     selector: 'register',
@@ -20,7 +31,9 @@ declare const $: any;
 })
 
 export class RegisterComponent implements OnInit {
-    user: User = new User();
+    @Input() loginString: string;
+
+    user: NewUser = new NewUser();
     isLoading: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
 
@@ -32,7 +45,7 @@ export class RegisterComponent implements OnInit {
         public snackbarService: SnackbarService) {
         this.validationFuncs = [
             {
-                isFieldValid(user: User) {
+                isFieldValid(user: NewUser) {
                     user.username = user.username.trim();
                     return !!user.username;
                 },
@@ -41,7 +54,34 @@ export class RegisterComponent implements OnInit {
                 inputId: "register-username"
             },
             {
-                isFieldValid(user: User) {
+                isFieldValid(user: NewUser) {
+                    const usernameRegexp = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/;
+                    return (usernameRegexp.test(user.username));
+                },
+                errMsg: "Username may only contain alphanumeric characters",
+                fieldId: "register-username-micro",
+                inputId: "register-username"
+            },
+            {
+                isFieldValid(user: NewUser) {
+                    user.email = user.email.trim();
+                    return !!user.email;
+                },
+                errMsg: "Please enter email address",
+                fieldId: "register-email-micro",
+                inputId: "register-email"
+            },
+            {
+                isFieldValid(user: NewUser) {
+                    const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    return (emailRegexp.test(user.email));
+                },
+                errMsg: "Email address is invalid",
+                fieldId: "register-email-micro",
+                inputId: "register-email"
+            },
+            {
+                isFieldValid(user: NewUser) {
                     return !!user.password;
                 },
                 errMsg: "Please enter password",
@@ -49,7 +89,7 @@ export class RegisterComponent implements OnInit {
                 inputId: "register-password"
             },
             {
-                isFieldValid(user: User) {
+                isFieldValid(user: NewUser) {
                     return user.password.length >= 6;
                 },
                 errMsg: "Your password must be at least 6 characters long",
@@ -60,7 +100,14 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.user.username = this.globalService.getData("registerUsername") || "";
+        if (this.loginString) {
+            if (this.loginString.includes("@")) {
+                this.user.email = this.loginString;
+            }
+            else {
+                this.user.username = this.loginString;
+            }
+        }
     }
 
     register() {
@@ -71,16 +118,20 @@ export class RegisterComponent implements OnInit {
                 this.isLoading = false;
                 let result = data ? data.result : null;
 
-                if (result) {
-                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.router.navigateByUrl("/");
+                if (!result) {
+                    this.snackbarService.error();
                 }
                 // In case the username is already exists.
-                else if (result == false) {
+                else if (result == "-1") {
                     $("#register-username-micro").html("The username is already in use");
                 }
+                // In case the email is already exists.
+                else if (result == "-2") {
+                    $("#register-email-micro").html("The email is already in use");
+                }
                 else {
-                    this.snackbarService.error();
+                    this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
+                    this.router.navigateByUrl("/");
                 }
             });
         }
