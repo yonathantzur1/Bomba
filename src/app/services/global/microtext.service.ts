@@ -21,39 +21,48 @@ export class MicrotextService {
             });
         }
 
-        let isValid = true;
-        let checkedFieldsIds: Array<any> = [];
+        let isFoundInvalidField = true;
+        let checkedFieldsIds = {};
 
-        // Running on all validation functions.
-        for (let i = 0; i < validations.length; i++) {
+        validations.forEach(validation => {
             // In case the field was not invalid before.
-            if (!checkedFieldsIds.includes(validations[i].fieldId)) {
+            if (!checkedFieldsIds[validation.fieldId]) {
                 // In case the field is not valid.
-                if (!validations[i].isFieldValid(obj, regexpPatterns)) {
-                    // Focus field in case it is the first invalid field.
-                    if (isValid) {
-                        $("#" + validations[i].inputId).focus();
+                if (!validation.isFieldValid(obj, regexpPatterns)) {
+                    // In case it is the first invalid field.
+                    if (isFoundInvalidField) {
+                        $("#" + validation.inputId).focus();
                     }
 
-                    isValid = false;
+                    isFoundInvalidField = false;
 
-                    // Push the field id to the array,
-                    // so in the next validation of this field it will not be checked.
-                    checkedFieldsIds.push(validations[i].fieldId);
+                    // Mark field as checked once.
+                    checkedFieldsIds[validation.fieldId] = true;
 
-                    // Show the microtext of the field. 
-                    $("#" + validations[i].fieldId).html(validations[i].errMsg);
+                    // Show the microtext of the field.
+                    this.showMicrotext(validation.fieldId, validation.errMsg);
                 }
                 else {
                     // Clear the microtext of the field.
-                    $("#" + validations[i].fieldId).html('');
+                    this.hideMicrotext(validation.fieldId);
                 }
             }
-        }
+        });
 
-        checkedFieldsIds = [];
+        return isFoundInvalidField;
+    }
 
-        return isValid;
+    restartAll(validations: Array<InputFieldValidation>) {
+        let checkedFieldsIds = {};
+
+        validations.forEach(validation => {
+            const fieldId = validation.fieldId;
+
+            if (!checkedFieldsIds[fieldId]) {
+                this.hideMicrotext(fieldId);
+                checkedFieldsIds[fieldId] = true;
+            }
+        });
     }
 
     // Hide microtext in a specific field.

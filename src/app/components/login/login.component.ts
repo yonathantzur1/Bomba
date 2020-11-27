@@ -117,6 +117,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.login();
     }
 
+    showRegister() {
+        this.isShowRegister = true;
+        this.microtextService.restartAll(this.validationFuncs);
+    }
+
     // Hide microtext in a specific field.
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
