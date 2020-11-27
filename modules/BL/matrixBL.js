@@ -211,7 +211,8 @@ function buildSendObject(requestData, requestTimeout) {
             path: encodeURI(urlData.path),
             method: requestData.method,
             headers: requestData.headers,
-            timeout: requestTimeout
+            timeout: requestTimeout,
+            rejectUnauthorized: false
         },
         requestId: requestData.id,
         amount: requestData.amount

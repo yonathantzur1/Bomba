@@ -1,5 +1,6 @@
 const DAL = require('../DAL');
 const config = require('../../config');
+const mailer = require('../mailer');
 const generator = require('../generator');
 const sha512 = require('js-sha512');
 
@@ -54,6 +55,8 @@ module.exports = {
 
         result.isValid = true;
         result.data = newUserObj;
+
+        mailer.registerMail(newUser.email, newUser.username);
 
         return result;
     },

@@ -5,6 +5,10 @@ module.exports = {
         maxRequestSize: "10mb",
         isForceHttps: true // (for production environment)
     },
+    mailer: {
+        mail: "bomba.load.group@gmail.com",
+        apiKeyCode: process.env.BOMBA_MAIL_KEY_CODE
+    },
     requests: {
         max: 1000,
         timeout: 60 * 1000 // milliseconds
