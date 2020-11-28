@@ -129,7 +129,6 @@ form {
 .options {
     margin-top: 5px;
     margin-bottom: 20px;
-    user-select: none;
 }
 
 .option-btn {
@@ -138,6 +137,7 @@ form {
     display: block;
     color: #4f4f4f !important;
     float: right;
+    user-select: none;
 }
 
 .option-btn:hover {
