@@ -12,8 +12,10 @@ module.exports = {
         let barsNumber;
         let rangeKey;
         let groupFilter;
-        let isRangeValid = true;
-        let dateWithOffsetQuery = { date: "$date", timezone: getTimeZoneOffsetString(clientTimeZone) };
+        const dateWithOffsetQuery = {
+            date: "$date",
+            timezone: getTimeZoneOffsetString(clientTimeZone)
+        };
 
         switch (range) {
             case STATISTICS_RANGE.YEARLY: {
@@ -29,12 +31,8 @@ module.exports = {
                 break;
             }
             default: {
-                isRangeValid = false;
+                return errorHandler.promiseError("Range " + range + " is not valid");
             }
-        }
-
-        if (!isRangeValid) {
-            return errorHandler.promiseError("Range " + range + " is not valid");
         }
 
         let filter = {
@@ -45,29 +43,25 @@ module.exports = {
             }
         };
 
-        username && (filter.username = username);
+        if (username) {
+            filter["$or"] = [{ username }, { "email": username }]
+        }
 
-        let logsFilter = {
+        const logsFilter = {
             $match: filter
         };
 
-        let groupObj = {
+        const groupObj = {
             $group: {
                 _id: groupFilter,
                 count: { $sum: 1 }
             }
         };
 
-        let aggregate = [logsFilter, groupObj];
-
-        let result = await DAL.aggregate(logsCollectionName, aggregate)
+        const result = await DAL.aggregate(logsCollectionName, [logsFilter, groupObj])
             .catch(errorHandler.promiseError);
 
-        let data = [];
-
-        for (let i = 0; i < barsNumber; i++) {
-            data.push(null);
-        }
+        let data = [].fill(null, barsNumber);
 
         result.forEach(logGroup => {
             data[logGroup._id[rangeKey] - 1] = logGroup.count;
@@ -78,7 +72,13 @@ module.exports = {
     },
 
     async isUserExists(username) {
-        let users = await DAL.count(usersCollectionName, { username })
+        const filter = {
+            $or: [
+                { username },
+                { "email": username }]
+        }
+
+        const users = await DAL.count(usersCollectionName, filter)
             .catch(errorHandler.promiseError);
 
         return (users > 0);
@@ -88,7 +88,7 @@ module.exports = {
 function getTimeZoneOffsetString(clientTimeZone) {
     // Convert the sign to the opposite for the mongo timezone calculation.
     clientTimeZone *= -1;
-    let isPositive = (clientTimeZone >= 0);
+    const isPositive = (clientTimeZone >= 0);
 
     let hours = clientTimeZone / 60;
     let minutes = clientTimeZone - (hours * 60);
@@ -101,7 +101,5 @@ function getTimeZoneOffsetString(clientTimeZone) {
         minutes = "0" + minutes;
     }
 
-    let offsetString = (isPositive ? "+" : "-") + hours + ":" + minutes;
-
-    return offsetString;
+    return (isPositive ? "+" : "-") + hours + ":" + minutes;
 }

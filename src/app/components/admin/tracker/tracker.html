@@ -62,8 +62,8 @@
                                 <input [(ngModel)]="usernameInput" (keyup)="isUsernameFound=null"
                                     (keyup.enter)="menu.onConfirm(menu.options)" id="user-search" name="user-search"
                                     (keydown)="hideMicrotext('username-micro')" class="form-control" type="text"
-                                    placeholder="Username" autocorrect="off" autocapitalize="off" spellcheck="false">
-                                <span *ngIf="isUsernameFound == false" class="microtext">Username not found</span>
+                                    placeholder="Username or email address" autocorrect="off" autocapitalize="off" spellcheck="false">
+                                <span *ngIf="isUsernameFound == false" class="microtext">User was not found</span>
                                 <span id="username-micro" class="microtext"></span>
                             </div>
                         </div>
