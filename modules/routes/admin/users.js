@@ -28,7 +28,7 @@ router.put('/saveUserEdit',
     validator,
     (req, res) => {
         usersBL.saveUserEdit(req.body).then(result => {
-            res.send(result);
+            res.send({ result });
         }).catch(err => {
             errorHandler.routeError(err, res);
         });

@@ -5,6 +5,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 export class UserCard {
     _id: string;
     username: string;
+    email: string;
     creationDate: Date;
     isAdmin: boolean;
     lastLoginTime: Date;

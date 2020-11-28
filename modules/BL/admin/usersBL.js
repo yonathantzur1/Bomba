@@ -13,17 +13,23 @@ const logsCollectionName = config.db.collections.logs;
 module.exports = {
     async getUser(searchInput) {
         // In case the input is empty, return empty result.
-        if (!searchInput) {
+        if (!searchInput || !(searchInput = searchInput.trim())) {
             return null;
         }
 
         searchInput = searchInput.replace(/\\/g, '').trim();
 
-        let usersFilter = { username: searchInput }
+        let usersFilter = {
+            $or: [
+                { username: searchInput },
+                { email: searchInput }
+            ]
+        }
 
         let userFields = {
             "_id": 1,
             "username": 1,
+            "email": 1,
             "creationDate": 1,
             "isAdmin": 1,
             "lastLoginTime": 1
@@ -59,24 +65,32 @@ module.exports = {
     },
 
     async saveUserEdit(userEdit) {
-        let userFilter = {
-            "_id": DAL.getObjectId(userEdit.id)
-        }
+        let updateObj = { $set: {} };
+        let userFilter = { "_id": DAL.getObjectId(userEdit.id) }
 
-        let originalUsername = (await DAL.findOneSpecific(usersCollectionName, userFilter, { "username": 1 })
-            .catch(errorHandler.promiseError)).username;
+        let originalUser = (await DAL.findOne(usersCollectionName, userFilter)
+            .catch(errorHandler.promiseError));
 
-        if (originalUsername != userEdit.username) {
-            const isExists = await registerBL.isUserExists(userEdit.username)
+        if (originalUser.username != userEdit.username) {
+            const isExists = await registerBL.isUsernameExists(userEdit.username)
                 .catch(errorHandler.promiseError);
 
             if (isExists) {
-                return false;
+                return "-1";
             }
+
+            updateObj["$set"]["username"] = username;
         }
 
-        let updateObj = {
-            $set: { "username": userEdit.username }
+        if (originalUser.email != userEdit.email) {
+            const isExists = await registerBL.isEmailExists(userEdit.email)
+                .catch(errorHandler.promiseError);
+
+            if (isExists) {
+                return "-2";
+            }
+
+            updateObj["$set"]["email"] = email;
         }
 
         if (userEdit.password) {
@@ -86,7 +100,13 @@ module.exports = {
             updateObj["$set"]["salt"] = salt;
         }
 
-        return DAL.updateOne(usersCollectionName, userFilter, updateObj);
+        if (Object.keys(updateObj["$set"]).length > 0) {
+            const updateResult = await DAL.updateOne(usersCollectionName, userFilter, updateObj)
+                .catch(errorHandler.promiseError);
+            return !!updateResult;
+        }
+
+        return true;
     },
 
     async deleteUser(userId) {
@@ -101,6 +121,7 @@ module.exports = {
         let username = (await DAL.findOneSpecific(usersCollectionName, userFilter, { "username": 1 })).username;
 
         let userProjects = await DAL.findSpecific(projectsCollectionName, projectFilter, { "_id": 1 });
+
         userProjects = userProjects.map(project => {
             return project._id;
         });

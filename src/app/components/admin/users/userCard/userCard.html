@@ -1,13 +1,14 @@
 <div id="userCard">
     <div class="card-container">
-        <span data-tooltip="Edit User" class="tooltip-bottom-left top-icon edit-icon" (click)="isEditMode=true;">
+        <span data-tooltip="Edit User" class="tooltip-bottom-left top-icon edit-icon" (click)="editUser()">
             <i class="far fa-edit"></i>
         </span>
         <span data-tooltip="Delete User" class="tooltip-bottom-right top-icon delete-icon" (click)="deleteUser()">
             <i class="far fa-trash-alt"></i>
         </span>
         <div class="user-name-container">
-            {{user.username}}
+            <div class="user-name-title">{{user.username}}</div>
+            <div class="user-name-title user-name-sub-title">{{user.email}}</div>
         </div>
         <div class="user-info-container">
             <table class="info-table">
@@ -38,5 +39,5 @@
             </table>
         </div>
     </div>
-    <user-edit *ngIf="isEditMode" [userId]="user._id" [username]="user.username"></user-edit>
+    <user-edit *ngIf="userEdit" [userEdit]="userEdit"></user-edit>
 </div>

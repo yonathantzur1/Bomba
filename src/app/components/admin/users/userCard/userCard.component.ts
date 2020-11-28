@@ -5,6 +5,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
+import { UserEdit } from './userEdit/userEdit.component';
 
 @Component({
     selector: 'user-card',
@@ -18,7 +19,7 @@ export class UserCardComponent implements OnDestroy {
     @Input() user: UserCard;
 
     isLoading: boolean = false;
-    isEditMode: boolean = false;
+    userEdit: UserEdit;
 
     eventsIds: Array<string> = [];
 
@@ -28,7 +29,7 @@ export class UserCardComponent implements OnDestroy {
         private snackbarService: SnackbarService,
         private usersService: UsersService) {
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
-            this.isEditMode = false;
+            this.userEdit = null;
         }, this.eventsIds);
 
         eventService.register(EVENT_TYPE.EDIT_USERNAME, (username: string) => {
@@ -64,11 +65,15 @@ export class UserCardComponent implements OnDestroy {
         this.usersService.changeAdminStatus(this.user._id, this.user.isAdmin);
     }
 
+    editUser() {
+        this.userEdit = new UserEdit(this.user._id, this.user.username, this.user.email);
+    }
+
     deleteUser() {
         this.alertService.alert({
             title: "Delete User",
             text: 'Please confirm the deletion of the user "' + this.user.username + '"\n\n' +
-                "The action will delete all data saved for the user including his projects and reports",
+                "The action will delete all data saved for the user including his projects and reports.",
             type: ALERT_TYPE.DANGER,
             confirmFunc: () => {
                 this.usersService.deleteUser(this.user._id).then(result => {

@@ -116,7 +116,7 @@ export class RegisterComponent implements OnInit {
 
             this.registerService.register(this.user).then(data => {
                 this.isLoading = false;
-                let result = data ? data.result : null;
+                const result = data ? data.result : null;
 
                 if (!result) {
                     this.snackbarService.error();

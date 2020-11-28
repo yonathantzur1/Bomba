@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
 import { UsersService } from 'src/app/services/admin/users.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
@@ -9,11 +9,13 @@ declare const $: any;
 export class UserEdit {
     id: string;
     username: string;
+    email: string;
     password: string;
 
-    constructor(id: string, username: string) {
+    constructor(id: string, username: string, email: string) {
         this.id = id;
         this.username = username;
+        this.email = email;
     }
 }
 
@@ -24,12 +26,9 @@ export class UserEdit {
     styleUrls: ['./userEdit.css']
 })
 
-export class UserEditComponent implements OnInit {
+export class UserEditComponent {
 
-    @Input() userId: string;
-    @Input() username: string;
-
-    userEdit: UserEdit;
+    @Input() userEdit: UserEdit;
 
     isLoading: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
@@ -50,6 +49,33 @@ export class UserEditComponent implements OnInit {
             },
             {
                 isFieldValid(user: UserEdit) {
+                    const usernameRegexp = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/;
+                    return (usernameRegexp.test(user.username));
+                },
+                errMsg: "Username may only contain alphanumeric characters",
+                fieldId: "register-username-micro",
+                inputId: "register-username"
+            },
+            {
+                isFieldValid(user: UserEdit) {
+                    user.email = user.email.trim();
+                    return !!user.email;
+                },
+                errMsg: "Please enter email address",
+                fieldId: "register-email-micro",
+                inputId: "register-email"
+            },
+            {
+                isFieldValid(user: UserEdit) {
+                    const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                    return (emailRegexp.test(user.email));
+                },
+                errMsg: "Email address is invalid",
+                fieldId: "register-email-micro",
+                inputId: "register-email"
+            },
+            {
+                isFieldValid(user: UserEdit) {
                     if (!user.password) {
                         return true;
                     }
@@ -64,23 +90,26 @@ export class UserEditComponent implements OnInit {
         ];
     }
 
-    ngOnInit() {
-        this.userEdit = new UserEdit(this.userId, this.username);
-    }
-
     saveEdit() {
         if (this.microtextService.validation(this.validationFuncs, this.userEdit)) {
-            this.usersService.saveUserEdit(this.userEdit).then(result => {
-                if (result) {
+            this.usersService.saveUserEdit(this.userEdit).then(data => {
+                const result = data ? data.result : null;
+
+                if (!result) {
+                    this.snackbarService.error();
+                }
+                else if (result == "-1") {
+                    this.microtextService.showMicrotext("edit-username-micro",
+                        "The username is already in use");
+                }
+                else if (result == "-2") {
+                    this.microtextService.showMicrotext("edit-email-micro",
+                        "The email is already in use");
+                }
+                else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
                     this.eventService.emit(EVENT_TYPE.EDIT_USERNAME, this.userEdit.username);
                     this.snackbarService.snackbar("Edit user was succeeded");
-                }
-                else if (result == false) {
-                    $("#edit-username-micro").html("The username is already in use");
-                }
-                else {
-                    this.snackbarService.error();
                 }
             });
         }
