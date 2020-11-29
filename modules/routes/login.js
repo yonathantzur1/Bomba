@@ -18,26 +18,14 @@ router.post('/userLogin',
     },
     limitter,
     (req, res) => {
-        // Input: { username, password }
-        // Output: result ->
-        // (result == false): wrong password.
-        // (result == "-1"): username is not exists on DB.
-        // else: username and password are valid.
         loginBL.getUser(req.body).then(user => {
             if (user) {
-                // In case the username is not exists on DB.
-                if (user == "-1") {
-                    res.send({ result: user });
-                }
-                // In case user username and password are valid.
-                else {
-                    tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
-                    res.send({ result: true });
-                }
+                tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
+                res.send({ result: true });
             }
             // In case the password is wrong.
             else {
-                res.send({ result: user });
+                res.send({ result: false });
                 logsBL.loginFail(req.body.username, req);
             }
         }).catch(err => {

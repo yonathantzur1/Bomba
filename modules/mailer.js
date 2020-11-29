@@ -15,12 +15,27 @@ let transporter = nodemailer.createTransport(
 
 module.exports = {
     sendMail(destEmail, title, text, css) {
+        const templateHeader = "<div dir='ltr'><img {{logoImg}} src='cid:logo'></div>";
+        const headerCss = {
+            logoImg: "width: 200px;margin-bottom: 25px;"
+        }
+
         // Setup email data with unicode symbols
-        let mailOptions = {
+        const mailOptions = {
             from: "'Bomba' <" + config.mailer.mail + ">", // Sender address
             to: destEmail, // List of receivers
             subject: title, // Subject line
-            html: "<div dir='ltr'>" + replaceStyleCss(text, css) + "</div>" // html body
+            html: `
+            ${setCss(templateHeader, headerCss)}
+            <div dir='ltr' style="font-size: 16px;">${setCss(text, css)}</div>
+            `,
+            attachments: [
+                {
+                    filename: 'bomba-logo.png',
+                    path: './src/assets/logo/bomba-logo.png',
+                    cid: 'logo'
+                }
+            ]
         };
 
         // Send email with defined transport object
@@ -63,10 +78,10 @@ function getTimeBlessing(name) {
     return blessingStr + " " + name + ",<br>";
 }
 
-function replaceStyleCss(html, css) {
+function setCss(html, css) {
     css && Object.keys(css).forEach(className => {
-        let styleAttr = 'style="' + css[className] + '"';
-        let classRegExp = new RegExp("{{" + className + "}}", 'g');
+        const styleAttr = `style="${css[className]}"`;
+        const classRegExp = new RegExp("{{" + className + "}}", 'g');
 
         html = html.replace(classRegExp, styleAttr);
     });

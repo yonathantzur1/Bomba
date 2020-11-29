@@ -8,34 +8,34 @@ const usersCollectionName = config.db.collections.users;
 
 module.exports = {
     async getUserById(id) {
-        let userFilter = { "_id": DAL.getObjectId(id) };
+        const userFilter = { "_id": DAL.getObjectId(id) };
 
         return await DAL.findOne(usersCollectionName, userFilter)
             .catch(errorHandler.promiseError);
     },
 
     async getUser(userAuth) {
-        let user = await DAL.findOne(usersCollectionName,
-            {
-                $or: [
-                    { "username": userAuth.username },
-                    { "email": userAuth.username }
-                ]
-            })
+        const userFilter = {
+            $or: [
+                { "username": userAuth.username },
+                { "email": userAuth.username }
+            ]
+        }
+
+        const user = await DAL.findOne(usersCollectionName, userFilter)
             .catch(errorHandler.promiseError);
 
         // In case the auth details are wrong.
         if (!user || sha512(userAuth.password + user.salt) != user.password) {
             return false;
         }
-        else {
-            return user;
-        }
+
+        return user;
     },
 
     updateLastLogin: (userId) => {
-        let findObj = { "_id": DAL.getObjectId(userId) };
-        let lastLoginTimeObj = { $set: { "lastLoginTime": new Date() } };
+        const findObj = { "_id": DAL.getObjectId(userId) };
+        const lastLoginTimeObj = { $set: { "lastLoginTime": new Date() } };
 
         return DAL.updateOne(usersCollectionName, findObj, lastLoginTimeObj)
             .catch(errorHandler.promiseError);
