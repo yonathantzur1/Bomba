@@ -1,7 +1,8 @@
 <div id="register">
-    <loader-spinner class="loader" *ngIf="isLoading"></loader-spinner>
     <card [title]="'New User'" [width]="350" [height]="270">
         <div class="body">
+            <div class="loader-overlay" *ngIf="isLoading"></div>
+            <loader-spinner class="loader" *ngIf="isLoading"></loader-spinner>
             <form autocomplete="off">
                 <div class="form-group">
                     <i class="fas fa-user input-icon"></i>

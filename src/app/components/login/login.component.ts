@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     user: User = new User();
     isLoading: boolean = false;
     isShowRegister: boolean = false;
+    isShowForgotPassword: boolean = false;
     validationFuncs: Array<InputFieldValidation>;
 
     eventsIds: Array<string> = [];
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
             this.isShowRegister = false;
+            this.isShowForgotPassword = false;
         });
 
         this.validationFuncs = [
@@ -119,6 +121,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     showRegister() {
         this.isShowRegister = true;
+        this.microtextService.restartAll(this.validationFuncs);
+    }
+
+    showForgotPassword() {
+        this.isShowForgotPassword = true;
         this.microtextService.restartAll(this.validationFuncs);
     }
 

@@ -6,7 +6,7 @@ module.exports = {
         isForceHttps: true // (for production environment)
     },
     mailer: {
-        mail: "bomba.load.group@gmail.com",
+        mail: "bomba@group.com",
         apiKeyCode: process.env.BOMBA_MAIL_KEY_CODE
     },
     requests: {

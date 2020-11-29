@@ -36,7 +36,7 @@ router.put('/saveUserEdit',
 
 router.put('/deleteUser', (req, res) => {
     usersBL.deleteUser(req.query.userId).then(result => {
-        res.send(result);
+        res.send(!!result);
     }).catch(err => {
         errorHandler.routeError(err, res);
     });

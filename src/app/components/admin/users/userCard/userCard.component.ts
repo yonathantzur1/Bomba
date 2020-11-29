@@ -75,24 +75,24 @@ export class UserCardComponent implements OnDestroy {
             text: 'Please confirm the deletion of the user "' + this.user.username + '"\n\n' +
                 "The action will delete all data saved for the user including his projects and reports.",
             type: ALERT_TYPE.DANGER,
-            confirmFunc: () => {
-                this.usersService.deleteUser(this.user._id).then(result => {
-                    if (result) {
-                        this.snackbarService.snackbar(this.user.username + " was deleted");
-                        this.eventService.emit(EVENT_TYPE.DELETE_USER);
+            preConfirm: () => {
+                return this.usersService.deleteUser(this.user._id);
+            },
+            confirmFunc: (result: boolean) => {
+                if (!result) {
+                    return this.snackbarService.error();
+                }
 
-                        let logoutMsg = "Your account has been deleted." +
-                            "{{enter}}" +
-                            "For further details, please contact website admin.";
+                this.snackbarService.snackbar(this.user.username + " was deleted");
+                this.eventService.emit(EVENT_TYPE.DELETE_USER);
 
-                        this.socketService.socketEmit("LogoutUserSessionServer",
-                            logoutMsg,
-                            this.user._id);
-                    }
-                    else {
-                        this.snackbarService.error();
-                    }
-                });
+                let logoutMsg = "Your account has been deleted." +
+                    "{{enter}}" +
+                    "For further details, please contact website admin.";
+
+                this.socketService.socketEmit("LogoutUserSessionServer",
+                    logoutMsg,
+                    this.user._id);
             }
         })
     }

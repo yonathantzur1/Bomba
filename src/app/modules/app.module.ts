@@ -28,6 +28,7 @@ import { TrackerComponent } from '../components/admin/tracker/tracker.component'
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
 import { BoardComponent } from '../components/board/board.component';
 import { MatrixComponent } from '../components/board/matrix/matrix.component';
 import { CellComponent } from '../components/board/matrix/cell/cell.component'
@@ -100,6 +101,7 @@ import { Routing } from '../routes/app.routing';
     InfoComponent,
     InfoCardComponent,
     RegisterComponent,
+    ForgotPasswordComponent,
     BoardComponent,
     MatrixComponent,
     CellComponent,

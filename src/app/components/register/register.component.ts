@@ -41,7 +41,6 @@ export class RegisterComponent implements OnInit {
         private registerService: RegisterService,
         private microtextService: MicrotextService,
         private eventService: EventService,
-        private globalService: GlobalService,
         public snackbarService: SnackbarService) {
         this.validationFuncs = [
             {
