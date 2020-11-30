@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { BoardService } from '../../services/board.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { Request } from '../requestCard/requestCard.component';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
@@ -91,7 +92,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         enableDragAndDrop(this);
 
-        // In case of route params changed.
         this.route.params.subscribe(params => {
             this.projectId = params["id"];
             this.isLoading = true;

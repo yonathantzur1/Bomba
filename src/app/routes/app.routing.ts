@@ -17,9 +17,11 @@ import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.c
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
 import { LoginGuard } from '../guards/login.guard';
+import { ResetPasswordComponent } from '../components/forgotPassword/resetPassword/resetPassword.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'reset-password/:resetCode', component: ResetPasswordComponent },
   {
     path: '',
     component: HomeComponent,

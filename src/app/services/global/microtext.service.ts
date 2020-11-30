@@ -65,7 +65,7 @@ export class MicrotextService {
         });
     }
 
-    // Hide microtext in a specific field.
+    // Show microtext in a specific field.
     showMicrotext(fieldId: string, text: string) {
         $("#" + fieldId).html(text);
     }

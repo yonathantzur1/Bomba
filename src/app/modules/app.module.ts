@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../components/app/app.component';
+import { HeaderComponent } from '../components/header/header.component';
 import { ContextMenuComponent } from '../components/contextMenu/contextMenu.component';
 import { LoaderDotsComponent } from '../components/loaders/loaderDots/loaderDots.component';
 import { LoaderRingsComponent } from '../components/loaders/loaderRings/loaderRings.component';
@@ -27,8 +28,9 @@ import { StatisticsComponent } from '../components/admin/statistics/statistics.c
 import { TrackerComponent } from '../components/admin/tracker/tracker.component';
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
-import { RegisterComponent } from '../components/register/register.component';
+import { RegisterComponent } from '../components/login/register/register.component';
 import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
+import { ResetPasswordComponent } from '../components/forgotPassword/resetPassword/resetPassword.component';
 import { BoardComponent } from '../components/board/board.component';
 import { MatrixComponent } from '../components/board/matrix/matrix.component';
 import { CellComponent } from '../components/board/matrix/cell/cell.component'
@@ -78,6 +80,7 @@ import { Routing } from '../routes/app.routing';
   declarations: [
     // -----Components-----
     AppComponent,
+    HeaderComponent,
     ContextMenuComponent,
     LoaderDotsComponent,
     LoaderRingsComponent,
@@ -102,6 +105,7 @@ import { Routing } from '../routes/app.routing';
     InfoCardComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
     BoardComponent,
     MatrixComponent,
     CellComponent,

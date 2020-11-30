@@ -314,7 +314,6 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
         this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
     }
 
-    // Hide microtext in a specific field.
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
     }

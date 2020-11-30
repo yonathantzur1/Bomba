@@ -42,7 +42,7 @@ module.exports = {
     },
 
     sendRestoreMail(email, username, restorePasswordCode) {
-        const restoreUrl = `${config.address.site}/rest-password/${restorePasswordCode}`;
+        const restoreUrl = `${config.address.site}/reset-password/${restorePasswordCode}`;
         mailer.restorePassword(email, username, restoreUrl);
     }
 }

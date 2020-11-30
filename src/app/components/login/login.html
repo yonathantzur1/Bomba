@@ -1,10 +1,6 @@
 <div id="login" class="container">
-	<div class="login-head-container">
-		<span class="login-title">B</span>
-		<img src="assets/logo/icon.png" class="login-head-icon">
-		<span class="login-title">MBA</span>
-	</div>
-	<div (keyup.enter)="loginEnter()" align="center" class="row card-container col-md-4 col-11">
+	<header></header>
+	<div (keyup.enter)="loginEnter()" class="row card-container col-md-4 col-11">
 		<div class="loader-overlay" *ngIf="isLoading"></div>
 		<loader-spinner class="loader" *ngIf="isLoading"></loader-spinner>
 		<form>

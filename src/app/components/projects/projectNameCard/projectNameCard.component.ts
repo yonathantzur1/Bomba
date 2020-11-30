@@ -76,7 +76,6 @@ export class ProjectNameCardComponent implements OnInit {
         }
     }
 
-    // Hide microtext in a specific field.
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
     }

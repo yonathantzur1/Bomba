@@ -1,0 +1,26 @@
+.header-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: calc(50% - 275px);
+    text-align: center;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-icon {
+    height: 70px;
+    width: 70px;
+    margin-top: -30px;
+    margin-right: -15px;
+}
+
+.header-title {
+    font-family: Colus;
+    color: #343a40;
+    font-size: 65px;
+    position: relative;
+    margin: 0;
+}

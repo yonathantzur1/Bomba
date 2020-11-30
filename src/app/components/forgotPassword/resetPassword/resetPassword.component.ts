@@ -1,0 +1,85 @@
+import { Component, OnInit } from '@angular/core';
+import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+
+class Password {
+    text: string;
+    confirm: string;
+
+    constructor() {
+        this.text = "";
+        this.confirm = "";
+    }
+}
+
+@Component({
+    selector: 'reset-password',
+    templateUrl: './resetPassword.html',
+    providers: [ForgotPasswordService],
+    styleUrls: ['./resetPassword.css']
+})
+
+export class ResetPasswordComponent implements OnInit {
+
+    resetCode: string;
+    newPassword: Password;
+
+    validationFuncs: Array<InputFieldValidation>;
+
+    constructor(private router: Router,
+        private route: ActivatedRoute,
+        private microtextService: MicrotextService,
+        private forgotPasswordService: ForgotPasswordService) {
+
+        this.validationFuncs = [
+            {
+                isFieldValid(newPassword: Password) {
+                    return !!newPassword.text;
+                },
+                errMsg: "Please enter new password",
+                fieldId: "password-text-micro",
+                inputId: "password-text"
+            },
+            {
+                isFieldValid(newPassword: Password) {
+                    return newPassword.text.length >= 6;
+                },
+                errMsg: "Your password must be at least 6 characters long",
+                fieldId: "password-text-micro",
+                inputId: "password-text"
+            },
+            {
+                isFieldValid(newPassword: Password) {
+                    return !!newPassword.confirm;
+                },
+                errMsg: "Please confirm your password",
+                fieldId: "password-confirm-micro",
+                inputId: "password-confirm"
+            },
+            {
+                isFieldValid(newPassword: Password) {
+                    return newPassword.text == newPassword.confirm;
+                },
+                errMsg: "Your passwords do not match",
+                fieldId: "password-confirm-micro",
+                inputId: "password-confirm"
+            }
+        ];
+
+    }
+
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            this.resetCode = params["resetCode"];
+        });
+    }
+
+    setPassword() {
+
+    }
+
+    hideMicrotext(microtextId: string) {
+        this.microtextService.hideMicrotext(microtextId);
+    }
+}

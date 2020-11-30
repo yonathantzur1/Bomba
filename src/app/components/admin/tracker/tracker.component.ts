@@ -205,11 +205,6 @@ export class TrackerComponent {
         ];
     }
 
-    // Hide microtext in a specific field.
-    hideMicrotext(microtextId: string) {
-        this.microtextService.hideMicrotext(microtextId);
-    }
-
     loadChart(chartData: ChartData, datesRange?: Object) {
         this.datesRange = datesRange || this.calculateDatesRangeByRangeType(chartData.statisticsRange);
         let clientTimeZone = new Date().getTimezoneOffset();
@@ -428,6 +423,10 @@ export class TrackerComponent {
     // May send data range object to control the dates of chart.
     loadChartAgain(datesRange?: Object) {
         this.loadChart(this.chartData, datesRange);
+    }
+
+    hideMicrotext(microtextId: string) {
+        this.microtextService.hideMicrotext(microtextId);
     }
 }
 

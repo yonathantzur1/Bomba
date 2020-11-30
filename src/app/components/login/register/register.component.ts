@@ -7,8 +7,6 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 import { RegisterService } from 'src/app/services/register.service';
 
-import { GlobalService } from 'src/app/services/global/global.service';
-
 declare const $: any;
 
 export class NewUser {
@@ -136,7 +134,6 @@ export class RegisterComponent implements OnInit {
         }
     }
 
-    // Hide microtext in a specific field.
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
     }

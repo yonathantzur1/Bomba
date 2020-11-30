@@ -17,7 +17,10 @@ module.exports = {
     sendMail(destEmail, title, text, css) {
         const templateHeader = "<div dir='ltr'><img {{logoImg}} src='cid:logo'></div>";
         const headerCss = {
-            logoImg: "width: 200px;margin: 30px 0px;"
+            logoImg: `
+            width: 200px;
+            margin: 30px 0px;
+            `
         }
 
         // Setup email data with unicode symbols
@@ -52,21 +55,44 @@ module.exports = {
     },
 
     restorePassword(email, name, restoreUrl) {
+        const css = {
+            resetBtn: `    
+                box-sizing: border-box;
+                border-color: #348eda;
+                font-weight: bold;
+                text-decoration: none;
+                display: inline-block;
+                margin: 0;
+                margin-top: 15px;
+                color: #ffffff;
+                background-color: #348eda;
+                border: solid 1px #348eda;
+                border-radius: 2px;
+                font-size: 14px;
+                padding: 12px 45px;
+            `,
+            infoText: `
+                color: #294661;
+                font-weight: bold;
+                margin-top: 5px;
+            `
+        }
+
         this.sendMail(email,
-            "Bomba - Restore Password",
+            "Bomba - Reset Password",
             getTimeBlessing(name) +
             `
-                <div>To reset your password click the link below:</div>
-                <a href='${restoreUrl}'>Reset password</a>
+                <div {{infoText}}>A request has been received to change the password for your Bomba account.</div>
+                <a {{resetBtn}} href='${restoreUrl}'>Reset password</a>
                 <p>
-                    If you did not request a password reset from Bomba Account, please ignore this message.
+                    If you did not initiate this request, please ignore this message.
                 </p>
                 <div>
-                    Yours truly,<br>
+                    Thank you,<br>
                     Bomba Team<br>
                     ${config.address.site}
                 </div>
-            `);
+            `, css);
     }
 
 };
