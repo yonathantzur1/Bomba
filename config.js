@@ -61,8 +61,7 @@ module.exports = {
             waitTime: 1 * 60 * 1000, // 1 minutes
         },
         password: {
-            saltSize: 8,
-            restoreCodeSize: 24
+            saltSize: 8
         }
     }
 }

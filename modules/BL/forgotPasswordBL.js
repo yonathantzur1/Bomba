@@ -27,7 +27,7 @@ module.exports = {
 
         if (!restorePassword) {
             restorePassword = {
-                code: generator.generateCode(config.security.password.restoreCodeSize),
+                code: generator.generateId(),
                 date: new Date()
             }
             const restorePasswordUpdate = { $set: { restorePassword } }
