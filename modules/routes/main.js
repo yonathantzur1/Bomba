@@ -6,6 +6,7 @@ module.exports = (app) => {
     app.use('/api', Exclude([
         '/login/*',
         '/register/*',
+        '/forgotPassword/restorePassword',
         '/client/*',
         '/auth/isUserOnSession',
         '/auth/deleteClientAuth'
@@ -15,6 +16,7 @@ module.exports = (app) => {
 
     app.use('/api/login', require('./login'));
     app.use('/api/register', require('./register'));
+    app.use('/api/forgotPassword', require('./forgotPassword'));
     app.use('/api/projects', require('./projects'));
     app.use('/api/matrix', require('./matrix'));
     app.use('/api/environments', require('./environments'));

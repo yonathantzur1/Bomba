@@ -8,6 +8,7 @@ const self = module.exports = {
             "_id": user._id,
             "uid": user.uid,
             "username": user.username,
+            "email": user.email,
             "isAdmin": user.isAdmin,
             "apiKey": user.apiKey
         }

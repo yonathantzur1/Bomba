@@ -28,8 +28,7 @@ module.exports = {
 
         const updateObj = { $set: { name } }
 
-        return DAL.updateOne(reportsCollectionName, reportFilter, updateObj)
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(reportsCollectionName, reportFilter, updateObj);
     },
 
     async initReport(matrix, projectId, userId) {
@@ -57,8 +56,7 @@ module.exports = {
             owner: DAL.getObjectId(userId)
         }
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, { $set: { "report": setReport } })
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(projectsCollectionName, projectFilter, { $set: { "report": setReport } });
     },
 
     updateRequestStart(projectId, requestId) {
@@ -71,8 +69,7 @@ module.exports = {
         const jsonStr = `{ "$set": { "report.results.${requestId}.isStart": true } }`;
         const updateObj = JSON.parse(jsonStr);
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
     },
 
     updateRequestStatus(requestStatus) {
@@ -88,8 +85,7 @@ module.exports = {
             "report.results.${requestStatus.requestId}.time": ${requestStatus.time} } }`;
         const updateObj = JSON.parse(jsonStr);
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj)
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(projectsCollectionName, projectFilter, updateObj);
     },
 
     finishReport(projectId) {
@@ -166,8 +162,7 @@ module.exports = {
             owner: DAL.getObjectId(userId)
         }
 
-        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } })
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(projectsCollectionName, projectFilter, { $unset: { "report": "" } });
     },
 
     getAllReports(userId) {

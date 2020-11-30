@@ -1,9 +1,15 @@
+const isProd = (process.env.IS_PROD == 'true');
+const clientPort = 4200;
+
 module.exports = {
     server: {
         port: process.env.PORT || 8000,
-        isProd: (process.env.IS_PROD == 'true'),
+        isProd,
         maxRequestSize: "10mb",
         isForceHttps: true // (for production environment)
+    },
+    address: {
+        site: isProd ? "https://bomba-load.herokuapp.com" : `http://localhost:${clientPort}`
     },
     mailer: {
         mail: "bomba@group.com",
@@ -55,7 +61,8 @@ module.exports = {
             waitTime: 1 * 60 * 1000, // 1 minutes
         },
         password: {
-            saltSize: 8
+            saltSize: 8,
+            restoreCodeSize: 24
         }
     }
 }

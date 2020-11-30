@@ -31,7 +31,7 @@ export class NewUser {
 })
 
 export class RegisterComponent implements OnInit {
-    @Input() loginString: string;
+    @Input() username: string;
 
     user: NewUser = new NewUser();
     isLoading: boolean = false;
@@ -99,12 +99,12 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.loginString) {
-            if (this.loginString.includes("@")) {
-                this.user.email = this.loginString;
+        if (this.username) {
+            if (this.username.includes("@")) {
+                this.user.email = this.username;
             }
             else {
-                this.user.username = this.loginString;
+                this.user.username = this.username;
             }
         }
     }

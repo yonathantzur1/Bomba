@@ -36,6 +36,6 @@
 			</div>
 		</form>
 	</div>
-	<register *ngIf="isShowRegister" [loginString]="user.username"></register>
-	<forgot-password *ngIf="isShowForgotPassword" [loginString]="user.username"></forgot-password>
+	<register *ngIf="isShowRegister" [username]="user.username"></register>
+	<forgot-password *ngIf="isShowForgotPassword" [username]="user.username"></forgot-password>
 </div>

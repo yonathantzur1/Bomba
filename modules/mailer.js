@@ -17,7 +17,7 @@ module.exports = {
     sendMail(destEmail, title, text, css) {
         const templateHeader = "<div dir='ltr'><img {{logoImg}} src='cid:logo'></div>";
         const headerCss = {
-            logoImg: "width: 200px;margin-bottom: 25px;"
+            logoImg: "width: 200px;margin: 30px 0px;"
         }
 
         // Setup email data with unicode symbols
@@ -49,6 +49,24 @@ module.exports = {
             "Bomba",
             getTimeBlessing(name) +
             "Welcome to Bomba!");
+    },
+
+    restorePassword(email, name, restoreUrl) {
+        this.sendMail(email,
+            "Bomba - Restore Password",
+            getTimeBlessing(name) +
+            `
+                <div>To reset your password click the link below:</div>
+                <a href='${restoreUrl}'>Reset password</a>
+                <p>
+                    If you did not request a password reset from Bomba Account, please ignore this message.
+                </p>
+                <div>
+                    Yours truly,<br>
+                    Bomba Team<br>
+                    ${config.address.site}
+                </div>
+            `);
     }
 
 };

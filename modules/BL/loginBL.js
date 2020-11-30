@@ -37,7 +37,6 @@ module.exports = {
         const findObj = { "_id": DAL.getObjectId(userId) };
         const lastLoginTimeObj = { $set: { "lastLoginTime": new Date() } };
 
-        return DAL.updateOne(usersCollectionName, findObj, lastLoginTimeObj)
-            .catch(errorHandler.promiseError);
+        return DAL.updateOne(usersCollectionName, findObj, lastLoginTimeObj);
     }
 };
