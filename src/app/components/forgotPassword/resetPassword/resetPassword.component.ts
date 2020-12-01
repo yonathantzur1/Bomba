@@ -72,6 +72,12 @@ export class ResetPasswordComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.resetCode = params["resetCode"];
+
+            this.forgotPasswordService.isResetCodeValid(this.resetCode).then(result => {
+                if (!result) {
+                    // TODO: show invalid message
+                }
+            });
         });
     }
 

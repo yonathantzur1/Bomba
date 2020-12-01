@@ -44,5 +44,27 @@ module.exports = {
     sendRestoreMail(email, username, restorePasswordCode) {
         const restoreUrl = `${config.address.site}/reset-password/${restorePasswordCode}`;
         mailer.restorePassword(email, username, restoreUrl);
+    },
+
+    async isResetCodeValid(resetCode) {
+        const userFilter = { "restorePassword.code": resetCode }
+        const userFields = { "_id": 1 }
+
+        const user = await DAL.findOneSpecific(usersCollectionName, userFilter, userFields)
+            .catch(errorHandler.promiseError);
+
+        return !!user;
+    },
+
+    async setPassword(resetCode, password) {
+        const salt = generator.generateCode(config.security.password.saltSize);
+        password = sha512(password + salt);
+        const userFilter = { "restorePassword.code": resetCode }
+        const passwordUpdate = { $set: { password, salt }, $unset: { restorePassword: "" } }
+
+        const updateResult = await DAL.updateOne(usersCollectionName, userFilter, passwordUpdate)
+            .catch(errorHandler.promiseError);
+
+        return !!updateResult;
     }
 }

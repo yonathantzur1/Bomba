@@ -6,7 +6,7 @@ module.exports = (app) => {
     app.use('/api', Exclude([
         '/login/*',
         '/register/*',
-        '/forgotPassword/restorePassword',
+        '/forgotPassword/*',
         '/client/*',
         '/auth/isUserOnSession',
         '/auth/deleteClientAuth'

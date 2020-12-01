@@ -15,4 +15,14 @@ export class ForgotPasswordService extends BasicService {
 
         return super.post("/restorePassword", data);
     }
+
+    isResetCodeValid(resetCode: string) {
+        return super.get("/isResetCodeValid?resetCode=" + resetCode);
+    }
+
+    setPassword(resetCode: string, password: string) {
+        const data = { resetCode, password }
+
+        return super.put("/setPassword", data);
+    }
 }
