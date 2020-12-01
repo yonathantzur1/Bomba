@@ -23,10 +23,14 @@ router.post('/userLogin',
                 tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
                 res.send({ result: true });
             }
-            // In case the password is wrong.
+            // In case the password is wrong or the user does not exist.
             else {
                 res.send({ result: false });
-                logsBL.loginFail(req.body.username, req);
+
+                // In case the password is wrong.
+                if (user == false) {
+                    logsBL.loginFail(req.body.username, req);
+                }
             }
         }).catch(err => {
             errorHandler.routeError(err, res);

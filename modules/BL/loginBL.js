@@ -25,8 +25,7 @@ module.exports = {
         const user = await DAL.findOne(usersCollectionName, userFilter)
             .catch(errorHandler.promiseError);
 
-        // In case the auth details are wrong.
-        if (!user || sha512(userAuth.password + user.salt) != user.password) {
+        if (user && sha512(userAuth.password + user.salt) != user.password) {
             return false;
         }
 
