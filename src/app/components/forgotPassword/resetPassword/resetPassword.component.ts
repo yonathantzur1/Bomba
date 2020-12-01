@@ -23,16 +23,16 @@ class Password {
 export class ResetPasswordComponent implements OnInit {
 
     resetCode: string;
-    newPassword: Password;
+    newPassword: Password = new Password();
 
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
         private microtextService: MicrotextService,
         private forgotPasswordService: ForgotPasswordService) {
 
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(newPassword: Password) {
                     return !!newPassword.text;
@@ -76,7 +76,9 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     setPassword() {
+        if (this.microtextService.validation(this.validations, this.newPassword)) {
 
+        }
     }
 
     hideMicrotext(microtextId: string) {

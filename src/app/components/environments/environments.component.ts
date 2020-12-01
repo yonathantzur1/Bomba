@@ -53,7 +53,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
 
     isAddEnvironment: boolean = false;
     environment: Environment = new Environment();
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     currWindowType: WINDOW_TYPE;
     windowType: any = WINDOW_TYPE;
@@ -69,7 +69,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
         private socketService: SocketService,
         private globalService: GlobalService,
         private eventService: EventService) {
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(env: Environment) {
                     const isValid = !!env.name;
@@ -131,7 +131,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
     }
 
     addEnv() {
-        if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+        if (this.microtextService.validation(this.validations, this.environment)) {
             this.isLoading = true;
             this.environmentsService.addEnv(this.projectId, this.environment).then(data => {
                 this.isLoading = false;
@@ -163,7 +163,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
     }
 
     updateEnv() {
-        if (this.microtextService.validation(this.validationFuncs, this.environment)) {
+        if (this.microtextService.validation(this.validations, this.environment)) {
             this.isLoading = true;
             this.environmentsService.updateEnv(this.projectId, this.environment).then(data => {
                 this.isLoading = false;

@@ -17,14 +17,14 @@ export class ForgotPasswordComponent {
     @Input() username: string;
 
     isLoading: boolean = false;
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService,
         private alertService: AlertService,
         private snackbarService: SnackbarService,
         private forgotPasswordService: ForgotPasswordService) {
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(username: string) {
                     username = username.trim();
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent {
     }
 
     forgot() {
-        if (this.microtextService.validation(this.validationFuncs, this.username)) {
+        if (this.microtextService.validation(this.validations, this.username)) {
             this.isLoading = true;
             this.forgotPasswordService.restorePassword(this.username).then(result => {
                 if (!result) {

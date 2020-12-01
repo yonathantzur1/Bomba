@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     isShowRegister: boolean = false;
     isShowForgotPassword: boolean = false;
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     eventsIds: Array<string> = [];
 
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.isShowForgotPassword = false;
         });
 
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(user: User) {
                     return !!user.username;
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.user.username = this.user.username.trim();
 
         // In case the login fields are valid.
-        if (this.microtextService.validation(this.validationFuncs, this.user)) {
+        if (this.microtextService.validation(this.validations, this.user)) {
             this.isLoading = true;
             const self = this;
 
@@ -121,12 +121,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     showRegister() {
         this.isShowRegister = true;
-        this.microtextService.restartAll(this.validationFuncs);
+        this.microtextService.restartAll(this.validations);
     }
 
     showForgotPassword() {
         this.isShowForgotPassword = true;
-        this.microtextService.restartAll(this.validationFuncs);
+        this.microtextService.restartAll(this.validations);
     }
 
     hideMicrotext(microtextId: string) {

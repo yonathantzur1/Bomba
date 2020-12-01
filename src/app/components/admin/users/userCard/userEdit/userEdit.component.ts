@@ -31,13 +31,13 @@ export class UserEditComponent {
     @Input() userEdit: UserEdit;
 
     isLoading: boolean = false;
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,
         private snackbarService: SnackbarService,
         private usersService: UsersService) {
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(user: UserEdit) {
                     user.username = user.username.trim();
@@ -91,7 +91,7 @@ export class UserEditComponent {
     }
 
     saveEdit() {
-        if (this.microtextService.validation(this.validationFuncs, this.userEdit)) {
+        if (this.microtextService.validation(this.validations, this.userEdit)) {
             this.isLoading = true;
             this.usersService.saveUserEdit(this.userEdit).then(data => {
                 this.isLoading = false;

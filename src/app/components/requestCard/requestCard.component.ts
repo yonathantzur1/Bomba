@@ -70,7 +70,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
 
     request: Request;
     tabs: Array<Tab>;
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
     method: any = METHOD;
 
     isTestRequest: boolean = false;
@@ -85,7 +85,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
             new Tab("Cookies", false)
         ];
 
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(request: Request) {
                     request.name = request.name.trim();
@@ -149,11 +149,11 @@ export class RequestCardComponent implements OnInit, OnDestroy {
     }
 
     validateRequest() {
-        return this.microtextService.validation(this.validationFuncs, this.request);
+        return this.microtextService.validation(this.validations, this.request);
     }
 
     validateTestRequest() {
-        const testValidations = this.validationFuncs.filter(validation => {
+        const testValidations = this.validations.filter(validation => {
             return validation.inputId != "name";
         });
 

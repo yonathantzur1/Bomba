@@ -1,8 +1,4 @@
 .header-container {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: calc(50% - 275px);
     text-align: center;
     user-select: none;
     display: flex;

@@ -33,14 +33,14 @@ export class RegisterComponent implements OnInit {
 
     user: NewUser = new NewUser();
     isLoading: boolean = false;
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     constructor(private router: Router,
         private registerService: RegisterService,
         private microtextService: MicrotextService,
         private eventService: EventService,
         public snackbarService: SnackbarService) {
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(user: NewUser) {
                     user.username = user.username.trim();
@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit {
     }
 
     register() {
-        if (this.microtextService.validation(this.validationFuncs, this.user)) {
+        if (this.microtextService.validation(this.validations, this.user)) {
             this.isLoading = true;
 
             this.registerService.register(this.user).then(data => {

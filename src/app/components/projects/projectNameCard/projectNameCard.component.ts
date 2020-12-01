@@ -20,13 +20,13 @@ export class ProjectNameCardComponent implements OnInit {
     @Input() editProject: Project;
 
     name: string = "";
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,
         private snackbarService: SnackbarService,
         private projectsService: ProjectsService) {
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(name: string) {
                     name = name.trim();
@@ -48,7 +48,7 @@ export class ProjectNameCardComponent implements OnInit {
     }
 
     addProject() {
-        if (this.microtextService.validation(this.validationFuncs, this.name)) {
+        if (this.microtextService.validation(this.validations, this.name)) {
             let actionPromise: Promise<any>;
             let actionEventType: EVENT_TYPE;
 

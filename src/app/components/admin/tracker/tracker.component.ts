@@ -32,7 +32,7 @@ class ChartData {
 })
 
 export class TrackerComponent {
-    validationFuncs: Array<InputFieldValidation>;
+    validations: Array<InputFieldValidation>;
 
     menus: Array<any> = [];
     chart: any;
@@ -56,7 +56,7 @@ export class TrackerComponent {
         private microtextService: MicrotextService) {
         const self = this;
 
-        this.validationFuncs = [
+        this.validations = [
             {
                 isFieldValid(username: string) {
                     return !!username;
@@ -183,7 +183,7 @@ export class TrackerComponent {
                 onConfirm: function () {
                     if (!this.isLoaderActive &&
                         self.usernameInput &&
-                        self.microtextService.validation(self.validationFuncs,
+                        self.microtextService.validation(self.validations,
                             self.usernameInput)) {
                         this.isLoaderActive = true;
                         self.trackerService.isUserExists(self.usernameInput).then((isExists: boolean) => {
