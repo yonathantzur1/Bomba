@@ -7,8 +7,7 @@ const logsBL = require('../BL/logsBL');
 const registerBL = require('../BL/registerBL');
 
 // Add new user to the DB and make sure the username is not already exists.
-router.post('/register',
-    validator,
+router.post('/register', validator,
     (req, res, next) => {
         req.body.email = req.body.email.toLowerCase();
         req.body.username = req.body.username.toLowerCase();

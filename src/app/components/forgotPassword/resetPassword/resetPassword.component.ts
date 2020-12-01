@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 class Password {
     text: string;
@@ -24,11 +25,14 @@ export class ResetPasswordComponent implements OnInit {
 
     resetCode: string;
     newPassword: Password = new Password();
+    isLoading: boolean = false;
+    isValid: boolean;
 
     validations: Array<InputFieldValidation>;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
+        private snackbarService: SnackbarService,
         private microtextService: MicrotextService,
         private forgotPasswordService: ForgotPasswordService) {
 
@@ -73,17 +77,25 @@ export class ResetPasswordComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.resetCode = params["resetCode"];
 
+            this.isLoading = true;
             this.forgotPasswordService.isResetCodeValid(this.resetCode).then(result => {
-                if (!result) {
-                    // TODO: show invalid message
-                }
+                this.isLoading = false;
+                this.isValid = !!result;
             });
         });
     }
 
     setPassword() {
         if (this.microtextService.validation(this.validations, this.newPassword)) {
-
+            this.forgotPasswordService.setPassword(this.resetCode, this.newPassword.text).then(result => {
+                if (!result) {
+                    this.snackbarService.error();
+                }
+                else {
+                    this.snackbarService.snackbar("Password has been changed");
+                    this.router.navigateByUrl("/login");
+                }
+            });
         }
     }
 

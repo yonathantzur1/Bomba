@@ -24,15 +24,13 @@ router.put('/changeAdminStatus', (req, res) => {
     });
 });
 
-router.put('/saveUserEdit',
-    validator,
-    (req, res) => {
-        usersBL.saveUserEdit(req.body).then(result => {
-            res.send({ result });
-        }).catch(err => {
-            errorHandler.routeError(err, res);
-        });
+router.put('/saveUserEdit', validator, (req, res) => {
+    usersBL.saveUserEdit(req.body).then(result => {
+        res.send({ result });
+    }).catch(err => {
+        errorHandler.routeError(err, res);
     });
+});
 
 router.put('/deleteUser', (req, res) => {
     usersBL.deleteUser(req.query.userId).then(result => {

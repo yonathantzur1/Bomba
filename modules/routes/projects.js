@@ -12,12 +12,11 @@ router.get('/getProjects', (req, res) => {
     });
 });
 
-router.post('/addProject',
+router.post('/addProject', validator,
     (req, res, next) => {
         req.body.name = req.body.name.trim();
         next();
     },
-    validator,
     (req, res) => {
         projectsBL.addProject(req.body.name, req.user._id).then(result => {
             res.send({ result });
@@ -26,12 +25,11 @@ router.post('/addProject',
         });
     });
 
-router.put('/editProject',
+router.put('/editProject', validator,
     (req, res, next) => {
         req.body.name = req.body.name.trim();
         next();
     },
-    validator,
     (req, res) => {
         projectsBL.editProject(req.body.id, req.body.name, req.user._id).then(result => {
             res.send({ result });
@@ -40,8 +38,7 @@ router.put('/editProject',
         });
     });
 
-router.delete('/deleteProject',
-    validator,
+router.delete('/deleteProject', validator,
     (req, res) => {
         projectsBL.deleteProject(req.query.id, req.user._id).then(result => {
             res.send(!!result);

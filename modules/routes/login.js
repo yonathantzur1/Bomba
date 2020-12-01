@@ -7,8 +7,7 @@ const validator = require('../security/validations/validator');
 const limitter = require('../security/limitter');
 
 // Validate the user details and login the user.
-router.post('/userLogin',
-    validator,
+router.post('/userLogin', validator,
     (req, res, next) => {
         req.body.username = req.body.username.toLowerCase();
 

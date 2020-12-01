@@ -5,7 +5,15 @@ let schemas = {};
 
 //#region get
 
-schemas[REST.GET] = {};
+schemas[REST.GET] = {
+    "api": {
+        "forgotPassword": {
+            "isResetCodeValid": {
+                resetCode: joi.string().length(24).required()
+            }
+        }
+    }
+};
 
 //#endregion
 
@@ -61,6 +69,12 @@ schemas[REST.PUT] = {
                     email: joi.string().regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required(),
                     password: joi.string().min(6).optional().allow('')
                 }
+            }
+        },
+        "forgotPassword": {
+            "setPassword": {
+                resetCode: joi.string().length(24).required(),
+                password: joi.string().min(6).required()
             }
         },
         "projects": {
