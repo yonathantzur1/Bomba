@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
@@ -20,7 +20,7 @@ export class ProjectNameCardComponent implements OnInit {
     @Input() editProject: Project;
 
     name: string = "";
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 
 import { EnvironmentsService } from '../../services/environments.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { SocketService } from 'src/app/services/global/socket.service';
@@ -53,7 +53,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
 
     isAddEnvironment: boolean = false;
     environment: Environment = new Environment();
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     currWindowType: WINDOW_TYPE;
     windowType: any = WINDOW_TYPE;

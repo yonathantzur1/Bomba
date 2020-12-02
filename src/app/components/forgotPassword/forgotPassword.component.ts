@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class ForgotPasswordComponent {
 
     username: string;
     isLoading: boolean = false;
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     constructor(private microtextService: MicrotextService,
         private eventService: EventService,

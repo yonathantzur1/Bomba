@@ -2,7 +2,7 @@ import { Component, Input, HostListener } from '@angular/core';
 import { UsersService } from 'src/app/services/admin/users.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 
 declare const $: any;
 
@@ -31,7 +31,7 @@ export class UserEditComponent {
     @Input() userEdit: UserEdit;
 
     isLoading: boolean = false;
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     constructor(private eventService: EventService,
         private microtextService: MicrotextService,

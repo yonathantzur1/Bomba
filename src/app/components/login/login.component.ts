@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SnackbarService } from '../../services/global/snackbar.service';
-import { MicrotextService, InputFieldValidation } from '../../services/global/microtext.service';
+import { MicrotextService, InputValidation } from '../../services/global/microtext.service';
 
 import { LoginService } from '../../services/login.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -29,7 +29,7 @@ export class User {
 export class LoginComponent implements OnInit {
     user: User = new User();
     isLoading: boolean = false;
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     eventsIds: Array<string> = [];
 

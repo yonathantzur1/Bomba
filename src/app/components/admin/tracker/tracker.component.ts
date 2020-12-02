@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { TrackerService } from '../../../services/admin/tracker.service';
 import { DateService } from '../../../services/global/date.service';
-import { MicrotextService, InputFieldValidation } from '../../../services/global/microtext.service';
+import { MicrotextService, InputValidation } from '../../../services/global/microtext.service';
 
 import { STATISTICS_RANGE, LOG_TYPE } from '../../../enums';
 
@@ -32,7 +32,7 @@ class ChartData {
 })
 
 export class TrackerComponent {
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     menus: Array<any> = [];
     chart: any;

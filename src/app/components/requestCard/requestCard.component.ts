@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
 import { DefaultSettings } from '../requestSettings/requestSettings.component';
 import { METHOD } from 'src/app/enums';
@@ -70,7 +70,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
 
     request: Request;
     tabs: Array<Tab>;
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
     method: any = METHOD;
 
     isTestRequest: boolean = false;

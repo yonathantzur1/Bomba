@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-export class InputFieldValidation {
+export class InputValidation {
     isFieldValid: Function;
     errMsg: string;
     fieldId: string;
@@ -12,7 +12,7 @@ declare const $: any;
 @Injectable()
 export class MicrotextService {
 
-    validation(validations: Array<InputFieldValidation>, obj: any, regexp?: any): boolean {
+    validation(validations: Array<InputValidation>, obj: any, regexp?: any): boolean {
         let regexpPatterns = {};
         // Convert strings to regex patterns in case regex was sent.
         if (regexp) {
@@ -52,7 +52,7 @@ export class MicrotextService {
         return isFoundInvalidField;
     }
 
-    restartAll(validations: Array<InputFieldValidation>) {
+    restartAll(validations: Array<InputValidation>) {
         let checkedFieldsIds = {};
 
         validations.forEach(validation => {

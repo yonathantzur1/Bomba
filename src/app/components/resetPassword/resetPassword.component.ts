@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 class Password {
@@ -28,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
     isLoading: boolean = false;
     isValid: boolean;
 
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     constructor(private router: Router,
         private route: ActivatedRoute,

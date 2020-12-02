@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
-import { MicrotextService, InputFieldValidation } from 'src/app/services/global/microtext.service';
+import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 import { RegisterService } from 'src/app/services/register.service';
@@ -32,7 +32,7 @@ export class RegisterComponent {
 
     user: NewUser = new NewUser();
     isLoading: boolean = false;
-    validations: Array<InputFieldValidation>;
+    validations: Array<InputValidation>;
 
     constructor(private router: Router,
         private registerService: RegisterService,
