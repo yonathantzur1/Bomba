@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -28,8 +28,7 @@ export class NewUser {
     styleUrls: ['./register.css']
 })
 
-export class RegisterComponent implements OnInit {
-    @Input() username: string;
+export class RegisterComponent {
 
     user: NewUser = new NewUser();
     isLoading: boolean = false;
@@ -94,17 +93,6 @@ export class RegisterComponent implements OnInit {
                 inputId: "register-password"
             }
         ];
-    }
-
-    ngOnInit() {
-        if (this.username) {
-            if (this.username.includes("@")) {
-                this.user.email = this.username;
-            }
-            else {
-                this.user.username = this.username;
-            }
-        }
     }
 
     register() {

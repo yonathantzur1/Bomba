@@ -19,7 +19,7 @@
 						placeholder="Password">
 					<label id="login-password-micro" class="microtext"></label>
 				</div>
-				<a (click)="showForgotPassword()" class="option-btn">Forget password?</a>
+				<a routerLink="/forgot" class="option-btn">Forget password?</a>
 			</div>
 			<div class="form-group">
 				<div>
@@ -33,5 +33,4 @@
 			</div>
 		</form>
 	</div>
-	<forgot-password *ngIf="isShowForgotPassword" [username]="user.username"></forgot-password>
 </div>

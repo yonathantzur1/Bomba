@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Components
 import { LoginComponent } from '../components/login/login.component';
+import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
+import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
+import { RegisterComponent } from '../components/register/register.component';
 import { HomeComponent } from '../components/home/home.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ReportsComponent } from '../components/reports/reports.component';
@@ -17,12 +20,11 @@ import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.c
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
 import { LoginGuard } from '../guards/login.guard';
-import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
-import { RegisterComponent } from '../components/register/register.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
+  { path: 'forgot', component: ForgotPasswordComponent, canActivate: [LoginGuard] },
   { path: 'reset-password/:resetCode', component: ResetPasswordComponent },
   {
     path: '',

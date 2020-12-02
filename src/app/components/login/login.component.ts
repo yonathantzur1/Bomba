@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EventService, EVENT_TYPE } from '../../services/global/event.service';
 import { SnackbarService } from '../../services/global/snackbar.service';
 import { MicrotextService, InputFieldValidation } from '../../services/global/microtext.service';
 
@@ -27,10 +26,9 @@ export class User {
     styleUrls: ['./login.css']
 })
 
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
     user: User = new User();
     isLoading: boolean = false;
-    isShowForgotPassword: boolean = false;
     validations: Array<InputFieldValidation>;
 
     eventsIds: Array<string> = [];
@@ -38,13 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
         public snackbarService: SnackbarService,
         private microtextService: MicrotextService,
-        public eventService: EventService,
         private loginService: LoginService,
         private globalService: GlobalService) {
-
-        eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
-            this.isShowForgotPassword = false;
-        });
 
         this.validations = [
             {
@@ -68,10 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.globalService.resetGlobalVariables();
-    }
-
-    ngOnDestroy() {
-        this.eventService.unsubscribeEvents(this.eventsIds);
     }
 
     // Login user and redirect him to main page.
@@ -115,11 +104,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     loginEnter() {
         $(".user-input").blur();
         this.login();
-    }
-
-    showForgotPassword() {
-        this.isShowForgotPassword = true;
-        this.microtextService.restartAll(this.validations);
     }
 
     hideMicrotext(microtextId: string) {
