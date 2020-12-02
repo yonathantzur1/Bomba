@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'header',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
     styleUrls: ['./header.css']
 })
 
-export class HeaderComponent { }
+export class HeaderComponent {
+
+    @Input() isClickable: boolean = false;
+
+    constructor(private router: Router) { }
+
+    navigateMain() {
+        this.isClickable && this.router.navigateByUrl("/");
+    }
+}

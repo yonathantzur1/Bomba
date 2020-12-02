@@ -4,6 +4,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 250px;
+    margin: auto;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 .header-icon {

@@ -1,4 +1,4 @@
-<div id="header" class="header-container">
+<div id="header" [ngClass]="{'clickable': isClickable}" class="header-container" (click)="navigateMain()">
     <span class="header-title">B</span>
     <img src="assets/logo/icon.png" class="header-icon">
     <span class="header-title">MBA</span>
