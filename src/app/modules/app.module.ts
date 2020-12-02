@@ -28,7 +28,7 @@ import { StatisticsComponent } from '../components/admin/statistics/statistics.c
 import { TrackerComponent } from '../components/admin/tracker/tracker.component';
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
-import { RegisterComponent } from '../components/login/register/register.component';
+import { RegisterComponent } from '../components/register/register.component';
 import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from '../components/forgotPassword/resetPassword/resetPassword.component';
 import { BoardComponent } from '../components/board/board.component';
