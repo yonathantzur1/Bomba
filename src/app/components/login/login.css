@@ -119,11 +119,6 @@ form {
     user-select: none;
 }
 
-.option-btn:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .login-icon {
     font-size: 48px;
     position: absolute;

@@ -26,6 +26,7 @@ a, a:hover, a:focus {
 
 .btn {
     padding: .3rem .7rem !important;
+    text-transform: unset !important;
 }
 
 .btn:focus {

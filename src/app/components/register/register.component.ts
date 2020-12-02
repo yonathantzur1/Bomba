@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit {
                     $("#register-email-micro").html("The email is already in use");
                 }
                 else {
+                    this.microtextService.restartAll(this.validations);
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
                     this.router.navigateByUrl("/");
                 }
