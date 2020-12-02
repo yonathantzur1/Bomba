@@ -17,7 +17,7 @@ import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.c
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
 import { LoginGuard } from '../guards/login.guard';
-import { ResetPasswordComponent } from '../components/forgotPassword/resetPassword/resetPassword.component';
+import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
 import { RegisterComponent } from '../components/register/register.component';
 
 const routes: Routes = [

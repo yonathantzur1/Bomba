@@ -111,10 +111,8 @@ form {
 }
 
 .option-btn {
-    cursor: pointer;
     font-size: 12px;
     display: block;
-    color: #4f4f4f !important;
     float: right;
     user-select: none;
 }

@@ -30,7 +30,7 @@ import { InfoComponent } from '../components/admin/statistics/info/info.componen
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../components/register/register.component';
 import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
-import { ResetPasswordComponent } from '../components/forgotPassword/resetPassword/resetPassword.component';
+import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
 import { BoardComponent } from '../components/board/board.component';
 import { MatrixComponent } from '../components/board/matrix/matrix.component';
 import { CellComponent } from '../components/board/matrix/cell/cell.component'
