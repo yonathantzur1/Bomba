@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -14,11 +15,12 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 export class ForgotPasswordComponent {
 
-    username: string;
+    username: string = "";
     isLoading: boolean = false;
     validations: Array<InputValidation>;
 
-    constructor(private microtextService: MicrotextService,
+    constructor(private router: Router,
+        private microtextService: MicrotextService,
         private eventService: EventService,
         private alertService: AlertService,
         private snackbarService: SnackbarService,
@@ -40,6 +42,8 @@ export class ForgotPasswordComponent {
         if (this.microtextService.validation(this.validations, this.username)) {
             this.isLoading = true;
             this.forgotPasswordService.restorePassword(this.username).then(result => {
+                this.isLoading = false;
+
                 if (!result) {
                     return this.snackbarService.error();
                 }
@@ -47,12 +51,15 @@ export class ForgotPasswordComponent {
                 this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
                 this.alertService.alert({
                     title: "Reset Password",
-                    text: "If we found an account associated with that username,\n" +
-                        "we've sent password reset instructions to the\n" +
+                    text: "If we found an account associated with that username, " +
+                        "we've sent password reset instructions to the " +
                         "email address on the account.",
                     type: ALERT_TYPE.INFO,
                     showCancelButton: false,
-                    closeBtnText: "OK"
+                    confirmBtnText: "OK",
+                    confirmFunc: () => {
+                        this.router.navigateByUrl("/");
+                    }
                 });
 
             });
