@@ -5,20 +5,15 @@
 		<loader-spinner class="loader" *ngIf="isLoading"></loader-spinner>
 		<form>
 			<div class="form-group">
-				<div class="col-12 no-padding">
-					<input [(ngModel)]="user.username" id="login-username" class="form-control user-input" type="text"
-						name="username" (keydown)="hideMicrotext($event.srcElement.id + '-micro')"
-						placeholder="Username or email address" autocapitalize="off" autocomplete="off">
-					<label id="login-username-micro" class="microtext"></label>
-				</div>
+				<input [(ngModel)]="user.username" id="login-username" class="form-control user-input" type="text"
+					name="username" (keydown)="hideMicrotext($event.srcElement.id + '-micro')"
+					placeholder="Username or email address" autocapitalize="off" autocomplete="off">
+				<label id="login-username-micro" class="microtext"></label>
 			</div>
 			<div class="form-group">
-				<div class="col-12 no-padding">
-					<input [(ngModel)]="user.password" id="login-password" class="form-control user-input"
-						type="password" name="password" (keydown)="hideMicrotext($event.srcElement.id + '-micro')"
-						placeholder="Password">
-					<label id="login-password-micro" class="microtext"></label>
-				</div>
+				<input [(ngModel)]="user.password" id="login-password" class="form-control user-input" type="password"
+					name="password" (keydown)="hideMicrotext($event.srcElement.id + '-micro')" placeholder="Password">
+				<label id="login-password-micro" class="microtext"></label>
 				<a routerLink="/forgot" class="option-btn">Forget password?</a>
 			</div>
 			<div class="form-group">

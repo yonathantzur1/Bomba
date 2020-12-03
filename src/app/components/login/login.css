@@ -13,10 +13,6 @@
     justify-content: center;
 }
 
-.no-padding {
-    padding: 0 !important;
-}
-
 .user-input {
     margin-bottom: 5px;
 }
