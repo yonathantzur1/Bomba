@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.globalService.resetGlobalVariables();
+        this.globalService.dynamicInput();
     }
 
     // Login user and redirect him to main page.

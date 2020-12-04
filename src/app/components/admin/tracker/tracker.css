@@ -134,7 +134,7 @@
 
 .microtext {
     font-size: 11px;
-    color: var(--microtext-color);
+    color: var(--error-color);
     line-height: 15px;
     position: absolute;
 }

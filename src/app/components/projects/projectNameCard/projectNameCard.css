@@ -20,7 +20,7 @@ form {
 
 .microtext {
     font-size: 11px;
-    color: var(--microtext-color) !important;
+    color: var(--error-color) !important;
     line-height: 18px;
     user-select: none;
 }

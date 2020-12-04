@@ -55,7 +55,7 @@ form {
 .microtext {
     font-size: 11px;
     position: absolute;
-    color: var(--microtext-color) !important;
+    color: var(--error-color) !important;
     left: 25px;
     bottom: -6px;
     user-select: none;

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { SocketService } from './socket.service';
 
+declare const $: any;
+
 @Injectable()
 export class GlobalService {
     private data = {};
@@ -44,5 +46,23 @@ export class GlobalService {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
+    }
+
+    dynamicInput() {
+        $("input").focus((event: any) => {
+            $("#" + event.target.id).parent().addClass("is-focused");
+        });
+
+        $("input").blur((event: any) => {
+            const inputElement = $("#" + event.target.id);
+            inputElement.parent().removeClass("is-focused");
+
+            if (inputElement.val()) {
+                inputElement.parent().addClass("is-filled");
+            }
+            else {
+                inputElement.parent().removeClass("is-filled");
+            }
+        });
     }
 }

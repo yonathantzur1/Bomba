@@ -15,9 +15,6 @@ a, a:hover, a:focus {
 ::placeholder {
     color: #969696 !important;
     font-size: 14px !important;
-    line-height: unset !important;
-    opacity: 1;
-    user-select: none;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:focus {
@@ -39,11 +36,29 @@ a, a:hover, a:focus {
 
 input, select {
     font-size: 14px !important;
-    padding: 3px !important;
 }
 
 select {
     cursor: pointer;
+}
+
+.bmd-label-floating {
+    color: #808080 !important;
+    font-size: 13px !important;
+    user-select: none;
+    top: 2.6rem !important;
+}
+
+.is-focused > .bmd-label-floating {
+    color: #808080 !important;
+    font-size: 0.75rem !important;
+    top: 1.2rem !important;
+}
+
+.is-filled > .bmd-label-floating {
+    color: #808080 !important;
+    font-size: 0.75rem !important;
+    top: 1.2rem !important;
 }
 
 /* END OVERRIDE BOOTSTRAP MATERIAL CSS */
@@ -149,7 +164,7 @@ select {
     /* Define css global variables */
     --main-background-color: #f7f7f7;
     --main-text-color: #4b4b4b;
-    --microtext-color: #e53935;
+    --error-color: #e53935;
     --main-border-color: #a5a5a5;
     --main-font: Rubik;
     --navbar-height: 50px;

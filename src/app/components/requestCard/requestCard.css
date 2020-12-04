@@ -32,7 +32,7 @@
 .microtext {
     font-size: 11px;
     position: absolute;
-    color: var(--microtext-color) !important;
+    color: var(--error-color) !important;
     line-height: 16px;
     left: 0;
 }

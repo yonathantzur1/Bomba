@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
@@ -28,13 +29,14 @@ export class NewUser {
     styleUrls: ['./register.css']
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
     user: NewUser = new NewUser();
     isLoading: boolean = false;
     validations: Array<InputValidation>;
 
     constructor(private router: Router,
+        private globalService: GlobalService,
         private registerService: RegisterService,
         private microtextService: MicrotextService,
         private eventService: EventService,
@@ -93,6 +95,10 @@ export class RegisterComponent {
                 inputId: "register-password"
             }
         ];
+    }
+
+    ngOnInit() {
+        this.globalService.dynamicInput();
     }
 
     register() {

@@ -1,8 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
@@ -13,13 +14,14 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
     styleUrls: ['./forgotPassword.css']
 })
 
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit {
 
     username: string = "";
     isLoading: boolean = false;
     validations: Array<InputValidation>;
 
     constructor(private router: Router,
+        private globalService: GlobalService,
         private microtextService: MicrotextService,
         private eventService: EventService,
         private alertService: AlertService,
@@ -36,6 +38,10 @@ export class ForgotPasswordComponent {
                 inputId: "forgot-username"
             }
         ]
+    }
+
+    ngOnInit() {
+        this.globalService.dynamicInput();
     }
 
     forgot() {
