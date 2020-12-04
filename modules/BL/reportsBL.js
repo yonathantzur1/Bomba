@@ -26,7 +26,14 @@ module.exports = {
             "projectId": DAL.getObjectId(projectId)
         }
 
-        const updateObj = { $set: { name } }
+        let updateObj;
+
+        if (name) {
+            updateObj = { $set: { name } }
+        }
+        else {
+            updateObj = { $unset: { name: "" } }
+        }
 
         return DAL.updateOne(reportsCollectionName, reportFilter, updateObj);
     },
