@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
                 isFieldValid(newPassword: Password) {
                     return !!newPassword.text;
                 },
-                errMsg: "Please enter new password",
+                errMsg: "Please enter new password.",
                 fieldId: "password-text-micro",
                 inputId: "password-text"
             },
@@ -49,7 +49,7 @@ export class ResetPasswordComponent implements OnInit {
                 isFieldValid(newPassword: Password) {
                     return newPassword.text.length >= 6;
                 },
-                errMsg: "Your password must be at least 6 characters long",
+                errMsg: "Your password must be at least 6 characters long.",
                 fieldId: "password-text-micro",
                 inputId: "password-text"
             },
@@ -57,7 +57,7 @@ export class ResetPasswordComponent implements OnInit {
                 isFieldValid(newPassword: Password) {
                     return !!newPassword.confirm;
                 },
-                errMsg: "Please confirm your password",
+                errMsg: "Please confirm your password.",
                 fieldId: "password-confirm-micro",
                 inputId: "password-confirm"
             },
@@ -65,7 +65,7 @@ export class ResetPasswordComponent implements OnInit {
                 isFieldValid(newPassword: Password) {
                     return newPassword.text == newPassword.confirm;
                 },
-                errMsg: "Your passwords do not match",
+                errMsg: "Your passwords do not match.",
                 fieldId: "password-confirm-micro",
                 inputId: "password-confirm"
             }

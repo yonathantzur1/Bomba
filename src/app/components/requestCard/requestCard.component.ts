@@ -91,7 +91,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
                     request.name = request.name.trim();
                     return !!request.name;
                 },
-                errMsg: "Please enter name for request",
+                errMsg: "Please enter name for request.",
                 fieldId: "name-micro",
                 inputId: "name"
             },
@@ -100,7 +100,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
                     request.url = request.url.trim();
                     return !!request.url;
                 },
-                errMsg: "Please enter request url",
+                errMsg: "Please enter request url.",
                 fieldId: "url-micro",
                 inputId: "url"
             },
@@ -108,7 +108,7 @@ export class RequestCardComponent implements OnInit, OnDestroy {
                 isFieldValid(request: Request) {
                     return !request.url.includes(" ");
                 },
-                errMsg: "The request url is not valid",
+                errMsg: "The request url is not valid.",
                 fieldId: "url-micro",
                 inputId: "url"
             }

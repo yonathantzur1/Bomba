@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
                     user.username = user.username.trim();
                     return !!user.username;
                 },
-                errMsg: "Please enter username",
+                errMsg: "Please enter username.",
                 fieldId: "register-username-micro",
                 inputId: "register-username"
             },
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
                     const usernameRegexp = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/;
                     return (usernameRegexp.test(user.username));
                 },
-                errMsg: "Username may only contain alphanumeric characters",
+                errMsg: "Username may only contain alphanumeric characters.",
                 fieldId: "register-username-micro",
                 inputId: "register-username"
             },
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
                     user.email = user.email.trim();
                     return !!user.email;
                 },
-                errMsg: "Please enter email address",
+                errMsg: "Please enter email address.",
                 fieldId: "register-email-micro",
                 inputId: "register-email"
             },
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
                     const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
                     return (emailRegexp.test(user.email));
                 },
-                errMsg: "Email address is invalid",
+                errMsg: "Email address is invalid.",
                 fieldId: "register-email-micro",
                 inputId: "register-email"
             },
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
                 isFieldValid(user: NewUser) {
                     return !!user.password;
                 },
-                errMsg: "Please enter password",
+                errMsg: "Please enter password.",
                 fieldId: "register-password-micro",
                 inputId: "register-password"
             },
@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
                 isFieldValid(user: NewUser) {
                     return user.password.length >= 6;
                 },
-                errMsg: "Your password must be at least 6 characters long",
+                errMsg: "Your password must be at least 6 characters long.",
                 fieldId: "register-password-micro",
                 inputId: "register-password"
             }

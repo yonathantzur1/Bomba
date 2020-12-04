@@ -32,7 +32,7 @@ export class ProjectNameCardComponent implements OnInit {
                     name = name.trim();
                     return !!name;
                 },
-                errMsg: "Please enter project name",
+                errMsg: "Please enter project name.",
                 fieldId: "name-micro",
                 inputId: "name"
             }

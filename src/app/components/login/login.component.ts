@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
                 isFieldValid(user: User) {
                     return !!user.username;
                 },
-                errMsg: "Please enter username or email address",
+                errMsg: "Please enter username or email address.",
                 fieldId: "login-username-micro",
                 inputId: "login-username"
             },
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                 isFieldValid(user: User) {
                     return !!user.password;
                 },
-                errMsg: "Please enter password",
+                errMsg: "Please enter password.",
                 fieldId: "login-password-micro",
                 inputId: "login-password"
             }

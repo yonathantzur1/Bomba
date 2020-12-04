@@ -80,7 +80,7 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
 
                     return isValid;
                 },
-                errMsg: "Please enter environment name",
+                errMsg: "Please enter environment name.",
                 fieldId: "new-env-name-micro",
                 inputId: "new-env-name"
             }

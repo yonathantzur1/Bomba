@@ -33,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
                     username = username.trim();
                     return !!username;
                 },
-                errMsg: "Please enter username or email address",
+                errMsg: "Please enter username or email address.",
                 fieldId: "forgot-username-micro",
                 inputId: "forgot-username"
             }

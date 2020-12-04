@@ -43,7 +43,7 @@ export class UserEditComponent {
                     user.username = user.username.trim();
                     return !!user.username;
                 },
-                errMsg: "Please enter username",
+                errMsg: "Please enter username.",
                 fieldId: "edit-username-micro",
                 inputId: "edit-username"
             },
@@ -52,7 +52,7 @@ export class UserEditComponent {
                     const usernameRegexp = /^[A-Za-z0-9]+(-[A-Za-z0-9]+)*$/;
                     return (usernameRegexp.test(user.username));
                 },
-                errMsg: "Username may only contain alphanumeric characters",
+                errMsg: "Username may only contain alphanumeric characters.",
                 fieldId: "register-username-micro",
                 inputId: "register-username"
             },
@@ -61,7 +61,7 @@ export class UserEditComponent {
                     user.email = user.email.trim();
                     return !!user.email;
                 },
-                errMsg: "Please enter email address",
+                errMsg: "Please enter email address.",
                 fieldId: "register-email-micro",
                 inputId: "register-email"
             },
@@ -70,7 +70,7 @@ export class UserEditComponent {
                     const emailRegexp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
                     return (emailRegexp.test(user.email));
                 },
-                errMsg: "Email address is invalid",
+                errMsg: "Email address is invalid.",
                 fieldId: "register-email-micro",
                 inputId: "register-email"
             },
@@ -83,7 +83,7 @@ export class UserEditComponent {
                         return (user.password.length >= 6);
                     }
                 },
-                errMsg: "Password must be at least 6 characters long",
+                errMsg: "Password must be at least 6 characters long.",
                 fieldId: "edit-password-micro",
                 inputId: "edit-password"
             }

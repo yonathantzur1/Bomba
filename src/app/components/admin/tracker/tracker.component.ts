@@ -61,7 +61,7 @@ export class TrackerComponent {
                 isFieldValid(username: string) {
                     return !!username;
                 },
-                errMsg: "Please enter username",
+                errMsg: "Please enter username.",
                 fieldId: "username-micro",
                 inputId: "user-search"
             }
