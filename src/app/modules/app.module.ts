@@ -29,6 +29,7 @@ import { TrackerComponent } from '../components/admin/tracker/tracker.component'
 import { InfoComponent } from '../components/admin/statistics/info/info.component';
 import { InfoCardComponent } from '../components/admin/statistics/info/infoCard/infoCard.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { VerificationComponent } from '../components/verification/verification.component';
 import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
 import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
 import { BoardComponent } from '../components/board/board.component';
@@ -104,6 +105,7 @@ import { Routing } from '../routes/app.routing';
     InfoComponent,
     InfoCardComponent,
     RegisterComponent,
+    VerificationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     BoardComponent,

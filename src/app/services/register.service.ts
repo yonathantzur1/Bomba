@@ -18,7 +18,7 @@ export class RegisterService extends BasicService {
     verifyUser(verificationCode: string) {
         const data = { verificationCode };
 
-        return super.put('/register', data);
+        return super.put('/verifyUser', data);
     }
 
 }

@@ -131,11 +131,6 @@ module.exports = {
 
 };
 
-function formatDate(date) {
-    date = new Date(date);
-    return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
-}
-
 function getTimeBlessing(name) {
     const hour = new Date().getHours();
     let blessingStr;

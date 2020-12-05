@@ -6,6 +6,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { ResetPasswordComponent } from '../components/resetPassword/resetPassword.component';
 import { ForgotPasswordComponent } from '../components/forgotPassword/forgotPassword.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { VerificationComponent } from '../components/verification/verification.component';
 import { HomeComponent } from '../components/home/home.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ReportsComponent } from '../components/reports/reports.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
   { path: 'forgot', component: ForgotPasswordComponent, canActivate: [LoginGuard] },
+  { path: 'verify/:verificationCode', component: VerificationComponent },
   { path: 'reset-password/:resetCode', component: ResetPasswordComponent },
   {
     path: '',

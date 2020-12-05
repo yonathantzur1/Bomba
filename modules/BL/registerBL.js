@@ -45,7 +45,10 @@ module.exports = {
             "creationDate": new Date(),
             "isAdmin": false,
             "apiKey": generator.generateId(),
-            "verificationCode": generator.generateId()
+            "verification": {
+                "code": generator.generateId(),
+                "isActive": false
+            }
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)
@@ -56,7 +59,7 @@ module.exports = {
         result.isValid = true;
         result.data = newUserObj;
 
-        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verificationCode);
+        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verification.code);
 
         return result;
     },
@@ -67,8 +70,8 @@ module.exports = {
     },
 
     async verifyUser(verificationCode) {
-        const userFilter = { verificationCode };
-        const userUpdate = { $unset: { verificationCode: "" } };
+        const userFilter = { "verification.code": verificationCode };
+        const userUpdate = { $set: { "verification.isActive": true } };
 
         const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate)
             .catch(errorHandler.promiseError);
