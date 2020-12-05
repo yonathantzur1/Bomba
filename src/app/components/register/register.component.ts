@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
@@ -131,12 +131,5 @@ export class RegisterComponent implements OnInit {
 
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
-    }
-
-    @HostListener('document:keyup', ['$event'])
-    KeyPress(event: any) {
-        if (event.key == "Enter") {
-            this.register();
-        }
     }
 }

@@ -6,7 +6,6 @@ const logsBL = require('../BL/logsBL');
 
 const registerBL = require('../BL/registerBL');
 
-// Add new user to the DB and make sure the username is not already exists.
 router.post('/register', validator,
     (req, res, next) => {
         req.body.email = req.body.email.toLowerCase();
@@ -32,5 +31,13 @@ router.post('/register', validator,
             errorHandler.routeError(err, res);
         });
     });
+
+router.put('/verifyUser', validator, (req, res) => {
+    registerBL.verifyUser(req.body.verificationCode).then(result => {
+        res.send(result);
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
 
 module.exports = router;

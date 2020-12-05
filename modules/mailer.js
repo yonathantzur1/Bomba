@@ -2,8 +2,7 @@ const nodemailer = require('nodemailer');
 const config = require('../config');
 const logger = require('../logger');
 
-// Create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport(
+const transporter = nodemailer.createTransport(
     {
         service: 'SendGrid',
         auth: {
@@ -18,19 +17,19 @@ module.exports = {
         const templateHeader = "<div dir='ltr'><img {{logoImg}} src='cid:logo'></div>";
         const headerCss = {
             logoImg: `
-            width: 200px;
-            margin: 30px 0px;
+                width: 200px;
+                margin: 30px 0px;
             `
         }
 
-        // Setup email data with unicode symbols
+        // Setup email data with unicode symbols.
         const mailOptions = {
             from: "'Bomba' <" + config.mailer.mail + ">", // Sender address
             to: destEmail, // List of receivers
             subject: title, // Subject line
             html: `
-            ${setCss(templateHeader, headerCss)}
-            <div dir='ltr' style="font-size: 16px;">${setCss(text, css)}</div>
+                ${setCss(templateHeader, headerCss)}
+                <div dir='ltr' style="font-size: 16px;">${setCss(text, css)}</div>
             `,
             attachments: [
                 {
@@ -41,17 +40,52 @@ module.exports = {
             ]
         };
 
-        // Send email with defined transport object
         transporter.sendMail(mailOptions, error => {
             error && logger.error(error);
         });
     },
 
-    registerMail(email, name) {
+    verifyUser(email, name, verificationCode) {
+        const css = {
+            verifyBtn: `    
+                box-sizing: border-box;
+                border-color: #348eda;
+                font-weight: bold;
+                text-decoration: none;
+                display: inline-block;
+                margin: 0;
+                margin-top: 15px;
+                color: #ffffff;
+                background-color: #348eda;
+                border: solid 1px #348eda;
+                border-radius: 2px;
+                font-size: 14px;
+                padding: 12px 45px;
+            `,
+            infoText: `
+                margin-top: 10px;
+            `
+        }
+
         this.sendMail(email,
-            "Bomba",
+            "Bomba - Verify Email Address",
             getTimeBlessing(name) +
-            "Welcome to Bomba!");
+            `
+                <div {{infoText}}>
+                    Thanks for registering and welcome to Bomba.<br>
+                    We just need to confirm that this email address belongs to you.<br>
+                    Click below to verify your email address.
+                </div>
+                <a {{verifyBtn}} href='${verificationCode}'>Verify Email Address</a>
+                <p>
+                    If you did not initiate this request, please ignore this message.
+                </p>
+                <div>
+                    Thank you,<br>
+                    Bomba Team<br>
+                    ${config.address.site}
+                </div>
+            `, css);
     },
 
     restorePassword(email, name, restoreUrl) {
@@ -103,7 +137,7 @@ function formatDate(date) {
 }
 
 function getTimeBlessing(name) {
-    let hour = new Date().getHours();
+    const hour = new Date().getHours();
     let blessingStr;
 
     if (hour >= 5 && hour < 12) {
@@ -119,7 +153,7 @@ function getTimeBlessing(name) {
         blessingStr = "Good night";
     }
 
-    return blessingStr + " " + name + ",<br>";
+    return `${blessingStr} ${name}.<br>`;
 }
 
 function setCss(html, css) {

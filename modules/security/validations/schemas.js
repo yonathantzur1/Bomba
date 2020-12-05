@@ -71,6 +71,11 @@ schemas[REST.PUT] = {
                 }
             }
         },
+        "register": {
+            "verifyUser": {
+                verificationCode: joi.string().length(24).required()
+            }
+        },
         "forgotPassword": {
             "setPassword": {
                 resetCode: joi.string().length(24).required(),

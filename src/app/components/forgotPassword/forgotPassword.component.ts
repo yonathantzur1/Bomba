@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from 'src/app/services/forgotPassword.service';
 import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
@@ -75,12 +75,4 @@ export class ForgotPasswordComponent implements OnInit {
     hideMicrotext(microtextId: string) {
         this.microtextService.hideMicrotext(microtextId);
     }
-
-    @HostListener('document:keyup', ['$event'])
-    KeyPress(event: any) {
-        if (event.key == "Enter") {
-            this.forgot();
-        }
-    }
-
 }

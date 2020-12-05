@@ -9,7 +9,6 @@ const errorHandler = require('../handlers/errorHandler');
 const usersCollectionName = config.db.collections.users;
 
 module.exports = {
-    // Add user to the DB.
     async addUser(newUser) {
         let result = { isValid: null, data: null };
 
@@ -45,7 +44,8 @@ module.exports = {
             "salt": salt,
             "creationDate": new Date(),
             "isAdmin": false,
-            "apiKey": generator.generateId()
+            "apiKey": generator.generateId(),
+            "verificationCode": generator.generateId()
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)
@@ -56,20 +56,35 @@ module.exports = {
         result.isValid = true;
         result.data = newUserObj;
 
-        mailer.registerMail(newUser.email, newUser.username);
+        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verificationCode);
 
         return result;
     },
 
+    sendVerificationMail(email, username, verificationCode) {
+        const verifyUrl = `${config.address.site}/verify/${verificationCode}`;
+        mailer.verifyUser(email, username, verifyUrl);
+    },
+
+    async verifyUser(verificationCode) {
+        const userFilter = { verificationCode };
+        const userUpdate = { $unset: { verificationCode: "" } };
+
+        const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate)
+            .catch(errorHandler.promiseError);
+
+        return !!updateResult;
+    },
+
     async isUsernameExists(username) {
-        let userCount = await DAL.count(usersCollectionName, { username })
+        const userCount = await DAL.count(usersCollectionName, { username })
             .catch(errorHandler.promiseError);
 
         return !!userCount;
     },
 
     async isEmailExists(email) {
-        let userCount = await DAL.count(usersCollectionName, { email })
+        const userCount = await DAL.count(usersCollectionName, { email })
             .catch(errorHandler.promiseError);
 
         return !!userCount;

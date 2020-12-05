@@ -14,6 +14,7 @@ export class MicrotextService {
 
     validation(validations: Array<InputValidation>, obj: any, regexp?: any): boolean {
         let regexpPatterns = {};
+
         // Convert strings to regex patterns in case regex was sent.
         if (regexp) {
             Object.keys(regexp).forEach((key: string) => {
@@ -45,6 +46,7 @@ export class MicrotextService {
                 else {
                     // Clear the microtext of the field.
                     this.hideMicrotext(validation.fieldId);
+                    $("#" + validation.inputId).blur();
                 }
             }
         });
