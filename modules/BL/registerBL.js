@@ -45,10 +45,7 @@ module.exports = {
             "creationDate": new Date(),
             "isAdmin": false,
             "apiKey": generator.generateId(),
-            "verification": {
-                "code": generator.generateId(),
-                "isActive": false
-            }
+            "verification": generator.generateId()
         };
 
         let insertResult = await DAL.insert(usersCollectionName, newUserObj)
@@ -70,13 +67,13 @@ module.exports = {
     },
 
     async verifyUser(verificationCode) {
-        const userFilter = { "verification.code": verificationCode };
-        const userUpdate = { $set: { "verification.isActive": true } };
+        const userFilter = { "verification": verificationCode };
+        const userUpdate = { $unset: { "verification": "" } };
 
         const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate)
             .catch(errorHandler.promiseError);
 
-        return !!updateResult;
+        return updateResult ? updateResult.username : false
     },
 
     async isUsernameExists(username) {

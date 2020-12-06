@@ -35,7 +35,7 @@ router.post('/register', validator,
 router.put('/verifyUser', validator, (req, res) => {
     registerBL.verifyUser(req.body.verificationCode).then(result => {
         tokenHandler.deleteAuthCookies(res);
-        res.send(result);
+        res.send({ result });
     }).catch(err => {
         errorHandler.routeError(err, res);
     });

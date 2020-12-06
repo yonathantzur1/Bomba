@@ -17,7 +17,7 @@ let db;
         return db;
     }
     else {
-        let client = await MongoClient.connect(connectionString,
+        const client = await MongoClient.connect(connectionString,
             { useNewUrlParser: true, useUnifiedTopology: true })
             .catch(errorHandler.promiseError);
 
@@ -26,7 +26,7 @@ let db;
 })().catch(err => { logger.warn(err) });
 
 async function getCollection(collectionName) {
-    let db = await getDB().catch(errorHandler.promiseError);
+    const db = await getDB().catch(errorHandler.promiseError);
 
     return db.collection(collectionName);
 }
@@ -46,35 +46,35 @@ module.exports = {
 
     // Get one document from collection by filter.
     async findOne(collectionName, filter) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.findOne(filter);
     },
 
     // Get document specific fields from collection by filter.
     async findOneSpecific(collectionName, filter, projection) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.findOne(filter, { projection });
     },
 
     // Get documents from collection by filter.
     async find(collectionName, filter, sortObj) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.find(filter).sort(sortObj || {}).toArray();
     },
 
     // Get documents specific fields from collection by filter.
     async findSpecific(collectionName, filter, projection, sortObj) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.find(filter, { projection }).sort(sortObj || {}).toArray();
     },
 
     // Aggregate documents.
     async aggregate(collectionName, aggregateArray) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.aggregate(aggregateArray).toArray();
     },
@@ -82,8 +82,8 @@ module.exports = {
     // Insert new document.
     async insert(collectionName, doc) {
         try {
-            let collection = await getCollection(collectionName);
-            let result = await collection.insertOne(doc);
+            const collection = await getCollection(collectionName);
+            const result = await collection.insertOne(doc);
 
             return result.insertedId;
         }
@@ -93,12 +93,12 @@ module.exports = {
     },
 
     // Update one document.
-    async updateOne(collectionName, findObj, updateObj, isInsertIfNotExists) {
+    async updateOne(collectionName, findObj, updateObj, isReturnOriginal) {
         try {
-            let collection = await getCollection(collectionName);
-            let updateResult = await collection.findOneAndUpdate(findObj, updateObj, {
-                returnOriginal: false,
-                upsert: isInsertIfNotExists
+            const collection = await getCollection(collectionName);
+            const updateResult = await collection.findOneAndUpdate(findObj, updateObj, {
+                returnOriginal: isReturnOriginal,
+                upsert: false
             });
 
             return updateResult.value || false;
@@ -109,13 +109,13 @@ module.exports = {
     },
 
     // Update documents.
-    async update(collectionName, findObj, updateObj, isInsertIfNotExists) {
+    async update(collectionName, findObj, updateObj) {
         try {
-            let collection = await getCollection(collectionName);
-            let updateResult = await collection.updateMany(findObj, updateObj, {
-                upsert: isInsertIfNotExists
+            const collection = await getCollection(collectionName);
+            const updateResult = await collection.updateMany(findObj, updateObj, {
+                upsert: false
             });
-            let modifiedAmount = updateResult.result.nModified;
+            const modifiedAmount = updateResult.result.nModified;
 
             return (modifiedAmount > 0 ? modifiedAmount : false);
         }
@@ -127,9 +127,9 @@ module.exports = {
     // Delete documents by filter.
     async delete(collectionName, filter) {
         try {
-            let collection = await getCollection(collectionName);
-            let deleteResult = await collection.deleteMany(filter);
-            let deletedAmount = deleteResult.deletedCount;
+            const collection = await getCollection(collectionName);
+            const deleteResult = await collection.deleteMany(filter);
+            const deletedAmount = deleteResult.deletedCount;
 
             return (deletedAmount > 0 ? deletedAmount : false);
         }
@@ -141,8 +141,8 @@ module.exports = {
     // Delete one document by filter.
     async deleteOne(collectionName, filter) {
         try {
-            let collection = await getCollection(collectionName);
-            let deleteResult = await collection.deleteOne(filter);
+            const collection = await getCollection(collectionName);
+            const deleteResult = await collection.deleteOne(filter);
 
             return (deleteResult.result.n != 0);
         }
@@ -153,7 +153,7 @@ module.exports = {
 
     // Getting documents amount by filter.
     async count(collectionName, filter) {
-        let collection = await getCollection(collectionName).catch(errorHandler.promiseError);
+        const collection = await getCollection(collectionName).catch(errorHandler.promiseError);
 
         return collection.find(filter).count();
     }

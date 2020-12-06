@@ -12,6 +12,7 @@ import { RegisterService } from 'src/app/services/register.service';
 export class VerificationComponent implements OnInit {
 
     verificationCode: string;
+    username: string;
     isLoading: boolean = false;
     isValid: boolean;
 
@@ -24,9 +25,13 @@ export class VerificationComponent implements OnInit {
             this.verificationCode = params["verificationCode"];
 
             this.isLoading = true;
-            this.registerService.verifyUser(this.verificationCode).then(result => {
+            this.registerService.verifyUser(this.verificationCode).then(data => {
                 this.isLoading = false;
-                this.isValid = !!result;
+                const result = data.result;
+
+                if (this.isValid = !!result) {
+                    this.username = result;
+                }
             });
         });
     }
