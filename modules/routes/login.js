@@ -5,7 +5,6 @@ const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
 const validator = require('../security/validations/validator');
 const limitter = require('../security/limitter');
-const mailer = require('../mailer');
 
 // Validate the user details and login the user.
 router.post('/userLogin', validator,
