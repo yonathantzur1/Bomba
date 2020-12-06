@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [LoginGuard] },
   { path: 'forgot', component: ForgotPasswordComponent, canActivate: [LoginGuard] },
   { path: 'verify/:verificationCode', component: VerificationComponent },
+  { path: 'verification/:userUid', component: VerificationComponent },
   { path: 'reset-password/:resetCode', component: ResetPasswordComponent },
   {
     path: '',

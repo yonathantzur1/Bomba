@@ -29,9 +29,10 @@
     margin-top: 25px;
 }
 
-.login-btn {
+.action-btn {
     color: #007bff !important;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .header {

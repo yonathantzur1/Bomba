@@ -6,6 +6,7 @@ import { MicrotextService, InputValidation } from '../../services/global/microte
 
 import { LoginService } from '../../services/login.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 declare const $: any;
 
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     eventsIds: Array<string> = [];
 
     constructor(private router: Router,
+        private alertService: AlertService,
         public snackbarService: SnackbarService,
         private microtextService: MicrotextService,
         private loginService: LoginService,
@@ -84,6 +86,10 @@ export class LoginComponent implements OnInit {
                 // In case the login details is incorrect.
                 else if (result == false) {
                     this.snackbarService.snackbar("Incorrect username or password");
+                }
+                // In case the user was not verified.
+                else if (typeof result == "string") {
+                    this.router.navigateByUrl("/verification/" + result);
                 }
                 else {
                     // In case the user is locked via brute attack.

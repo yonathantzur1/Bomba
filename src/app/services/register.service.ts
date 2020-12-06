@@ -21,4 +21,13 @@ export class RegisterService extends BasicService {
         return super.put('/verifyUser', data);
     }
 
+    getVerificationUserData(userUid: string) {
+        return super.get('/getVerificationUserData?userUid=' + userUid);
+    }
+
+    resendVerification(userUid: string) {
+        const data = { userUid };
+
+        return super.put('/resendVerification', data);
+    }
 }

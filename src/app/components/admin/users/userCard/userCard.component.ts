@@ -42,6 +42,10 @@ export class UserCardComponent implements OnDestroy {
     }
 
     getInfoDateString(date: Date) {
+        if (!date) {
+            return "-"
+        }
+        
         let dateObj = new Date(date);
 
         let dateString = (dateObj.getDate()) + "/" +

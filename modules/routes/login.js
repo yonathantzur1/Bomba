@@ -5,6 +5,7 @@ const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
 const validator = require('../security/validations/validator');
 const limitter = require('../security/limitter');
+const mailer = require('../mailer');
 
 // Validate the user details and login the user.
 router.post('/userLogin', validator,
@@ -19,8 +20,13 @@ router.post('/userLogin', validator,
     (req, res) => {
         loginBL.getUser(req.body).then(user => {
             if (user) {
-                tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
-                res.send({ result: true });
+                if (user.verification) {
+                    res.send({ result: user.uid });
+                }
+                else {
+                    tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
+                    res.send({ result: true });
+                }
             }
             // In case the password is wrong or the user does not exist.
             else {

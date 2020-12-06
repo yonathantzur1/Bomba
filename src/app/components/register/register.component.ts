@@ -123,7 +123,7 @@ export class RegisterComponent implements OnInit {
                 else {
                     this.microtextService.restartAll(this.validations);
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.router.navigateByUrl("/");
+                    this.router.navigateByUrl("/verification/" + result);
                 }
             });
         }

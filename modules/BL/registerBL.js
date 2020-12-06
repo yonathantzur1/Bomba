@@ -3,7 +3,6 @@ const config = require('../../config');
 const mailer = require('../mailer');
 const generator = require('../generator');
 const sha512 = require('js-sha512');
-
 const errorHandler = require('../handlers/errorHandler');
 
 const usersCollectionName = config.db.collections.users;
@@ -56,7 +55,7 @@ module.exports = {
         result.isValid = true;
         result.data = newUserObj;
 
-        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verification.code);
+        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verification);
 
         return result;
     },
@@ -74,6 +73,39 @@ module.exports = {
             .catch(errorHandler.promiseError);
 
         return updateResult ? updateResult.username : false
+    },
+
+    async getVerificationUserData(userUid) {
+        const userFilter = {
+            "uid": userUid,
+            "verification": { $ne: null }
+        }
+
+        const userFields = { "username": 1 };
+
+        const user = await DAL.findOneSpecific(usersCollectionName, userFilter, userFields)
+            .catch(errorHandler.promiseError);
+
+        return user ? user.username : null;
+    },
+
+    async resendVerification(userUid) {
+        const userFilter = {
+            "uid": userUid,
+            "verification": { $ne: null }
+        }
+
+        const verification = generator.generateId();
+        const userUpdate = { $set: { verification } };
+
+        const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate, true)
+            .catch(errorHandler.promiseError);
+
+        if (updateResult) {
+            this.sendVerificationMail(updateResult.email, updateResult.username, verification);
+        }
+
+        return !!updateResult;
     },
 
     async isUsernameExists(username) {

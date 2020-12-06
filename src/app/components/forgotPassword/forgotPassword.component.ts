@@ -58,7 +58,7 @@ export class ForgotPasswordComponent implements OnInit {
                 this.alertService.alert({
                     title: "Reset Password",
                     text: "If we found an account associated with that username, " +
-                        "we've sent password reset instructions to the " +
+                        "we have sent password reset instructions to the " +
                         "email address on the account.",
                     type: ALERT_TYPE.INFO,
                     showCancelButton: false,

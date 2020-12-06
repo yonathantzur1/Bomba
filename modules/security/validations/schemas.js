@@ -7,6 +7,11 @@ let schemas = {};
 
 schemas[REST.GET] = {
     "api": {
+        "register": {
+            "getVerificationUserData": {
+                userUid: joi.string().length(24).required()
+            }
+        },
         "forgotPassword": {
             "isResetCodeValid": {
                 resetCode: joi.string().length(24).required()
@@ -74,6 +79,9 @@ schemas[REST.PUT] = {
         "register": {
             "verifyUser": {
                 verificationCode: joi.string().length(24).required()
+            },
+            "resendVerification": {
+                userUid: joi.string().length(24).required()
             }
         },
         "forgotPassword": {

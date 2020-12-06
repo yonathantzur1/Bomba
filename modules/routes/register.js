@@ -22,9 +22,7 @@ router.post('/register', validator,
             }
             else {
                 const user = result.data;
-                let token = tokenHandler.getTokenFromUserObject(user);
-                tokenHandler.setTokenOnCookie(token, res);
-                res.send({ result: true });
+                res.send({ result: user.uid });
                 logsBL.register(user.username, req);
             }
         }).catch(err => {
@@ -36,6 +34,23 @@ router.put('/verifyUser', validator, (req, res) => {
     registerBL.verifyUser(req.body.verificationCode).then(result => {
         tokenHandler.deleteAuthCookies(res);
         res.send({ result });
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
+router.get('/getVerificationUserData', validator, (req, res) => {
+    registerBL.getVerificationUserData(req.query.userUid).then(result => {
+        tokenHandler.deleteAuthCookies(res);
+        res.send({ result });
+    }).catch(err => {
+        errorHandler.routeError(err, res);
+    });
+});
+
+router.put('/resendVerification', validator, (req, res) => {
+    registerBL.resendVerification(req.body.userUid).then(result => {
+        res.send(result);
     }).catch(err => {
         errorHandler.routeError(err, res);
     });
