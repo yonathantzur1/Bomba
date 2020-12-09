@@ -7,7 +7,7 @@
             <div *ngIf="verificationCode">
                 <div *ngIf="isValid" class="info-text">
                     <p>
-                        <strong>Welcome {{username}},</strong><br>
+                        <strong>Welcome {{username}}</strong><br>
                         <strong>Your account has been activated.</strong>
                     </p>
                     <p>Please login <a class="action-btn" href="/login">here</a> and enjoy!</p>
@@ -22,8 +22,9 @@
             </div>
             <div *ngIf="userUid">
                 <div class="info-text">
+                    <h4 class="verify-title">Hello {{username}}</h4>
+                    <i class="far fa-smile-beam verify-title-icon"></i>
                     <p>
-                        <strong>Hello {{username}}.</strong><br>
                         <strong>A link to verify your email address was sent to your email.</strong><br>
                     </p>
                     <p>

@@ -72,7 +72,7 @@ module.exports = {
             getTimeBlessing(name) +
             `
                 <div {{infoText}}>
-                    Thanks for registering and welcome to Bomba.<br>
+                    Thanks for signing up and welcome to Bomba.<br>
                     We just need to confirm that this email address belongs to you.<br>
                     Click below to verify your email address.
                 </div>

@@ -1,6 +1,6 @@
 .card-container {
     top: 100px;
-    height: 315px;
+    height: 320px;
     width: 450px;
     margin: auto;
     border-radius: 3px;
@@ -51,4 +51,14 @@
     color: #294661;
     text-align: center;
     margin-bottom: 20px;
+}
+
+.verify-title {
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.verify-title-icon {
+    margin-left: 8px;
+    font-size: 24px;
 }
