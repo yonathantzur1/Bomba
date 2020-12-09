@@ -17,6 +17,7 @@ export class VerificationComponent implements OnInit {
     userUid: string;
     username: string;
     isLoading: boolean = false;
+    isResendClicked: boolean = false;
     isValid: boolean;
 
     constructor(private router: Router,
@@ -62,11 +63,11 @@ export class VerificationComponent implements OnInit {
             this.isLoading = false;
 
             if (result) {
-                this.snackbarService.snackbar("Verification email has been sent");
-                this.router.navigateByUrl("/");
+                this.isResendClicked = true;
             }
             else {
                 this.snackbarService.error();
+                this.router.navigateByUrl("/");
             }
         });
     }

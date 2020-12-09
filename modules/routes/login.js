@@ -19,7 +19,7 @@ router.post('/userLogin', validator,
     (req, res) => {
         loginBL.getUser(req.body).then(user => {
             if (user) {
-                if (user.verification) {
+                if (!user.verification.isVerified) {
                     res.send({ result: user.uid });
                 }
                 else {

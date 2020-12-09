@@ -27,9 +27,12 @@
                     <p>
                         <strong>A link to verify your email address was sent to your email.</strong><br>
                     </p>
-                    <p>
+                    <p *ngIf="!isResendClicked">
                         Click <span (click)="resendVerification()" class="action-btn">here</span>
                         to send verification email again.
+                    </p>
+                    <p *ngIf="isResendClicked">
+                        Please check your email and verify account.
                     </p>
                 </div>
             </div>

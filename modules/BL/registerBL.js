@@ -34,7 +34,6 @@ module.exports = {
         const salt = generator.generateCode(config.security.password.saltSize);
         newUser.password = sha512(newUser.password + salt);
 
-        // Creat the new user object.
         let newUserObj = {
             "uid": generator.generateId(),
             "username": newUser.username,
@@ -44,10 +43,14 @@ module.exports = {
             "creationDate": new Date(),
             "isAdmin": false,
             "apiKey": generator.generateId(),
-            "verification": generator.generateId()
+            "verification": {
+                "code": generator.generateId(),
+                "isVerified": false,
+                "date": new Date()
+            }
         };
 
-        let insertResult = await DAL.insert(usersCollectionName, newUserObj)
+        const insertResult = await DAL.insert(usersCollectionName, newUserObj)
             .catch(errorHandler.promiseError);
 
         newUserObj._id = insertResult;
@@ -55,7 +58,7 @@ module.exports = {
         result.isValid = true;
         result.data = newUserObj;
 
-        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verification);
+        this.sendVerificationMail(newUser.email, newUser.username, newUserObj.verification.code);
 
         return result;
     },
@@ -66,19 +69,28 @@ module.exports = {
     },
 
     async verifyUser(verificationCode) {
-        const userFilter = { "verification": verificationCode };
-        const userUpdate = { $unset: { "verification": "" } };
+        const userFilter = {
+            "verification.code": verificationCode,
+            "verification.isVerified": false
+        }
+
+        const userUpdate = {
+            $set: {
+                "verification.isVerified": true,
+                "verification.date": new Date()
+            }
+        }
 
         const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate)
             .catch(errorHandler.promiseError);
 
-        return updateResult ? updateResult.username : false
+        return updateResult ? updateResult.username : false;
     },
 
     async getVerificationUserData(userUid) {
         const userFilter = {
             "uid": userUid,
-            "verification": { $ne: null }
+            "verification.isVerified": false
         }
 
         const userFields = { "username": 1 };
@@ -92,17 +104,22 @@ module.exports = {
     async resendVerification(userUid) {
         const userFilter = {
             "uid": userUid,
-            "verification": { $ne: null }
+            "verification.isVerified": false
         }
 
-        const verification = generator.generateId();
-        const userUpdate = { $set: { verification } };
+        const verificationCode = generator.generateId();
+        const userUpdate = {
+            $set: {
+                "verification.code": verificationCode,
+                "verification.date": new Date()
+            }
+        };
 
         const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate, true)
             .catch(errorHandler.promiseError);
 
         if (updateResult) {
-            this.sendVerificationMail(updateResult.email, updateResult.username, verification);
+            this.sendVerificationMail(updateResult.email, updateResult.username, verificationCode);
         }
 
         return !!updateResult;
