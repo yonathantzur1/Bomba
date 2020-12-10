@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const loginBL = require('../BL/loginBL');
+const registerBL = require('../BL/registerBL');
 const logsBL = require('../BL/logsBL');
 const tokenHandler = require('../handlers/tokenHandler');
 const errorHandler = require('../handlers/errorHandler');
@@ -19,12 +20,21 @@ router.post('/userLogin', validator,
     (req, res) => {
         loginBL.getUser(req.body).then(user => {
             if (user) {
-                if (!user.verification.isVerified) {
-                    res.send({ result: user.uid });
-                }
-                else {
+                if (user.verification.isVerified) {
                     tokenHandler.setTokenOnCookie(tokenHandler.getTokenFromUserObject(user), res);
                     res.send({ result: true });
+                }
+                else {
+                    const resultObj = { result: user.uid };
+
+                    if (registerBL.isVerificationDateExpired(user.verification.date)) {
+                        registerBL.resendVerification(user.uid).then(result => {
+                            res.send(resultObj);
+                        });
+                    }
+                    else {
+                        res.send(resultObj);
+                    }
                 }
             }
             // In case the password is wrong or the user does not exist.

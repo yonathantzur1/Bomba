@@ -93,11 +93,10 @@ module.exports = {
     },
 
     // Update one document.
-    async updateOne(collectionName, findObj, updateObj, isReturnOriginal) {
+    async updateOne(collectionName, findObj, updateObj) {
         try {
             const collection = await getCollection(collectionName);
             const updateResult = await collection.findOneAndUpdate(findObj, updateObj, {
-                returnOriginal: isReturnOriginal,
                 upsert: false
             });
 

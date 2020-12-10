@@ -61,7 +61,7 @@ module.exports = {
             waitTime: 1 * 60 * 1000, // 1 minutes
         },
         verification: {
-            timeout: 24 * 60 * 60 * 1000 // 1 day
+            timeout: 12 * 60 * 60 * 1000 // 12 hours
         },
         password: {
             saltSize: 8

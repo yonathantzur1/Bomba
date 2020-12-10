@@ -68,10 +68,38 @@ module.exports = {
         mailer.verifyUser(email, username, verifyUrl);
     },
 
+    isVerificationDateExpired(verificationDate) {
+        const verificationDateTime = verificationDate.getTime();
+        const verificationDateLimit = verificationDateTime + config.security.verification.timeout;
+        const currDateTime = new Date().getTime();
+
+        return (verificationDateLimit < currDateTime);
+    },
+
+    async isVerificationExpired(userFilter) {
+        const userFields = { "verification": 1 };
+
+        const user = await DAL.findOneSpecific(usersCollectionName, userFilter, userFields)
+            .catch(errorHandler.promiseError);
+
+        if (!user) {
+            return false;
+        }
+
+        return this.isVerificationDateExpired(user.verification.date);
+    },
+
     async verifyUser(verificationCode) {
         const userFilter = {
             "verification.code": verificationCode,
             "verification.isVerified": false
+        }
+
+        const isVerificationExpired = await this.isVerificationExpired(userFilter)
+            .catch(errorHandler.promiseError);
+
+        if (isVerificationExpired) {
+            return false;
         }
 
         const userUpdate = {
@@ -93,12 +121,19 @@ module.exports = {
             "verification.isVerified": false
         }
 
+        const isVerificationExpired = await this.isVerificationExpired(userFilter)
+            .catch(errorHandler.promiseError);
+
+        if (isVerificationExpired) {
+            return false;
+        }
+
         const userFields = { "username": 1 };
 
         const user = await DAL.findOneSpecific(usersCollectionName, userFilter, userFields)
             .catch(errorHandler.promiseError);
 
-        return user ? user.username : null;
+        return user ? user.username : false;
     },
 
     async resendVerification(userUid) {
@@ -115,7 +150,7 @@ module.exports = {
             }
         };
 
-        const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate, true)
+        const updateResult = await DAL.updateOne(usersCollectionName, userFilter, userUpdate)
             .catch(errorHandler.promiseError);
 
         if (updateResult) {
