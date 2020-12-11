@@ -32,8 +32,9 @@ export class UserCardComponent implements OnDestroy {
             this.userEdit = null;
         }, this.eventsIds);
 
-        eventService.register(EVENT_TYPE.EDIT_USERNAME, (username: string) => {
-            this.user.username = username;
+        eventService.register(EVENT_TYPE.EDIT_USER, (userEdit: UserEdit) => {
+            this.user.username = userEdit.username;
+            this.user.email = userEdit.email;
         }, this.eventsIds);
     }
 
@@ -45,7 +46,7 @@ export class UserCardComponent implements OnDestroy {
         if (!date) {
             return "-"
         }
-        
+
         let dateObj = new Date(date);
 
         let dateString = (dateObj.getDate()) + "/" +

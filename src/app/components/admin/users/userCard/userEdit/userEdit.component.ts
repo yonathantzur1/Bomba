@@ -110,7 +110,7 @@ export class UserEditComponent {
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);
-                    this.eventService.emit(EVENT_TYPE.EDIT_USERNAME, this.userEdit.username);
+                    this.eventService.emit(EVENT_TYPE.EDIT_USER, this.userEdit);
                     this.snackbarService.snackbar("Edit user was succeeded");
                 }
             });

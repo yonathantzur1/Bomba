@@ -65,10 +65,10 @@ module.exports = {
     },
 
     async saveUserEdit(userEdit) {
-        let updateObj = { $set: {} };
-        let userFilter = { "_id": DAL.getObjectId(userEdit.id) }
+        let updateFields = {};
+        const userFilter = { "_id": DAL.getObjectId(userEdit.id) }
 
-        let originalUser = (await DAL.findOne(usersCollectionName, userFilter)
+        const originalUser = (await DAL.findOne(usersCollectionName, userFilter)
             .catch(errorHandler.promiseError));
 
         if (originalUser.username != userEdit.username) {
@@ -79,7 +79,7 @@ module.exports = {
                 return "-1";
             }
 
-            updateObj["$set"]["username"] = username;
+            updateFields.username = userEdit.username;
         }
 
         if (originalUser.email != userEdit.email) {
@@ -90,19 +90,21 @@ module.exports = {
                 return "-2";
             }
 
-            updateObj["$set"]["email"] = email;
+            updateFields.email = userEdit.email;
         }
 
         if (userEdit.password) {
-            let salt = generator.generateCode(config.security.password.saltSize);
-            let password = sha512(userEdit.password + salt);
-            updateObj["$set"]["password"] = password;
-            updateObj["$set"]["salt"] = salt;
+            const salt = generator.generateCode(config.security.password.saltSize);
+            const password = sha512(userEdit.password + salt);
+            updateFields.password = password;
+            updateFields.salt = salt;
         }
 
-        if (Object.keys(updateObj["$set"]).length > 0) {
+        if (Object.keys(updateFields).length > 0) {
+            const updateObj = { $set: updateFields };
             const updateResult = await DAL.updateOne(usersCollectionName, userFilter, updateObj)
                 .catch(errorHandler.promiseError);
+
             return !!updateResult;
         }
 
