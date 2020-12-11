@@ -100,18 +100,25 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.isLoading = false;
 
                 if (!project) {
-                    this.snackbarService.error();
-                    this.router.navigateByUrl('');
+                    // In case of error.
+                    if (project == null) {
+                        this.snackbarService.error();
+                        this.router.navigateByUrl('');
+                    }
+                    // In case the project does not exist or the user does not have permissions. 
+                    else if (project == false) {
+                        this.router.navigateByUrl('/page-not-found');
+                    }
+
                     return;
                 }
-                else {
-                    this.projectName = project.name;
-                    this.matrix = this.mapMatrix(project.matrix);
-                    this.requests = this.mapRequests(project.requests);
-                    this.defaultSettings = project.defaultSettings;
-                    this.environments = project.environments;
-                    this.maxRequestAmount = project.maxRequestAmount;
-                }
+
+                this.projectName = project.name;
+                this.matrix = this.mapMatrix(project.matrix);
+                this.requests = this.mapRequests(project.requests);
+                this.defaultSettings = project.defaultSettings;
+                this.environments = project.environments;
+                this.maxRequestAmount = project.maxRequestAmount;
 
                 if (project.report) {
                     this.report = project.report;
