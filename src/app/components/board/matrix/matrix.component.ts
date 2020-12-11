@@ -297,6 +297,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.compressMatrix();
         this.requestsAmount = this.getMatrixRequestsAmount();
         this.initResultMatrix();
+        this.matrixScrollTop();
         this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, true);
     }
 
@@ -375,6 +376,7 @@ export class MatrixComponent implements OnInit, OnDestroy {
         this.isSendMode = false;
         this.report.results = {};
         this.resultsAmount = 0;
+        this.matrixScrollTop();
         this.eventService.emit(EVENT_TYPE.REQUESTS_SEND_MODE, false);
     }
 
@@ -402,5 +404,9 @@ export class MatrixComponent implements OnInit, OnDestroy {
                 this.closeReport();
             }
         });
+    }
+
+    matrixScrollTop() {
+        $("#matrix-container").scrollTop(0);
     }
 }
