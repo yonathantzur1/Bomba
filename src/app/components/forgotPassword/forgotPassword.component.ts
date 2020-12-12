@@ -7,6 +7,8 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
+declare const $: any;
+
 @Component({
     selector: 'forgot-password',
     templateUrl: './forgotPassword.html',
@@ -18,6 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     username: string = "";
     isLoading: boolean = false;
+    isPageReady: boolean = false;
     validations: Array<InputValidation>;
 
     constructor(private router: Router,
@@ -42,6 +45,12 @@ export class ForgotPasswordComponent implements OnInit {
 
     ngOnInit() {
         this.globalService.dynamicInput();
+
+        if (this.username = this.globalService.getData("username")) {
+            $("#forgot-username").focus();
+        }
+
+        this.isPageReady = true;
     }
 
     forgot() {

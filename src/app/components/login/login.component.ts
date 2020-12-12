@@ -6,7 +6,6 @@ import { MicrotextService, InputValidation } from '../../services/global/microte
 
 import { LoginService } from '../../services/login.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { AlertService, ALERT_TYPE } from 'src/app/services/global/alert.service';
 
 declare const $: any;
 
@@ -35,7 +34,6 @@ export class LoginComponent implements OnInit {
     eventsIds: Array<string> = [];
 
     constructor(private router: Router,
-        private alertService: AlertService,
         public snackbarService: SnackbarService,
         private microtextService: MicrotextService,
         private loginService: LoginService,
@@ -111,6 +109,10 @@ export class LoginComponent implements OnInit {
     loginEnter() {
         $(".user-input").blur();
         this.login();
+    }
+
+    openForgot() {
+        this.globalService.setData("username", this.user.username);
     }
 
     hideMicrotext(microtextId: string) {

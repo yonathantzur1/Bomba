@@ -16,7 +16,7 @@
 				<input [(ngModel)]="user.password" id="login-password" class="form-control user-input" type="password"
 					name="password" (keydown)="hideMicrotext($event.srcElement.id + '-micro')">
 				<label id="login-password-micro" class="microtext"></label>
-				<a routerLink="/forgot" class="option-btn">Forgot password?</a>
+				<a routerLink="/forgot" (click)="openForgot()" class="option-btn">Forgot password?</a>
 			</div>
 			<div class="form-group">
 				<div>

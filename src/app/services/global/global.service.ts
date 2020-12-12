@@ -22,21 +22,15 @@ export class GlobalService {
         this.userGuid = null;
     }
 
-    setData(key, value) {
+    setData(key: string, value: any) {
         this.data[key] = value;
     }
 
-    getData(key) {
-        if (this.data[key]) {
-            // Deep copy data value.
-            let result = JSON.parse(JSON.stringify(this.data[key]));
-            delete this.data[key];
+    getData(key: string) {
+        const result = this.data[key];
+        delete this.data[key];
 
-            return result;
-        }
-        else {
-            return null;
-        }
+        return result;
     }
 
     copyToClipboard(text: string) {
