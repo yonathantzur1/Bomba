@@ -14,7 +14,7 @@
 
 .card-container {
     position: fixed;
-    background-color: #f7f7f7;
+    background-color: var(--main-background-color);
     box-shadow: 1px 1px 8px 1px #424242;
     z-index: 2;
 }

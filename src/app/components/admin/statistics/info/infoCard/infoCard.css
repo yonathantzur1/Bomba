@@ -6,7 +6,7 @@
     height: 210px;
     width: 320px;
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: var(--main-background-color);
     padding: 10px;
     box-shadow: 1px 1px 5px 1px #afafaf;
     position: relative;

@@ -288,14 +288,7 @@ export class TrackerComponent {
             options: {
                 maintainAspectRatio: false,
                 legend: {
-                    display: false,
-                    labels: {
-                        fontFamily: 'Rubik',
-                        fontColor: '#4b4b4b',
-                        fontSize: 18,
-                        boxWidth: 0
-                    },
-                    onClick: (event: any) => event.stopPropagation()
+                    display: false
                 },
                 scales: {
                     yAxes: [{
