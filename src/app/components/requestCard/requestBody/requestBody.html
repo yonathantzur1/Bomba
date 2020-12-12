@@ -19,6 +19,6 @@
             </div>
         </div>
         <textarea [disabled]="isDisabled" id="req-body" (keydown)="bodyKeyDown($event)" name="reqBody"
-            [placeholder]="isDisabled && !request.body ? 'Empty Body' : 'Body'" type="text" class="request-body" [(ngModel)]="request.body"></textarea>
+            placeholder="Body" type="text" class="request-body" [(ngModel)]="request.body"></textarea>
     </div>
 </div>
