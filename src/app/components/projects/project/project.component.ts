@@ -85,7 +85,7 @@ export class ProjectComponent implements OnDestroy {
         event.stopPropagation();
         this.alertService.alert({
             title: "Delete Project",
-            text: 'Please confirm the deletion of the project -\n"' + this.project.name + '"\n\n' +
+            text: 'Please confirm the deletion of - "' + this.project.name + '"\n\n' +
                 "The action will delete all data saved on the project and its reports.",
             type: ALERT_TYPE.DANGER,
             preConfirm: () => {
