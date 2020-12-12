@@ -40,23 +40,23 @@ module.exports = (io) => {
     });
 
     events.on('socket.selfSync', (userId, eventName, data) => {
-        io.to(userId).emit(eventName, data);
+        io.to(userId.toString()).emit(eventName, data);
     });
 
     events.on('socket.requestStart', (userId, data) => {
-        io.to(userId).emit('requestStart', data);
+        io.to(userId.toString()).emit('requestStart', data);
     });
 
     events.on('socket.requestStatus', (userId, data) => {
-        io.to(userId).emit('requestStatus', data);
+        io.to(userId.toString()).emit('requestStatus', data);
     });
 
     events.on('socket.finishReport', (userId, projectId) => {
-        io.to(userId).emit('finishReport', projectId);
+        io.to(userId.toString()).emit('finishReport', projectId);
     });
 
     events.on('socket.testResult', (userId, response, requestId) => {
-        io.to(userId).emit('testResult', response, requestId);
+        io.to(userId.toString()).emit('testResult', response, requestId);
     });
 };
 
