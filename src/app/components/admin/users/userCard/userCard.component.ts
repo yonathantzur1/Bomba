@@ -77,7 +77,7 @@ export class UserCardComponent implements OnDestroy {
     deleteUser() {
         this.alertService.alert({
             title: "Delete User",
-            text: 'Please confirm the deletion of the user "' + this.user.username + '"\n\n' +
+            text: "Please confirm the deletion of the user\n'" + this.user.username + "'\n\n" +
                 "The action will delete all data saved for the user including his projects and reports.",
             type: ALERT_TYPE.DANGER,
             preConfirm: () => {

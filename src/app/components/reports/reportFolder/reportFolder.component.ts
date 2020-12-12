@@ -245,7 +245,7 @@ export class ReportFolderComponent implements OnInit, OnDestroy {
 
         this.alertService.alert({
             title: "Delete Folder",
-            text: "Please confirm the deletion of the folder \n'" + envName + "'",
+            text: "Please confirm the deletion of the folder\n'" + envName + "'",
             type: ALERT_TYPE.DANGER,
             preConfirm: () => { return this.reportsService.deleteEnvFolder(projectId, envId) },
             confirmFunc: (result: any) => {
