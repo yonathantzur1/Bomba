@@ -10,7 +10,7 @@
 :root .dark-theme {
     --main-background-color: #212529;
     --main-text-color: #f8f9fa;
-    --error-color: #ffa49d;
+    --error-color: #ff7373;
     --main-border-color: #d8d8d8;
 }
 

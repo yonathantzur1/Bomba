@@ -4,8 +4,6 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
 import { MicrotextService, InputValidation } from 'src/app/services/global/microtext.service';
 
-declare const $: any;
-
 export class UserEdit {
     id: string;
     username: string;
@@ -102,11 +100,11 @@ export class UserEditComponent {
                 }
                 else if (result == "-1") {
                     this.microtextService.showMicrotext("edit-username-micro",
-                        "The username is already in use");
+                        "The username is already in use.");
                 }
                 else if (result == "-2") {
                     this.microtextService.showMicrotext("edit-email-micro",
-                        "The email is already in use");
+                        "The email is already in use.");
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);

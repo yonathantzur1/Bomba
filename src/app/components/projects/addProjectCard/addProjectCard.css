@@ -14,6 +14,10 @@ form {
     color: #696969;
 }
 
+:host-context(.dark-theme) .add-icon:hover {
+    color: #c3c3c3;
+}
+
 .body {
     padding: 15px;
 }

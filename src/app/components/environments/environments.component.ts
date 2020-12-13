@@ -142,7 +142,8 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
                 }
                 // In case the env name is exists.
                 else if (data.result == "-1") {
-                    $("#new-env-name-micro").html("The name is already in use");
+                    this.microtextService.showMicrotext("new-env-name-micro",
+                        "The name is already in use.");
                 }
                 else {
                     this.environment.id = data.result;
@@ -174,7 +175,8 @@ export class EnvironmentsComponent implements OnInit, OnChanges {
                 }
                 // In case the env name is exists.
                 else if (data.result == "-1") {
-                    $("#new-env-name-micro").html("The name is already in use");
+                    this.microtextService.showMicrotext("new-env-name-micro",
+                        "The name is already in use.")
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.UPDATE_ENVIRONMENT, this.environment);

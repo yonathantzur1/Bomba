@@ -8,8 +8,6 @@ import { SnackbarService } from 'src/app/services/global/snackbar.service';
 
 import { RegisterService } from 'src/app/services/register.service';
 
-declare const $: any;
-
 export class NewUser {
     username: string;
     email: string;
@@ -114,11 +112,13 @@ export class RegisterComponent implements OnInit {
                 }
                 // In case the username is already exists.
                 else if (result == "-1") {
-                    $("#register-username-micro").html("The username is already in use");
+                    this.microtextService.showMicrotext("register-username-micro",
+                        "The username is already in use.");
                 }
                 // In case the email is already exists.
                 else if (result == "-2") {
-                    $("#register-email-micro").html("The email is already in use");
+                    this.microtextService.showMicrotext("register-email-micro",
+                        "The email is already in use.");
                 }
                 else {
                     this.microtextService.restartAll(this.validations);
