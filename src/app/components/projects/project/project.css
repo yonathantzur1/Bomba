@@ -10,6 +10,12 @@
     position: relative;
 }
 
+:host-context(.dark-theme) .project-container {
+    box-shadow: none;
+    border: 1px solid var(--main-border-color);
+    border-radius: 5px;
+}
+
 .top-icon {
     position: absolute;
     cursor: pointer;

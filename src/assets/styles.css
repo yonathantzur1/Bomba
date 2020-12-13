@@ -161,13 +161,19 @@ select {
 /* END data-tooltip CSS */
 
 :root {
-    /* Define css global variables */
     --main-background-color: #f7f7f7;
     --main-text-color: #4b4b4b;
     --error-color: #e53935;
     --main-border-color: #a5a5a5;
     --main-font: Rubik;
     --navbar-height: 50px;
+}
+
+:root .dark-theme {
+    --main-background-color: #212529;
+    --main-text-color: #f8f9fa;
+    --error-color: #e53935;
+    --main-border-color: #d8d8d8;
 }
 
 body {

@@ -1,7 +1,7 @@
 <div id="navbar">
     <div class="navbar-container">
         <div class="logo-container" (click)="navigateMain()">
-            <img class="logo-image" src="assets/logo/icon.png">
+            <img class="logo-image" [src]="globalService.getLogoIcon()">
         </div>
         <div class="tabs" [ngStyle]="{'column-count': tabs.length}">
             <span class="tab" [ngClass]="{'clicked-tab': tab.isClicked}" (click)="tabClick(tab.url)"

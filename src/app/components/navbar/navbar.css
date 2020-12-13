@@ -29,6 +29,7 @@
     cursor: pointer;
     display: inline-block;
     margin-left: 30px;
+    column-rule-color: var(--main-text-color);
 }
 
 .tab {

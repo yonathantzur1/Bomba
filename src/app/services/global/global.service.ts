@@ -8,8 +8,24 @@ declare const $: any;
 export class GlobalService {
     private data = {};
     userGuid: string;
+    isDarkMode: boolean;
 
-    constructor(private socketService: SocketService) { }
+    constructor(private socketService: SocketService) {
+        this.setDarkMode(true);
+    }
+
+    getLogoIcon() {
+        return `assets/logo/${this.isDarkMode ? 'icon-dark-theme' : 'icon'}.png`;
+    }
+
+    setDarkMode(isDarkMode: boolean) {
+        if (this.isDarkMode = isDarkMode) {
+            $("body").addClass("dark-theme");
+        }
+        else {
+            $("body").removeClass("dark-theme");
+        }
+    }
 
     initialize() {
         if (!this.socketService.isSocketExists()) {
