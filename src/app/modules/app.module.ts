@@ -47,7 +47,7 @@ import { RequestSettingsComponent } from '../components/requestSettings/requestS
 import { TemplatesComponent } from '../components/board/templates/templates.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ProjectComponent } from '../components/projects/project/project.component';
-import { ProjectNameCardComponent } from '../components/projects/projectNameCard/projectNameCard.component';
+import { AddProjectCardComponent } from '../components/projects/addProjectCard/addProjectCard.component';
 import { ApiManagerComponent } from '../components/apiManager/apiManager.component';
 import { ApiGeneratorComponent } from '../components/apiManager/apiGenerator/apiGenerator.component';
 import { PageNotFoundComponent } from '../components/pageNotFound/pageNotFound.component';
@@ -123,7 +123,7 @@ import { Routing } from '../routes/app.routing';
     TemplatesComponent,
     ProjectsComponent,
     ProjectComponent,
-    ProjectNameCardComponent,
+    AddProjectCardComponent,
     ApiManagerComponent,
     ApiGeneratorComponent,
     PageNotFoundComponent

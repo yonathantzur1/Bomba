@@ -9,13 +9,13 @@ import { Project } from '../project/project.component';
 declare const $: any;
 
 @Component({
-    selector: 'project-name-card',
-    templateUrl: './projectNameCard.html',
+    selector: 'add-project-card',
+    templateUrl: './addProjectCard.html',
     providers: [ProjectsService],
-    styleUrls: ['./projectNameCard.css']
+    styleUrls: ['./addProjectCard.css']
 })
 
-export class ProjectNameCardComponent implements OnInit {
+export class AddProjectCardComponent implements OnInit {
 
     @Input() editProject: Project;
 
