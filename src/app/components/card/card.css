@@ -12,11 +12,22 @@
     background-color: rgba(0, 0, 0, .6);
 }
 
+:host-context(.dark-theme) .overlay {
+    background-color: rgba(0, 0, 0, .1);
+    border-bottom: 0.5px solid #a7a7a7;
+}
+
+
 .card-container {
     position: fixed;
     background-color: var(--main-background-color);
     box-shadow: 1px 1px 8px 1px #424242;
     z-index: 2;
+}
+
+:host-context(.dark-theme) .card-container {
+    box-shadow: 0 0px 10px #000000;
+    background-color: #2d3135;
 }
 
 .top-sector {
@@ -29,6 +40,11 @@
     display: flex;
     align-items: center;
     user-select: none;
+}
+
+:host-context(.dark-theme) .top-sector {
+    background-color: #ff6c00;
+    box-shadow: none;
 }
 
 .body-sector {
