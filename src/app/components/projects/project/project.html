@@ -7,5 +7,5 @@
         <span *ngIf="project.isSendMode" class="send-mode-alert" [ngClass]="{'send-mode-done': project.isSendDone}"
             [title]="project.isSendDone ? 'Report is Ready': 'Sending requests...'"></span>
     </div>
-    <project-name-card [editProject]="project" *ngIf="isEditProjectCard"></project-name-card>
+    <add-project-card [editProject]="project" *ngIf="isEditProjectCard"></add-project-card>
 </div>
