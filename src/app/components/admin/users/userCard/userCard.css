@@ -6,6 +6,11 @@
     position: relative;
 }
 
+:host-context(.dark) .card-container {
+    background-color: var(--main-background-color);
+    box-shadow: 0 0px 10px #000000;
+}
+
 .user-name-container {
     width: 100%;
     font-size: 30px;
