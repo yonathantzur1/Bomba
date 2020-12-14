@@ -12,7 +12,7 @@
     background-color: rgba(0, 0, 0, .6);
 }
 
-:host-context(.dark-theme) .overlay {
+:host-context(.dark) .overlay {
     background-color: rgba(0, 0, 0, .2);
     border-bottom: 0.5px solid #a7a7a7;
 }
@@ -25,7 +25,7 @@
     z-index: 2;
 }
 
-:host-context(.dark-theme) .card-container {
+:host-context(.dark) .card-container {
     box-shadow: 0 0px 10px #000000;
     background-color: #2d3135;
 }
@@ -42,7 +42,7 @@
     user-select: none;
 }
 
-:host-context(.dark-theme) .top-sector {
+:host-context(.dark) .top-sector {
     background-color: #ff6c00;
     box-shadow: none;
 }

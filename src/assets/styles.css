@@ -1,17 +1,19 @@
 :root {
     --main-background-color: #f7f7f7;
     --main-text-color: #4b4b4b;
-    --error-color: #e53935;
     --main-border-color: #a5a5a5;
+    --error-color: #e53935;
+    --placeholder-color: #969696;
     --main-font: Rubik;
     --navbar-height: 50px;
 }
 
-:root .dark-theme {
+:root .dark {
     --main-background-color: #212529;
     --main-text-color: #f8f9fa;
-    --error-color: #ff7373;
     --main-border-color: #d8d8d8;
+    --error-color: #ff7373;
+    --placeholder-color: #c7c5c5;
 }
 
 /* START OVERRIDE BOOTSTRAP MATERIAL CSS */
@@ -24,7 +26,7 @@ a, a:hover, a:focus {
     background-image: linear-gradient(0deg, #7882b6 2px, rgba(0, 150, 136, 0) 0), linear-gradient(0deg, rgba(0, 0, 0, 0.3) 1px, transparent 0) !important;
 }
 
-.dark-theme .form-control {
+.dark .form-control {
     background-image: linear-gradient(0deg, #9ca8e8 2px, rgba(0, 150, 136, 0) 0), linear-gradient(0deg, rgba(255, 255, 255, 0.3) 1px, transparent 0) !important;
     color: var(--main-text-color) !important;
 }
@@ -34,12 +36,8 @@ a, a:hover, a:focus {
 }
 
 ::placeholder {
-    color: #969696 !important;
+    color: var(--placeholder-color) !important;
     font-size: 14px !important;
-}
-
-.dark-theme ::placeholder {
-    color: #cecece !important;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:focus {

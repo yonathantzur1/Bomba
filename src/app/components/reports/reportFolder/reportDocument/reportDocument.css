@@ -33,6 +33,10 @@
     cursor: pointer;
 }
 
+:host-context(.dark) .delete-icon {
+    color: black;
+}
+
 .document-name-container {
     position: relative;
 }

@@ -20,10 +20,10 @@ export class GlobalService {
 
     setDarkMode(isDarkMode: boolean) {
         if (this.isDarkMode = isDarkMode) {
-            $("body").addClass("dark-theme");
+            $("body").addClass("dark");
         }
         else {
-            $("body").removeClass("dark-theme");
+            $("body").removeClass("dark");
         }
     }
 
