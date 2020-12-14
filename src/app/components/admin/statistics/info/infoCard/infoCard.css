@@ -14,7 +14,9 @@
 }
 
 :host-context(.dark) .container {
-    box-shadow: 0 0px 10px #000000;
+    border: 1px solid;
+    box-shadow: none;
+    border-radius: 5px;
 }
 
 .title {

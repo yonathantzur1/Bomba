@@ -1,7 +1,8 @@
 <div id="reportDocument">
     <div class="document-icon-container">
         <i (click)="deleteDocument(document)" class="delete-icon fas fa-times"></i>
-        <img (click)="openDocument(document)" class="document-icon" src="assets/icons/document.svg">
+        <img (click)="openDocument(document)" class="document-icon"
+            src="assets/icons/document{{globalService.isDarkMode ? '-dark-theme' : ''}}.svg">
     </div>
     <span class="document-name-container">
         <div [hidden]="document.name == null" id="report-{{index}}" class="document-name" contenteditable

@@ -14,10 +14,6 @@ export class GlobalService {
         this.setDarkMode(true);
     }
 
-    getLogoIcon() {
-        return `assets/logo/${this.isDarkMode ? 'icon-dark-theme' : 'icon'}.png`;
-    }
-
     setDarkMode(isDarkMode: boolean) {
         if (this.isDarkMode = isDarkMode) {
             $("body").addClass("dark");

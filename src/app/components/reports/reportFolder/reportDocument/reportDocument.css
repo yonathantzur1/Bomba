@@ -56,6 +56,10 @@
     cursor: text;
 }
 
+:host-context(.dark) .default-name {
+    color: #c1c1c1;
+}
+
 .document-name:not(:focus) {
     text-overflow: ellipsis;
 }

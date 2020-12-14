@@ -9,6 +9,7 @@
 :host-context(.dark) .card-container {
     background-color: var(--main-background-color);
     box-shadow: 0 0px 10px #000000;
+    border: 1px solid #383838;
 }
 
 .user-name-container {
