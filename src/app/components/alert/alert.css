@@ -125,3 +125,11 @@
 .close-btn:hover {
     background-color: #7f8991;
 }
+
+:host-context(.dark) .close-btn {
+    background-color: #72797e;
+}
+
+:host-context(.dark) .close-btn:hover {
+    background-color: #666c70;
+}
