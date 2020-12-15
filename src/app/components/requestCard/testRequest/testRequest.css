@@ -8,6 +8,10 @@
     width: 95%;
 }
 
+:host-context(.dark) .break-line {
+    border-color: #545454;
+}
+
 .response-info {
     padding-top: 15px;
 }

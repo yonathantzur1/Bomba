@@ -20,6 +20,11 @@
     padding: 0px 15px;
 }
 
+:host-context(.dark) .box-container {
+    background-color: #343a40;
+    box-shadow: 0 0px 3px #888888;
+}
+
 .title {
     width: 100%;
     height: 55px;
@@ -95,6 +100,14 @@
 
 .confirm-btn:hover {
     background-color: #3a85ce;
+}
+
+:host-context(.dark) .confirm-btn {
+    background-color: #2098d1;
+}
+
+:host-context(.dark) .confirm-btn:hover {
+    background-color: #1d88bb;
 }
 
 .danger-btn {
