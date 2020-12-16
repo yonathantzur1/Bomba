@@ -11,7 +11,7 @@ export class GlobalService {
     isDarkMode: boolean;
 
     constructor(private socketService: SocketService) {
-        this.setDarkMode(true);
+        this.setDarkMode(false);
     }
 
     setDarkMode(isDarkMode: boolean) {

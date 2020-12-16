@@ -39,6 +39,10 @@
     background-color: #ebf5ff;
 }
 
+:host-context(.dark) .tab-container:hover {
+    background-color: #3a3a3a;
+}
+
 .tab {
     display: inline-flex;
     width: 100%;    
