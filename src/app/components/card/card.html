@@ -4,6 +4,7 @@
         <div class="top-sector">
             <i (click)="closeWindow()" class="close-icon fas fa-times hvr-grow"></i>
             <span class="title">{{title}}</span>
+            <i *ngIf="icon" class="title-icon {{icon}}"></i>
         </div>
         <div class="body-sector">
             <ng-content></ng-content>

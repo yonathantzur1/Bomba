@@ -6,8 +6,8 @@
                     css='{"text-align": "center", "width": "100%", "font-size": "16px", "position": "absolute", "top": "16px"}'>
                 </loader-dots>
             </div>
-            <span *ngFor="let menu of menus" class="tab-container" [title]="menu.title" (click)="menu.onClick()">
-                <span class="tab">
+            <span *ngFor="let menu of menus" class="tab-container" (click)="menu.onClick()">
+                <span [attr.data-tooltip]="menu.title" class="tooltip-bottom tab">
                     <i class="tab-icon {{menu.icon}}"></i>
                 </span>
             </span>
@@ -33,7 +33,7 @@
         </div>
 
         <div *ngFor="let menu of menus">
-            <card *ngIf="menu.isOpen" [title]="menu.title" [width]="menu.width" [height]="menu.height">
+            <card *ngIf="menu.isOpen" [title]="menu.title" [icon]="menu.icon" [width]="menu.width" [height]="menu.height">
                 <div class="body">
                     <!-- In case of options select list -->
                     <div *ngIf="menu.options">

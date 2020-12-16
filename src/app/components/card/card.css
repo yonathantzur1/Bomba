@@ -47,6 +47,10 @@
     box-shadow: none;
 }
 
+.title-icon {
+    margin-left: 8px;
+}
+
 .body-sector {
     height: calc(100% - var(--top-height));
     position: relative;

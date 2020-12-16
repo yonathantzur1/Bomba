@@ -10,6 +10,7 @@ import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service'
 export class CardComponent implements OnInit {
 
     @Input() title: string;
+    @Input() icon: string;
     @Input() width: number;
     @Input() height: number;
     @Input() disableEscape: boolean;
