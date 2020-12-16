@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { TrackerService } from '../../../services/admin/tracker.service';
 import { DateService } from '../../../services/global/date.service';
 import { MicrotextService, InputValidation } from '../../../services/global/microtext.service';
 
 import { STATISTICS_RANGE, LOG_TYPE } from '../../../enums';
+import { EventService, EVENT_TYPE } from 'src/app/services/global/event.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare const $: any;
 declare const Chart: any;
@@ -31,7 +33,7 @@ class ChartData {
     styleUrls: ['./tracker.css']
 })
 
-export class TrackerComponent {
+export class TrackerComponent implements OnDestroy {
     validations: Array<InputValidation>;
 
     menus: Array<any> = [];
@@ -43,7 +45,6 @@ export class TrackerComponent {
     datesRangeMovementIndex: number = 0;
     usernameInput: string;
     username: string;
-    isUsernameFound: boolean;
     isLoadingChart: boolean;
     chartData: ChartData = new ChartData(
         LOG_TYPE.LOGIN,
@@ -51,9 +52,19 @@ export class TrackerComponent {
         "Logins"
     );
 
+    eventIds: Array<string> = [];
+
     constructor(private dateService: DateService,
+        private globalService: GlobalService,
+        private eventService: EventService,
         private trackerService: TrackerService,
         private microtextService: MicrotextService) {
+        this.eventService.register(EVENT_TYPE.CLOSE_CARD, () => {
+            this.menus.forEach(menu => {
+                menu.isOpen = false;
+            });
+        }, this.eventIds);
+
         const self = this;
 
         this.validations = [
@@ -69,9 +80,11 @@ export class TrackerComponent {
 
         this.menus = [
             {
-                id: "charts",
                 title: "Graphs",
                 icon: "far fa-chart-bar",
+                width: 460,
+                height: 250,
+                isOpen: false,
                 options: [
                     {
                         text: "Logins",
@@ -92,36 +105,31 @@ export class TrackerComponent {
                     }
                 ],
                 onClick: function () {
-                    self.openModal(this.id);
+                    this.isOpen = true;
                     self.saveCurrentSelectedOption(this.options);
                 },
                 onCancel: function () {
+                    this.isOpen = false;
                     self.restoreSelectedOption(this.options);
                 },
                 onConfirm: function (options: Array<any>) {
-                    self.closeModal(this.id);
+                    this.isOpen = false;
+                    const selectedOption = options.find(option => option.isSelected);
 
-                    let option;
-
-                    for (let i = 0; i < options.length; i++) {
-                        if (options[i].isSelected) {
-                            option = options[i];
-                            break;
-                        }
-                    }
-
-                    if (option) {
-                        self.chartData.logType = option.logType;
-                        self.chartData.chartName = option.text;
+                    if (selectedOption) {
+                        self.chartData.logType = selectedOption.logType;
+                        self.chartData.chartName = selectedOption.text;
 
                         self.loadChartAgain();
                     }
                 }
             },
             {
-                id: "charts-time",
                 title: "Time Units",
                 icon: "far fa-clock",
+                width: 400,
+                height: 180,
+                isOpen: false,
                 options: [
                     {
                         text: "Weekly",
@@ -134,25 +142,19 @@ export class TrackerComponent {
                     }
                 ],
                 onClick: function () {
-                    self.openModal(this.id);
+                    this.isOpen = true;
                     self.saveCurrentSelectedOption(this.options);
                 },
                 onCancel: function () {
+                    this.isOpen = false;
                     self.restoreSelectedOption(this.options);
                 },
                 onConfirm: function (options: Array<any>) {
-                    self.closeModal(this.id);
-                    let option;
+                    this.isOpen = false;
+                    const selectedOption = options.find(option => option.isSelected);
 
-                    for (let i = 0; i < options.length; i++) {
-                        if (options[i].isSelected) {
-                            option = options[i];
-                            break;
-                        }
-                    }
-
-                    if (option) {
-                        self.chartData.statisticsRange = option.statisticsRange;
+                    if (selectedOption) {
+                        self.chartData.statisticsRange = selectedOption.statisticsRange;
 
                         if (self.chart != null) {
                             self.loadChartAgain();
@@ -161,24 +163,27 @@ export class TrackerComponent {
                 }
             },
             {
-                id: "charts-user-search",
                 title: "Search User",
                 icon: "fas fa-search",
                 type: "user-search",
+                width: 400,
+                height: 180,
+                isOpen: false,
                 isLoaderActive: false,
                 isShow: function () {
                     return !!self.chart;
                 },
                 onClick: function () {
-                    self.openModal(this.id);
+                    this.isOpen = true;
+                    setTimeout(() => {
+                        self.globalService.dynamicInput();
+                    }, 0);
                 },
                 onCancel: function () {
-                    self.usernameInput = null;
-                    self.isUsernameFound = null;
-                    self.hideMicrotext("username-micro");
+                    this.isOpen = false;
                 },
                 isDisableConfirm: function () {
-                    return (self.usernameInput ? false : true);
+                    return !!!self.usernameInput || this.isLoaderActive;
                 },
                 onConfirm: function () {
                     if (!this.isLoaderActive &&
@@ -188,7 +193,6 @@ export class TrackerComponent {
                         this.isLoaderActive = true;
                         self.trackerService.isUserExists(self.usernameInput).then((isExists: boolean) => {
                             this.isLoaderActive = false;
-                            self.isUsernameFound = !!isExists;
 
                             if (isExists) {
                                 // Setting the username for the chart filter.
@@ -196,13 +200,19 @@ export class TrackerComponent {
 
                                 self.loadChartAgain();
                                 self.usernameInput = null;
-                                self.closeModal(this.id);
+                                this.isOpen = false;
+                            } else {
+                                self.microtextService.showMicrotext("username-micro", "User was not found.")
                             }
                         });
                     }
                 }
             }
         ];
+    }
+
+    ngOnDestroy() {
+        this.eventService.unsubscribeEvents(this.eventIds);
     }
 
     loadChart(chartData: ChartData, datesRange?: Object) {
@@ -291,14 +301,36 @@ export class TrackerComponent {
                     display: false
                 },
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    xAxes: [
+                        {
+                            gridLines: {
+                                color: this.getThemeBorderColor()
+                            },
+                            ticks: {
+                                fontColor: this.getThemeTextColor()
+                            }
+                        }],
+                    yAxes: [
+                        {
+                            gridLines: {
+                                color: this.getThemeBorderColor()
+                            },
+                            ticks: {
+                                fontColor: this.getThemeTextColor(),
+                                beginAtZero: true
+                            }
+                        }]
                 }
             }
         });
+    }
+
+    getThemeTextColor() {
+        return this.globalService.isDarkMode ? "#f8f8f8" : "#4b4b4b";
+    }
+
+    getThemeBorderColor() {
+        return this.globalService.isDarkMode ? "rgb(107, 107, 107, 0.6)" : "rgba(0, 0, 0, 0.1)";
     }
 
     selectOption(options: Array<any>, index: number) {
@@ -307,14 +339,6 @@ export class TrackerComponent {
         });
 
         options[index].isSelected = true;
-    }
-
-    openModal(modalId: string) {
-        $("#" + modalId).modal("show");
-    }
-
-    closeModal(modalId: string) {
-        $("#" + modalId).modal("hide");
     }
 
     saveCurrentSelectedOption(options: Array<any>) {
