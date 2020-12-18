@@ -40,4 +40,9 @@ p {
 :host-context(.dark) .api-gen-btn {
     border: 1px solid;
     border-radius: 3px;
+    box-shadow: none;
+}
+
+:host-context(.dark) .api-gen-btn:hover {
+    background-color: #2a2f33;
 }
