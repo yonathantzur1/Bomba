@@ -27,7 +27,7 @@
 
 :host-context(.dark) .card-container {
     box-shadow: 0 0px 10px #000000;
-    background-color: #2d3135;
+    background-color: var(--second-background-color);
 }
 
 .top-sector {
