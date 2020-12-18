@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
     selector: 'header',
@@ -12,7 +13,8 @@ export class HeaderComponent {
 
     @Input() isClickable: boolean = false;
 
-    constructor(private router: Router) { }
+    constructor(private router: Router,
+        private globalService: GlobalService) { }
 
     navigateMain() {
         this.isClickable && this.router.navigateByUrl("/");
