@@ -26,10 +26,17 @@
     background-color: #ffffff;
     box-shadow: 1px 1px 6px 1px #a1a1a1;
     display: inline-block;
-    margin: 15px 0 0 15px;
+    margin: 10px 0 0 10px;
     position: relative;
     font-size: 14px;
     touch-action: none
+}
+
+:host-context(.dark) .card-sector {
+    background-color: var(--second-background-color);
+    box-shadow: none;
+    border: 1px solid;
+    border-radius: 5px;
 }
 
 .add-card {
@@ -84,6 +91,10 @@
 
 .top-icon:hover {
     color: #656565;
+}
+
+:host-context(.dark) .top-icon:hover {
+    color: #d0d4d8;
 }
 
 .delete-request-icon {

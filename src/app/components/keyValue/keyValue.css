@@ -58,8 +58,8 @@ input:focus {
 }
 
 :host-context(.dark) .add-btn {
-    background-color: #c1c1c1;
-    color: #3d4e62;
+    background-color: #b7b6b6;
+    color: #343a40;
     border: none;
 }
 

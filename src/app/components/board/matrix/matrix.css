@@ -51,8 +51,17 @@
     height: var(--cell_size);
 }
 
+:host-context(.dark) .cell {
+    border-color: var(--main-border-color);
+    background-color: var(--main-background-color);
+}
+
 .plus-sector:hover {
     background-color: #ececec;
+}
+
+:host-context(.dark) .plus-sector:hover {
+    background-color: #303438 !important;
 }
 
 .plus-icon-container {
@@ -76,8 +85,7 @@
 }
 
 .drop-target {
-    background-color: #29e;
-    border-color: #555555 !important;
+    background-color: #29e !important;
     color: white;
 }
 
@@ -104,6 +112,11 @@
     font-size: 13px !important;
 }
 
+:host-context(.dark) .env-select {
+    background-color: var(--main-background-color);
+    color: var(--main-text-color);
+}
+
 .compress-icon {
     left: 50px;
 }
@@ -122,6 +135,10 @@
 
 .top-icon:hover {
     color: #656565;
+}
+
+:host-context(.dark) .top-icon:hover {
+    color: #d0d4d8;
 }
 
 .loader-dots {

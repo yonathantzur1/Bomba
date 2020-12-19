@@ -85,6 +85,15 @@
     float: right;
 }
 
+:host-context(.dark) .amount-input {
+    background-color: var(--main-background-color);
+    border: 1px solid white;
+    border-radius: 2px;
+    background-image: none !important;
+    padding: 0;
+    height: auto;
+}
+
 .result-info {
     position: absolute;
     bottom: 4px;
