@@ -14,7 +14,7 @@ export class HeaderComponent {
     @Input() isClickable: boolean = false;
 
     constructor(private router: Router,
-        private globalService: GlobalService) { }
+        public globalService: GlobalService) { }
 
     navigateMain() {
         this.isClickable && this.router.navigateByUrl("/");

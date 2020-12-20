@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
         private cookieService: CookieService,
         private eventService: EventService,
-        private globalService: GlobalService,
+        public globalService: GlobalService,
         private socketService: SocketService,
         private alertService: AlertService,
         private authService: AuthService) {

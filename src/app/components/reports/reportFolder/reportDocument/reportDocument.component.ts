@@ -26,7 +26,7 @@ export class ReportDocumentComponent implements OnInit {
     reportNameMaxLength: number = 30;
 
     constructor(private reportsService: ReportsService,
-        private globalService: GlobalService,
+        public globalService: GlobalService,
         private snackbarService: SnackbarService) { }
 
     ngOnInit() {
