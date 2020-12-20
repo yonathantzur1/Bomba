@@ -26,6 +26,12 @@
     padding: 5px 25px;
 }
 
+:host-context(.dark) .card-container {
+    background-color: var(--main-background-color);
+    box-shadow: 0 0px 10px #000000;
+    border: 1px solid #383838;
+}
+
 .head-container {    
     width: 100%;
     display: flex;
@@ -98,9 +104,18 @@ form {
     margin-top: 20px;
 }
 
+:host-context(.dark) .login-btn {
+    background-color: #d67630;
+}
+
 .login-btn:hover, .login-btn:focus {
     background-color: #007bff !important;
     border-color: #7882b6 !important;
+}
+
+:host-context(.dark) .login-btn:hover, :host-context(.dark) .login-btn:focus {
+    background-color: #e88035 !important;
+    border-color: #f8f9fa !important;
 }
 
 .options {
@@ -113,6 +128,10 @@ form {
     display: block;
     float: right;
     user-select: none;
+}
+
+:host-context(.dark) .option-btn {
+    color: #607d8e !important;
 }
 
 .login-icon {

@@ -100,7 +100,16 @@ form {
     margin-top: 25px;
 }
 
+:host-context(.dark) .register-btn {
+    background-color: #d67630;
+}
+
 .register-btn:hover, .register-btn:focus {
     background-color: #007bff !important;
     border-color: #7882b6 !important;
+}
+
+:host-context(.dark) .register-btn:hover, :host-context(.dark) .register-btn:focus {
+    background-color: #e88035 !important;
+    border-color: #f8f9fa !important;
 }
