@@ -8,18 +8,24 @@ declare const $: any;
 export class GlobalService {
     private data = {};
     userGuid: string;
-    isDarkMode: boolean;
+    isDarkMode: boolean = false;
 
     constructor(private socketService: SocketService) {
-        this.setDarkMode(true);
+        this.initializeDarkMode();
+    }
+
+    initializeDarkMode() {
+        this.setDarkMode(!!localStorage.getItem("darkMode"));
     }
 
     setDarkMode(isDarkMode: boolean) {
         if (this.isDarkMode = isDarkMode) {
             $("body").addClass("dark");
+            localStorage.setItem("darkMode", "1");
         }
         else {
             $("body").removeClass("dark");
+            localStorage.removeItem("darkMode");
         }
     }
 

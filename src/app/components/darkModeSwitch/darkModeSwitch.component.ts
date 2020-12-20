@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { GlobalService } from "src/app/services/global/global.service";
 
 @Component({
@@ -8,12 +8,8 @@ import { GlobalService } from "src/app/services/global/global.service";
     styleUrls: ['./darkModeSwitch.css']
 })
 
-export class DarkModeSwitchComponent implements OnInit {
+export class DarkModeSwitchComponent {
     constructor(private globalService: GlobalService) { }
-
-    ngOnInit() {
-        this.globalService.setDarkMode(this.globalService.isDarkMode);
-    }
 
     changeTheme() {
         this.globalService.setDarkMode(!this.globalService.isDarkMode);
