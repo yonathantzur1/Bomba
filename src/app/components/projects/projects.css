@@ -20,7 +20,7 @@
 }
 
 .empty-project {
-    border: 1px dashed black;
+    border: 1px dashed;
     margin-left: 0;
     display: flex;
     justify-content: center;
