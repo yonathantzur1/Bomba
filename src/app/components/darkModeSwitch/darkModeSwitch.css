@@ -1,0 +1,47 @@
+.switch-container {
+    position: relative;
+    height: 24px;
+    width: 42px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border: 3px solid #d1d5da;
+    border-radius: 24px;
+}
+
+:host-context(.dark) .switch-container {
+    border-color: #3c1e70;
+    background-color: #271052;
+}
+
+.slider {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #263f3d;
+    transition: transform .3s cubic-bezier(.4,.03,0,1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:host-context(.dark) .slider {
+    background-color: #6e40c9;
+}
+
+.slider-active {
+    transform: translateX(18px);
+}
+
+.slider-icon {
+    color: #ffdf5d;
+    font-size: 12px;
+}
+
+:host-context(.dark) .slider-icon {
+    color: var(--main-text-color);
+}

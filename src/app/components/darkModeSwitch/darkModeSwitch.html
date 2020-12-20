@@ -1,0 +1,7 @@
+<div id="darkModeSwitch">
+    <div class="switch-container" (click)="changeTheme()">
+        <div class="slider" [ngClass]="{'slider-active': globalService.isDarkMode}">
+            <i class="fas fa-moon slider-icon"></i>
+        </div>
+    </div>
+</div>

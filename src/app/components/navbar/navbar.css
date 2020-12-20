@@ -57,6 +57,11 @@
     text-decoration: underline;
 }
 
+dark-mode-switch {
+    position: absolute;
+    right: 100px;
+}
+
 @media (max-aspect-ratio: 8/5) {
     .navbar-container {
         padding: 0 15px;
