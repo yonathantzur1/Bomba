@@ -9,7 +9,7 @@ import { GlobalService } from "src/app/services/global/global.service";
 })
 
 export class DarkModeSwitchComponent {
-    constructor(private globalService: GlobalService) { }
+    constructor(public globalService: GlobalService) { }
 
     changeTheme() {
         this.globalService.setDarkMode(!this.globalService.isDarkMode);
