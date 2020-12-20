@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from '../components/app/app.component';
+import { DarkModeSwitchComponent } from '../components/darkModeSwitch/darkModeSwitch.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { ContextMenuComponent } from '../components/contextMenu/contextMenu.component';
 import { LoaderDotsComponent } from '../components/loaders/loaderDots/loaderDots.component';
@@ -81,6 +82,7 @@ import { Routing } from '../routes/app.routing';
   declarations: [
     // -----Components-----
     AppComponent,
+    DarkModeSwitchComponent,
     HeaderComponent,
     ContextMenuComponent,
     LoaderDotsComponent,

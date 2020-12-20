@@ -35,6 +35,10 @@
     cursor: pointer;
 }
 
+:host-context(.dark) .action-btn {
+    color: #5ca8d4 !important;
+}
+
 .header {
     position: absolute;
     width: 100%;
@@ -51,6 +55,10 @@
     color: #294661;
     text-align: center;
     margin-bottom: 20px;
+}
+
+:host-context(.dark) .title {
+    color: #94abbf;
 }
 
 .verify-title {

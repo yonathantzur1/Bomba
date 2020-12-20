@@ -1,3 +1,10 @@
+:host-context(.dark) input, :host-context(.dark) select {
+    background-image: none !important;
+    background-color: var(--main-background-color);
+    padding: 0 10px;
+    border: 1px solid #7882b6;
+}
+
 .card-body {
     padding: 15px;
 }
@@ -52,6 +59,14 @@
     background-color: #f8f9fa;
 }
 
+:host-context(.dark) .test-btn {
+    background-color: var(--main-background-color);
+}
+
+:host-context(.dark) .test-btn:hover {
+    background-color: #2c3135;
+}
+
 .test-btn-main {
     bottom: 11px;
     left: calc(50% - 50px);
@@ -76,4 +91,9 @@
     cursor: default !important;
     user-select: text !important;
     box-shadow: 0px 0px 2px 0px #a7a7a7;
+}
+
+:host-context(.dark) :disabled {
+    background-color: #495057;
+    border: none;
 }

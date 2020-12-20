@@ -66,7 +66,8 @@ export class AddProjectCardComponent implements OnInit {
                     this.snackbarService.error();
                 }
                 else if (data.result == false) {
-                    $("#name-micro").html("The project name is already in use");
+                    this.microtextService.showMicrotext("name-micro",
+                        "The project name is already in use.")
                 }
                 else {
                     this.eventService.emit(EVENT_TYPE.CLOSE_CARD);

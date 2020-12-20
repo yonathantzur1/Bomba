@@ -8,15 +8,26 @@
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 1;
+    z-index: 999;
     background-color: rgba(0, 0, 0, .6);
 }
+
+:host-context(.dark) .overlay {
+    background-color: rgba(0, 0, 0, .2);
+    border-bottom: 0.5px solid #a7a7a7;
+}
+
 
 .card-container {
     position: fixed;
     background-color: var(--main-background-color);
     box-shadow: 1px 1px 8px 1px #424242;
-    z-index: 2;
+    z-index: 1000;
+}
+
+:host-context(.dark) .card-container {
+    box-shadow: 0 0px 10px #000000;
+    background-color: var(--second-background-color);
 }
 
 .top-sector {
@@ -29,6 +40,15 @@
     display: flex;
     align-items: center;
     user-select: none;
+}
+
+:host-context(.dark) .top-sector {
+    background-color: #ff6c00;
+    box-shadow: none;
+}
+
+.title-icon {
+    margin-left: 8px;
 }
 
 .body-sector {

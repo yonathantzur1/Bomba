@@ -54,11 +54,20 @@
     font-size: 14px;
     background-color: #fafafb;
     user-select: none;
+    color: #2c2c2c;
+}
+
+:host-context(.dark) .add-project-btn {
+    box-shadow: none;
 }
 
 .add-project-btn:hover {
     box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
     background-color: white;
+}
+
+:host-context(.dark) .add-project-btn:hover {
+    box-shadow: 0px 0px 1px 1px var(--main-border-color);
 }
 
 .add-icon {

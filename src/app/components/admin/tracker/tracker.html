@@ -6,8 +6,8 @@
                     css='{"text-align": "center", "width": "100%", "font-size": "16px", "position": "absolute", "top": "16px"}'>
                 </loader-dots>
             </div>
-            <span *ngFor="let menu of menus" class="tab-container" [title]="menu.title" (click)="menu.onClick()">
-                <span class="tab">
+            <span *ngFor="let menu of menus" class="tab-container" (click)="menu.onClick()">
+                <span [attr.data-tooltip]="menu.title" class="tooltip-bottom tab">
                     <i class="tab-icon {{menu.icon}}"></i>
                 </span>
             </span>
@@ -31,52 +31,41 @@
             </div>
             <canvas [hidden]="!chart" id="statistics-chart"></canvas>
         </div>
-        <div *ngFor="let menu of menus" class="modal" data-backdrop="static" [id]="menu.id" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <i class="fas fa-times close"
-                            (click)="closeModal(menu.id);(menu.onCancel && menu.onCancel())"></i>
-                        <h4>
-                            <span>{{menu.title}}</span>
-                            <i class="modal-title-icon {{menu.icon}}"></i>
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <!-- In case of options select list -->
-                        <div *ngIf="menu.options">
-                            <div *ngFor="let option of menu.options; let i=index;" class="menu-option">
-                                <div (click)="selectOption(menu.options, i)">
-                                    <i *ngIf="!option.isSelected" class="far fa-circle"></i>
-                                    <i *ngIf="option.isSelected" class="far fa-dot-circle"></i>
-                                    <span>{{option.text}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- In case of user search -->
-                        <div *ngIf="menu.type=='user-search'">
-                            <loader-dots *ngIf="menu.isLoaderActive"
-                                css='{"text-align": "center", "font-size": "10px", "position": "absolute", "bottom": "-44px"}'>
-                            </loader-dots>
-                            <div class="form-group" style="padding:0;margin:0;">
-                                <input [(ngModel)]="usernameInput" (keyup)="isUsernameFound=null"
-                                    (keyup.enter)="menu.onConfirm(menu.options)" id="user-search" name="user-search"
-                                    (keydown)="hideMicrotext('username-micro')" class="form-control" type="text"
-                                    placeholder="Username or email address" autocorrect="off" autocapitalize="off" spellcheck="false">
-                                <span *ngIf="isUsernameFound == false" class="microtext">User was not found</span>
-                                <span id="username-micro" class="microtext"></span>
+
+        <div *ngFor="let menu of menus">
+            <card *ngIf="menu.isOpen" [title]="menu.title" [icon]="menu.icon" [width]="menu.width" [height]="menu.height">
+                <div class="body">
+                    <!-- In case of options select list -->
+                    <div *ngIf="menu.options">
+                        <div *ngFor="let option of menu.options; let i=index;" class="menu-option">
+                            <div (click)="selectOption(menu.options, i)">
+                                <i class="far fa-{{option.isSelected ? 'dot-' : ''}}circle"></i>
+                                <span class="option-text">{{option.text}}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <a (click)="closeModal(menu.id);(menu.onCancel && menu.onCancel())"
-                            class="btn btn-default cancel-modal-btn">Cancel</a>
+                    <!-- In case of user search -->
+                    <div *ngIf="menu.type=='user-search'">
+                        <loader-dots *ngIf="menu.isLoaderActive"
+                            css='{"font-size": "10px", "position": "absolute", "bottom": "0px"}'>
+                        </loader-dots>
+                        <div class="form-group bmd-form-group">
+                            <label for="user-search" class="bmd-label-floating">Username or email address</label>
+                            <input [(ngModel)]="usernameInput" (keyup)="isUsernameFound=null"
+                                (keyup.enter)="menu.onConfirm(menu.options)" id="user-search" name="user-search"
+                                (keydown)="hideMicrotext('username-micro')" class="form-control" type="text"
+                                autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <span id="username-micro" class="microtext"></span>
+                        </div>
+                    </div>
+                    <div class="menu-footer">
+                        <a (click)="menu.onCancel()" class="btn btn-default cancel-btn">Cancel</a>
                         <a (click)="menu.onConfirm(menu.options)"
                             [ngClass]="{'accept-btn-disabled': menu.isDisableConfirm && menu.isDisableConfirm()}"
                             class="btn btn-primary save-charts-menu-btn">Confirm</a>
                     </div>
                 </div>
-            </div>
+            </card>
         </div>
     </div>
 </div>

@@ -26,3 +26,7 @@
     position: relative;
     margin: 0;
 }
+
+:host-context(.dark) .header-title {
+    color: var(--main-text-color);
+}

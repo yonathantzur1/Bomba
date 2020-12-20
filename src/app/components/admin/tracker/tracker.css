@@ -1,3 +1,15 @@
+.body {
+    padding: 20px;
+}
+
+.bmd-form-group {
+    position: absolute;
+    width: calc(100% - 40px);
+    margin: auto;
+    top: 0px;
+    left: 20px;
+}
+
 .tracker-container {
     width: 100%;
     height: 100%;
@@ -39,6 +51,10 @@
     background-color: #ebf5ff;
 }
 
+:host-context(.dark) .tab-container:hover {
+    background-color: #3a3a3a;
+}
+
 .tab {
     display: inline-flex;
     width: 100%;    
@@ -62,18 +78,22 @@
     padding: 0;
 }
 
-.modal-header, .modal-body, .modal-footer {
-    user-select: none;    
-}
-
-.modal-title-icon {
-    font-size: 20px;    
-    top: 26px;
-    margin-left: 10px;    
+.menu-footer {
+    user-select: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: right;
+    padding: 5px 10px; 
 }
 
 .menu-option {
     margin-bottom: 10px;
+}
+
+.option-text {
+    user-select: none;
 }
 
 .menu-option div {    
@@ -135,13 +155,21 @@
 .microtext {
     font-size: 11px;
     color: var(--error-color);
-    line-height: 15px;
+    margin-top: 2px;
     position: absolute;
+}
+
+:host-context(.dark) .cancel-btn {
+    color: darkgrey !important;
 }
 
 .disable-btn {
     color: darkgrey;
     cursor: default;
+}
+
+:host-context(.dark) .disable-btn {
+    color: #4f4f4f;
 }
 
 .chart-top-details-container {
@@ -161,7 +189,11 @@
 
 .accept-btn-disabled {
     color: darkgrey !important;
-    cursor: not-allowed;
+    cursor: not-allowed !important;
+}
+
+:host-context(.dark) .accept-btn-disabled {
+    color: #4f4f4f !important;
 }
 
 @media (max-aspect-ratio: 8/5) {

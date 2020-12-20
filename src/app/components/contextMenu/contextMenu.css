@@ -18,6 +18,12 @@
     user-select: none;
 }
 
+:host-context(.dark) .list-container {
+    background-color: var(--main-background-color);
+    border: 1px solid;
+    box-shadow: none;
+}
+
 .list-item {
     padding: 5px 10px;
     width: 100%;
@@ -30,7 +36,7 @@
 }
 
 .list-item:hover {
-    background-color: #EEEEEE;
+    background-color: var(--second-background-color);
 }
 
 i {

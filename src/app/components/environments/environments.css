@@ -46,8 +46,24 @@
     user-select: none;
 }
 
+:host-context(.dark) .env-btn {
+    box-shadow: none;
+}
+
+.env-btn:hover {
+    background-color: #e8e8e8;
+}
+
 .cancel-env-btn {
     right: 130px;
+}
+
+:host-context(.dark) .cancel-env-btn {
+    border: 1px solid #a7a7a7;
+}
+
+:host-context(.dark) .cancel-env-btn:hover {
+    background-color: #495057;
 }
 
 .set-env-btn {
@@ -56,8 +72,8 @@
     color: white;
 }
 
-.env-btn:hover {
-    background-color: #e8e8e8;
+:host-context(.dark) .set-env-btn {
+    border: 1px solid #41abff;
 }
 
 .set-env-btn:hover {

@@ -46,11 +46,23 @@ form {
     cursor: text;
 }
 
+:host-context(.dark) .api-input-text {
+    color: var(--main-text-color);
+}
+
 .api-select {
     border-radius: 3px;
     padding: 5px 8px !important;
     background-color: transparent;
     user-select: none;
+}
+
+:host-context(.dark) .api-select {
+    color: var(--main-text-color);
+}
+
+select option {
+    color: black;
 }
 
 .api-url {
@@ -71,6 +83,10 @@ form {
     margin: auto;
     margin-top: -10px;
     width: 155px;
+}
+
+:host-context(.dark) .copy-btn {
+    background-color: #495057;
 }
 
 .copy-icon {

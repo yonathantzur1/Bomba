@@ -1,7 +1,7 @@
 <div id="navbar">
     <div class="navbar-container">
         <div class="logo-container" (click)="navigateMain()">
-            <img class="logo-image" src="assets/logo/icon.png">
+            <img class="logo-image" src="assets/logo/icon{{globalService.isDarkMode ? '-dark-theme' : ''}}.png">
         </div>
         <div class="tabs" [ngStyle]="{'column-count': tabs.length}">
             <span class="tab" [ngClass]="{'clicked-tab': tab.isClicked}" (click)="tabClick(tab.url)"
@@ -9,6 +9,7 @@
                 {{tab.name}}
             </span>
         </div>
+        <dark-mode-switch></dark-mode-switch>
         <div class="logout-container" (click)="logout()">
             <span class="logout-text">Logout</span>
             <i class="fas fa-sign-out-alt"></i>

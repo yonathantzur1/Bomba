@@ -31,12 +31,21 @@
     padding-left: 5px !important;
     display: inline-block;
     outline: none;
+    border: 1px solid #6c757d;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+:host-context(.dark) .search-input {
+    border: none;
+    background-color: #495057;
+    color: var(--main-text-color);
 }
 
 .search-user-btn {
     height: 35px;
     width: 35px;
-    background-color: #afafaf;
+    background-color: white;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -45,27 +54,24 @@
     top: 0px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    color: #343a40;
+    font-size: 15px;
+    border: 1px solid #6c757d;
+    border-left: none;
 }
 
-@keyframes activesearch {
-    from {background-color: #afafaf;}
-    to {background-color: #4799ff;}
+:host-context(.dark) .search-user-btn {
+    background-color: #495057;
+    color: white;
+    border: none;
 }
 
 .search-user-btn-active {
-    animation-name: activesearch;
-    animation-duration: 0.3s;
-    background-color: #4799ff;
     cursor: pointer;
 }
 
 .search-user-btn-disabled {
     cursor: default;
-}
-
-.search-user-btn-icon {
-    color: #f3f3f3;
-    font-size: 15px;
 }
 
 .not-found-users-sector {

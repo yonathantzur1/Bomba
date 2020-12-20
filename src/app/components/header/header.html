@@ -1,5 +1,5 @@
 <div id="header" [ngClass]="{'clickable': isClickable}" class="header-container" (click)="navigateMain()">
     <span class="header-title">B</span>
-    <img src="assets/logo/icon.png" class="header-icon">
+    <img src="assets/logo/icon{{globalService.isDarkMode ? '-dark-theme' : ''}}.png" class="header-icon">
     <span class="header-title">MBA</span>
 </div>

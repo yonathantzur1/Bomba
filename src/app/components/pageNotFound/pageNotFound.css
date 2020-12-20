@@ -1,33 +1,16 @@
+.header {
+    position: relative;
+    text-align: center;
+    margin-top: 40px;
+}
+
 .container {
     text-align: center;
     margin-top: 10px;
 }
 
-.head-container {
-    position: relative;
-    text-align: center;
-    user-select: none;
-    margin-top: 15px;
-}
-
-.head-icon {
-    height: 70px;
-    width: 70px;
-    margin-top: -20px;
-    margin-right: -15px;
-}
-
-.head-title {
-    font-family: Colus;
-    color: #343a40;
-    font-size: 65px;
-    top: 20px;
-    position: relative;
-}
-
 .main-text {
     font-size: 40px;
-    margin-top: 20px;
 }
 
 .sub-text {
@@ -45,4 +28,8 @@
     text-decoration: underline;
     cursor: pointer;
     color: #046ad9;
+}
+
+:host-context(.dark) .back-link {
+    color: #607d8e;
 }

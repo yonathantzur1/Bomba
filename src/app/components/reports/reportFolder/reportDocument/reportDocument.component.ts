@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Document } from '../reportFolder.component';
 import { ReportsService } from 'src/app/services/reports.service';
 import { SnackbarService } from 'src/app/services/global/snackbar.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 declare const $: any;
 
@@ -25,6 +26,7 @@ export class ReportDocumentComponent implements OnInit {
     reportNameMaxLength: number = 30;
 
     constructor(private reportsService: ReportsService,
+        private globalService: GlobalService,
         private snackbarService: SnackbarService) { }
 
     ngOnInit() {

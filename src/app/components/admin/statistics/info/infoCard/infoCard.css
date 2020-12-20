@@ -13,6 +13,12 @@
     user-select: none;
 }
 
+:host-context(.dark) .container {
+    border: 1px solid;
+    box-shadow: none;
+    border-radius: 5px;
+}
+
 .title {
     font-size: 26px;
     padding-bottom: 5px;

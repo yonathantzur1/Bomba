@@ -40,6 +40,10 @@ form {
     color: #495057;
 }
 
+:host-context(.dark) .input-icon {
+    color: #bfbfbf;
+}
+
 .save-icon {
     position: absolute;
     bottom: 15px;
