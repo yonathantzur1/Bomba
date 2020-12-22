@@ -85,8 +85,16 @@ select option {
     width: 155px;
 }
 
+.copy-btn:hover {
+    background-color: #34a0f6;
+}
+
 :host-context(.dark) .copy-btn {
     background-color: #495057;
+}
+
+:host-context(.dark) .copy-btn:hover {
+    background-color: #586169;
 }
 
 .copy-icon {

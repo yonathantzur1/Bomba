@@ -54,7 +54,7 @@
                             <input [(ngModel)]="usernameInput" (keyup)="hideMicrotext('username-micro')"
                                 (keyup.enter)="menu.onConfirm(menu.options)" id="user-search" name="user-search"
                                 (keydown)="hideMicrotext('username-micro')" class="form-control" type="text"
-                                autocorrect="off" autocapitalize="off" spellcheck="false">
+                                autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
                             <span id="username-micro" class="microtext"></span>
                         </div>
                     </div>

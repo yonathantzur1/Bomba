@@ -22,7 +22,7 @@
 
 :host-context(.dark) .box-container {
     background-color: #343a40;
-    box-shadow: 0 0px 10px #000000;
+    box-shadow: var(--main-box-shadow);
 }
 
 .title {

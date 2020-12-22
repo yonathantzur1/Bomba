@@ -14,7 +14,9 @@
 }
 
 :host-context(.dark) .board-container-send-mode {
-    box-shadow: 0px 0px 3px 1px #ccc;
+    border: none;
+    box-shadow: var(--main-box-shadow);
+    border-top: none;
 }
 
 .sector {
