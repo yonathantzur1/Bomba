@@ -14,8 +14,9 @@
     --second-background-color: #2d3135;
     --main-text-color: #f8f8f8;
     --main-border-color: #d8d8d8;
+    --main-box-shadow: 1px 1px 10px black;
     --error-color: #ff7373;
-    --placeholder-color: #c7c5c5;
+    --placeholder-color: #c7c5c5; 
 }
 
 /* START OVERRIDE BOOTSTRAP MATERIAL CSS */

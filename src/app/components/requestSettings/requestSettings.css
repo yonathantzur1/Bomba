@@ -10,6 +10,10 @@
     cursor: pointer;
 }
 
+:host-context(.dark) .method-select {
+    background-color: var(--second-background-color);
+}
+
 .save-icon:hover {
     color: #696969;
 }
