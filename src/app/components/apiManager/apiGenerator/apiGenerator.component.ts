@@ -75,7 +75,7 @@ export class ApiGeneratorComponent implements OnInit {
             (this.api.env ? ("env=" + this.api.env + "&") : '') +
             "action=" + this.api.action;
 
-        this.globalService.copyToClipboard(apiRequest);
+        this.globalService.copyToClipboard(encodeURI(apiRequest));
         this.closeWindow();
         this.snackbarService.snackbar("Copy successfully");
     }
