@@ -297,8 +297,10 @@ export class TrackerComponent implements OnDestroy {
             },
             options: {
                 maintainAspectRatio: false,
-                legend: {
-                    display: false
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 },
                 scales: {
                     xAxes: [
